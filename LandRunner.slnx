@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/ソリューション項目/">
+    <File Path="docs/hid/VITURE_Luma.md" />
+  </Folder>
+  <Project Path="GlassBridge/GlassBridge.csproj" />
+  <Project Path="LandRunner/LandRunner.csproj" />
+</Solution>
