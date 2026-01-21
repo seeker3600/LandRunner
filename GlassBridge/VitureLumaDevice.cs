@@ -4,12 +4,27 @@ using System.Runtime.CompilerServices;
 namespace GlassBridge;
 
 /// <summary>
-/// VITURE Luma用IMUデバイス実装
+/// VITURE系グラス用IMUデバイス実装
 /// </summary>
 internal sealed class VitureLumaDevice : IImuDevice
 {
     private const int VendorId = 0x35CA;
-    private const int ProductId = 0x1131;
+    
+    // サポート対象の Product IDs
+    // - VITURE One: 0x1011, 0x1013, 0x1017
+    // - VITURE One Lite: 0x1015, 0x101b
+    // - VITURE Pro: 0x1019, 0x101d
+    // - VITURE Luma Pro: 0x1121, 0x1141
+    // - VITURE Luma: 0x1131
+    private static readonly int[] SupportedProductIds = new[]
+    {
+        0x1011, 0x1013, 0x1017,  // VITURE One
+        0x1015, 0x101b,           // VITURE One Lite
+        0x1019, 0x101d,           // VITURE Pro
+        0x1121, 0x1141,           // VITURE Luma Pro
+        0x1131                    // VITURE Luma
+    };
+    
     private const int ReadTimeoutMs = 1000;
     private const int ReadBufferSize = 64;
 
@@ -37,21 +52,24 @@ internal sealed class VitureLumaDevice : IImuDevice
         var devices = new List<HidDevice>();
         var streams = new List<HidStream?>();
 
-        // VID/PIDで列挙
-        foreach (var device in DeviceList.Local.GetHidDevices(VendorId, ProductId))
+        // VID/PIDで列挙（サポート対象のすべてのPIDを試す）
+        foreach (var productId in SupportedProductIds)
         {
-            try
+            foreach (var device in DeviceList.Local.GetHidDevices(VendorId, productId))
             {
-                var stream = device.Open();
-                if (stream != null)
+                try
                 {
-                    devices.Add(device);
-                    streams.Add(stream);
+                    var stream = device.Open();
+                    if (stream != null)
+                    {
+                        devices.Add(device);
+                        streams.Add(stream);
+                    }
                 }
-            }
-            catch
-            {
-                // デバイスオープン失敗は無視
+                catch
+                {
+                    // デバイスオープン失敗は無視
+                }
             }
         }
 

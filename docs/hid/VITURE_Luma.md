@@ -11,7 +11,7 @@ VITURE Luma（無印）を **Windows ホスト**から **USB HID（hidapi）** �
 
 ## 1. スコープ
 
-- 対象：**VITURE Luma（無印）**（VID/PIDは後述）
+- 対象：**VITURE系グラス** （Luma無印・Pro、One系列等）
 - 取得したいデータ：**3DoF姿勢（orientation）**
   - 位置（pos）や6DoFは対象外
 - ホスト：**Windows**（hidapi利用可能）
@@ -24,9 +24,18 @@ VITURE Luma（無印）を **Windows ホスト**から **USB HID（hidapi）** �
 VITURE系グラスは以下の **USB Vendor ID / Product ID** として見える（リバースエンジニアリング資料より）。 :contentReference[oaicite:1]{index=1}
 
 - **Vendor ID (VID)**: `0x35CA` :contentReference[oaicite:2]{index=2}
-- **VITURE Luma（無印） Product ID (PID)**: `0x1131` :contentReference[oaicite:3]{index=3}
 
-> 補足：同資料には VITURE One / One Lite / Pro / Luma Pro のPIDも整理されています。 :contentReference[oaicite:4]{index=4}
+### 2.1 サポート対象モデルと Product ID (PID)
+
+| モデル | Product IDs |
+|-------|-------------|
+| **VITURE One** | `0x1011`, `0x1013`, `0x1017` |
+| **VITURE One Lite** | `0x1015`, `0x101b` |
+| **VITURE Pro** | `0x1019`, `0x101d` |
+| **VITURE Luma Pro** | `0x1121`, `0x1141` |
+| **VITURE Luma（無印）** | `0x1131` |
+
+> **注意**：各PIDは同一モデルの複数の内部リビジョン（USB記述子構成の異なるファームウェア等）を表す場合があります。ホストはすべてのPIDに対応すべきです（以下「3.」参照）。 :contentReference[oaicite:4]{index=4}
 
 ---
 
