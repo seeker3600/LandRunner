@@ -1,4 +1,5 @@
 using HidSharp;
+using System.Runtime.CompilerServices;
 
 namespace GlassBridge;
 
@@ -33,41 +34,42 @@ internal sealed class VitureLumaDevice : IImuDevice
     /// </summary>
     public static async Task<VitureLumaDevice?> ConnectAsync(CancellationToken cancellationToken = default)
     {
-        try
-        {
-            var devices = new List<HidDevice>();
-            var streams = new List<HidStream?>();
+        var devices = new List<HidDevice>();
+        var streams = new List<HidStream?>();
 
-            // VID/PIDで列挙
-            foreach (var device in DeviceList.Local.GetHidDevices(VendorId, ProductId))
+        // VID/PIDで列挙
+        foreach (var device in DeviceList.Local.GetHidDevices(VendorId, ProductId))
+        {
+            try
             {
-                try
+                var stream = device.Open();
+                if (stream != null)
                 {
-                    var stream = device.Open();
-                    if (stream != null)
-                    {
-                        devices.Add(device);
-                        streams.Add(stream);
-                    }
-                }
-                catch
-                {
-                    // デバイスオープン失敗は無視
+                    devices.Add(device);
+                    streams.Add(stream);
                 }
             }
+            catch
+            {
+                // デバイスオープン失敗は無視
+            }
+        }
 
-            if (devices.Count == 0)
-                return null;
+        if (devices.Count == 0)
+            return null;
 
-            var vitureLuma = new VitureLumaDevice(devices, streams);
+        var vitureLuma = new VitureLumaDevice(devices, streams);
 
+        try
+        {
             // IMU有効化コマンドを送信
             await vitureLuma.SendImuEnableCommandAsync(enable: true, cancellationToken);
-
             return vitureLuma;
         }
         catch
         {
+            // コマンド送信失敗時はリソースをクリーンアップ
+            await vitureLuma.DisposeAsync();
             return null;
         }
     }
@@ -75,7 +77,7 @@ internal sealed class VitureLumaDevice : IImuDevice
     /// <summary>
     /// IMUデータストリームを取得
     /// </summary>
-    public async IAsyncEnumerable<ImuData> GetImuDataStreamAsync(CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ImuData> GetImuDataStreamAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         if (!IsConnected)
             throw new InvalidOperationException("Device is not connected");
@@ -176,17 +178,17 @@ internal sealed class VitureLumaDevice : IImuDevice
         if (_disposed)
             return;
 
-        try
+        if (_isConnected)
         {
-            // IMU無効化コマンドを送信
-            if (_isConnected)
+            try
             {
+                // IMU無効化コマンドを送信
                 await SendImuEnableCommandAsync(enable: false);
             }
-        }
-        catch
-        {
-            // エラーは無視
+            catch
+            {
+                // エラーは無視
+            }
         }
 
         // ストリームをクローズ

@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace GlassBridge;
 
 /// <summary>
@@ -38,7 +40,7 @@ public sealed class MockImuDevice : IImuDevice
         return new MockImuDevice(ct => GeneratePeriodicData(dataFactory, intervalMs, maxIterations, ct));
     }
 
-    public async IAsyncEnumerable<ImuData> GetImuDataStreamAsync(CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ImuData> GetImuDataStreamAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         if (_disposed)
             throw new ObjectDisposedException(nameof(MockImuDevice));
@@ -86,7 +88,7 @@ public sealed class MockImuDevice : IImuDevice
         Func<ushort, ImuData> dataFactory,
         int intervalMs,
         int maxIterations,
-        CancellationToken cancellationToken)
+        [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         for (ushort i = 0; i < maxIterations; i++)
         {
