@@ -1,14 +1,18 @@
+# Copilot Instructions
 
 ## C# Instructions
 
-XRデバイスの仕様に関する知識が必要な場合、以下のドキュメントを参照してください。
-* docs/hid/VITURE_Luma.md
-	* VITURE Luma（無印）
-	* 無印以外のシリーズについては、基本的に無印と同じ仕様ですが、細部が異なる場合があります。
+### General Guidelines
+- Follow Visual Studio best practices for project structure.
+- Ensure file hierarchy and namespaces are consistent.
 
-GlassBridgeを使用してXRデバイスと通信する方法については、以下のドキュメントを参照してください。
-* GlassBridge/README.md
-
-プロダクト全体の設計方針やアーキテクチャに関する情報が必要な場合、以下のドキュメントを参照してください。
-* README.md
+### Project-Specific Rules
+- Separate public API (GlassBridge) from internal implementation (GlassBridge.Internal). Place internal implementation files in the Internal folder.
+- Refer to the following documentation for specific components:
+  - docs/hid/VITURE_Luma.md
+    - VITURE Luma (details on functionality and usage)
+  - GlassBridge/README.md
+    - Overview and instructions for the GlassBridge project.
+  - README.md
+    - General project information and guidelines.
 

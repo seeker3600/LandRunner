@@ -2,22 +2,42 @@
 
 XRグラスからのIMU（慣性測定装置）データを取得するための .NET ライブラリ。
 
-**現在対応：** VITURE Luma
+**現在対応：** VITURE Luma、VITURE Pro、VITURE One、VITURE One Lite、VITURE Luma Pro
 
 ## 概要
 
-GlassBridgeは、Windows上でVITURE Lumaなどのシースルーグラスから3DoF（ロール、ピッチ、ヨー）の頭部姿勢データを非同期ストリームで取得できるライブラリです。
+GlassBridgeは、Windows上でVITURE系シースルーグラスから3DoF（ロール、ピッチ、ヨー）の頭部姿勢データを非同期ストリームで取得できるライブラリです。
 
 HIDプロトコルの詳細を隠蔽し、シンプルで非同期的なAPIを提供します。また、テスト時にはモック実装で容易にシミュレーションできます。
 
 ## 特徴
 
-- ? **VITURE Luma対応** - USB HIDプロトコル完全実装
+- ? **複数モデル対応** - VITURE Luma・Pro・One系列をサポート
 - ? **非同期ストリーム** - `IAsyncEnumerable<ImuData>`で自然なデータフロー
 - ? **テスト可能** - インターフェース分離とモック実装
 - ? **複数フォーマット対応** - オイラー角とクォータニオンの両方を提供
 - ? **CRC検証** - パケットの整合性確認
 - ? **リソース管理** - `IAsyncDisposable`による自動クリーンアップ
+
+## プロジェクト構成
+
+```
+GlassBridge/
+├── 公開 API
+│   ├── ImuData.cs                 IMUデータ型（record）
+│   ├── Interfaces.cs              インターフェース定義
+│   ├── ImuDeviceManager.cs        デバイス接続マネージャー
+│   └── MockImuDevice.cs           テスト用モック実装
+└── 内部実装 (GlassBridge.Internal namespace)
+    ├── VitureLumaDevice.cs        HIDデバイス実装
+    ├── VitureLumaPacket.cs        プロトコルパケット処理
+    └── Crc16Ccitt.cs              CRC-16計算ユーティリティ
+```
+
+### 名前空間
+
+- **GlassBridge** - 公開API（`ImuDeviceManager`、`ImuData` 等）
+- **GlassBridge.Internal** - 内部実装詳細（HIDデバイス、パケット処理等）
 
 ## インストール
 
@@ -26,6 +46,11 @@ HIDプロトコルの詳細を隠蔽し、シンプルで非同期的なAPIを提供します。また、テスト時
 ### 依存パッケージ
 
 - **HidSharp** 2.6.4 - HIDデバイス通信
+
+### 要件
+
+- **.NET 10** 以上
+- **Windows** (USB HID通信のため)
 
 ## クイックスタート
 

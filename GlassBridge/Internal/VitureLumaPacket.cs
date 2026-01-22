@@ -1,4 +1,4 @@
-namespace GlassBridge;
+namespace GlassBridge.Internal;
 
 /// <summary>
 /// VITURE Lumaプロトコルのパケット処理ユーティリティ

@@ -1,4 +1,4 @@
-namespace GlassBridge;
+namespace GlassBridge.Internal;
 
 /// <summary>
 /// CRC-16-CCITT計算ユーティリティ

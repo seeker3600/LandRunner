@@ -1,5 +1,7 @@
 namespace GlassBridge;
 
+using GlassBridge.Internal;
+
 /// <summary>
 /// IMUデバイスマネージャーの実装
 /// </summary>

@@ -1,7 +1,7 @@
+namespace GlassBridge.Internal;
+
 using HidSharp;
 using System.Runtime.CompilerServices;
-
-namespace GlassBridge;
 
 /// <summary>
 /// VITURE系グラス用IMUデバイス実装
