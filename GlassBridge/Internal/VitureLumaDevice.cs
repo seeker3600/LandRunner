@@ -105,8 +105,8 @@ internal sealed class VitureLumaDevice : IImuDevice
 
     /// <summary>
     /// VITURE固有：ストリームからIMU/MCUを判別
-    /// 送信可否でテスト
-    /// ドキュメント参照：「IMU側はコマンドを拒否する場合がある」
+    /// 有効なコマンドパケットを送信して応答をテスト
+    /// ドキュメント参照：「送信可否でコマンドの宛先を事実上判別している」
     /// </summary>
     private async Task IdentifyStreamsAsync(IReadOnlyList<IHidStream> streams, CancellationToken cancellationToken)
     {
@@ -114,43 +114,44 @@ internal sealed class VitureLumaDevice : IImuDevice
         {
             try
             {
-                // MCUはコマンド受け取り可能、IMUは受け取り不可の可能性
-                // ハンドシェイク用のテストパケットを送信
-                var testCmd = new byte[65];  // Report ID + 64 bytes
-                testCmd[0] = 0x00;  // Report ID
+                // 有効な IMU enable コマンドパケットを送信
+                var cmdPacket = VitureLumaPacket.BuildImuEnableCommand(enable: true, messageCounter: 0);
+                var writeBuffer = new byte[cmdPacket.Length + 1];
+                writeBuffer[0] = 0x00; // Report ID
+                Array.Copy(cmdPacket, 0, writeBuffer, 1, cmdPacket.Length);
 
-                await stream.WriteAsync(testCmd, cancellationToken);
+                await stream.WriteAsync(writeBuffer, cancellationToken);
 
-                // 応答待機（短時間）
+                // 応答待機（タイムアウト付き）
                 var ackBuffer = new byte[ReadBufferSize];
-                var readTask = stream.ReadAsync(ackBuffer, 0, ackBuffer.Length, cancellationToken);
-                var completed = await Task.WhenAny(readTask, Task.Delay(100, cancellationToken));
+                using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                cts.CancelAfter(TimeSpan.FromMilliseconds(100));
 
-                if (completed == readTask)
+                try
                 {
-                    int bytesRead = await readTask;
+                    int bytesRead = await stream.ReadAsync(ackBuffer, 0, ackBuffer.Length, cts.Token);
 
-                    // MCU ACKが返ってきた？
+                    // MCU ACK が返ってきた？
                     if (bytesRead >= 2 && ackBuffer[0] == 0xFF && ackBuffer[1] == 0xFD)
                     {
                         _mcuStream = stream;
                     }
+                    // IMU データが返ってきた？
                     else if (bytesRead >= 2 && ackBuffer[0] == 0xFF && ackBuffer[1] == 0xFC)
                     {
-                        // IMUデータが返ってきた
                         _imuStream = stream;
                     }
                 }
-                else
+                catch (OperationCanceledException)
                 {
-                    // タイムアウト → 無反応 = IMUの可能性
+                    // タイムアウト → 無反応 = IMU の可能性
                     if (_imuStream == null)
                         _imuStream = stream;
                 }
             }
             catch
             {
-                // コマンド送信失敗 → IMUの可能性
+                // エラー → IMU の可能性
                 if (_imuStream == null)
                     _imuStream = stream;
             }
@@ -225,13 +226,23 @@ internal sealed class VitureLumaDevice : IImuDevice
             // MCUストリーム「のみ」に送信
             await _mcuStream.WriteAsync(writeBuffer, cancellationToken);
 
-            // ACK受信待機
+            // ACK受信待機（タイムアウト付き）
             var ackBuffer = new byte[ReadBufferSize];
-            int bytesRead = await _mcuStream.ReadAsync(ackBuffer, 0, ackBuffer.Length, cancellationToken);
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            cts.CancelAfter(TimeSpan.FromMilliseconds(500));
 
-            if (bytesRead >= 2 && ackBuffer[0] == 0xFF && ackBuffer[1] == 0xFD)
+            try
             {
-                System.Diagnostics.Debug.WriteLine("Received MCU ACK");
+                int bytesRead = await _mcuStream.ReadAsync(ackBuffer, 0, ackBuffer.Length, cts.Token);
+
+                if (bytesRead >= 2 && ackBuffer[0] == 0xFF && ackBuffer[1] == 0xFD)
+                {
+                    System.Diagnostics.Debug.WriteLine("Received MCU ACK");
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                System.Diagnostics.Debug.WriteLine("MCU ACK timeout (acceptable in some cases)");
             }
 
             await Task.Delay(100, cancellationToken);
