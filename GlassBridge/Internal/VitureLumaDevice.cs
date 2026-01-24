@@ -1,6 +1,6 @@
 namespace GlassBridge.Internal;
 
-using HidSharp;
+using GlassBridge.Internal.HID;
 using System.Runtime.CompilerServices;
 
 /// <summary>
@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 internal sealed class VitureLumaDevice : IImuDevice
 {
     private const int VendorId = 0x35CA;
-    
+
     // サポート対象の Product IDs
     // - VITURE One: 0x1011, 0x1013, 0x1017
     // - VITURE One Lite: 0x1015, 0x101b
@@ -24,23 +24,20 @@ internal sealed class VitureLumaDevice : IImuDevice
         0x1121, 0x1141,           // VITURE Luma Pro
         0x1131                    // VITURE Luma
     };
-    
-    private const int ReadTimeoutMs = 1000;
+
     private const int ReadBufferSize = 64;
 
-    private readonly List<HidDevice> _devices;
-    private readonly List<HidStream?> _streams;
+    private readonly IHidStreamProvider _hidProvider;
+    private IReadOnlyList<IHidStream> _streams = [];
     private bool _isConnected;
     private bool _disposed;
     private ushort _messageCounter;
 
     public bool IsConnected => _isConnected && !_disposed;
 
-    private VitureLumaDevice(List<HidDevice> devices, List<HidStream?> streams)
+    private VitureLumaDevice(IHidStreamProvider hidProvider)
     {
-        _devices = devices;
-        _streams = streams;
-        _isConnected = devices.Count > 0;
+        _hidProvider = hidProvider ?? throw new ArgumentNullException(nameof(hidProvider));
         _messageCounter = 0;
     }
 
@@ -49,46 +46,74 @@ internal sealed class VitureLumaDevice : IImuDevice
     /// </summary>
     public static async Task<VitureLumaDevice?> ConnectAsync(CancellationToken cancellationToken = default)
     {
-        var devices = new List<HidDevice>();
-        var streams = new List<HidStream?>();
+        // VITURE固有: VID/PIDでプロバイダを生成
+        var provider = new HidStreamProvider(VendorId, SupportedProductIds);
+        return await ConnectWithProviderAsync(provider, cancellationToken);
+    }
 
-        // VID/PIDで列挙（サポート対象のすべてのPIDを試す）
-        foreach (var productId in SupportedProductIds)
-        {
-            foreach (var device in DeviceList.Local.GetHidDevices(VendorId, productId))
-            {
-                try
-                {
-                    var stream = device.Open();
-                    if (stream != null)
-                    {
-                        devices.Add(device);
-                        streams.Add(stream);
-                    }
-                }
-                catch
-                {
-                    // デバイスオープン失敗は無視
-                }
-            }
-        }
+    /// <summary>
+    /// 指定されたプロバイダでデバイスを初期化（テスト用）
+    /// </summary>
+    internal static async Task<VitureLumaDevice?> ConnectWithProviderAsync(
+        IHidStreamProvider hidProvider,
+        CancellationToken cancellationToken = default)
+    {
+        var device = new VitureLumaDevice(hidProvider);
 
-        if (devices.Count == 0)
-            return null;
+        if (await device.InitializeAsync(cancellationToken))
+            return device;
 
-        var vitureLuma = new VitureLumaDevice(devices, streams);
+        await device.DisposeAsync();
+        return null;
+    }
 
+    /// <summary>
+    /// デバイスを初期化し、ストリームを取得してIMU有効化コマンドを送信
+    /// </summary>
+    private async Task<bool> InitializeAsync(CancellationToken cancellationToken)
+    {
         try
         {
-            // IMU有効化コマンドを送信
-            await vitureLuma.SendImuEnableCommandAsync(enable: true, cancellationToken);
-            return vitureLuma;
+            _streams = await _hidProvider.GetStreamsAsync(cancellationToken);
+            if (_streams.Count == 0)
+                return false;
+
+            // VITURE固有: 全ストリームにIMU有効化コマンドを送信
+            await SendImuEnableCommandToAllStreamsAsync(enable: true, cancellationToken);
+
+            _isConnected = true;
+            return true;
         }
         catch
         {
-            // コマンド送信失敗時はリソースをクリーンアップ
-            await vitureLuma.DisposeAsync();
-            return null;
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// VITURE固有: 全ストリームにIMUコマンドを送信
+    /// </summary>
+    private async Task SendImuEnableCommandToAllStreamsAsync(bool enable, CancellationToken cancellationToken)
+    {
+        var cmdPacket = VitureLumaPacket.BuildImuEnableCommand(enable, _messageCounter++);
+
+        // Report ID付きで送信（VITURE仕様）
+        var writeBuffer = new byte[cmdPacket.Length + 1];
+        writeBuffer[0] = 0x00; // Report ID
+        Array.Copy(cmdPacket, 0, writeBuffer, 1, cmdPacket.Length);
+
+        foreach (var stream in _streams)
+        {
+            try
+            {
+                await stream.WriteAsync(writeBuffer, cancellationToken);
+                await Task.Delay(100, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"Failed to send IMU command: {ex.Message}");
+            }
         }
     }
 
@@ -106,13 +131,10 @@ internal sealed class VitureLumaDevice : IImuDevice
         {
             bool dataReceived = false;
 
-            // 全デバイスから読み込み
-            foreach (var stream in _streams.Where(s => s != null))
+            // 全デバイスから読み込み（複数パスの想定）
+            foreach (var stream in _streams)
             {
-                if (stream == null)
-                    continue;
-
-                var imuData = TryReadImuData(stream, buffer);
+                var imuData = await TryReadImuDataAsync(stream, buffer, cancellationToken);
                 if (imuData != null)
                 {
                     dataReceived = true;
@@ -136,13 +158,13 @@ internal sealed class VitureLumaDevice : IImuDevice
     }
 
     /// <summary>
-    /// HIDストリームからIMUデータを読み込もうとする
+    /// HIDストリームからIMUデータを読み込もうとする（非同期）
     /// </summary>
-    private static ImuData? TryReadImuData(HidStream stream, byte[] buffer)
+    private static async Task<ImuData?> TryReadImuDataAsync(IHidStream stream, byte[] buffer, CancellationToken cancellationToken)
     {
         try
         {
-            int bytesRead = stream.Read(buffer, 0, buffer.Length);
+            int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
 
             if (bytesRead == buffer.Length &&
                 VitureLumaPacket.TryParseImuPacket(buffer, out var imuData) &&
@@ -160,33 +182,28 @@ internal sealed class VitureLumaDevice : IImuDevice
     }
 
     /// <summary>
-    /// IMU有効化/無効化コマンドを送信
+    /// IMU無効化コマンドを送信
     /// </summary>
-    private async Task SendImuEnableCommandAsync(bool enable, CancellationToken cancellationToken = default)
+    private async Task SendImuDisableCommandAsync(CancellationToken cancellationToken = default)
     {
-        var cmdPacket = VitureLumaPacket.BuildImuEnableCommand(enable, _messageCounter++);
+        var cmdPacket = VitureLumaPacket.BuildImuEnableCommand(enable: false, _messageCounter++);
 
-        // 全デバイスにコマンドを送信
-        foreach (var stream in _streams.Where(s => s != null))
+        // Report ID付きで送信（VITURE仕様）
+        var writeBuffer = new byte[cmdPacket.Length + 1];
+        writeBuffer[0] = 0x00; // Report ID
+        Array.Copy(cmdPacket, 0, writeBuffer, 1, cmdPacket.Length);
+
+        foreach (var stream in _streams)
         {
-            if (stream == null)
-                continue;
-
             try
             {
-                // Report ID付きで送信（Report ID = 0x00）
-                var writeBuffer = new byte[cmdPacket.Length + 1];
-                writeBuffer[0] = 0x00; // Report ID
-                Array.Copy(cmdPacket, 0, writeBuffer, 1, cmdPacket.Length);
-
-                stream.Write(writeBuffer);
-
-                // 応答を待つ
+                await stream.WriteAsync(writeBuffer, cancellationToken);
                 await Task.Delay(100, cancellationToken);
             }
-            catch
+            catch (Exception ex)
             {
-                // 送信エラーは無視
+                System.Diagnostics.Debug.WriteLine(
+                    $"Failed to send IMU disable command: {ex.Message}");
             }
         }
     }
@@ -201,7 +218,7 @@ internal sealed class VitureLumaDevice : IImuDevice
             try
             {
                 // IMU無効化コマンドを送信
-                await SendImuEnableCommandAsync(enable: false);
+                await SendImuDisableCommandAsync();
             }
             catch
             {
@@ -209,11 +226,7 @@ internal sealed class VitureLumaDevice : IImuDevice
             }
         }
 
-        // ストリームをクローズ
-        foreach (var stream in _streams)
-        {
-            stream?.Dispose();
-        }
+        await _hidProvider.DisposeAsync();
 
         _isConnected = false;
         _disposed = true;
@@ -224,3 +237,4 @@ internal sealed class VitureLumaDevice : IImuDevice
         DisposeAsync().GetAwaiter().GetResult();
     }
 }
+
