@@ -2,6 +2,7 @@ namespace GlassBridge.Internal.HID;
 
 /// <summary>
 /// テスト用のモックHIDストリームプロバイダ
+/// IHidStreamProviderの汎用インターフェースに準拠
 /// </summary>
 internal sealed class MockHidStreamProvider : IHidStreamProvider
 {
@@ -19,8 +20,12 @@ internal sealed class MockHidStreamProvider : IHidStreamProvider
             throw new ObjectDisposedException(nameof(MockHidStreamProvider));
 
         var dataStream = _dataStreamFactory(cancellationToken);
-        IHidStream stream = new MockHidStream(dataStream, cancellationToken);
-        return new[] { stream };
+        
+        // テスト用：IMU/MCUの2つのストリームを返す
+        IHidStream imuStream = new MockHidStream(dataStream, cancellationToken);
+        IHidStream mcuStream = new MockHidStream(CreateAckStream(), cancellationToken);
+        
+        return new[] { imuStream, mcuStream };
     }
 
     public async ValueTask DisposeAsync()
@@ -31,5 +36,16 @@ internal sealed class MockHidStreamProvider : IHidStreamProvider
         _disposed = true;
         await Task.CompletedTask;
     }
+
+    /// <summary>
+    /// MCU ACKストリーム用のダミーデータを生成
+    /// </summary>
+    private static async IAsyncEnumerable<ImuData> CreateAckStream()
+    {
+        // ACKは実装していないため、空のストリームを返す
+        await Task.CompletedTask;
+        yield break;
+    }
 }
+
 

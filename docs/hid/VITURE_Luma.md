@@ -1,369 +1,225 @@
-﻿
-# VITURE Luma（無印） 3DoFトラッキング用 USB HID プロトコル仕様（調査ベース）
+﻿# VITURE XR Glasses（Luma 系含む）HID 3DoF（IMU）プロトコル仕様（改訂版）
 
-**目的**  
-VITURE Luma（無印）を **Windows ホスト**から **USB HID（hidapi）** で扱い、**3DoF（姿勢のみ）** のIMUデータ（オイラー角 or クォータニオン）を取得するための「接続後にどうすればよいか分かる」資料を提供する。  
- 
-**注意（重要）**  
-本資料は、公開SDKの上位APIではなく、主に **WebHID向けにリバースエンジニアリングされた仕様**と実装（JavaScript）を根拠にしています。ファームウェア更新等で挙動が変わる可能性があります。根拠は末尾の「出典」を参照。 :contentReference[oaicite:0]{index=0}
+## 0. 位置づけ・適用範囲
+
+本書は、VITURE XR グラスを **3DoF の姿勢取得**（IMU トラッキング）用途でホスト（主に Windows）から利用するために必要な、USB HID 上の通信仕様を記述する。
+本仕様は公開公式仕様ではなく、公開情報およびリバースエンジニアリング成果に基づく（「根拠のある仕様」章に出典を示す）。[1][2]
 
 ---
 
-## 1. スコープ
+## 1. 用語
 
-- 対象：**VITURE系グラス** （Luma無印・Pro、One系列等）
-- 取得したいデータ：**3DoF姿勢（orientation）**
-  - 位置（pos）や6DoFは対象外
-- ホスト：**Windows**（hidapi利用可能）
-- インタフェース：**USB HID（Vendor-specific）**
-
----
-
-## 2. デバイス同定（VID/PID）
-
-VITURE系グラスは以下の **USB Vendor ID / Product ID** として見える（リバースエンジニアリング資料より）。 :contentReference[oaicite:1]{index=1}
-
-- **Vendor ID (VID)**: `0x35CA` :contentReference[oaicite:2]{index=2}
-
-### 2.1 サポート対象モデルと Product ID (PID)
-
-| モデル | Product IDs |
-|-------|-------------|
-| **VITURE One** | `0x1011`, `0x1013`, `0x1017` |
-| **VITURE One Lite** | `0x1015`, `0x101b` |
-| **VITURE Pro** | `0x1019`, `0x101d` |
-| **VITURE Luma Pro** | `0x1121`, `0x1141` |
-| **VITURE Luma（無印）** | `0x1131` |
-
-> **注意**：各PIDは同一モデルの複数の内部リビジョン（USB記述子構成の異なるファームウェア等）を表す場合があります。ホストはすべてのPIDに対応すべきです（以下「3.」参照）。 :contentReference[oaicite:4]{index=4}
+* **ホスト**: Windows 等で動作するアプリケーション側。
+* **デバイス**: VITURE XR グラス本体。
+* **IMU**: Inertial Measurement Unit。姿勢（3DoF）を表すセンサ系。
+* **HID インターフェース**: 1 台のデバイスが複数の HID 論理デバイスとして見える構成要素（後述の IMU/MCU の 2 つ）。[1]
 
 ---
 
-## 3. HIDデバイス構成（重要：2つのHIDインタフェース）
+## 2. 対象デバイスと識別子
 
-VITUREグラスは **2つのHIDインタフェース**を露出し、ホスト側（WebHID/Windows）では **別々のHIDデバイス**として見える、という前提で実装されています。 :contentReference[oaicite:5]{index=5}
+### 2.1 根拠のある仕様（ソース明記）
 
-- **IMU Interface（Interface 0）**：IMU姿勢データを **受信**する（ストリーム）
-- **MCU Interface（Interface 1）**：IMUストリーム開始などの **コマンド送信** と ACK 受信
+* USB Vendor ID は `0x35CA`。[1]
+* Product ID（PID）はモデルにより異なる。少なくとも以下が列挙されている。[1]
 
-両方のインタフェースは以下の共通属性を持つ（報告書より）。 :contentReference[oaicite:6]{index=6}
+  * Viture One: `0x1011`, `0x1013`, `0x1017`
+  * Viture One Lite: `0x1015`, `0x101B`
+  * Viture Pro: `0x1019`, `0x101D`
+  * **Viture Luma**: `0x1131`
+  * **Viture Luma Pro**: `0x1121`, `0x1141`
 
-- Usage Page: `0xFF00`（Vendor-specific）
-- Usage: `0x01`
-- Report ID: `0x00`
-- Report Size: **64 bytes**
+### 2.2 互換性に関する記述（根拠と限界）
 
-> **実務的には**：Windows(hidapi)では「Interface番号」を直接取りにくいことが多いので、  
-> ① VID/PIDで列挙し、該当するHIDデバイスを **全部 open**  
-> ② **MCU用コマンドを“全デバイスに投げる”**（受け付けるものがMCU側）  
-> ③ **入力レポートを読んで** `0xFF 0xFC` ヘッダのものをIMUとして扱う  
-> …が堅牢です（WebHID実装もこの方針）。 :contentReference[oaicite:7]{index=7}
+* 上記の列挙対象（One / One Lite / Pro / Luma / Luma Pro）について、本書が扱う **WebHID ベースの同一プロトコル**（後述の 2 HID インターフェース・同一パケット構造・IMU 制御コマンド）で取り扱うことを前提として記述されている。[1]
+* 一方で、**Luma Ultra** は別資料で「対応デバイス」として挙げられるが、ここで述べる **同一の WebHID 逆解析プロトコルで同様に動作する**ことまでは、その資料単体では断定できない（少なくとも “対応一覧” 以上のプロトコル詳細が同資料に明記されていない）。[3]
 
 ---
 
-## 4. 全体フロー（接続〜IMU受信）
+## 3. HID 論理構成（最重要）
 
-### 4.1 シーケンス（推奨）
+### 3.1 根拠のある仕様（ソース明記）
+
+デバイスは **2 つの独立した HID インターフェース**としてホストに提示される。[1]
+
+* **IMU インターフェース**（Interface 0）: IMU 姿勢データのストリーム受信。[1]
+* **MCU インターフェース**（Interface 1）: コマンド送信と応答（ACK 等）の受信。[1]
+
+両インターフェースは以下の共通パラメータを持つ。[1]
+
+* Usage Page: `0xFF00`（Vendor-specific）
+* Usage: `0x01`
+* Report ID: `0x00`
+* Report Size: 64 bytes
+
+**要件**: IMU 取得を成立させるため、ホストは **両方の HID インターフェースをオープンしなければならない**（コマンド送信は MCU、IMU データ受信は IMU）。[1]
+
+### 3.2 図（理解補助）
+
+```mermaid
+flowchart LR
+  Host[Host App] -->|HID Output Report| MCU[MCU IF (Interface 1)]
+  MCU -->|HID Input Report (ACK)| Host
+  IMU[IMU IF (Interface 0)] -->|HID Input Report (IMU stream)| Host
+```
+
+---
+
+## 4. パケット共通フォーマット
+
+### 4.1 根拠のある仕様（ソース明記）
+
+本プロトコルで扱うパケットは、以下の構造を取る。[1]
+
+```
+Offset  Size  Description
+0x00    2     Header
+0x02    2     CRC-16-CCITT (big-endian)
+0x04    2     Payload length (little-endian)
+0x06    4     Timestamp (IMU packets)
+0x0A    4     Reserved (zeros)
+0x0E    2     Command ID (little-endian)
+0x10    2     Message counter (little-endian)
+0x12    N     Payload data
+Last    1     End marker (0x03)
+```
+
+ヘッダ（`0x00..0x01`）はパケット種別を表す。[1]
+
+* `0xFF 0xFC`: IMU データパケット
+* `0xFF 0xFD`: MCU 応答（ACK 等）
+* `0xFF 0xFE`: MCU コマンド
+
+### 4.2 根拠のある仕様（ソース明記）: CRC
+
+CRC は **CRC-16-CCITT**（polynomial `0x1021`、initial `0xFFFF`）。[1]
+CRC 計算範囲は **offset `0x04` 以降**（ヘッダと CRC フィールド自体を除外）である。[1]
+
+### 4.3 仕様（ソースから論理的に導出）
+
+* `payload_length` は、**offset `0x06` から End marker（`0x03`）までを含むバイト数**として扱われる（生成側の長さ計算と全体構造から整合する）。[1]
+* HID Report Size は 64 bytes だが、実際のパケット長は `payload_length` から復元できるため、受信側は **末尾のパディング（0 埋め等）に依存してはならない**（パケット長で切り出して処理する）。[1]
+
+---
+
+## 5. IMU ストリーム制御（コマンド）
+
+### 5.1 根拠のある仕様（ソース明記）
+
+IMU ストリーム開始・停止は MCU インターフェースへコマンド送信して行う。[1]
+
+* Command ID: `0x15`
+* Data（ペイロード）:
+
+  * `0x01`: enable
+  * `0x00`: disable
+
+コマンドパケットはヘッダ `0xFF 0xFE` を用い、末尾に End marker `0x03` を付加する。[1]
+
+### 5.2 図（送受信シーケンス）
 
 ```mermaid
 sequenceDiagram
-  participant Host as Windows App (hidapi)
-  participant HID0 as HID Dev A (likely IMU IF)
-  participant HID1 as HID Dev B (likely MCU IF)
-
-  Host->>Host: hid_enumerate(VID=0x35CA, PID=0x1131)
-  Host->>HID0: hid_open_path(...)
-  Host->>HID1: hid_open_path(...)
-
-  Note over Host: IMUストリーム開始コマンドを送る（ReportID=0）
-  Host->>HID0: write(OutputReport: MCU CMD 0x15 enable)
-  Host->>HID1: write(OutputReport: MCU CMD 0x15 enable)
-
-  Note over HID1: MCU IF が受理しACK返すことがある
-  HID1-->>Host: InputReport (header 0xFF 0xFD) [optional]
-
-  Note over HID0: IMU IF から IMU packet が流れる
-  HID0-->>Host: InputReport (header 0xFF 0xFC) [64 bytes]
-  Host->>Host: parse Euler @ payload offset 0x12
-  Host->>Host: (option) Euler->Quaternion / recenter
-````
-
-根拠：IMU enable コマンド（CMD `0x15`）の存在、IMU packet header、payload offset等。 ([GitHub][1])
-
----
-
-## 5. パケット仕様（共通）
-
-### 5.1 ヘッダ種別
-
-| 先頭2byte | 意味         |
-| ------- | ---------- |
-| `FF FC` | IMUデータパケット |
-| `FF FD` | MCU応答/ACK  |
-| `FF FE` | MCUコマンド    |
-
-([GitHub][1])
-
-### 5.2 パケット構造（64byteレポート内の論理構造）
-
-リバースエンジニアリング資料に記載された構造（オフセットは先頭=0）。 ([GitHub][1])
-
-| Offset | Size | 内容                    | エンディアン/備考                   |
-| -----: | ---: | --------------------- | --------------------------- |
-| `0x00` |    2 | Header                | `FF FC/FD/FE`               |
-| `0x02` |    2 | CRC-16-CCITT          | **ビッグエンディアン** ([GitHub][1]) |
-| `0x04` |    2 | Payload length        | **リトルエンディアン** ([GitHub][1]) |
-| `0x06` |    4 | Timestamp（IMU packet） | IMUパケットで使用 ([GitHub][1])    |
-| `0x0A` |    4 | Reserved（ゼロ）          | ([GitHub][1])               |
-| `0x0E` |    2 | Command ID            | **リトルエンディアン** ([GitHub][1]) |
-| `0x10` |    2 | Message counter       | **リトルエンディアン** ([GitHub][1]) |
-| `0x12` |    N | Payload data          | コマンド/IMUデータ本体 ([GitHub][1]) |
-| `last` |    1 | End marker            | `0x03` ([GitHub][1])        |
-
-> **長さの考え方（実装ヒント）**
-> `payload_len = u16le(bytes[0x04..0x05])` とすると、論理パケットの総長は概ね `total_len = 6 + payload_len`。
-> CRCは「offset 0x04 から total_len-1 まで」に対して計算する実装になっています。 ([GitHub][1])
-
----
-
-## 6. CRC仕様
-
-* **CRC-16-CCITT**
-* polynomial: `0x1021`
-* initial value: `0xFFFF`
-* 計算範囲：**offset `0x04` 以降**（ヘッダとCRC自身を除外） ([GitHub][1])
-
-> JS実装（WebHID）では lookup table を生成して `calcCrc16(packet, 4, packetLen-4)` の形で計算しています。 ([GitHub][1])
-
----
-
-## 7. IMUストリーム開始（MCUコマンド）
-
-### 7.1 コマンド概要
-
-IMUデータを受信開始するには、MCUインタフェースへ以下を送ります。 ([GitHub][1])
-
-* **Command ID**: `0x0015`
-* **Data**:
-
-  * `0x01` = enable
-  * `0x00` = disable ([GitHub][1])
-
-### 7.2 MCUコマンドパケット生成（論理）
-
-WebHID実装に基づく組み立て仕様（要点）。 ([GitHub][2])
-
-* header: `FF FE`
-* reserved（0x06〜0x0D）: 0 埋め
-* command id: offset `0x0E`（LE）
-* msg counter: offset `0x10`（LE、適当なインクリメントでOK）
-* data: offset `0x12` 以降
-* end marker: `0x03`
-* CRC: offset `0x02`（BE）。計算は offset `0x04` から end marker まで。 ([GitHub][2])
-
----
-
-## 8. IMUデータ（姿勢）パケット
-
-### 8.1 IMUパケット判定
-
-入力レポート（64byte）の先頭が以下なら IMU packet として扱う。 ([GitHub][1])
-
-* `bytes[0] == 0xFF && bytes[1] == 0xFC`
-
-### 8.2 オイラー角の配置（payload offset）
-
-IMUパケットの **payload offset は `0x12`（=18）**で、ここからオイラー角が格納されています。 ([GitHub][1])
-
-* `raw0`：`bytes[18..21]`
-* `raw1`：`bytes[22..25]`
-* `raw2`：`bytes[26..29]` ([GitHub][1])
-
-### 8.3 浮動小数点のエンディアン（重要）
-
-リバースエンジニアリング資料では、これらは **IEEE754 float** で、**バイトスワップして解釈**する例が提示されています。 ([GitHub][1])
-
-* 実装上は「4バイトを逆順にして little-endian float として読む」＝「big-endian float を読む」のと同義です（JS実装がその方式）。 ([GitHub][2])
-
-### 8.4 軸マッピング（注意：実機で要検証）
-
-WebHID実装では、取得した `raw0/raw1/raw2` をそのまま roll/pitch/yaw とせず、符号反転・入替をしています（“WebXR向け”調整）。 ([GitHub][2])
-
-* 例（JS実装のコメント/処理より）
-
-  * `yaw = -raw0`
-  * `roll = -raw1`
-  * `pitch = raw2` ([GitHub][2])
-
-> **推奨**：あなたのアプリ側の座標系（右手/左手、Yaw軸の定義等）と、
-> VITUREから来る角度の軸が一致する保証はありません。
-> “右を向く/上を向く/右に傾ける”の3動作で、どのrawがどの軸かをログで確認してマッピングを確定してください（ここが一番ハマりやすい）。
-> 仕様上の根拠は上の実装・ドキュメントですが、機種/ファームで差異が出うる点は留意。 ([GitHub][2])
-
----
-
-## 9. 姿勢の表現：Euler → Quaternion（推奨）
-
-多くの3Dエンジン/姿勢融合ではクォータニオンが扱いやすいので、Euler→Quaternion 変換を推奨します。
-
-WebHID実装例（度→radして合成）に倣うなら、以下の形式です。 ([GitHub][1])
-
-* 入力：roll/pitch/yaw（**degree**）
-* 出力：`{w, x, y, z}`
-
-> 注意：回転順序（Yaw-Pitch-Roll をどう適用するか）はエンジンにより流儀が違います。
-> “見た目が合う順序”を実機で合わせてください（WebHID例は一つの実装です）。 ([GitHub][1])
-
----
-
-## 10. リセンタ（Recenter）／キャリブレーション
-
-「今向いている方向を正面(0)にする」用途には、**現在クォータニオンをオフセットとして保存**し、以後の姿勢に共役を掛ける方式が紹介されています。 ([GitHub][1])
-
-* `offset = current_q`
-* `q_calibrated = conj(offset) * q_raw` ([GitHub][1])
-
----
-
-## 11. hidapi実装ガイド（Windows）
-
-### 11.1 列挙と open（基本）
-
-1. `hid_init()`
-2. `hid_enumerate(0x35CA, 0x1131)`
-3. 列挙された **全 path を open**（2つ以上見える想定）
-4. 各デバイスで
-
-   * `hid_set_nonblocking(dev, 1)`（推奨）
-   * 受信スレッド/ループ開始
-
-> もし列挙数が1しかない場合：
-> Windows側で何かが掴んでいる（SpaceWalker等）/ドライバ状態/権限/接続形態（ハブ）などが疑わしいです。
-> VITURE自身のツールが「他アプリで使用中だと接続前に止めてね」と注意しているので、まずSpaceWalker等を終了して試してください。 ([Viture][3])
-
-### 11.2 Output Report の送り方（Report ID 0）
-
-Report ID が `0x00` の場合でも、hidapiでは **先頭1byteに Report ID を付ける**流儀が一般的です（Windows実装で特に重要）。
-
-* 送信バッファ例：`[0x00][packet bytes...]`
-
-  * `0x00` は report id
-  * `packet bytes` は 先頭が `FF FE` から始まるMCUコマンド本体
-
-※ 送信長について：
-
-* 仕様資料では report size は64byteですが、JS実装は短いパケット長でも `sendReport(0x00, packet)` しています。
-  hidapi側では **64byteまでゼロパディング**し、CRC/length/end marker は論理パケット長に基づく…のが安全策です（余剰は無視される想定）。 ([GitHub][1])
-
-### 11.3 受信（Input Report）
-
-* `hid_read_timeout(dev, buf, 64, timeout_ms)` などで64byte受信
-* `buf[0..1]` が `FF FC` なら IMU data
-* `buf[0..1]` が `FF FD` なら MCU ACK（必要ならログ）
-* CRCやlengthで妥当性チェックすると堅牢 ([GitHub][1])
-
----
-
-## 12. 参考実装（擬似コード）
-
-### 12.1 C風（概略）
-
-```c
-// 依存: hidapi
-// 目的: VITURE Luma (VID 0x35CA, PID 0x1131) のIMUを有効化してIMU packetを読む
-
-#define VID 0x35CA
-#define PID 0x1131
-
-// CRC-16-CCITT(0x1021, init 0xFFFF) を実装すること（本資料 6章）
-// build_mcu_cmd_0x15_enable() で FF FE のコマンドパケットを作る（本資料 7章）
-
-int main() {
-  hid_init();
-
-  // enumerate
-  struct hid_device_info* devs = hid_enumerate(VID, PID);
-
-  // open all
-  std::vector<hid_device*> handles;
-  for (auto* cur = devs; cur; cur = cur->next) {
-    hid_device* h = hid_open_path(cur->path);
-    if (h) {
-      hid_set_nonblocking(h, 1);
-      handles.push_back(h);
-    }
-  }
-  hid_free_enumeration(devs);
-
-  // build IMU enable cmd
-  uint8_t cmd_payload[1] = { 0x01 }; // enable
-  uint8_t cmd_packet[64] = {0};      // report body (64)
-  size_t cmd_len = build_mcu_cmd_packet(cmd_packet, /*cmdId=*/0x0015, cmd_payload, 1);
-  // cmd_len: 論理パケット長（例: 20）。reportは64送ってもよい。
-
-  // send to all (MCU IF だけ受理する想定)
-  for (auto* h : handles) {
-    uint8_t out[65] = {0}; // [reportId=0] + 64 bytes
-    out[0] = 0x00;
-    memcpy(out + 1, cmd_packet, 64);
-    hid_write(h, out, sizeof(out));
-  }
-
-  // read loop
-  while (1) {
-    for (auto* h : handles) {
-      uint8_t in[64];
-      int n = hid_read(h, in, sizeof(in));
-      if (n == 64) {
-        if (in[0] == 0xFF && in[1] == 0xFC) {
-          // IMU packet -> parse Euler at offset 0x12
-          // raw0/raw1/raw2: bytes[18..29], float32 big-endian（byte-swapして読む）
-          // axis mapping は実機で合わせる（本資料 8.4）
-        }
-      }
-    }
-    // sleep a bit
-  }
-}
+  participant Host
+  participant MCU as MCU IF (Interface 1)
+  participant IMU as IMU IF (Interface 0)
+
+  Host->>MCU: Send Command(0x15, data=0x01)
+  MCU-->>Host: ACK (header=0xFFFD) ※内容詳細は未規定
+  IMU-->>Host: IMU stream (header=0xFFFC) 継続送信
+  Host->>MCU: Send Command(0x15, data=0x00)
+  MCU-->>Host: ACK (header=0xFFFD)
+  IMU-->>Host: IMU stream 停止
 ```
 
-> 上記は「何をするべきか」の骨格です。
-> CRC計算や float デコード、軸マッピングは本資料の該当章に従って実装してください。 ([GitHub][1])
+---
+
+## 6. IMU データ（姿勢）フォーマット
+
+### 6.1 根拠のある仕様（ソース明記）
+
+IMU データパケットはヘッダ `0xFF 0xFC` を持ち、姿勢は **Payload offset `0x12`（= byte 18）**から取得する。[1]
+
+* byte 18–21: raw0（float32）
+* byte 22–25: raw1（float32）
+* byte 26–29: raw2（float32）
+
+raw0/raw1/raw2 は **ビッグエンディアンの IEEE754 float32**として格納されており、ホスト側でバイトスワップして解釈する必要がある。[1]
+
+### 6.2 根拠のある仕様（ソース明記）: 軸マッピング
+
+取得した raw 値は、姿勢として扱う前に以下の変換（符号・対応付け）を行う。[1]
+
+* `yaw  = -raw0`
+* `roll = -raw1`
+* `pitch = raw2`
+
+> 注: raw0/raw1/raw2 のコメント表現（Roll/yaw/pitch 等）は資料内で混乱を招きうるため、本書は上記の **最終的な割当**を仕様として採用する。[1]
+
+### 6.3 根拠のある仕様（ソース明記）: クォータニオン化
+
+Euler からクォータニオンへ変換する場合、回転順序は **ZXY** を用いる。[1]
+
+（ここでは数式展開は省略し、回転順序と入出力の取り決めのみを仕様化する。）
 
 ---
 
-## 13. 既知コマンド（現時点で確度が高いもの）
+## 7. MCU 応答（ACK 等）
 
-現状、公開されているリバースエンジニアリング資料で **明示されているコマンド**は以下です。 ([GitHub][1])
+### 7.1 根拠のある仕様（ソース明記）
 
-| Command ID | 意味         | Data                           |
-| ---------: | ---------- | ------------------------------ |
-|   `0x0015` | IMU on/off | `0x01` enable / `0x00` disable |
+MCU 応答はヘッダ `0xFF 0xFD` として受信される。[1]
 
----
+### 7.2 未規定（情報不足）
 
-## 14. “SDKを使わない”方針のリスクと代替
-
-* VITUREは **Linux向けにIMUアクセスAPIを提供するSDK**を公開しています（ただしWindows向けの同等低レベル仕様公開ではない）。 ([first.viture.com][4])
-* Unity向けには VitureXR API（SDK）があり、モデル取得などのAPI体系が公開されています（ただしあなたの要望通り「Unityを噛ませない」用途には重い）。 ([VITURE Developer][5])
-* WindowsではSpaceWalkerがヘッドトラッキング等を提供し、また一部のVITURE公式ツールは「Windowsでは先にSpaceWalker（ドライバ同梱）を入れる」旨の注意を出しています。環境によっては競合/排他が起きる可能性があるため、hidapiで直接叩く場合は SpaceWalker を終了して試験するのが安全です。 ([Viture][3])
+ACK 内のペイロード構造（成功/失敗コード、対応する Message counter の関係、再送条件等）は、少なくとも参照ソース内で十分に定義されていないため **本書では規定しない**。[1]
 
 ---
 
-## 15. 出典（一次情報・根拠）
+## 8. 参考情報（非規定）
 
-* bfvogel / viture-webxr-extension
+本章は仕様ではなく、設計判断の補助を目的とする。
 
-  * `VITURE_PROTOCOL.md`（WebHID向けに整理されたプロトコル仕様：VID/PID、2IF構成、パケット構造、CRC、IMU enable、IMUデータ位置） ([GitHub][1])
-  * `viture-hid.js`（実装：コマンド組み立て、CRC計算、IMU packet判定、payload offset、floatデコード、軸マッピング） ([GitHub][2])
-* VITURE公式：VITURE XR Glasses SDK for Linux（IMUデータアクセスSDKの存在） ([first.viture.com][4])
-* VITURE公式：Firmware Update / DFUツールの注意（WindowsでSpaceWalker/ドライバ同梱に言及） ([Viture][3])
-* VITURE公式（Academy）：SpaceWalker for Windows（3DoF等の機能説明） ([Viture Academy][6])
+### 8.1 参考（ソース明記）: 公式 Linux SDK が提供する抽象化
 
+VITURE は Linux 向け SDK を提供しており、IMU データ取得・IMU ストリーム制御・IMU 周波数設定・解像度切替等の API をうたっている。[5]
+ただし、当該 SDK は利用許諾契約（SDK License Agreement）の対象であり、契約条件に従う必要がある。[6]
 
-[1]: https://raw.githubusercontent.com/bfvogel/viture-webxr-extension/main/VITURE_PROTOCOL.md "https://raw.githubusercontent.com/bfvogel/viture-webxr-extension/main/VITURE_PROTOCOL.md"
-[2]: https://raw.githubusercontent.com/bfvogel/viture-webxr-extension/main/viture-hid.js "https://raw.githubusercontent.com/bfvogel/viture-webxr-extension/main/viture-hid.js"
-[3]: https://www.viture.com/firmware/update "https://www.viture.com/firmware/update"
-[4]: https://first.viture.com/developer/viture-sdk-for-linux "https://first.viture.com/developer/viture-sdk-for-linux"
-[5]: https://developer.viture.com/unity/viturexr_api "https://developer.viture.com/unity/viturexr_api"
-[6]: https://academy.viture.com/xr_glasses/spacewalker_windows "https://academy.viture.com/xr_glasses/spacewalker_windows"
+### 8.2 参考（ソースから論理的に導出）: “どちらが MCU/IMU か判別できない” 場合
+
+ソース上の WebHID 手順では、列挙された VITURE デバイスをすべて open し、送信可否でコマンドの宛先を事実上判別している（IMU 側はコマンドを拒否する場合がある）。[1]
+同様の戦略は hidapi 等でも採用し得るが、Windows のデバイスパス表現や権限モデルに依存するため、本書は仕様としては規定しない。
+
+### 8.3 推測・推奨（ソースなし）
+
+* 実運用では CRC 不一致・パケット断片化等のエラーパスを想定し、ヘッダ・長さ・終端 `0x03` を用いたフレーミング復旧（次フレーム同期）を実装しておくことが望ましい。
+* IMU の “リセンタ（正面合わせ）” は、現時点姿勢を基準として後続姿勢に補正を掛ける方式が一般的である（資料にも同趣旨の処理例があるが、ここでは設計上の推奨として扱う）。[1]
+
+---
+
+## 9. 参照資料・ライセンス（統一形式）
+
+[1] 「Viture XR Glasses Protocol Documentation（VITURE_PROTOCOL.md）」ユーザー提供ファイル。内容: VID/PID、2 HID インターフェース、パケット構造、CRC、IMU enable（0x15）、IMU データ（byte 18 起点 float32）、軸マッピング、ZXY 変換。
+ライセンス: 本ファイル単体には明記されないが、入手元として広く流通している GitHub リポジトリ（[2]）は MIT License 表記。
+根拠箇所: 
+
+[2] bfvogel, “viture-webxr-extension” (GitHub). 逆解析プロトコル文書の配布元として参照。リポジトリに MIT License 表記。
+ライセンス: MIT License。 ([GitHub][1])
+
+[3] wheaney, “XRLinuxDriver” (GitHub). 対応デバイス一覧に VITURE Luma Ultra を含む。リポジトリに GPL-3.0 license 表記。
+ライセンス: GPL-3.0。 ([GitHub][2])
+
+[4] mgschwan, “viture_virtual_display” (GitHub). 関連する逆解析実装として参照されることがある。リポジトリに MIT license 表記。
+ライセンス: MIT License。 ([GitHub][3])
+
+[5] VITURE, “VITURE XR Glasses SDK for Linux” (公式). IMU データ取得、IMU イベント制御、IMU 周波数 API、解像度切替等の提供を記載。
+ライセンス: 公式 SDK のため別途許諾条件に従う（[6] 参照）。 ([viture.com][4])
+
+[6] VITURE, “VITURE SDK LICENSE AGREEMENT” (公式). SDK 利用に関する契約文書の存在および “Effective September 2025” 等が検索結果として確認できる。
+ライセンス: 契約（プロプライエタリ）。 ([viture.com][5])
+
+[1]: https://github.com/bfvogel/viture-webxr-extension "GitHub - bfvogel/viture-webxr-extension"
+[2]: https://github.com/wheaney/XRLinuxDriver "GitHub - wheaney/XRLinuxDriver: Linux service for interacting with XR devices"
+[3]: https://github.com/mgschwan/viture_virtual_display "GitHub - mgschwan/viture_virtual_display: Virtual display with Viture Pro XR glasses using hdmi in on an OrangePi"
+[4]: https://www.viture.com/developer/viture-one-sdk-for-linux "VITURE XR Glasses SDK for Linux"
+[5]: https://www.viture.com/viture-sdk-license-agreement?utm_source=chatgpt.com "VITURE SDK LICENSE AGREEMENT | VITURE: Next Gen ..."

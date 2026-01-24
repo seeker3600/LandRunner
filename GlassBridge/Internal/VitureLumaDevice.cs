@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 
 /// <summary>
 /// VITURE系グラス用IMUデバイス実装
+/// IMU/MCUストリームの判別はこのクラスが責務（VITURE固有のドメイン知識）
 /// </summary>
 internal sealed class VitureLumaDevice : IImuDevice
 {
@@ -28,7 +29,11 @@ internal sealed class VitureLumaDevice : IImuDevice
     private const int ReadBufferSize = 64;
 
     private readonly IHidStreamProvider _hidProvider;
-    private IReadOnlyList<IHidStream> _streams = [];
+
+    // VITURE固有：IMU/MCUストリーム（ドメイン知識）
+    private IHidStream? _imuStream;
+    private IHidStream? _mcuStream;
+
     private bool _isConnected;
     private bool _disposed;
     private ushort _messageCounter;
@@ -46,7 +51,7 @@ internal sealed class VitureLumaDevice : IImuDevice
     /// </summary>
     public static async Task<VitureLumaDevice?> ConnectAsync(CancellationToken cancellationToken = default)
     {
-        // VITURE固有: VID/PIDでプロバイダを生成
+        // HidSharpの汎用ラッパーを使用
         var provider = new HidStreamProvider(VendorId, SupportedProductIds);
         return await ConnectWithProviderAsync(provider, cancellationToken);
     }
@@ -68,18 +73,26 @@ internal sealed class VitureLumaDevice : IImuDevice
     }
 
     /// <summary>
-    /// デバイスを初期化し、ストリームを取得してIMU有効化コマンドを送信
+    /// デバイスを初期化
+    /// IMU/MCUストリームの判別を行う（VITURE固有ロジック）
     /// </summary>
     private async Task<bool> InitializeAsync(CancellationToken cancellationToken)
     {
         try
         {
-            _streams = await _hidProvider.GetStreamsAsync(cancellationToken);
-            if (_streams.Count == 0)
+            // HidStreamProviderから全ストリームを取得
+            var allStreams = await _hidProvider.GetStreamsAsync(cancellationToken);
+            if (allStreams.Count < 2)
                 return false;
 
-            // VITURE固有: 全ストリームにIMU有効化コマンドを送信
-            await SendImuEnableCommandToAllStreamsAsync(enable: true, cancellationToken);
+            // VITURE固有：IMU/MCUを判別
+            await IdentifyStreamsAsync(allStreams, cancellationToken);
+
+            if (_imuStream == null || _mcuStream == null)
+                return false;
+
+            // コマンド送信でデバイス初期化
+            await SendImuEnableCommandAsync(enable: true, cancellationToken);
 
             _isConnected = true;
             return true;
@@ -91,28 +104,55 @@ internal sealed class VitureLumaDevice : IImuDevice
     }
 
     /// <summary>
-    /// VITURE固有: 全ストリームにIMUコマンドを送信
+    /// VITURE固有：ストリームからIMU/MCUを判別
+    /// 送信可否でテスト
+    /// ドキュメント参照：「IMU側はコマンドを拒否する場合がある」
     /// </summary>
-    private async Task SendImuEnableCommandToAllStreamsAsync(bool enable, CancellationToken cancellationToken)
+    private async Task IdentifyStreamsAsync(IReadOnlyList<IHidStream> streams, CancellationToken cancellationToken)
     {
-        var cmdPacket = VitureLumaPacket.BuildImuEnableCommand(enable, _messageCounter++);
-
-        // Report ID付きで送信（VITURE仕様）
-        var writeBuffer = new byte[cmdPacket.Length + 1];
-        writeBuffer[0] = 0x00; // Report ID
-        Array.Copy(cmdPacket, 0, writeBuffer, 1, cmdPacket.Length);
-
-        foreach (var stream in _streams)
+        foreach (var stream in streams)
         {
             try
             {
-                await stream.WriteAsync(writeBuffer, cancellationToken);
-                await Task.Delay(100, cancellationToken);
+                // MCUはコマンド受け取り可能、IMUは受け取り不可の可能性
+                // ハンドシェイク用のテストパケットを送信
+                var testCmd = new byte[65];  // Report ID + 64 bytes
+                testCmd[0] = 0x00;  // Report ID
+
+                await stream.WriteAsync(testCmd, cancellationToken);
+
+                // 応答待機（短時間）
+                var ackBuffer = new byte[ReadBufferSize];
+                var readTask = stream.ReadAsync(ackBuffer, 0, ackBuffer.Length, cancellationToken);
+                var completed = await Task.WhenAny(readTask, Task.Delay(100, cancellationToken));
+
+                if (completed == readTask)
+                {
+                    int bytesRead = await readTask;
+
+                    // MCU ACKが返ってきた？
+                    if (bytesRead >= 2 && ackBuffer[0] == 0xFF && ackBuffer[1] == 0xFD)
+                    {
+                        _mcuStream = stream;
+                    }
+                    else if (bytesRead >= 2 && ackBuffer[0] == 0xFF && ackBuffer[1] == 0xFC)
+                    {
+                        // IMUデータが返ってきた
+                        _imuStream = stream;
+                    }
+                }
+                else
+                {
+                    // タイムアウト → 無反応 = IMUの可能性
+                    if (_imuStream == null)
+                        _imuStream = stream;
+                }
             }
-            catch (Exception ex)
+            catch
             {
-                System.Diagnostics.Debug.WriteLine(
-                    $"Failed to send IMU command: {ex.Message}");
+                // コマンド送信失敗 → IMUの可能性
+                if (_imuStream == null)
+                    _imuStream = stream;
             }
         }
     }
@@ -122,37 +162,22 @@ internal sealed class VitureLumaDevice : IImuDevice
     /// </summary>
     public async IAsyncEnumerable<ImuData> GetImuDataStreamAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        if (!IsConnected)
+        if (!IsConnected || _imuStream == null)
             throw new InvalidOperationException("Device is not connected");
 
         var buffer = new byte[ReadBufferSize];
 
         while (!cancellationToken.IsCancellationRequested && IsConnected)
         {
-            bool dataReceived = false;
+            var imuData = await TryReadImuDataAsync(_imuStream, buffer, cancellationToken);
 
-            // 全デバイスから読み込み（複数パスの想定）
-            foreach (var stream in _streams)
+            if (imuData != null)
             {
-                var imuData = await TryReadImuDataAsync(stream, buffer, cancellationToken);
-                if (imuData != null)
-                {
-                    dataReceived = true;
-                    yield return imuData;
-                }
+                yield return imuData;
             }
-
-            // データがない場合は少し待機
-            if (!dataReceived)
+            else
             {
-                try
-                {
-                    await Task.Delay(1, cancellationToken);
-                }
-                catch (OperationCanceledException)
-                {
-                    break;
-                }
+                await Task.Delay(1, cancellationToken);
             }
         }
     }
@@ -182,29 +207,38 @@ internal sealed class VitureLumaDevice : IImuDevice
     }
 
     /// <summary>
-    /// IMU無効化コマンドを送信
+    /// IMU有効化/無効化コマンドを送信
     /// </summary>
-    private async Task SendImuDisableCommandAsync(CancellationToken cancellationToken = default)
+    private async Task SendImuEnableCommandAsync(bool enable, CancellationToken cancellationToken = default)
     {
-        var cmdPacket = VitureLumaPacket.BuildImuEnableCommand(enable: false, _messageCounter++);
+        if (_mcuStream == null)
+            return;
 
-        // Report ID付きで送信（VITURE仕様）
+        var cmdPacket = VitureLumaPacket.BuildImuEnableCommand(enable, _messageCounter++);
+
         var writeBuffer = new byte[cmdPacket.Length + 1];
         writeBuffer[0] = 0x00; // Report ID
         Array.Copy(cmdPacket, 0, writeBuffer, 1, cmdPacket.Length);
 
-        foreach (var stream in _streams)
+        try
         {
-            try
+            // MCUストリーム「のみ」に送信
+            await _mcuStream.WriteAsync(writeBuffer, cancellationToken);
+
+            // ACK受信待機
+            var ackBuffer = new byte[ReadBufferSize];
+            int bytesRead = await _mcuStream.ReadAsync(ackBuffer, 0, ackBuffer.Length, cancellationToken);
+
+            if (bytesRead >= 2 && ackBuffer[0] == 0xFF && ackBuffer[1] == 0xFD)
             {
-                await stream.WriteAsync(writeBuffer, cancellationToken);
-                await Task.Delay(100, cancellationToken);
+                System.Diagnostics.Debug.WriteLine("Received MCU ACK");
             }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    $"Failed to send IMU disable command: {ex.Message}");
-            }
+
+            await Task.Delay(100, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Failed to send IMU command: {ex.Message}");
         }
     }
 
@@ -213,12 +247,12 @@ internal sealed class VitureLumaDevice : IImuDevice
         if (_disposed)
             return;
 
-        if (_isConnected)
+        if (_isConnected && _mcuStream != null)
         {
             try
             {
                 // IMU無効化コマンドを送信
-                await SendImuDisableCommandAsync();
+                await SendImuEnableCommandAsync(enable: false);
             }
             catch
             {
@@ -237,4 +271,5 @@ internal sealed class VitureLumaDevice : IImuDevice
         DisposeAsync().GetAwaiter().GetResult();
     }
 }
+
 
