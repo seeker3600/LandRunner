@@ -15,4 +15,6 @@
     - Overview and instructions for the GlassBridge project.
   - README.md
     - General project information and guidelines.
-
+- プロジェクト単位の重要事項はREADME.mdに記載すること。
+- ソリューション全体に関わる重要事項はソリューションフォルダ直下のREADME.mdに記載すること。
+- 他のドキュメントは、基本的にソリューションフォルダのdocsサブフォルダ内に作成すること。サブフォルダは任意に作成してよい。
