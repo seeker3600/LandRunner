@@ -35,6 +35,13 @@ internal sealed class MockHidStream : IHidStream
                 return 0;
         }
 
+        // 現在のデータがない場合は次のデータを取得
+        if (_currentData == null)
+        {
+            if (!await FetchNextDataAsync())
+                return 0; // データストリームが終了
+        }
+
         // 現在のデータをシリアライズしてバッファに詰める
         if (_currentData != null)
         {
@@ -48,8 +55,7 @@ internal sealed class MockHidStream : IHidStream
             if (_readOffset >= packet.Length)
             {
                 _readOffset = 0;
-                if (!await FetchNextDataAsync())
-                    return bytesToCopy;
+                _currentData = null; // 次の ReadAsync で次データを取得
             }
 
             return bytesToCopy;

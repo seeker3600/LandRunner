@@ -5,5 +5,8 @@
     <File Path="README.md" />
   </Folder>
   <Project Path="GlassBridge/GlassBridge.csproj" />
+  <Project Path="GlassBridgeTest/GlassBridgeTest.csproj" Id="66072987-92e2-458a-81da-3a1c89e48168">
+    <BuildDependency Project="GlassBridge/GlassBridge.csproj" />
+  </Project>
   <Project Path="LandRunner/LandRunner.csproj" />
 </Solution>
