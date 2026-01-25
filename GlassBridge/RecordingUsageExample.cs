@@ -5,22 +5,19 @@ using GlassBridge.Internal.HID;
 using GlassBridge.Internal.Recording;
 
 /// <summary>
-/// IMU データの記録・再生機能を使用する例
+/// IMU データの記録・再生機能の使用例
 /// </summary>
 public class RecordingUsageExample
 {
     /// <summary>
-    /// デバイスから IMU データを記録する例
+    /// デバイスから IMU データを記録する
     /// </summary>
     public static async Task RecordFromDeviceAsync(string outputDirectory)
     {
         // HIDストリームプロバイダーを作成
-        var baseProvider = new HidStreamProvider(
-            vendorId: 0x35CA,
-            0x1131  // VITURE Luma
-        );
+        var baseProvider = new HidStreamProvider();
 
-        // 記録機能をラップ
+        // 記録機能でラップ
         var recordingProvider = new RecordingHidStreamProvider(baseProvider, outputDirectory);
 
         // デバイスに接続
@@ -53,7 +50,7 @@ public class RecordingUsageExample
     }
 
     /// <summary>
-    /// 記録されたデータから Mock デバイスを再生する例
+    /// 記録されたデータから Mock デバイスを再生する
     /// </summary>
     public static async Task ReplayFromRecordingAsync(string recordingDirectory)
     {
@@ -84,43 +81,6 @@ public class RecordingUsageExample
         {
             await device.DisposeAsync();
             await replayProvider.DisposeAsync();
-        }
-    }
-
-    /// <summary>
-    /// 記録ファイルの内容を確認する例
-    /// </summary>
-    public static void InspectRecordingFiles(string recordingDirectory)
-    {
-        // メタデータを読み込む
-        var metadataFiles = Directory.GetFiles(recordingDirectory, "metadata_*.json");
-        foreach (var metadataFile in metadataFiles)
-        {
-            var json = File.ReadAllText(metadataFile);
-            var metadata = ImuRecordingSession.FromJson(json);
-            
-            Console.WriteLine($"Recording: {metadataFile}");
-            Console.WriteLine($"  Recorded At: {metadata.RecordedAt}");
-            Console.WriteLine($"  Frame Count: {metadata.FrameCount}");
-            Console.WriteLine($"  Sample Rate: {metadata.SampleRate}");
-        }
-
-        // フレームデータの最初の数行を表示
-        var framesFiles = Directory.GetFiles(recordingDirectory, "frames_*.jsonl");
-        foreach (var framesFile in framesFiles)
-        {
-            Console.WriteLine($"\nFirst 5 frames from {Path.GetFileName(framesFile)}:");
-            
-            var lines = File.ReadLines(framesFile).Take(5);
-            int lineNum = 1;
-            foreach (var line in lines)
-            {
-                var record = ImuFrameRecord.FromJsonLine(line);
-                Console.WriteLine($"  Frame {lineNum}: Timestamp={record.Timestamp}, " +
-                    $"Quat=({record.Quaternion.W:F2},{record.Quaternion.X:F2}), " +
-                    $"Euler=({record.EulerAngles.Roll:F2},{record.EulerAngles.Pitch:F2},{record.EulerAngles.Yaw:F2})");
-                lineNum++;
-            }
         }
     }
 }

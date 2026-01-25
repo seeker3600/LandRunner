@@ -8,5 +8,8 @@ internal interface IHidStreamProvider : IAsyncDisposable
     /// <summary>
     /// 指定VID/PIDのデバイスストリームを取得
     /// </summary>
-    Task<IReadOnlyList<IHidStream>> GetStreamsAsync(CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<IHidStream>> GetStreamsAsync(
+        int vendorId,
+        int[] productIds,
+        CancellationToken cancellationToken = default);
 }

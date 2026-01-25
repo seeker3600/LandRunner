@@ -23,12 +23,15 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
         Directory.CreateDirectory(_outputDirectory);
     }
 
-    public async Task<IReadOnlyList<IHidStream>> GetStreamsAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<IHidStream>> GetStreamsAsync(
+        int vendorId,
+        int[] productIds,
+        CancellationToken cancellationToken = default)
     {
         if (_disposed)
             throw new ObjectDisposedException(nameof(RecordingHidStreamProvider));
 
-        var baseStreams = await _baseProvider.GetStreamsAsync(cancellationToken);
+        var baseStreams = await _baseProvider.GetStreamsAsync(vendorId, productIds, cancellationToken);
 
         // 各ストリームをRecordingHidStreamでラップ
         var recordingStreams = new List<IHidStream>();

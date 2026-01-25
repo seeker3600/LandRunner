@@ -184,7 +184,10 @@ public class IntegrationTests
         var provider = new MockHidStreamProvider(GenerateTestImuData);
 
         // Act
-        var streams = await provider.GetStreamsAsync(CancellationToken.None);
+        var streams = await provider.GetStreamsAsync(
+            VitureLumaDevice.VendorId,
+            VitureLumaDevice.SupportedProductIds,
+            CancellationToken.None);
 
         // Assert
         Assert.Equal(2, streams.Count);

@@ -1,9 +1,9 @@
 namespace GlassBridge.Internal.HID;
 
 /// <summary>
-/// テスト用のモックHIDストリームプロバイダ
-/// IHidStreamProviderの汎用インターフェースに準拠
-/// IMU/MCUの2つのストリームを返す
+/// テスト用のモック HID ストリームプロバイダー
+/// IHidStreamProvider の実装インターフェースに合わせる
+/// IMU/MCU の2つのストリームを返す
 /// </summary>
 internal sealed class MockHidStreamProvider : IHidStreamProvider
 {
@@ -15,18 +15,21 @@ internal sealed class MockHidStreamProvider : IHidStreamProvider
         _imuDataStreamFactory = imuDataStreamFactory ?? throw new ArgumentNullException(nameof(imuDataStreamFactory));
     }
 
-    public async Task<IReadOnlyList<IHidStream>> GetStreamsAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<IHidStream>> GetStreamsAsync(
+        int vendorId,
+        int[] productIds,
+        CancellationToken cancellationToken = default)
     {
         if (_disposed)
             throw new ObjectDisposedException(nameof(MockHidStreamProvider));
 
         var imuDataStream = _imuDataStreamFactory(cancellationToken);
         
-        // テスト用：MCU/IMUの順序で返す（MCUが最初）
-        // MCUストリーム：コマンドに応答するACKパケットを返す
+        // テスト用: MCU/IMU の順序で返す (MCU が最初)
+        // MCU ストリーム: コマンドに応答し ACK パケットを返す
         IHidStream mcuStream = new MockMcuStream();
         
-        // IMUストリーム：テストデータを返す
+        // IMU ストリーム: テストデータを返す
         IHidStream imuStream = new MockHidStream(imuDataStream, cancellationToken);
         
         return new[] { mcuStream, imuStream };
@@ -44,7 +47,7 @@ internal sealed class MockHidStreamProvider : IHidStreamProvider
 
 /// <summary>
 /// MCU ストリーム用のモック実装
-/// コマンドに応答する ACK パケットを返す
+/// コマンドに応答し ACK パケットを返す
 /// </summary>
 internal sealed class MockMcuStream : IHidStream
 {
@@ -64,7 +67,7 @@ internal sealed class MockMcuStream : IHidStream
             return 0;
         }
 
-        // ACK パケットを生成（ヘッダ: 0xFF 0xFD）
+        // ACK パケットを生成 (ヘッダ: 0xFF 0xFD)
         var ackPacket = new byte[64];
         ackPacket[0] = 0xFF;  // Header byte 0
         ackPacket[1] = 0xFD;  // Header byte 1 (MCU ACK)
@@ -83,24 +86,22 @@ internal sealed class MockMcuStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(MockMcuStream));
 
-        // コマンド受け取り
-        await Task.Delay(1, cancellationToken);
+        // モック: 書き込みは何もしない
+        await Task.CompletedTask;
     }
 
     public async ValueTask DisposeAsync()
     {
-        Dispose();
-        await ValueTask.CompletedTask;
+        if (_disposed)
+            return;
+
+        _disposed = true;
+        await Task.CompletedTask;
     }
 
     public void Dispose()
     {
-        _disposed = true;
+        DisposeAsync().GetAwaiter().GetResult();
     }
 }
-
-
-
-
-
 

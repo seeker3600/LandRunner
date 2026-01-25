@@ -46,14 +46,7 @@ public sealed class ImuDeviceManager : IImuDeviceManager
         }
 
         // 基本的なHIDストリームプロバイダーを作成
-        var baseProvider = new HidStreamProvider(
-            vendorId: 0x35CA,
-            0x1011, 0x1013, 0x1017,  // VITURE One
-            0x1015, 0x101b,           // VITURE One Lite
-            0x1019, 0x101d,           // VITURE Pro
-            0x1121, 0x1141,           // VITURE Luma Pro
-            0x1131                    // VITURE Luma
-        );
+        var baseProvider = new HidStreamProvider();
 
         // 記録機能でラップ
         _recordingProvider = new RecordingHidStreamProvider(baseProvider, outputDirectory);

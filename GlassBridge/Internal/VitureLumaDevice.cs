@@ -9,22 +9,16 @@ using System.Runtime.CompilerServices;
 /// </summary>
 internal sealed class VitureLumaDevice : IImuDevice
 {
-    private const int VendorId = 0x35CA;
+    internal const int VendorId = 0x35CA;
 
-    // サポート対象の Product IDs
-    // - VITURE One: 0x1011, 0x1013, 0x1017
-    // - VITURE One Lite: 0x1015, 0x101b
-    // - VITURE Pro: 0x1019, 0x101d
-    // - VITURE Luma Pro: 0x1121, 0x1141
-    // - VITURE Luma: 0x1131
-    private static readonly int[] SupportedProductIds = new[]
-    {
+    internal static readonly int[] SupportedProductIds =
+    [
         0x1011, 0x1013, 0x1017,  // VITURE One
         0x1015, 0x101b,           // VITURE One Lite
         0x1019, 0x101d,           // VITURE Pro
         0x1121, 0x1141,           // VITURE Luma Pro
         0x1131                    // VITURE Luma
-    };
+    ];
 
     private const int ReadBufferSize = 64;
 
@@ -52,7 +46,7 @@ internal sealed class VitureLumaDevice : IImuDevice
     public static async Task<VitureLumaDevice?> ConnectAsync(CancellationToken cancellationToken = default)
     {
         // HidSharpの汎用ラッパーを使用
-        var provider = new HidStreamProvider(VendorId, SupportedProductIds);
+        var provider = new HidStreamProvider();
         return await ConnectWithProviderAsync(provider, cancellationToken);
     }
 
@@ -81,7 +75,10 @@ internal sealed class VitureLumaDevice : IImuDevice
         try
         {
             // HidStreamProviderから全ストリームを取得
-            var allStreams = await _hidProvider.GetStreamsAsync(cancellationToken);
+            var allStreams = await _hidProvider.GetStreamsAsync(
+                VendorId,
+                SupportedProductIds,
+                cancellationToken);
             if (allStreams.Count < 2)
                 return false;
 

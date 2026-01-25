@@ -87,13 +87,16 @@ public class MockStreamTests
     /// テスト3: MockHidStreamProvider が 2 つのストリームを返す
     /// </summary>
     [Fact]
-    public async Task MockHidStreamProvider_ShouldReturnTwoStreams()
+     public async Task MockHidStreamProvider_ShouldReturnTwoStreams()
     {
         // Arrange
         var provider = new MockHidStreamProvider(ct => GenerateTestImuData(1, ct));
 
         // Act
-        var streams = await provider.GetStreamsAsync(CancellationToken.None);
+        var streams = await provider.GetStreamsAsync(
+            VitureLumaDevice.VendorId,
+            VitureLumaDevice.SupportedProductIds,
+            CancellationToken.None);
 
         // Assert
         Assert.Equal(2, streams.Count);

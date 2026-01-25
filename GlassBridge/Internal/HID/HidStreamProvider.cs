@@ -3,34 +3,33 @@ namespace GlassBridge.Internal.HID;
 using HidSharp;
 
 /// <summary>
-/// HidSharpの薄いラッパー（デバイス非依存、VID/PIDで指定可能）
+/// HidSharpの薄いラッパー（デバイス非依存、VID/PIDは呼び出し時に指定）
 /// </summary>
 internal sealed class HidStreamProvider : IHidStreamProvider
 {
-    private readonly int _vendorId;
-    private readonly int[] _productIds;
     private readonly List<IHidStream> _streams = [];
     private bool _disposed;
 
-    public HidStreamProvider(int vendorId, params int[] productIds)
+    public HidStreamProvider()
     {
-        if (productIds.Length == 0)
-            throw new ArgumentException("At least one product ID must be specified.", nameof(productIds));
-
-        _vendorId = vendorId;
-        _productIds = productIds;
     }
 
-    public async Task<IReadOnlyList<IHidStream>> GetStreamsAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<IHidStream>> GetStreamsAsync(
+        int vendorId,
+        int[] productIds,
+        CancellationToken cancellationToken = default)
     {
         if (_disposed)
             throw new ObjectDisposedException(nameof(HidStreamProvider));
 
+        if (productIds.Length == 0)
+            throw new ArgumentException("At least one product ID must be specified.", nameof(productIds));
+
         var result = new List<IHidStream>();
 
-        foreach (var productId in _productIds)
+        foreach (var productId in productIds)
         {
-            foreach (var device in DeviceList.Local.GetHidDevices(_vendorId, productId))
+            foreach (var device in DeviceList.Local.GetHidDevices(vendorId, productId))
             {
                 try
                 {
@@ -45,7 +44,7 @@ internal sealed class HidStreamProvider : IHidStreamProvider
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine(
-                        $"Failed to open HID device (VID: {_vendorId:X4}, PID: {productId:X4}): {ex.Message}");
+                        $"Failed to open HID device (VID: {vendorId:X4}, PID: {productId:X4}): {ex.Message}");
                 }
             }
         }

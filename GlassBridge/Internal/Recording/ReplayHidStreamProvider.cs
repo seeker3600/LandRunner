@@ -19,14 +19,17 @@ internal sealed class ReplayHidStreamProvider : IHidStreamProvider
             throw new DirectoryNotFoundException($"Recording directory not found: {_recordingDirectory}");
     }
 
-    public async Task<IReadOnlyList<IHidStream>> GetStreamsAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<IHidStream>> GetStreamsAsync(
+        int vendorId,
+        int[] productIds,
+        CancellationToken cancellationToken = default)
     {
         if (_disposed)
             throw new ObjectDisposedException(nameof(ReplayHidStreamProvider));
 
         var replayStreams = new List<IHidStream>();
 
-        // ディレクトリ内の全frames_*.jsonlファイルを探して再生ストリームを作成
+        // ディレクトリの全frames_*.jsonlファイルを探して再生ストリームを作成
         var framesFiles = Directory.GetFiles(_recordingDirectory, "frames_*.jsonl")
             .OrderBy(f => ExtractIndex(f))
             .ToList();
