@@ -111,33 +111,78 @@ internal sealed class MockHidStream : IHidStream
     }
 
     /// <summary>
-    /// ImuDataをバイト配列にシリアライズ（簡易的な実装）
-    /// 実際にはVitureLumaPacket.TryParseImuPacketと対応する形式が必要
+    /// ImuDataをバイト配列にシリアライズ（VITURE パケット形式）
+    /// VitureLumaPacket.TryParseImuPacket と互換性のある形式
     /// </summary>
     private static byte[] SerializeImuData(ImuData data)
     {
-        // 簡易的なシリアライズ実装
-        // 実際の形式はVitureLumaPacketのパースロジックに合わせる必要があります
         var buffer = new byte[64];
 
-        // Quaternion (4 floats = 16 bytes)
-        BitConverter.GetBytes(data.Quaternion.W).CopyTo(buffer, 0);
-        BitConverter.GetBytes(data.Quaternion.X).CopyTo(buffer, 4);
-        BitConverter.GetBytes(data.Quaternion.Y).CopyTo(buffer, 8);
-        BitConverter.GetBytes(data.Quaternion.Z).CopyTo(buffer, 12);
+        // ヘッダ（VITURE IMU データパケット）
+        buffer[0] = 0xFF;
+        buffer[1] = 0xFC;  // IMU Data
 
-        // EulerAngles (3 floats = 12 bytes)
-        BitConverter.GetBytes(data.EulerAngles.Roll).CopyTo(buffer, 16);
-        BitConverter.GetBytes(data.EulerAngles.Pitch).CopyTo(buffer, 20);
-        BitConverter.GetBytes(data.EulerAngles.Yaw).CopyTo(buffer, 24);
+        // CRC は簡略化（0でも可）
+        buffer[2] = 0x00;
+        buffer[3] = 0x00;
 
-        // Timestamp (4 bytes)
-        BitConverter.GetBytes(data.Timestamp).CopyTo(buffer, 28);
+        // Payload length（offset 4-5、リトルエンディアン）
+        ushort payloadLen = 30; // 簡略化
+        buffer[4] = (byte)(payloadLen & 0xFF);
+        buffer[5] = (byte)((payloadLen >> 8) & 0xFF);
 
-        // MessageCounter (2 bytes)
-        BitConverter.GetBytes(data.MessageCounter).CopyTo(buffer, 32);
+        // Timestamp（offset 6-9、リトルエンディアン）
+        buffer[6] = (byte)(data.Timestamp & 0xFF);
+        buffer[7] = (byte)((data.Timestamp >> 8) & 0xFF);
+        buffer[8] = (byte)((data.Timestamp >> 16) & 0xFF);
+        buffer[9] = (byte)((data.Timestamp >> 24) & 0xFF);
+
+        // Reserved（offset 10-13）
+        buffer[10] = 0x00;
+        buffer[11] = 0x00;
+        buffer[12] = 0x00;
+        buffer[13] = 0x00;
+
+        // Command ID（offset 14-15）
+        buffer[14] = 0x00;
+        buffer[15] = 0x00;
+
+        // Message counter（offset 16-17、リトルエンディアン）
+        buffer[16] = (byte)(data.MessageCounter & 0xFF);
+        buffer[17] = (byte)((data.MessageCounter >> 8) & 0xFF);
+
+        // IMU データ（offset 18-29）
+        // raw0, raw1, raw2 (3 x float32 = 12 bytes、ビッグエンディアン)
+        var euler = data.EulerAngles;
+        
+        // yaw = -raw0
+        float raw0 = -euler.Yaw;
+        // roll = -raw1
+        float raw1 = -euler.Roll;
+        // pitch = raw2
+        float raw2 = euler.Pitch;
+
+        // ビッグエンディアン float32
+        var bytes0 = BitConverter.GetBytes(raw0);
+        if (BitConverter.IsLittleEndian)
+            System.Array.Reverse(bytes0);
+        bytes0.CopyTo(buffer, 18);
+
+        var bytes1 = BitConverter.GetBytes(raw1);
+        if (BitConverter.IsLittleEndian)
+            System.Array.Reverse(bytes1);
+        bytes1.CopyTo(buffer, 22);
+
+        var bytes2 = BitConverter.GetBytes(raw2);
+        if (BitConverter.IsLittleEndian)
+            System.Array.Reverse(bytes2);
+        bytes2.CopyTo(buffer, 26);
+
+        // End marker
+        buffer[30] = 0x03;
 
         return buffer;
     }
 }
+
 
