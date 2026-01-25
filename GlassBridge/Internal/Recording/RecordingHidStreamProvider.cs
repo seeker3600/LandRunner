@@ -62,6 +62,9 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
         if (_disposed)
             return;
 
+        // 自動的にメタデータを保存
+        await FinalizeRecordingAsync();
+
         foreach (var recordingStream in _recordingStreams.Values)
         {
             await recordingStream.DisposeAsync();
