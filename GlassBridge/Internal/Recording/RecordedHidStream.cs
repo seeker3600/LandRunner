@@ -1,0 +1,139 @@
+namespace GlassBridge.Internal.Recording;
+
+using GlassBridge.Internal.HID;
+
+/// <summary>
+/// 記録されたJSONファイルから生データを再生するHIDストリーム
+/// 使用例: var replayStream = new RecordedHidStream(framesJsonPath, metadataJsonPath)
+/// </summary>
+internal sealed class RecordedHidStream : IHidStream
+{
+    private readonly Queue<(long delayMs, byte[] data)> _frameQueue;
+    private readonly DateTime _sessionStartTime;
+    private DateTime _playbackStartTime;
+    private bool _disposed;
+    private IEnumerator<(long, byte[])>? _frameEnumerator;
+
+    public bool IsOpen => !_disposed;
+
+    /// <summary>
+    /// 記録ファイルから再生ストリームを作成
+    /// </summary>
+    /// <param name="framesJsonLinesPath">frames.jsonlファイルのパス</param>
+    /// <param name="metadataJsonPath">metadata.jsonファイルのパス（オプション）</param>
+    public RecordedHidStream(string framesJsonLinesPath, string? metadataJsonPath = null)
+    {
+        if (!File.Exists(framesJsonLinesPath))
+            throw new FileNotFoundException($"Frames file not found: {framesJsonLinesPath}");
+
+        _frameQueue = new Queue<(long, byte[])>();
+        _sessionStartTime = DateTime.UtcNow;
+
+        // メタデータを読み込む
+        ImuRecordingSession? metadata = null;
+        if (!string.IsNullOrEmpty(metadataJsonPath) && File.Exists(metadataJsonPath))
+        {
+            try
+            {
+                var json = File.ReadAllText(metadataJsonPath);
+                metadata = ImuRecordingSession.FromJson(json);
+            }
+            catch
+            {
+                // メタデータ読み込み失敗は無視
+            }
+        }
+
+        // フレームを読み込んでキューに積む
+        LoadFramesFromJsonLines(framesJsonLinesPath);
+    }
+
+    private void LoadFramesFromJsonLines(string framesJsonLinesPath)
+    {
+        long previousTimestamp = 0;
+        
+        using var reader = new StreamReader(framesJsonLinesPath);
+        string? line;
+        
+        while ((line = reader.ReadLine()) != null)
+        {
+            if (string.IsNullOrWhiteSpace(line))
+                continue;
+
+            try
+            {
+                var frameRecord = ImuFrameRecord.FromJsonLine(line);
+                var rawBytes = Convert.FromBase64String(frameRecord.RawBytes);
+                
+                // タイムスタンプの差分を計算してディレイを設定
+                long delayMs = 0;
+                if (previousTimestamp != 0)
+                {
+                    delayMs = (long)(frameRecord.Timestamp - previousTimestamp);
+                }
+                previousTimestamp = frameRecord.Timestamp;
+                
+                _frameQueue.Enqueue((delayMs, rawBytes));
+            }
+            catch
+            {
+                // 不正なフレームは無視
+            }
+        }
+
+        _frameEnumerator = _frameQueue.GetEnumerator();
+    }
+
+    public async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken = default)
+    {
+        if (_disposed)
+            throw new ObjectDisposedException(nameof(RecordedHidStream));
+
+        // 初回呼び出し時に再生開始時刻を記録
+        if (_playbackStartTime == default)
+        {
+            _playbackStartTime = DateTime.UtcNow;
+        }
+
+        if (_frameEnumerator == null || !_frameEnumerator.MoveNext())
+            return 0; // ストリーム終了
+
+        var (delayMs, frameData) = _frameEnumerator.Current;
+
+        // タイミング制御：フレーム間のディレイを待機
+        if (delayMs > 0)
+        {
+            await Task.Delay((int)delayMs, cancellationToken);
+        }
+
+        // バッファにコピー
+        int bytesToCopy = Math.Min(frameData.Length, count);
+        Array.Copy(frameData, 0, buffer, offset, bytesToCopy);
+
+        return bytesToCopy;
+    }
+
+    public async Task WriteAsync(byte[] buffer, CancellationToken cancellationToken = default)
+    {
+        if (_disposed)
+            throw new ObjectDisposedException(nameof(RecordedHidStream));
+
+        // 再生ストリームでは書き込みは何もしない
+        await Task.CompletedTask;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_disposed)
+            return;
+
+        _frameEnumerator?.Dispose();
+        _disposed = true;
+        await ValueTask.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        DisposeAsync().GetAwaiter().GetResult();
+    }
+}
