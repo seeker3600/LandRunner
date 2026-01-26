@@ -50,11 +50,6 @@ LandRunner プロジェクトの開発ガイドラインです。
 - **docs/recording/API_GUIDE.md** - IMU データ記録・再生機能の使用ガイド
 - **docs/recording/IMPLEMENTATION.md** - 記録機能の内部実装説明
 
-#### その他（参考資料・アーカイブ）
-- **docs/archive/** - 過去の実装報告書・作業ログ（参考用）
-  - IMPLEMENTATION_REPORT.md - 初期実装報告書
-  - IMPLEMENTATION_REPORT_CLIENT_API_FINAL.md - 最終報告書
-
 ---
 
 ## 3. 参照すべきドキュメント
