@@ -35,22 +35,6 @@ LandRunner プロジェクトの開発ガイドラインです。
 | **ARCHITECTURE.md** | プロジェクトフォルダ（オプション） | アーキテクチャ設計・モジュール責務 |
 | **その他ドキュメント** | `docs/` サブフォルダ | ドメイン知識・プロトコル仕様・ガイド |
 
-**ドキュメント作成時のルール**:
-```
-LandRunner/
-├── README.md                          ← ソリューション全体の概要
-├── docs/                              ← 詳細ドキュメント
-│   ├── hid/VITURE_Luma.md            ← HID プロトコル仕様
-│   ├── architecture/                  ← アーキテクチャ設計ドキュメント
-│   └── guides/                        ← 使用ガイド・チュートリアル
-│
-├── GlassBridge/
-│   ├── README.md                      ← プロジェクト概要・API 説明
-│   ├── ARCHITECTURE.md                ← 設計・責務分離（オプション）
-│   └── Internal/
-│       └── Recording/README.md        ← 記録機能の詳細（オプション）
-```
-
 ### 2.2 既存ドキュメント一覧
 
 #### ソリューション直下
@@ -60,8 +44,11 @@ LandRunner/
 
 #### プロジェクトレベル（GlassBridge）
 - **GlassBridge/README.md** - GlassBridge 公開API の説明
-- **GlassBridge/RECORDING_API_GUIDE.md** - IMUデータ記録・再生機能の使用ガイド
-- **GlassBridge/Internal/Recording/README.md** - 記録機能の内部実装説明
+
+#### ドメイン知識・実装ガイド（docs/）
+- **docs/hid/VITURE_Luma.md** - VITURE HID プロトコル仕様
+- **docs/recording/API_GUIDE.md** - IMU データ記録・再生機能の使用ガイド
+- **docs/recording/IMPLEMENTATION.md** - 記録機能の内部実装説明
 
 #### その他（参考資料・アーカイブ）
 - **docs/archive/** - 過去の実装報告書・作業ログ（参考用）
@@ -85,7 +72,7 @@ LandRunner/
 - プロジェクト構成・依存関係
 
 ### IMU データ記録・再生機能に関わる場合
-?? **GlassBridge/RECORDING_API_GUIDE.md**
+?? **docs/recording/API_GUIDE.md**
 - `ImuDeviceManager.ConnectAndRecordAsync()` の使用方法
 - `ImuDeviceManager.ConnectFromRecordingAsync()` の使用方法
 - 記録ファイル形式（JSON Lines）
@@ -116,4 +103,3 @@ LandRunner/
 ### ドキュメント追加時
 1. 配置ルール（§2.1）に従い配置場所を決定
 2. 既存ドキュメント（§2.2）と重複がないか確認
-3. copilot-instructions.md この指示書を更新

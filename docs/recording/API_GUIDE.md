@@ -1,6 +1,6 @@
 # ImuDeviceManager の記録・再生機能 - 使用ガイド
 
-`ImuDeviceManager` に記録・再生機能が統合されました。クライアント側から簡単に利用できます。
+`ImuDeviceManager` に記録・再生機能が組み込まれています。クライアント開発者は簡単に利用できます。
 
 ## 基本的な使用方法
 
@@ -18,7 +18,7 @@ if (device == null)
 }
 
 // IMU データストリームを取得
-// 自動的に C:\IMU_Records に frames_0.jsonl, metadata_0.json として保存される
+// 終了時に C:\IMU_Records に frames_0.jsonl, metadata_0.json として保存される
 var count = 0;
 await foreach (var imuData in device.GetImuDataStreamAsync())
 {
@@ -30,10 +30,10 @@ await foreach (var imuData in device.GetImuDataStreamAsync())
 }
 
 Console.WriteLine($"Recorded {count} frames");
-// device.DisposeAsync() 時に自動的にメタデータが保存される
+// device.DisposeAsync() 時に最終的にメタデータが保存される
 ```
 
-### 2. 記録されたデータの再生（テスト・パフォーマンス計測）
+### 2. 記録されたデータの再生（テスト・パフォーマンス分析）
 
 ```csharp
 using var manager = new ImuDeviceManager();
@@ -46,12 +46,12 @@ if (replayDevice == null)
     return;
 }
 
-// 記録されたデータをストリーム配信
-// 実デバイスと同じインターフェイスで使用可能
+// 記録されたデータをストリームで送信
+// 実デバイスと同じインターフェースで利用可能
 var count = 0;
 await foreach (var imuData in replayDevice.GetImuDataStreamAsync())
 {
-    // テスト実行やパフォーマンス計測
+    // テストや性能分析用ロジック
     Console.WriteLine($"Replayed - Timestamp: {imuData.Timestamp}");
     
     count++;
@@ -62,7 +62,7 @@ await foreach (var imuData in replayDevice.GetImuDataStreamAsync())
 Console.WriteLine($"Replayed {count} frames");
 ```
 
-### 3. 標準的なデバイス接続（変更なし）
+### 3. 通常のデバイス接続（変更なし）
 
 ```csharp
 using var manager = new ImuDeviceManager();
@@ -104,7 +104,7 @@ Task<IImuDevice?> ConnectAsync(CancellationToken cancellationToken = default);
 ---
 
 #### ConnectAndRecordAsync()
-デバイスに接続し、取得したデータを自動的にファイルに記録します。
+デバイスに接続し、取得したデータをファイルに記録します。
 
 ```csharp
 Task<IImuDevice?> ConnectAndRecordAsync(
@@ -113,7 +113,7 @@ Task<IImuDevice?> ConnectAndRecordAsync(
 ```
 
 **パラメータ**:
-- `outputDirectory`: 記録ファイルの出力先ディレクトリ（自動作成）
+- `outputDirectory`: 記録ファイルの出力ディレクトリ（なければ作成）
 - `cancellationToken`: キャンセルトークン（オプション）
 
 **戻り値**: 記録機能付きのデバイス、接続失敗時は `null`
@@ -122,9 +122,9 @@ Task<IImuDevice?> ConnectAndRecordAsync(
 - `frames_0.jsonl`: IMU フレームデータ（JSON Lines形式）
 - `metadata_0.json`: 記録セッションのメタデータ
 
-**メタデータの自動保存**:
-- `device.DisposeAsync()` 時に自動的に `metadata_*.json` が保存されます
-- `await using` を使用して確実に廃棄されるようにしてください
+**メタデータの定期保存**:
+- `device.DisposeAsync()` 時に最終的に `metadata_*.json` が保存されます
+- `await using` を使用して確実にメモリを解放するようにしてください
 
 **例外**:
 - `ArgumentException`: `outputDirectory` が null または empty の場合
@@ -144,17 +144,17 @@ Task<IImuDevice?> ConnectFromRecordingAsync(
 - `recordingDirectory`: 記録ファイルが保存されているディレクトリ
 - `cancellationToken`: キャンセルトークン（オプション）
 
-**戻り値**: 再生用の Mock デバイス、ファイルなし時は `null`
+**戻り値**: 再生用の Mock デバイス、ファイルなければ `null`
 
 **例外**:
 - `ArgumentException`: `recordingDirectory` が null または empty の場合
-- `DirectoryNotFoundException`: ディレクトリが存在しない場合
+- `DirectoryNotFoundException`: ディレクトリが見つからない場合
 
 ---
 
 ## 実装例：テストシナリオ
 
-### テストの準備と実行
+### テストの流れと実行
 
 ```csharp
 public class ImuDataProcessingTests
@@ -171,7 +171,7 @@ public class ImuDataProcessingTests
 
         var processingResults = new List<ProcessingResult>();
         
-        // データを処理
+        // データ処理
         await foreach (var imuData in replayDevice.GetImuDataStreamAsync())
         {
             var result = ProcessImuData(imuData);
@@ -181,14 +181,14 @@ public class ImuDataProcessingTests
                 break;
         }
 
-        // 結果を検証
+        // 結果確認
         Assert.NotEmpty(processingResults);
         Assert.All(processingResults, r => Assert.True(r.IsValid));
     }
 
     private ProcessingResult ProcessImuData(ImuData data)
     {
-        // カスタム処理ロジック
+        // カスタムロジック
         return new ProcessingResult { IsValid = true };
     }
 }
@@ -209,7 +209,7 @@ var frameCount = 0;
 
 await foreach (var imuData in replayDevice.GetImuDataStreamAsync())
 {
-    // ベンチマーク対象の処理
+    // ベンチマーク対象のロジック
     var euler = imuData.EulerAngles;
     var quat = imuData.Quaternion;
     
@@ -240,7 +240,7 @@ JSON Lines 形式のフレームデータ。1行が1フレームです。
 - `rawBytes`: 生バイト列（Base64エンコード）
 
 ### metadata_*.json
-記録セッションのメタデータ。**device.DisposeAsync() 時に自動的に生成**されます。
+記録セッションのメタデータ。**device.DisposeAsync() 時に最終的に作成**されます。
 
 ```json
 {
@@ -252,10 +252,10 @@ JSON Lines 形式のフレームデータ。1行が1フレームです。
 ```
 
 **フィールド**:
-- `recordedAt`: 記録日時（ISO 8601形式）
+- `recordedAt`: 記録開始時刻（ISO 8601形式）
 - `frameCount`: フレーム数
 - `sampleRate`: サンプリングレート（Hz）
-- `format`: ファイル形式（常に "jsonl"）
+- `format`: ファイル形式（通常 "jsonl"）
 
 ## エラーハンドリング
 
@@ -273,7 +273,7 @@ try
     }
 
     // データ取得
-    // device.DisposeAsync() 時に自動的にメタデータが保存される
+    // device.DisposeAsync() 時に最終的にメタデータが保存される
 }
 catch (ArgumentException ex)
 {
@@ -293,21 +293,21 @@ finally
 }
 ```
 
-## 制限事項と注意点
+## 注意事項・ベストプラクティス
 
-1. **ファイルシステムI/O**: 記録時はファイルシステムへの書き込みが発生するため、ディスク速度に依存します
-2. **メモリ**: 再生時は フレームを1行ずつ読み込むため、メモリ効率的です
-3. **複数セッション**: 同じマネージャーで複数の記録セッションを使用する場合、前のセッションの device は廃棄する必要があります
-4. **リアルタイム性**: 再生時は記録時のタイムスタンプを使用してディレイを計算しますが、実行環境のパフォーマンスに依存します
-5. **自動メタデータ保存**: `device.DisposeAsync()` で自動的にメタデータが保存されるため、`await using` の使用を推奨します
+1. **ファイルシステム I/O**: 記録時はファイルシステムへの書き込みが発生するため、ディスク速度に左右されます
+2. **シーケンシャル**: 再生は1フレーム単位で1行読み込むため、ランダムアクセスできません
+3. **マルチセッション**: 複数マネージャーで同じディレクトリに記録する場合、異なるセッションごとに device は解放が必要です
+4. **リアルタイムディレイ**: 再生は記録時のタイムスタンプを使用しますが、実行速度のずれに左右されます
+5. **メタデータ保存**: `device.DisposeAsync()` で最終的にメタデータが保存されるため、`await using` の使用を強制します
 
-## テスト済みシナリオ
+## テスト仕様一覧
 
-? デバイス接続時のデータ記録  
-? 記録ファイルからの再生  
-? device.DisposeAsync() 時の自動メタデータ保存  
-? 複数セッションの切り替え  
-? エラーハンドリング（無効な入力など）  
-? インターフェイス準拠確認  
+? デバイス接続時のデータ記録
+? 記録ファイルからの再生
+? device.DisposeAsync() 時のメタデータ保存
+? マルチセッション切り替え
+? エラーハンドリング（拡張仕様など）
+? インターフェース確認
 
-すべてのテストが成功しています。
+すべてのテストが実装されています。
