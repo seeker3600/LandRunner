@@ -91,8 +91,17 @@ internal sealed class VitureLumaDevice : IImuDevice
                 return false;
             }
 
-            // コマンド送信でデバイス初期化
-            await SendImuEnableCommandAsync(enable: true, cancellationToken);
+            // ストリーム判別後、IMUを無効化する
+            // GetImuDataStreamAsync 呼び出し時にだけ有効化することで、
+            // 古いデータがUSBバッファに蓄積されることを防ぐ
+            try
+            {
+                await SendImuEnableCommandAsync(enable: false, cancellationToken);
+            }
+            catch
+            {
+                // 初期化処理の一部なので、失敗してもシステムは動作継続
+            }
 
             _isConnected = true;
             return true;
@@ -195,25 +204,55 @@ internal sealed class VitureLumaDevice : IImuDevice
 
     /// <summary>
     /// IMUデータストリームを取得
+    /// このメソッド呼び出し時にIMUを有効化し、終了時に無効化する
+    /// これにより、古いデータがUSBバッファに蓄積されるのを防ぎ、
+    /// 呼び出し時点での最新データを取得できる
     /// </summary>
     public async IAsyncEnumerable<ImuData> GetImuDataStreamAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         if (!IsConnected || _imuStream == null)
             throw new InvalidOperationException("Device is not connected");
 
-        var buffer = new byte[ReadBufferSize];
-
-        while (!cancellationToken.IsCancellationRequested && IsConnected)
+        // IMU有効化（ストリーム開始時）
+        try
         {
-            var imuData = await TryReadImuDataAsync(_imuStream, buffer, cancellationToken);
+            await SendImuEnableCommandAsync(enable: true, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Failed to enable IMU: {ex.Message}");
+            throw;
+        }
 
-            if (imuData != null)
+        try
+        {
+            var buffer = new byte[ReadBufferSize];
+
+            while (!cancellationToken.IsCancellationRequested && IsConnected)
             {
-                yield return imuData;
+                var imuData = await TryReadImuDataAsync(_imuStream, buffer, cancellationToken);
+
+                if (imuData != null)
+                {
+                    yield return imuData;
+                }
+                else
+                {
+                    await Task.Delay(1, cancellationToken);
+                }
             }
-            else
+        }
+        finally
+        {
+            // IMU無効化（ストリーム終了時 - 例外時も必ず実行）
+            try
             {
-                await Task.Delay(1, cancellationToken);
+                await SendImuEnableCommandAsync(enable: false, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to disable IMU: {ex.Message}");
+                // 無効化失敗は致命的ではないため、例外を吐かない
             }
         }
     }

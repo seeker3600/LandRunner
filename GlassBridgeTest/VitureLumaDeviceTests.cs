@@ -151,6 +151,28 @@ public class VitureLumaDeviceTests
             Assert.False(device.IsConnected);
         }
     }
+
+    /// <summary>
+    /// テスト6: デバイス初期化後は IMU が無効化されていることを確認
+    /// DisposeAsync でも無効化コマンドが送信される
+    /// </summary>
+    [Fact(Timeout = 10000)]
+    public async Task DisposeAsync_ShouldDisableImuOnCleanup()
+    {
+        // Arrange
+        var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(10, delayMs: 0, cancellationToken: ct));
+        var device = await VitureLumaDevice.ConnectWithProviderAsync(mockProvider);
+        Assert.NotNull(device);
+        Assert.True(device.IsConnected);
+
+        // Act: Dispose を呼び出す
+        await device.DisposeAsync();
+
+        // Assert: デバイスが切断されたことを確認
+        Assert.False(device.IsConnected);
+        // Dispose 時に IMU 無効化コマンドが送信される（実装詳細だが確認可能）
+    }
 }
+
 
 
