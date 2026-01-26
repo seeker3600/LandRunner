@@ -280,13 +280,76 @@ public class ImuRecordingTests
         Assert.True(frameCount > 0, "Should have replayed at least one frame");
     }
 
-    private IAsyncEnumerable<ImuData> GenerateTestImuData()
+    /// <summary>
+    /// テスト9: 低速データストリーム受信のシミュレーション（パフォーマンス計測用）
+    /// 遅延なしでデータを受信する
+    /// </summary>
+    [Fact]
+    public void ImuFrameRecord_HighSpeedDataGeneration()
+    {
+        // Arrange: 遅延なしでデータを生成
+        var imuDataEnumerable = GenerateTestImuData(count: 100, delayMs: 0);
+        var recordList = new List<ImuFrameRecord>();
+
+        // Act
+        var syncEnumerator = imuDataEnumerable.GetAsyncEnumerator();
+        var task = Task.Run(async () =>
+        {
+            while (await syncEnumerator.MoveNextAsync())
+            {
+                var record = ImuFrameRecord.FromImuData(syncEnumerator.Current, new byte[] { 0xFF, 0xFC });
+                recordList.Add(record);
+            }
+        });
+        task.Wait(5000);
+
+        // Assert
+        Assert.Equal(100, recordList.Count);
+        Assert.NotEmpty(recordList);
+    }
+
+    /// <summary>
+    /// テスト10: 実デバイス相当の遅延でのデータ受信
+    /// 10ms の遅延（実デバイスのデータ送信タイミングをシミュレート）
+    /// </summary>
+    [Fact]
+    public void ImuFrameRecord_WithDeviceLatencySimulation()
+    {
+        // Arrange: 10ms 遅延でデータを生成（実デバイスシミュレーション）
+        var imuDataEnumerable = GenerateTestImuData(count: 20, delayMs: 10);
+        var recordList = new List<ImuFrameRecord>();
+
+        // Act
+        var syncEnumerator = imuDataEnumerable.GetAsyncEnumerator();
+        var task = Task.Run(async () =>
+        {
+            while (await syncEnumerator.MoveNextAsync())
+            {
+                var record = ImuFrameRecord.FromImuData(syncEnumerator.Current, new byte[] { 0xFF, 0xFC });
+                recordList.Add(record);
+            }
+        });
+        task.Wait(10000);
+
+        // Assert
+        Assert.True(recordList.Count > 0, "Should have received some frames");
+        Assert.True(recordList.Count <= 20, "Should not exceed requested count");
+        
+        // タイムスタンプが順序通りであることを確認
+        for (int i = 1; i < recordList.Count; i++)
+        {
+            Assert.True(recordList[i].Timestamp >= recordList[i - 1].Timestamp, 
+                "Timestamps should be in order");
+        }
+    }
+
+    private IAsyncEnumerable<ImuData> GenerateTestImuData(int count = 20, int delayMs = 0)
     {
         return GenerateTestImuDataAsync();
 
         async IAsyncEnumerable<ImuData> GenerateTestImuDataAsync()
         {
-            for (uint i = 0; i < 20; i++)
+            for (uint i = 0; i < count; i++)
             {
                 yield return new ImuData
                 {
@@ -295,15 +358,19 @@ public class ImuRecordingTests
                     Quaternion = new Quaternion(1.0f, 0.01f * i, 0.02f * i, 0.03f * i),
                     EulerAngles = new EulerAngles(i * 1.0f, i * 2.0f, i * 3.0f)
                 };
-                await Task.Delay(1);
+                
+                if (delayMs > 0)
+                {
+                    await Task.Delay(delayMs);
+                }
             }
         }
     }
 
-    private MockHidStreamProvider CreateMockProvider()
+    private MockHidStreamProvider CreateMockProvider(int delayMs = 0)
     {
         // MockHidStreamProvider は Func を期待
-        return new MockHidStreamProvider(_ => GenerateTestImuData());
+        return new MockHidStreamProvider(_ => GenerateTestImuData(count: 20, delayMs: delayMs));
     }
 
     public void Dispose()

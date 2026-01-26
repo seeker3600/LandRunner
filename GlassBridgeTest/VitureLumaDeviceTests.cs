@@ -13,9 +13,14 @@ public class VitureLumaDeviceTests
 {
     /// <summary>
     /// テスト用IMUデータジェネレータ
+    /// データ受信速度をシミュレーション可能
     /// </summary>
+    /// <param name="count">生成するデータ数</param>
+    /// <param name="delayMs">フレーム間の遅延（ms）。0 でパフォーマンス計測、>0 でタイムアウト等をテスト</param>
+    /// <param name="cancellationToken">キャンセルトークン</param>
     private static async IAsyncEnumerable<ImuData> GenerateTestImuData(
         int count = 10,
+        int delayMs = 0,
         [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         for (int i = 0; i < count; i++)
@@ -31,19 +36,23 @@ public class VitureLumaDeviceTests
                 MessageCounter = (ushort)i
             };
 
-            await Task.Delay(5, cancellationToken);
+            if (delayMs > 0)
+            {
+                await Task.Delay(delayMs, cancellationToken);
+            }
         }
     }
 
     /// <summary>
-    /// テスト1: デバイス接続
+    /// テスト1: デバイス接続（パフォーマンス計測用）
     /// 仕様：「デバイス接続時にIsConnectedがtrueになる」
+    /// 遅延なしで高速実行
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task ConnectAsync_ShouldSucceed()
     {
         // Arrange
-        var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(5, ct));
+        var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(5, delayMs: 0, cancellationToken: ct));
 
         // Act
         var device = await VitureLumaDevice.ConnectWithProviderAsync(mockProvider);
@@ -56,14 +65,15 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// テスト2: GetImuDataStreamAsync メソッドが存在し、呼び出し可能
+    /// テスト2: GetImuDataStreamAsync メソッドが存在し、呼び出し可能（パフォーマンス計測用）
     /// 仕様：「IMUデータストリームメソッドが実装されている」
+    /// 遅延なしで高速実行
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task GetImuDataStreamAsync_ShouldBeCallable()
     {
         // Arrange
-        var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(1, ct));
+        var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(1, delayMs: 0, cancellationToken: ct));
         var device = await VitureLumaDevice.ConnectWithProviderAsync(mockProvider);
         Assert.NotNull(device);
         Assert.True(device.IsConnected);
@@ -79,14 +89,15 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// テスト3: Dispose時の正常終了
+    /// テスト3: Dispose時の正常終了（パフォーマンス計測用）
     /// 仕様：「DisposeasyncでIsConnectedがfalseになる」
+    /// 遅延なしで高速実行
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task DisposeAsync_ShouldDisconnect()
     {
         // Arrange
-        var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(5, ct));
+        var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(5, delayMs: 0, cancellationToken: ct));
         var device = await VitureLumaDevice.ConnectWithProviderAsync(mockProvider);
         Assert.NotNull(device);
         Assert.True(device.IsConnected);
@@ -97,5 +108,49 @@ public class VitureLumaDeviceTests
         // Assert
         Assert.False(device.IsConnected);
     }
+
+    /// <summary>
+    /// テスト4: 低速データストリーム受信のシミュレーション
+    /// 実デバイスは数 ms～数十 ms のタイミングでデータを送信する
+    /// タイムアウト処理やバッファリング動作の確認用
+    /// </summary>
+    [Fact(Timeout = 10000)]
+    public async Task ConnectAsync_WithDelayedData_ShouldSucceed()
+    {
+        // Arrange: 10ms の遅延でデータを送信（実デバイスシミュレーション）
+        var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(10, delayMs: 10, cancellationToken: ct));
+
+        // Act
+        var device = await VitureLumaDevice.ConnectWithProviderAsync(mockProvider);
+
+        // Assert
+        Assert.NotNull(device);
+        Assert.True(device.IsConnected);
+
+        await device.DisposeAsync();
+    }
+
+    /// <summary>
+    /// テスト5: デバイス初期化と複数回の接続テスト
+    /// 複数のデバイス接続シーケンスが正常に動作することを確認
+    /// </summary>
+    [Fact(Timeout = 10000)]
+    public async Task ConnectAsync_MultipleConnections_ShouldSucceed()
+    {
+        // Arrange & Act: 複数回の接続を試行
+        for (int i = 0; i < 3; i++)
+        {
+            var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(3, delayMs: 0, cancellationToken: ct));
+            var device = await VitureLumaDevice.ConnectWithProviderAsync(mockProvider);
+
+            // Assert
+            Assert.NotNull(device);
+            Assert.True(device.IsConnected);
+
+            await device.DisposeAsync();
+            Assert.False(device.IsConnected);
+        }
+    }
 }
+
 
