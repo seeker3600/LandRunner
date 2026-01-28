@@ -11,10 +11,9 @@ namespace LandRunner
     /// </summary>
     public partial class App : Application
     {
-    public static ILoggerFactory LoggerFactory { get; set; } = null!;
-        public static ILogger<T> CreateLogger<T>() => LoggerFactory.CreateLogger<T>();
+        public static ILoggerFactory LoggerFactory { get; set; }
 
-        private void Application_Startup(object sender, StartupEventArgs e)
+        static App()
         {
             var appDataPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -36,11 +35,12 @@ namespace LandRunner
                 .AddSerilog(Log.Logger);
         }
 
+        public static ILogger<T> CreateLogger<T>() => LoggerFactory.CreateLogger<T>();
+
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             Log.CloseAndFlush();
         }
     }
-
 }
 
