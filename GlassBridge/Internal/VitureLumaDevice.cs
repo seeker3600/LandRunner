@@ -2,6 +2,7 @@ namespace GlassBridge.Internal;
 
 using GlassBridge.Internal.HID;
 using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// VITURE系グラス用IMUデバイス実装
@@ -9,6 +10,8 @@ using System.Runtime.CompilerServices;
 /// </summary>
 internal sealed class VitureLumaDevice : IImuDevice
 {
+    private static readonly ILogger<VitureLumaDevice> _logger = LoggerFactoryProvider.Instance.CreateLogger<VitureLumaDevice>();
+
     internal const int VendorId = 0x35CA;
 
     internal static readonly int[] SupportedProductIds =
@@ -87,7 +90,7 @@ internal sealed class VitureLumaDevice : IImuDevice
 
             if (_imuStream == null || _mcuStream == null)
             {
-                System.Diagnostics.Debug.WriteLine($"Stream identification failed: IMU={(_imuStream != null)}, MCU={(_mcuStream != null)}");
+                _logger.LogError("Stream identification failed: IMU={ImuStreamOk}, MCU={McuStreamOk}", _imuStream != null, _mcuStream != null);
                 return false;
             }
 
@@ -108,7 +111,7 @@ internal sealed class VitureLumaDevice : IImuDevice
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Initialize failed: {ex.Message}");
+            _logger.LogError(ex, "Initialize failed: {ErrorMessage}", ex.Message);
             return false;
         }
     }
@@ -220,7 +223,7 @@ internal sealed class VitureLumaDevice : IImuDevice
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Failed to enable IMU: {ex.Message}");
+            _logger.LogError(ex, "Failed to enable IMU: {ErrorMessage}", ex.Message);
             throw;
         }
 
@@ -251,7 +254,7 @@ internal sealed class VitureLumaDevice : IImuDevice
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Failed to disable IMU: {ex.Message}");
+                _logger.LogError(ex, "Failed to disable IMU: {ErrorMessage}", ex.Message);
                 // 無効化失敗は致命的ではないため、例外を吐かない
             }
         }
@@ -311,19 +314,19 @@ internal sealed class VitureLumaDevice : IImuDevice
 
                 if (bytesRead >= 2 && ackBuffer[0] == 0xFF && ackBuffer[1] == 0xFD)
                 {
-                    System.Diagnostics.Debug.WriteLine("Received MCU ACK");
+                    _logger.LogDebug("Received MCU ACK");
                 }
             }
             catch (OperationCanceledException)
             {
-                System.Diagnostics.Debug.WriteLine("MCU ACK timeout (acceptable in some cases)");
+                _logger.LogDebug("MCU ACK timeout (acceptable in some cases)");
             }
 
             await Task.Delay(100, cancellationToken);
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Failed to send IMU command: {ex.Message}");
+            _logger.LogError(ex, "Failed to send IMU command: {ErrorMessage}", ex.Message);
         }
     }
 

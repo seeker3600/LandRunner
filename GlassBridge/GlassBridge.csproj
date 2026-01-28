@@ -8,11 +8,15 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="GlassBridgeTest" />
+    <InternalsVisibleTo Include="LandRunner" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="HidSharp" Version="2.6.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0" />
   </ItemGroup>
 
 </Project>
+
 

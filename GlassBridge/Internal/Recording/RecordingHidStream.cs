@@ -1,6 +1,7 @@
 namespace GlassBridge.Internal.Recording;
 
 using GlassBridge.Internal.HID;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// HIDストリームをラップして生データをJSONで記録する

@@ -33,6 +33,9 @@ namespace LandRunner
             // Microsoft.Extensions.Logging を Serilog と統合
             LoggerFactory = new LoggerFactory()
                 .AddSerilog(Log.Logger);
+
+            // GlassBridge 内部で使用するロガーファクトリを設定
+            GlassBridge.Internal.LoggerFactoryProvider.Instance = LoggerFactory;
         }
 
         public static ILogger<T> CreateLogger<T>() => LoggerFactory.CreateLogger<T>();
