@@ -1,13 +1,13 @@
 using System;
 using System.Windows.Input;
+using Microsoft.Extensions.Logging;
 using GlassBridge;
-using LandRunner.Models;
 
 namespace LandRunner.ViewModels;
 
 /// <summary>
 /// IMUデータ表示用のViewModel
-/// GlassBridgeの ConnectAndRecordAsync() を使用してデータを記録
+/// GlassBridgeの ConnectAndRecordAsync() を使用してデータを自動録音
 /// </summary>
 public class MainWindowViewModel : ViewModelBase
 {
@@ -133,10 +133,11 @@ public class MainWindowViewModel : ViewModelBase
     private IImuDeviceManager? _deviceManager;
     private IImuDevice? _device;
     private CancellationTokenSource? _cancellationTokenSource;
-    private DebugLogger? _logger;
+    private readonly ILogger<MainWindowViewModel> _logger;
 
     public MainWindowViewModel()
     {
+        _logger = App.CreateLogger<MainWindowViewModel>();
         ConnectCommand = new AsyncRelayCommand(ConnectAsync, () => IsConnectButtonEnabled);
         DisconnectCommand = new AsyncRelayCommand(DisconnectAsync, () => IsDisconnectButtonEnabled);
     }
@@ -153,7 +154,6 @@ public class MainWindowViewModel : ViewModelBase
                 "LandRunner");
             System.IO.Directory.CreateDirectory(appDataPath);
 
-            _logger = new DebugLogger(appDataPath);
             _logger.LogDebug("Starting device connection with GlassBridge recording");
 
             _deviceManager = new ImuDeviceManager();
@@ -164,7 +164,7 @@ public class MainWindowViewModel : ViewModelBase
             if (_device == null)
             {
                 InfoText = "Failed to connect to device";
-                _logger.LogDebug("Failed to connect to VITURE Luma device");
+                _logger.LogError("Failed to connect to VITURE Luma device");
                 IsConnectButtonEnabled = true;
                 return;
             }
@@ -175,15 +175,15 @@ public class MainWindowViewModel : ViewModelBase
             InfoText = "Connected! Receiving and recording data...";
             VisualizationLabelText = "";
 
-            _logger.LogDebug("Successfully connected to device");
-            _logger.LogDebug($"Recording IMU data to: {appDataPath}");
+            _logger.LogInformation("Successfully connected to device");
+            _logger.LogInformation("Recording IMU data to: {AppDataPath}", appDataPath);
 
             _cancellationTokenSource = new CancellationTokenSource();
             _ = StreamDataAsync(_cancellationTokenSource.Token);
         }
         catch (Exception ex)
         {
-            _logger?.LogDebug($"Connection error: {ex.Message}");
+            _logger.LogError(ex, "Connection error: {ErrorMessage}", ex.Message);
             InfoText = $"Error: {ex.Message}";
             IsConnectButtonEnabled = true;
         }
@@ -198,7 +198,7 @@ public class MainWindowViewModel : ViewModelBase
 
             if (_device != null)
             {
-                _logger?.LogDebug("Disposing device (GlassBridge will finalize recording)");
+                _logger.LogDebug("Disposing device (GlassBridge will finalize recording)");
                 await _device.DisposeAsync();
             }
 
@@ -210,18 +210,18 @@ public class MainWindowViewModel : ViewModelBase
             InfoText = "Disconnected. Click 'Connect Device' to start.";
             VisualizationLabelText = "Waiting for data...";
 
-            _logger?.LogDebug("Device disconnected");
-            _logger?.Dispose();
+            _logger.LogInformation("Device disconnected");
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Disconnect error: {ErrorMessage}", ex.Message);
             InfoText = $"Disconnect error: {ex.Message}";
         }
     }
 
     private async Task StreamDataAsync(CancellationToken cancellationToken)
     {
-        if (_device == null || _logger == null) return;
+        if (_device == null) return;
 
         try
         {
@@ -230,8 +230,8 @@ public class MainWindowViewModel : ViewModelBase
             {
                 count++;
                 
-                // UI更新はメインスレッドで実行する必要があります
-                // ViewModelBase経由でUIを更新
+                // UIの更新はメインスレッドで実行される必要があります
+                // ViewModelBaseの仕組みでUIが更新されます
                 UpdateFromImuData(imuData, count);
             }
         }
@@ -241,7 +241,7 @@ public class MainWindowViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _logger.LogDebug($"Streaming error: {ex.Message}");
+            _logger.LogError(ex, "Streaming error: {ErrorMessage}", ex.Message);
             InfoText = $"Streaming error: {ex.Message}";
         }
     }
@@ -269,7 +269,7 @@ public class MainWindowViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _logger?.LogDebug($"UI update error: {ex.Message}");
+            _logger.LogTrace(ex, "UI update error: {ErrorMessage}", ex.Message);
         }
     }
 
@@ -282,4 +282,3 @@ public class MainWindowViewModel : ViewModelBase
         return new EulerAngles(roll, pitch, yaw);
     }
 }
-

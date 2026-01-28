@@ -1,6 +1,8 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using System;
+using System.IO;
 using System.Windows;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace LandRunner
 {
@@ -9,6 +11,36 @@ namespace LandRunner
     /// </summary>
     public partial class App : Application
     {
+    public static ILoggerFactory LoggerFactory { get; set; } = null!;
+        public static ILogger<T> CreateLogger<T>() => LoggerFactory.CreateLogger<T>();
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            var appDataPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "LandRunner");
+            Directory.CreateDirectory(appDataPath);
+
+            // Serilog 構成
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .WriteTo.File(
+                    path: Path.Combine(appDataPath, $"debug_{DateTime.Now:yyyyMMdd_HHmmss}.log"),
+                    outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff}] [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+                    rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            // Microsoft.Extensions.Logging を Serilog と統合
+            LoggerFactory = new LoggerFactory()
+                .AddSerilog(Log.Logger);
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            Log.CloseAndFlush();
+        }
     }
 
 }
+

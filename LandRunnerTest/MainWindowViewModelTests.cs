@@ -1,3 +1,6 @@
+using Microsoft.Extensions.Logging;
+using Serilog;
+using LandRunner;
 using LandRunner.ViewModels;
 
 namespace LandRunnerTest;
@@ -6,8 +9,35 @@ namespace LandRunnerTest;
 /// MainWindowViewModel のテスト
 /// ViewModel のプロパティバインディングと状態管理を検証
 /// </summary>
-public class MainWindowViewModelTests
+public class MainWindowViewModelTests : IDisposable
 {
+    private static bool _loggerInitialized = false;
+
+    public MainWindowViewModelTests()
+    {
+        // テスト用のロギング初期化（1回のみ）
+        if (!_loggerInitialized)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.File(
+                    path: Path.Combine(Path.GetTempPath(), $"test_{DateTime.Now:yyyyMMdd_HHmmss}.log"),
+                    outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff}] [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+                    rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            App.LoggerFactory = new LoggerFactory()
+                .AddSerilog(Log.Logger);
+
+            _loggerInitialized = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        Log.CloseAndFlush();
+    }
+
     [Fact]
     public void MainWindowViewModel_Initialize_DefaultValues()
     {
