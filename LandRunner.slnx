@@ -9,4 +9,5 @@
     <BuildDependency Project="GlassBridge/GlassBridge.csproj" />
   </Project>
   <Project Path="LandRunner/LandRunner.csproj" />
+  <Project Path="LandRunnerTest/LandRunnerTest.csproj" Id="8e4ccc79-18eb-4dbd-a129-78c820a821d9" />
 </Solution>

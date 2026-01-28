@@ -5,8 +5,107 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LandRunner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="LandRunner - VITURE Luma IMU Viewer" Height="600" Width="900"
+        Closing="Window_Closing">
+    <Grid Background="#F5F5F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <!-- Top: Status Bar -->
+        <Grid Grid.Row="0" Background="#2C3E50" Margin="0">
+            <StackPanel Orientation="Vertical" Margin="15">
+                <TextBlock Text="VITURE Luma IMU Sensor" Foreground="White" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                <StackPanel Orientation="Horizontal" Margin="0">
+                    <TextBlock Text="{Binding StatusText}" Foreground="#ECF0F1" FontSize="14" Margin="0,0,30,0"/>
+                    <TextBlock Text="{Binding MessageCounterText}" Foreground="#ECF0F1" FontSize="14" Margin="0,0,30,0"/>
+                    <TextBlock Text="{Binding LastTimestampText}" Foreground="#ECF0F1" FontSize="14"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <!-- Middle: Visualization -->
+        <Grid Grid.Row="1" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: 3D Axis Visualization -->
+            <Grid Grid.Column="0" Background="#ECF0F1" Margin="10">
+                <Canvas x:Name="AxisCanvas" Background="White"/>
+                <TextBlock Text="{Binding VisualizationLabelText}"
+                           Foreground="#7F8C8D" 
+                           FontSize="14"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"/>
+            </Grid>
+
+            <!-- Right: Data Display -->
+            <StackPanel Grid.Column="1" Background="#ECF0F1" Margin="10">
+                <TextBlock Text="Current Values" FontSize="14" FontWeight="Bold" Foreground="#2C3E50" Margin="15,15,15,10"/>
+                
+                <!-- Euler Angles -->
+                <Border Background="White" Margin="15,0,15,10" CornerRadius="5" Padding="10">
+                    <StackPanel Margin="0">
+                        <TextBlock Text="Euler Angles (degrees)" FontSize="12" FontWeight="Bold" Foreground="#34495E" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding RollText}" FontSize="11" Foreground="#E74C3C" Margin="0,0,0,3"/>
+                        <TextBlock Text="{Binding PitchText}" FontSize="11" Foreground="#3498DB" Margin="0,0,0,3"/>
+                        <TextBlock Text="{Binding YawText}" FontSize="11" Foreground="#2ECC71"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Quaternion -->
+                <Border Background="White" Margin="15,0,15,10" CornerRadius="5" Padding="10">
+                    <StackPanel Margin="0">
+                        <TextBlock Text="Quaternion" FontSize="12" FontWeight="Bold" Foreground="#34495E" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding QuatWText}" FontSize="10" Foreground="#95A5A6" Margin="0,0,0,3"/>
+                        <TextBlock Text="{Binding QuatXText}" FontSize="10" Foreground="#E74C3C" Margin="0,0,0,3"/>
+                        <TextBlock Text="{Binding QuatYText}" FontSize="10" Foreground="#3498DB" Margin="0,0,0,3"/>
+                        <TextBlock Text="{Binding QuatZText}" FontSize="10" Foreground="#2ECC71"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Metadata -->
+                <Border Background="White" Margin="15,0,15,15" CornerRadius="5" Padding="10">
+                    <StackPanel Margin="0">
+                        <TextBlock Text="Metadata" FontSize="12" FontWeight="Bold" Foreground="#34495E" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding TimestampValueText}" FontSize="10" Foreground="#7F8C8D" Margin="0,0,0,3"/>
+                        <TextBlock Text="{Binding CounterValueText}" FontSize="10" Foreground="#7F8C8D"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Bottom: Controls -->
+        <Grid Grid.Row="2" Background="#ECF0F1" Height="60" Margin="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0,0,0">
+                <Button Command="{Binding ConnectCommand}"
+                        IsEnabled="{Binding IsConnectButtonEnabled}"
+                        Content="Connect Device"
+                        Background="#27AE60" 
+                        Foreground="White"
+                        FontSize="12"
+                        Padding="15,10"
+                        Margin="0,0,10,0"
+                        Cursor="Hand"/>
+                <Button Command="{Binding DisconnectCommand}"
+                        IsEnabled="{Binding IsDisconnectButtonEnabled}"
+                        Content="Disconnect" 
+                        Background="#E74C3C" 
+                        Foreground="White"
+                        FontSize="12"
+                        Padding="15,10"
+                        Margin="0,0,10,0"
+                        Cursor="Hand"/>
+                <TextBlock Text="{Binding InfoText}"
+                           Foreground="#7F8C8D" 
+                           FontSize="11"
+                           VerticalAlignment="Center"
+                           Margin="20,0,0,0"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
