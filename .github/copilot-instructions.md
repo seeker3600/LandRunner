@@ -72,6 +72,8 @@ LandRunner プロジェクトの開発ガイドラインです。
 - `ImuDeviceManager.ConnectFromRecordingAsync()` の使用方法
 - 記録ファイル形式（JSON Lines）
 
+### HidSharp パッケージに関わる場合
+- https://docs.seekye.com/hidsharp/
 ---
 
 ## 4. コード品質
