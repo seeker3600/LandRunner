@@ -8,6 +8,12 @@ using GlassBridge.Internal.HID;
 /// </summary>
 internal sealed class RecordedHidStream : IHidStream
 {
+    /// <summary>
+    /// デフォルトのレポート長（VITURE デバイスに合わせた値）
+    /// Report ID (1 byte) + Report Data (64 bytes) = 65 bytes
+    /// </summary>
+    public const int DefaultReportLength = 65;
+
     private readonly Queue<(long delayMs, byte[] data)> _frameQueue;
     private readonly DateTime _sessionStartTime;
     private DateTime _playbackStartTime;
@@ -17,17 +23,35 @@ internal sealed class RecordedHidStream : IHidStream
     public bool IsOpen => !_disposed;
 
     /// <summary>
+    /// 最大入力レポート長（Report ID を含む）
+    /// </summary>
+    public int MaxInputReportLength { get; }
+
+    /// <summary>
+    /// 最大出力レポート長（Report ID を含む）
+    /// </summary>
+    public int MaxOutputReportLength { get; }
+
+    /// <summary>
     /// 記録ファイルから再生ストリームを作成
     /// </summary>
     /// <param name="framesJsonLinesPath">frames.jsonlファイルのパス</param>
     /// <param name="metadataJsonPath">metadata.jsonファイルのパス（オプション）</param>
-    public RecordedHidStream(string framesJsonLinesPath, string? metadataJsonPath = null)
+    /// <param name="maxInputReportLength">最大入力レポート長（デフォルト: 65）</param>
+    /// <param name="maxOutputReportLength">最大出力レポート長（デフォルト: 65）</param>
+    public RecordedHidStream(
+        string framesJsonLinesPath,
+        string? metadataJsonPath = null,
+        int maxInputReportLength = DefaultReportLength,
+        int maxOutputReportLength = DefaultReportLength)
     {
         if (!File.Exists(framesJsonLinesPath))
             throw new FileNotFoundException($"Frames file not found: {framesJsonLinesPath}");
 
         _frameQueue = new Queue<(long, byte[])>();
         _sessionStartTime = DateTime.UtcNow;
+        MaxInputReportLength = maxInputReportLength;
+        MaxOutputReportLength = maxOutputReportLength;
 
         // メタデータを読み込む
         ImuRecordingSession? metadata = null;

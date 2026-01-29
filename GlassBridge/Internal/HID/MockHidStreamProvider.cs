@@ -51,10 +51,26 @@ internal sealed class MockHidStreamProvider : IHidStreamProvider
 /// </summary>
 internal sealed class MockMcuStream : IHidStream
 {
+    /// <summary>
+    /// デフォルトのレポート長（VITURE デバイスに合わせた値）
+    /// Report ID (1 byte) + Report Data (64 bytes) = 65 bytes
+    /// </summary>
+    public const int DefaultReportLength = 65;
+
     private bool _disposed;
     private int _readCount;
 
     public bool IsOpen => !_disposed;
+
+    /// <summary>
+    /// 最大入力レポート長（Report ID を含む）
+    /// </summary>
+    public int MaxInputReportLength { get; } = DefaultReportLength;
+
+    /// <summary>
+    /// 最大出力レポート長（Report ID を含む）
+    /// </summary>
+    public int MaxOutputReportLength { get; } = DefaultReportLength;
 
     public async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken = default)
     {

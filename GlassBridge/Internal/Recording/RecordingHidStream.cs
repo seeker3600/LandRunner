@@ -20,6 +20,18 @@ internal sealed class RecordingHidStream : IHidStream
     public bool IsOpen => !_disposed && _innerStream.IsOpen;
 
     /// <summary>
+    /// 最大入力レポート長（Report ID を含む）
+    /// 内部ストリームに委譲
+    /// </summary>
+    public int MaxInputReportLength => _innerStream.MaxInputReportLength;
+
+    /// <summary>
+    /// 最大出力レポート長（Report ID を含む）
+    /// 内部ストリームに委譲
+    /// </summary>
+    public int MaxOutputReportLength => _innerStream.MaxOutputReportLength;
+
+    /// <summary>
     /// 記録を伴うHIDストリームを作成
     /// </summary>
     /// <param name="innerStream">基盤となるHIDストリーム</param>

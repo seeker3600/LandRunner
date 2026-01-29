@@ -19,4 +19,14 @@ internal interface IHidStream : IAsyncDisposable, IDisposable
     /// ストリームが開いているかを確認
     /// </summary>
     bool IsOpen { get; }
+
+    /// <summary>
+    /// 最大入力レポート長（Report ID を含む）
+    /// </summary>
+    int MaxInputReportLength { get; }
+
+    /// <summary>
+    /// 最大出力レポート長（Report ID を含む）
+    /// </summary>
+    int MaxOutputReportLength { get; }
 }

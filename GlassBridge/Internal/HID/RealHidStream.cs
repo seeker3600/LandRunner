@@ -8,13 +8,25 @@ using HidSharp;
 internal sealed class RealHidStream : IHidStream
 {
     private readonly HidStream _hidStream;
+    private readonly HidDevice _device;
     private bool _disposed;
 
     public bool IsOpen => !_disposed;
 
-    public RealHidStream(HidStream hidStream)
+    /// <summary>
+    /// 最大入力レポート長（Report ID を含む）
+    /// </summary>
+    public int MaxInputReportLength => _device.GetMaxInputReportLength();
+
+    /// <summary>
+    /// 最大出力レポート長（Report ID を含む）
+    /// </summary>
+    public int MaxOutputReportLength => _device.GetMaxOutputReportLength();
+
+    public RealHidStream(HidStream hidStream, HidDevice device)
     {
         _hidStream = hidStream ?? throw new ArgumentNullException(nameof(hidStream));
+        _device = device ?? throw new ArgumentNullException(nameof(device));
     }
 
     public async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken = default)

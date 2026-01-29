@@ -7,6 +7,12 @@ using System.Runtime.CompilerServices;
 /// </summary>
 internal sealed class MockHidStream : IHidStream
 {
+    /// <summary>
+    /// デフォルトのレポート長（VITURE デバイスに合わせた値）
+    /// Report ID (1 byte) + Report Data (64 bytes) = 65 bytes
+    /// </summary>
+    public const int DefaultReportLength = 65;
+
     private readonly IAsyncEnumerable<ImuData> _dataStream;
     private readonly CancellationToken _cancellationToken;
     private IAsyncEnumerator<ImuData>? _enumerator;
@@ -16,10 +22,26 @@ internal sealed class MockHidStream : IHidStream
 
     public bool IsOpen => !_disposed;
 
-    public MockHidStream(IAsyncEnumerable<ImuData> dataStream, CancellationToken cancellationToken = default)
+    /// <summary>
+    /// 最大入力レポート長（Report ID を含む）
+    /// </summary>
+    public int MaxInputReportLength { get; }
+
+    /// <summary>
+    /// 最大出力レポート長（Report ID を含む）
+    /// </summary>
+    public int MaxOutputReportLength { get; }
+
+    public MockHidStream(
+        IAsyncEnumerable<ImuData> dataStream,
+        CancellationToken cancellationToken = default,
+        int maxInputReportLength = DefaultReportLength,
+        int maxOutputReportLength = DefaultReportLength)
     {
         _dataStream = dataStream ?? throw new ArgumentNullException(nameof(dataStream));
         _cancellationToken = cancellationToken;
+        MaxInputReportLength = maxInputReportLength;
+        MaxOutputReportLength = maxOutputReportLength;
     }
 
     public async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken = default)

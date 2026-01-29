@@ -23,8 +23,6 @@ internal sealed class VitureLumaDevice : IImuDevice
         0x1131                    // VITURE Luma
     ];
 
-    private const int ReadBufferSize = 64;
-
     private readonly IHidStreamProvider _hidProvider;
 
     // VITURE固有：IMU/MCUストリーム（ドメイン知識）
@@ -146,15 +144,18 @@ internal sealed class VitureLumaDevice : IImuDevice
             {
                 // 有効な IMU enable コマンドパケットを送信
                 var cmdPacket = VitureLumaPacket.BuildImuEnableCommand(enable: true, messageCounter: 0);
-                var writeBuffer = new byte[cmdPacket.Length + 1];
+                
+                // デバイスの MaxOutputReportLength に基づいてバッファを作成
+                var writeBuffer = new byte[stream.MaxOutputReportLength];
                 writeBuffer[0] = 0x00; // Report ID
-                Array.Copy(cmdPacket, 0, writeBuffer, 1, cmdPacket.Length);
+                Array.Copy(cmdPacket, 0, writeBuffer, 1, Math.Min(cmdPacket.Length, writeBuffer.Length - 1));
 
                 _logger.LogTrace("Sending IMU enable command to stream #{StreamIndex}, packet size: {PacketSize}", i, cmdPacket.Length);
                 await stream.WriteAsync(writeBuffer, cancellationToken);
 
                 // 応答待機（タイムアウト付き）
-                var ackBuffer = new byte[ReadBufferSize];
+                // デバイスの MaxInputReportLength に基づいてバッファを作成
+                var ackBuffer = new byte[stream.MaxInputReportLength];
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                 cts.CancelAfter(TimeSpan.FromMilliseconds(100));
 
@@ -259,7 +260,8 @@ internal sealed class VitureLumaDevice : IImuDevice
 
         try
         {
-            var buffer = new byte[ReadBufferSize];
+            // デバイスの MaxInputReportLength に基づいてバッファを作成
+            var buffer = new byte[_imuStream.MaxInputReportLength];
 
             while (!cancellationToken.IsCancellationRequested && IsConnected)
             {
@@ -348,9 +350,10 @@ internal sealed class VitureLumaDevice : IImuDevice
 
         var cmdPacket = VitureLumaPacket.BuildImuEnableCommand(enable, _messageCounter++);
 
-        var writeBuffer = new byte[cmdPacket.Length + 1];
+        // デバイスの MaxOutputReportLength に基づいてバッファを作成
+        var writeBuffer = new byte[_mcuStream.MaxOutputReportLength];
         writeBuffer[0] = 0x00; // Report ID
-        Array.Copy(cmdPacket, 0, writeBuffer, 1, cmdPacket.Length);
+        Array.Copy(cmdPacket, 0, writeBuffer, 1, Math.Min(cmdPacket.Length, writeBuffer.Length - 1));
 
         _logger.LogDebug("Sending IMU {EnableState} command, MessageCounter={MessageCounter}, PacketSize={PacketSize}", 
             enable ? "enable" : "disable", _messageCounter - 1, cmdPacket.Length);
@@ -362,7 +365,8 @@ internal sealed class VitureLumaDevice : IImuDevice
             _logger.LogTrace("IMU {EnableState} command sent to MCU", enable ? "enable" : "disable");
 
             // ACK受信待機（タイムアウト付き）
-            var ackBuffer = new byte[ReadBufferSize];
+            // デバイスの MaxInputReportLength に基づいてバッファを作成
+            var ackBuffer = new byte[_mcuStream.MaxInputReportLength];
             using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             cts.CancelAfter(TimeSpan.FromMilliseconds(500));
 

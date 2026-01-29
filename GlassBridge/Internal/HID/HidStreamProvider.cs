@@ -40,11 +40,14 @@ internal sealed class HidStreamProvider : IHidStreamProvider
             {
                 try
                 {
-                    _logger.LogDebug("Found HID device: {DevicePath}", device.DevicePath);
+                    _logger.LogDebug("Found HID device: {DevicePath}, MaxInput={MaxInput}, MaxOutput={MaxOutput}", 
+                        device.DevicePath,
+                        device.GetMaxInputReportLength(),
+                        device.GetMaxOutputReportLength());
                     var stream = device.Open();
                     if (stream != null)
                     {
-                        var hidStream = new RealHidStream(stream);
+                        var hidStream = new RealHidStream(stream, device);
                         _streams.Add(hidStream);
                         result.Add(hidStream);
                         _logger.LogDebug("Successfully opened HID device: {DevicePath}", device.DevicePath);
