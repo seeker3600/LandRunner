@@ -163,17 +163,20 @@ internal sealed class VitureLumaDevice : IImuDevice
                 {
                     int bytesRead = await stream.ReadAsync(ackBuffer, 0, ackBuffer.Length, cts.Token);
 
+                    // Report ID オフセットを検出
+                    int offset = (bytesRead > 1 && ackBuffer[0] == 0x00 && ackBuffer[1] == 0xFF) ? 1 : 0;
+
                     // 応答があればこのストリームが MCU
-                    if (bytesRead > 0 && ackBuffer[0] == 0xFF)
+                    if (bytesRead > offset && ackBuffer[offset] == 0xFF)
                     {
                         // MCU ACK か IMU データか確認
-                        if (ackBuffer[1] == 0xFD)
+                        if (ackBuffer[offset + 1] == 0xFD)
                         {
                             _mcuStream = stream;
                             _logger.LogInformation("Stream #{StreamIndex} identified as MCU (ACK received: 0xFF 0xFD)", i);
                             continue;
                         }
-                        else if (ackBuffer[1] == 0xFC)
+                        else if (ackBuffer[offset + 1] == 0xFC)
                         {
                             // IMU データが返ってきた
                             _imuStream = stream;
@@ -374,11 +377,14 @@ internal sealed class VitureLumaDevice : IImuDevice
             {
                 int bytesRead = await _mcuStream.ReadAsync(ackBuffer, 0, ackBuffer.Length, cts.Token);
 
-                if (bytesRead >= 2)
+                // Report ID オフセットを検出
+                int offset = (bytesRead > 1 && ackBuffer[0] == 0x00 && ackBuffer[1] == 0xFF) ? 1 : 0;
+
+                if (bytesRead >= offset + 2)
                 {
-                    _logger.LogTrace("MCU response: {ResponseByte0:X2} {ResponseByte1:X2}", ackBuffer[0], ackBuffer[1]);
+                    _logger.LogTrace("MCU response: {ResponseByte0:X2} {ResponseByte1:X2}", ackBuffer[offset], ackBuffer[offset + 1]);
                     
-                    if (ackBuffer[0] == 0xFF && ackBuffer[1] == 0xFD)
+                    if (ackBuffer[offset] == 0xFF && ackBuffer[offset + 1] == 0xFD)
                     {
                         _logger.LogDebug("Received MCU ACK for IMU {EnableState} command", enable ? "enable" : "disable");
                     }

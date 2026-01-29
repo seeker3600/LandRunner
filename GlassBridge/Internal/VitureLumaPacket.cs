@@ -23,43 +23,54 @@ internal static class VitureLumaPacket
 
     /// <summary>
     /// IMUデータパケットを解析
+    /// HID読み取りでは先頭にReport ID (0x00) が付くことがあるため自動検出する
     /// </summary>
     public static bool TryParseImuPacket(ReadOnlySpan<byte> buffer, out ImuData? imuData)
     {
         imuData = null;
 
+        // Report ID の検出とオフセット決定
+        // HID読み取りでは先頭に Report ID (0x00) が付くことがある
+        int offset = 0;
+        if (buffer.Length > 1 && buffer[0] == 0x00 && buffer[1] == HeaderByte0)
+        {
+            offset = 1;
+        }
+
+        var packet = buffer[offset..];
+
         // バッファサイズチェック
-        if (buffer.Length < PacketSize)
+        if (packet.Length < PacketSize)
             return false;
 
         // ヘッダ確認
-        if (buffer[0] != HeaderByte0 || buffer[1] != HeaderImuData)
+        if (packet[0] != HeaderByte0 || packet[1] != HeaderImuData)
             return false;
 
         // CRC検証
-        if (!VerifyCrc(buffer))
+        if (!VerifyCrc(packet))
             return false;
 
         // Payload lengthを取得（リトルエンディアン）
-        ushort payloadLen = (ushort)(buffer[LengthOffset] | (buffer[LengthOffset + 1] << 8));
+        ushort payloadLen = (ushort)(packet[LengthOffset] | (packet[LengthOffset + 1] << 8));
         int totalLen = LengthOffset + payloadLen;
 
         // End markerを確認
-        if (totalLen > 0 && totalLen <= buffer.Length && buffer[totalLen - 1] != EndMarkerValue)
+        if (totalLen > 0 && totalLen <= packet.Length && packet[totalLen - 1] != EndMarkerValue)
             return false;
 
         // タイムスタンプを取得
-        uint timestamp = (uint)(buffer[TimestampOffset] | 
-                               (buffer[TimestampOffset + 1] << 8) |
-                               (buffer[TimestampOffset + 2] << 16) |
-                               (buffer[TimestampOffset + 3] << 24));
+        uint timestamp = (uint)(packet[TimestampOffset] | 
+                               (packet[TimestampOffset + 1] << 8) |
+                               (packet[TimestampOffset + 2] << 16) |
+                               (packet[TimestampOffset + 3] << 24));
 
         // メッセージカウンターを取得（リトルエンディアン）
-        ushort msgCounter = (ushort)(buffer[MessageCounterOffset] | 
-                                    (buffer[MessageCounterOffset + 1] << 8));
+        ushort msgCounter = (ushort)(packet[MessageCounterOffset] | 
+                                    (packet[MessageCounterOffset + 1] << 8));
 
         // オイラー角を取得（ビッグエンディアン float32）
-        var euler = ExtractEulerAngles(buffer);
+        var euler = ExtractEulerAngles(packet);
 
         // クォータニオンに変換
         var quat = ConvertEulerToQuaternion(euler);
