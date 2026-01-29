@@ -9,6 +9,9 @@ using Microsoft.Extensions.Logging;
 /// </summary>
 internal sealed class RecordingHidStream : IHidStream
 {
+    private static readonly ILogger<RecordingHidStream> _logger 
+        = LoggerFactoryProvider.Instance.CreateLogger<RecordingHidStream>();
+
     private readonly IHidStream _innerStream;
     private readonly StreamWriter _recordingWriter;
     private int _frameCount;
@@ -38,6 +41,8 @@ internal sealed class RecordingHidStream : IHidStream
             AutoFlush = true
         };
         _frameCount = 0;
+        
+        _logger.LogDebug("Recording HID stream initialized: {RecordingPath}", recordingPath);
     }
 
     public async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken = default)
@@ -62,16 +67,22 @@ internal sealed class RecordingHidStream : IHidStream
                     var frameRecord = ImuFrameRecord.FromImuData(imuData, rawData);
                     await _recordingWriter.WriteLineAsync(frameRecord.ToJsonLine());
                     _frameCount++;
+                    
+                    if (_frameCount % 100 == 0)
+                    {
+                        _logger.LogDebug("Recorded {FrameCount} frames", _frameCount);
+                    }
                 }
                 else
                 {
                     // パース失敗でも生データは記録（デバッグ用）
-                    // rawDataがそのままバイト列として保存される
+                    _logger.LogTrace("Failed to parse IMU packet from {BytesCount} bytes", bytesRead);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 // 解析エラーは無視（記録ができなくても処理を続ける）
+                _logger.LogWarning(ex, "Error recording frame data");
             }
         }
 
@@ -94,16 +105,22 @@ internal sealed class RecordingHidStream : IHidStream
         if (_disposed)
             return;
 
+        _logger.LogDebug("Finalizing recording session with {FrameCount} frames to: {MetadataPath}", _frameCount, metadataPath);
+
         await _recordingWriter.FlushAsync();
 
         var metadata = ImuRecordingSession.CreateNew(_frameCount);
         await File.WriteAllTextAsync(metadataPath, metadata.ToJson());
+        
+        _logger.LogInformation("Recording session finalized: {FrameCount} frames saved", _frameCount);
     }
 
     public async ValueTask DisposeAsync()
     {
         if (_disposed)
             return;
+
+        _logger.LogDebug("Disposing RecordingHidStream with {FrameCount} frames recorded", _frameCount);
 
         try
         {

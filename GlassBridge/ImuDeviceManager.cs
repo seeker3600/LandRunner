@@ -3,6 +3,7 @@ namespace GlassBridge;
 using GlassBridge.Internal;
 using GlassBridge.Internal.HID;
 using GlassBridge.Internal.Recording;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// IMUデバイスマネージャーの実装
@@ -10,6 +11,9 @@ using GlassBridge.Internal.Recording;
 /// </summary>
 public sealed class ImuDeviceManager : IImuDeviceManager
 {
+    private static readonly ILogger<ImuDeviceManager> _logger 
+        = LoggerFactoryProvider.Instance.CreateLogger<ImuDeviceManager>();
+
     private bool _disposed;
     private RecordingHidStreamProvider? _recordingProvider;
 
@@ -21,7 +25,19 @@ public sealed class ImuDeviceManager : IImuDeviceManager
         if (_disposed)
             throw new ObjectDisposedException(nameof(ImuDeviceManager));
 
-        return await VitureLumaDevice.ConnectAsync(cancellationToken);
+        _logger.LogDebug("Starting device connection (normal mode)");
+        var device = await VitureLumaDevice.ConnectAsync(cancellationToken);
+        
+        if (device != null)
+        {
+            _logger.LogInformation("Device connected successfully");
+        }
+        else
+        {
+            _logger.LogWarning("Failed to connect to device");
+        }
+        
+        return device;
     }
 
     /// <summary>
@@ -39,9 +55,12 @@ public sealed class ImuDeviceManager : IImuDeviceManager
         if (string.IsNullOrWhiteSpace(outputDirectory))
             throw new ArgumentException("Output directory must not be null or empty", nameof(outputDirectory));
 
+        _logger.LogDebug("Starting device connection with recording to: {OutputDirectory}", outputDirectory);
+
         // 前回の記録セッションを終了
         if (_recordingProvider != null)
         {
+            _logger.LogDebug("Disposing previous recording session");
             await _recordingProvider.DisposeAsync();
         }
 
@@ -53,6 +72,15 @@ public sealed class ImuDeviceManager : IImuDeviceManager
 
         // デバイスに接続
         var device = await VitureLumaDevice.ConnectWithProviderAsync(_recordingProvider, cancellationToken);
+        
+        if (device != null)
+        {
+            _logger.LogInformation("Device connected successfully with recording enabled");
+        }
+        else
+        {
+            _logger.LogError("Failed to connect to device for recording");
+        }
         
         return device;
     }
@@ -74,11 +102,22 @@ public sealed class ImuDeviceManager : IImuDeviceManager
         if (!Directory.Exists(recordingDirectory))
             throw new DirectoryNotFoundException($"Recording directory not found: {recordingDirectory}");
 
+        _logger.LogDebug("Starting device connection from recording: {RecordingDirectory}", recordingDirectory);
+
         // 再生プロバイダーを作成
         var replayProvider = new ReplayHidStreamProvider(recordingDirectory);
 
         // Mock デバイスとして再生
         var device = await VitureLumaDevice.ConnectWithProviderAsync(replayProvider, cancellationToken);
+
+        if (device != null)
+        {
+            _logger.LogInformation("Device connected successfully from recording");
+        }
+        else
+        {
+            _logger.LogError("Failed to connect to device from recording");
+        }
 
         return device;
     }

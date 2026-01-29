@@ -1,12 +1,16 @@
 namespace GlassBridge.Internal.HID;
 
 using HidSharp;
+using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// HidSharpの薄いラッパー（デバイス非依存、VID/PIDは呼び出し時に指定）
 /// </summary>
 internal sealed class HidStreamProvider : IHidStreamProvider
 {
+    private static readonly ILogger<HidStreamProvider> _logger 
+        = LoggerFactoryProvider.Instance.CreateLogger<HidStreamProvider>();
+
     private readonly List<IHidStream> _streams = [];
     private bool _disposed;
 
@@ -25,6 +29,9 @@ internal sealed class HidStreamProvider : IHidStreamProvider
         if (productIds.Length == 0)
             throw new ArgumentException("At least one product ID must be specified.", nameof(productIds));
 
+        _logger.LogDebug("Searching for HID devices: VID={VendorId:X4}, PIDs=[{ProductIds}]", 
+            vendorId, string.Join(", ", productIds.Select(p => $"{p:X4}")));
+
         var result = new List<IHidStream>();
 
         foreach (var productId in productIds)
@@ -33,22 +40,25 @@ internal sealed class HidStreamProvider : IHidStreamProvider
             {
                 try
                 {
+                    _logger.LogDebug("Found HID device: {DevicePath}", device.DevicePath);
                     var stream = device.Open();
                     if (stream != null)
                     {
                         var hidStream = new RealHidStream(stream);
                         _streams.Add(hidStream);
                         result.Add(hidStream);
+                        _logger.LogDebug("Successfully opened HID device: {DevicePath}", device.DevicePath);
                     }
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine(
-                        $"Failed to open HID device (VID: {vendorId:X4}, PID: {productId:X4}): {ex.Message}");
+                    _logger.LogWarning(ex, "Failed to open HID device (VID: {VendorId:X4}, PID: {ProductId:X4}): {ErrorMessage}", 
+                        vendorId, productId, ex.Message);
                 }
             }
         }
 
+        _logger.LogInformation("Found {StreamCount} HID streams", result.Count);
         return result;
     }
 
@@ -57,6 +67,8 @@ internal sealed class HidStreamProvider : IHidStreamProvider
         if (_disposed)
             return;
 
+        _logger.LogDebug("Disposing HidStreamProvider with {StreamCount} streams", _streams.Count);
+
         foreach (var stream in _streams)
         {
             stream?.Dispose();
@@ -64,5 +76,7 @@ internal sealed class HidStreamProvider : IHidStreamProvider
 
         _streams.Clear();
         _disposed = true;
+        
+        _logger.LogDebug("HidStreamProvider disposed");
     }
 }

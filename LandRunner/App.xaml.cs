@@ -26,7 +26,7 @@ namespace LandRunner
                 .WriteTo.Console()
                 .WriteTo.File(
                     path: Path.Combine(appDataPath, $"debug_{DateTime.Now:yyyyMMdd_HHmmss}.log"),
-                    outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff}] [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+                    outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff}] [{Level:u3}] [{SourceContext}] {Message:lj}{NewLine}{Exception}",
                     rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 

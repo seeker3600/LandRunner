@@ -77,13 +77,20 @@ internal sealed class VitureLumaDevice : IImuDevice
     {
         try
         {
+            _logger.LogDebug("Device initialization started");
+
             // HidStreamProviderから全ストリームを取得
             var allStreams = await _hidProvider.GetStreamsAsync(
                 VendorId,
                 SupportedProductIds,
                 cancellationToken);
             if (allStreams.Count < 2)
+            {
+                _logger.LogError("Expected at least 2 streams, but found {StreamCount}", allStreams.Count);
                 return false;
+            }
+
+            _logger.LogDebug("Found {StreamCount} streams, identifying IMU and MCU...", allStreams.Count);
 
             // VITURE固有：IMU/MCUを判別
             await IdentifyStreamsAsync(allStreams, cancellationToken);
@@ -93,6 +100,8 @@ internal sealed class VitureLumaDevice : IImuDevice
                 _logger.LogError("Stream identification failed: IMU={ImuStreamOk}, MCU={McuStreamOk}", _imuStream != null, _mcuStream != null);
                 return false;
             }
+
+            _logger.LogInformation("Stream identification successful: IMU and MCU identified");
 
             // ストリーム判別後、IMUを無効化する
             // GetImuDataStreamAsync 呼び出し時にだけ有効化することで、
@@ -107,6 +116,7 @@ internal sealed class VitureLumaDevice : IImuDevice
             }
 
             _isConnected = true;
+            _logger.LogDebug("Device initialization completed successfully");
             return true;
         }
         catch (Exception ex)
@@ -125,9 +135,13 @@ internal sealed class VitureLumaDevice : IImuDevice
     {
         // シンプルな判別：最初のストリームを MCU、2番目を IMU とする
         // （実装は WebHID の判別方式に基づく）
+        _logger.LogDebug("Identifying IMU and MCU streams from {StreamCount} available streams", streams.Count);
+
         for (int i = 0; i < streams.Count; i++)
         {
             var stream = streams[i];
+            _logger.LogDebug("Testing stream #{StreamIndex} for identification", i);
+
             try
             {
                 // 有効な IMU enable コマンドパケットを送信
@@ -136,6 +150,7 @@ internal sealed class VitureLumaDevice : IImuDevice
                 writeBuffer[0] = 0x00; // Report ID
                 Array.Copy(cmdPacket, 0, writeBuffer, 1, cmdPacket.Length);
 
+                _logger.LogTrace("Sending IMU enable command to stream #{StreamIndex}, packet size: {PacketSize}", i, cmdPacket.Length);
                 await stream.WriteAsync(writeBuffer, cancellationToken);
 
                 // 応答待機（タイムアウト付き）
@@ -154,12 +169,14 @@ internal sealed class VitureLumaDevice : IImuDevice
                         if (ackBuffer[1] == 0xFD)
                         {
                             _mcuStream = stream;
+                            _logger.LogInformation("Stream #{StreamIndex} identified as MCU (ACK received: 0xFF 0xFD)", i);
                             continue;
                         }
                         else if (ackBuffer[1] == 0xFC)
                         {
                             // IMU データが返ってきた
                             _imuStream = stream;
+                            _logger.LogInformation("Stream #{StreamIndex} identified as IMU (data received: 0xFF 0xFC)", i);
                             continue;
                         }
                     }
@@ -168,15 +185,21 @@ internal sealed class VitureLumaDevice : IImuDevice
                 {
                     // タイムアウト → IMU
                     if (_imuStream == null)
+                    {
                         _imuStream = stream;
+                        _logger.LogDebug("Stream #{StreamIndex} identified as IMU (timeout on ACK wait)", i);
+                    }
                     continue;
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 // エラー → IMU
                 if (_imuStream == null)
+                {
                     _imuStream = stream;
+                    _logger.LogDebug(ex, "Stream #{StreamIndex} identified as IMU (exception on write): {ErrorMessage}", i, ex.Message);
+                }
             }
         }
 
@@ -188,6 +211,7 @@ internal sealed class VitureLumaDevice : IImuDevice
                 if (streams[i] != _imuStream)
                 {
                     _mcuStream = streams[i];
+                    _logger.LogDebug("MCU stream assigned to stream #{StreamIndex} (fallback)", i);
                     break;
                 }
             }
@@ -199,10 +223,13 @@ internal sealed class VitureLumaDevice : IImuDevice
                 if (streams[i] != _mcuStream)
                 {
                     _imuStream = streams[i];
+                    _logger.LogDebug("IMU stream assigned to stream #{StreamIndex} (fallback)", i);
                     break;
                 }
             }
         }
+
+        _logger.LogInformation("Stream identification complete: IMU={ImuStreamOk}, MCU={McuStreamOk}", _imuStream != null, _mcuStream != null);
     }
 
     /// <summary>
@@ -215,6 +242,9 @@ internal sealed class VitureLumaDevice : IImuDevice
     {
         if (!IsConnected || _imuStream == null)
             throw new InvalidOperationException("Device is not connected");
+
+        _logger.LogInformation("IMU data stream started");
+        int frameCount = 0;
 
         // IMU有効化（ストリーム開始時）
         try
@@ -237,6 +267,11 @@ internal sealed class VitureLumaDevice : IImuDevice
 
                 if (imuData != null)
                 {
+                    frameCount++;
+                    if (frameCount % 1000 == 0)
+                    {
+                        _logger.LogDebug("Streamed {FrameCount} IMU data frames", frameCount);
+                    }
                     yield return imuData;
                 }
                 else
@@ -257,28 +292,44 @@ internal sealed class VitureLumaDevice : IImuDevice
                 _logger.LogError(ex, "Failed to disable IMU: {ErrorMessage}", ex.Message);
                 // 無効化失敗は致命的ではないため、例外を吐かない
             }
+
+            _logger.LogInformation("IMU data stream ended after {FrameCount} frames", frameCount);
         }
     }
 
     /// <summary>
     /// HIDストリームからIMUデータを読み込もうとする（非同期）
     /// </summary>
-    private static async Task<ImuData?> TryReadImuDataAsync(IHidStream stream, byte[] buffer, CancellationToken cancellationToken)
+    private async Task<ImuData?> TryReadImuDataAsync(IHidStream stream, byte[] buffer, CancellationToken cancellationToken)
     {
         try
         {
             int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
 
-            if (bytesRead > 0 &&
-                VitureLumaPacket.TryParseImuPacket(buffer.AsSpan(0, bytesRead), out var imuData) &&
-                imuData != null)
+            if (bytesRead > 0)
             {
-                return imuData;
+                _logger.LogTrace("Read {BytesCount} bytes from IMU stream", bytesRead);
+
+                if (VitureLumaPacket.TryParseImuPacket(buffer.AsSpan(0, bytesRead), out var imuData) && imuData != null)
+                {
+                    _logger.LogTrace("Successfully parsed IMU packet: Counter={MessageCounter}, Timestamp={Timestamp}", 
+                        imuData.MessageCounter, imuData.Timestamp);
+                    return imuData;
+                }
+                else
+                {
+                    _logger.LogDebug("Failed to parse IMU packet from {BytesCount} bytes", bytesRead);
+                }
             }
         }
-        catch
+        catch (OperationCanceledException)
         {
-            // 読み込みエラーは無視
+            // キャンセルは正常な終了
+            _logger.LogDebug("IMU read cancelled");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Error reading from IMU stream: {ErrorMessage}", ex.Message);
         }
 
         return null;
@@ -290,7 +341,10 @@ internal sealed class VitureLumaDevice : IImuDevice
     private async Task SendImuEnableCommandAsync(bool enable, CancellationToken cancellationToken = default)
     {
         if (_mcuStream == null)
+        {
+            _logger.LogWarning("MCU stream is null, cannot send IMU {EnableState} command", enable ? "enable" : "disable");
             return;
+        }
 
         var cmdPacket = VitureLumaPacket.BuildImuEnableCommand(enable, _messageCounter++);
 
@@ -298,10 +352,14 @@ internal sealed class VitureLumaDevice : IImuDevice
         writeBuffer[0] = 0x00; // Report ID
         Array.Copy(cmdPacket, 0, writeBuffer, 1, cmdPacket.Length);
 
+        _logger.LogDebug("Sending IMU {EnableState} command, MessageCounter={MessageCounter}, PacketSize={PacketSize}", 
+            enable ? "enable" : "disable", _messageCounter - 1, cmdPacket.Length);
+
         try
         {
             // MCUストリーム「のみ」に送信
             await _mcuStream.WriteAsync(writeBuffer, cancellationToken);
+            _logger.LogTrace("IMU {EnableState} command sent to MCU", enable ? "enable" : "disable");
 
             // ACK受信待機（タイムアウト付き）
             var ackBuffer = new byte[ReadBufferSize];
@@ -312,9 +370,18 @@ internal sealed class VitureLumaDevice : IImuDevice
             {
                 int bytesRead = await _mcuStream.ReadAsync(ackBuffer, 0, ackBuffer.Length, cts.Token);
 
-                if (bytesRead >= 2 && ackBuffer[0] == 0xFF && ackBuffer[1] == 0xFD)
+                if (bytesRead >= 2)
                 {
-                    _logger.LogDebug("Received MCU ACK");
+                    _logger.LogTrace("MCU response: {ResponseByte0:X2} {ResponseByte1:X2}", ackBuffer[0], ackBuffer[1]);
+                    
+                    if (ackBuffer[0] == 0xFF && ackBuffer[1] == 0xFD)
+                    {
+                        _logger.LogDebug("Received MCU ACK for IMU {EnableState} command", enable ? "enable" : "disable");
+                    }
+                }
+                else
+                {
+                    _logger.LogDebug("MCU response received but invalid length: {BytesCount}", bytesRead);
                 }
             }
             catch (OperationCanceledException)
@@ -335,6 +402,8 @@ internal sealed class VitureLumaDevice : IImuDevice
         if (_disposed)
             return;
 
+        _logger.LogDebug("Disposing VitureLumaDevice");
+
         if (_isConnected && _mcuStream != null)
         {
             try
@@ -342,9 +411,9 @@ internal sealed class VitureLumaDevice : IImuDevice
                 // IMU無効化コマンドを送信
                 await SendImuEnableCommandAsync(enable: false);
             }
-            catch
+            catch (Exception ex)
             {
-                // エラーは無視
+                _logger.LogWarning(ex, "Error disabling IMU during dispose: {ErrorMessage}", ex.Message);
             }
         }
 
@@ -352,6 +421,8 @@ internal sealed class VitureLumaDevice : IImuDevice
 
         _isConnected = false;
         _disposed = true;
+        
+        _logger.LogInformation("VitureLumaDevice disposed");
     }
 
     public void Dispose()
