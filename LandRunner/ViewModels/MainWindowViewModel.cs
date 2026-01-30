@@ -125,6 +125,9 @@ public class MainWindowViewModel : ViewModelBase
         set => SetProperty(ref _isDisconnectButtonEnabled, value);
     }
 
+    // Event for visualization updates
+    public event Action<EulerAngles>? EulerAnglesUpdated;
+
     // Commands
     public ICommand ConnectCommand { get; }
     public ICommand DisconnectCommand { get; }
@@ -266,6 +269,9 @@ public class MainWindowViewModel : ViewModelBase
 
             TimestampValueText = $"Timestamp: {data.Timestamp}";
             CounterValueText = $"Counter: {data.MessageCounter}";
+
+            // Notify visualization to update
+            EulerAnglesUpdated?.Invoke(euler);
         }
         catch (Exception ex)
         {

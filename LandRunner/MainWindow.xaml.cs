@@ -17,27 +17,22 @@ namespace LandRunner
             InitializeComponent();
             
             _viewModel = new MainWindowViewModel();
+            _viewModel.EulerAnglesUpdated += OnEulerAnglesUpdated;
             DataContext = _viewModel;
+        }
+
+        private void OnEulerAnglesUpdated(EulerAngles euler)
+        {
+            // Ensure we're on the UI thread for drawing
+            Dispatcher.Invoke(() => DrawAxisVisualization(euler));
         }
 
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (_viewModel != null)
             {
+                _viewModel.EulerAnglesUpdated -= OnEulerAnglesUpdated;
                 await _viewModel.DisconnectAsync();
-            }
-        }
-
-        // Visualization is drawn based on ViewModel updates
-        // This is called from MainWindow.xaml binding to ViewModel properties
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            base.OnRender(drawingContext);
-            
-            // Draw axis visualization when data is available
-            if (_viewModel != null && !string.IsNullOrEmpty(_viewModel.YawText))
-            {
-                DrawAxisVisualization(_viewModel.GetLastEulerAngles());
             }
         }
 

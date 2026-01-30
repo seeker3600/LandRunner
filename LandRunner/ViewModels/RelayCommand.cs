@@ -13,7 +13,11 @@ public class AsyncRelayCommand : ICommand
     private readonly Func<bool>? _canExecute;
     private bool _isExecuting;
 
-    public event EventHandler? CanExecuteChanged;
+    public event EventHandler? CanExecuteChanged
+    {
+        add { CommandManager.RequerySuggested += value; }
+        remove { CommandManager.RequerySuggested -= value; }
+    }
 
     public AsyncRelayCommand(Func<Task> execute, Func<bool>? canExecute = null)
     {
@@ -30,14 +34,19 @@ public class AsyncRelayCommand : ICommand
         _isExecuting = true;
         try
         {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            RaiseCanExecuteChanged();
             await _execute();
         }
         finally
         {
             _isExecuting = false;
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            RaiseCanExecuteChanged();
         }
+    }
+
+    public void RaiseCanExecuteChanged()
+    {
+        CommandManager.InvalidateRequerySuggested();
     }
 }
 
