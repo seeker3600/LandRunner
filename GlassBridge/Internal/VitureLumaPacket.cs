@@ -25,7 +25,10 @@ internal static class VitureLumaPacket
     /// IMUデータパケットを解析
     /// HID読み取りでは先頭にReport ID (0x00) が付くことがあるため自動検出する
     /// </summary>
-    public static bool TryParseImuPacket(ReadOnlySpan<byte> buffer, out ImuData? imuData)
+    /// <param name="buffer">入力バッファ</param>
+    /// <param name="imuData">解析結果</param>
+    /// <param name="skipCrcValidation">CRC検証をスキップするかどうか（デフォルト: false）</param>
+    public static bool TryParseImuPacket(ReadOnlySpan<byte> buffer, out ImuData? imuData, bool skipCrcValidation = false)
     {
         imuData = null;
 
@@ -47,17 +50,26 @@ internal static class VitureLumaPacket
         if (packet[0] != HeaderByte0 || packet[1] != HeaderImuData)
             return false;
 
-        // CRC検証
-        if (!VerifyCrc(packet))
+        // CRC検証（オプショナル）
+        // 実デバイスではCRC計算が仕様と異なる場合があるため、スキップ可能
+        if (!skipCrcValidation && !VerifyCrc(packet))
             return false;
 
         // Payload lengthを取得（リトルエンディアン）
+        // payload_length は offset 0x06 から End marker までのバイト数
         ushort payloadLen = (ushort)(packet[LengthOffset] | (packet[LengthOffset + 1] << 8));
-        int totalLen = LengthOffset + payloadLen;
+        
+        // End marker の位置: TimestampOffset (0x06) + payloadLen - 1
+        int endMarkerPos = TimestampOffset + payloadLen - 1;
 
-        // End markerを確認
-        if (totalLen > 0 && totalLen <= packet.Length && packet[totalLen - 1] != EndMarkerValue)
-            return false;
+        // End markerを確認（存在する場合のみ検証、0x00パディングの場合はスキップ）
+        // 実デバイスでは End marker が省略されることがある
+        if (endMarkerPos > 0 && endMarkerPos < packet.Length)
+        {
+            byte endByte = packet[endMarkerPos];
+            if (endByte != EndMarkerValue && endByte != 0x00)
+                return false;
+        }
 
         // タイムスタンプを取得
         uint timestamp = (uint)(packet[TimestampOffset] | 
@@ -88,6 +100,9 @@ internal static class VitureLumaPacket
 
     /// <summary>
     /// CRCを検証
+    /// CRC計算範囲: offset 0x04 以降（ヘッダとCRCフィールド自体を除外）
+    /// payload_length は offset 0x06 から End marker までのバイト数
+    /// よって計算範囲は offset 0x04 から 2 + payload_length バイト
     /// </summary>
     private static bool VerifyCrc(ReadOnlySpan<byte> buffer)
     {
@@ -97,12 +112,14 @@ internal static class VitureLumaPacket
         // 保存されたCRC（ビッグエンディアン）
         ushort storedCrc = (ushort)((buffer[CrcOffset] << 8) | buffer[CrcOffset + 1]);
 
-        // Payload lengthを取得
+        // Payload lengthを取得（offset 0x06 から End marker までのバイト数）
         ushort payloadLen = (ushort)(buffer[LengthOffset] | (buffer[LengthOffset + 1] << 8));
-        int dataLen = payloadLen;
+        
+        // CRC計算範囲: length field (2バイト) + payload
+        int crcDataLen = 2 + payloadLen;
 
         // CRCを再計算（offset 0x04以降）
-        ushort calculatedCrc = Crc16Ccitt.Calculate(buffer, LengthOffset, dataLen);
+        ushort calculatedCrc = Crc16Ccitt.Calculate(buffer, LengthOffset, crcDataLen);
 
         return storedCrc == calculatedCrc;
     }

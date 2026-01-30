@@ -264,6 +264,7 @@ internal sealed class VitureLumaDevice : IImuDevice
         try
         {
             // デバイスの MaxInputReportLength に基づいてバッファを作成
+            // VITURE仕様: Report ID (1 byte) + Report Size (64 bytes) = 65 bytes
             var buffer = new byte[_imuStream.MaxInputReportLength];
 
             while (!cancellationToken.IsCancellationRequested && IsConnected)
@@ -315,7 +316,7 @@ internal sealed class VitureLumaDevice : IImuDevice
             {
                 _logger.LogTrace("Read {BytesCount} bytes from IMU stream", bytesRead);
 
-                if (VitureLumaPacket.TryParseImuPacket(buffer.AsSpan(0, bytesRead), out var imuData) && imuData != null)
+                if (VitureLumaPacket.TryParseImuPacket(buffer.AsSpan(0, bytesRead), out var imuData, skipCrcValidation: true) && imuData != null)
                 {
                     _logger.LogTrace("Successfully parsed IMU packet: Counter={MessageCounter}, Timestamp={Timestamp}", 
                         imuData.MessageCounter, imuData.Timestamp);
