@@ -86,42 +86,12 @@ public class ImuPacketParseBenchmark
     }
 
     /// <summary>
-    /// 標準的なIMUパケット解析（CRCスキップ）
-    /// 実運用時の典型的なパス
-    /// </summary>
-    [Benchmark(Baseline = true)]
-    public ImuData? ParseValidPacket_SkipCrc()
-    {
-        VitureLumaPacket.TryParseImuPacket(_validImuPacket.AsSpan(), out var data, skipCrcValidation: true);
-        return data;
-    }
-
-    /// <summary>
     /// Report ID付きパケット解析（HID読み取り時の実際の形式）
     /// </summary>
     [Benchmark]
-    public ImuData? ParseValidPacket_WithReportId()
+    public ImuData? ParseValidPacket()
     {
         VitureLumaPacket.TryParseImuPacket(_validImuPacketWithReportId.AsSpan(), out var data, skipCrcValidation: true);
         return data;
-    }
-
-    /// <summary>
-    /// CRC検証付きパケット解析
-    /// </summary>
-    [Benchmark]
-    public ImuData? ParseValidPacket_WithCrcValidation()
-    {
-        VitureLumaPacket.TryParseImuPacket(_validImuPacket.AsSpan(), out var data, skipCrcValidation: false);
-        return data;
-    }
-
-    /// <summary>
-    /// 無効なパケットの早期リジェクト
-    /// </summary>
-    [Benchmark]
-    public bool ParseInvalidPacket_EarlyReject()
-    {
-        return VitureLumaPacket.TryParseImuPacket(_invalidPacket.AsSpan(), out _, skipCrcValidation: true);
     }
 }
