@@ -99,7 +99,7 @@ namespace LandRunner
             // double z3 = y2 * Math.Sin(roll) + z2 * Math.Cos(roll); // Not needed for 2D projection
 
             // Project to 2D (orthographic projection: X -> right, Y -> down)
-            return (x3, y3);
+            return (x3, -y3);  // Flip Y: WPF Y-axis is down, math Y-axis is up
         }
 
         private void DrawReferenceAxis(double centerX, double centerY, double length, double angleDeg, Color color, string label)
