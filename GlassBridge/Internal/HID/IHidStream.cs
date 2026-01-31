@@ -1,32 +1,32 @@
 namespace GlassBridge.Internal.HID;
 
 /// <summary>
-/// HIDƒXƒgƒŠ[ƒ€‘€ì‚Ì’ŠÛ‰»iHidSharp‚Ö‚Ì’¼ÚˆË‘¶‚ğ”rœj
+/// HIDã‚¹ãƒˆãƒªãƒ¼ãƒ æ“ä½œã®æŠ½è±¡åŒ–ï¼ˆHidSharpã¸ã®ç›´æ¥ä¾å­˜ã‚’æ’é™¤ï¼‰
 /// </summary>
 internal interface IHidStream : IAsyncDisposable, IDisposable
 {
     /// <summary>
-    /// ƒXƒgƒŠ[ƒ€‚©‚çƒf[ƒ^‚ğ”ñ“¯Šú‚Å“Ç‚İ‚Ş
+    /// ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’éåŒæœŸã§èª­ã¿è¾¼ã‚€
     /// </summary>
     Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// ƒXƒgƒŠ[ƒ€‚Éƒf[ƒ^‚ğ”ñ“¯Šú‚Å‘‚«‚Ş
+    /// ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒ‡ãƒ¼ã‚¿ã‚’éåŒæœŸã§æ›¸ãè¾¼ã‚€
     /// </summary>
     Task WriteAsync(byte[] buffer, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// ƒXƒgƒŠ[ƒ€‚ªŠJ‚¢‚Ä‚¢‚é‚©‚ğŠm”F
+    /// ã‚¹ãƒˆãƒªãƒ¼ãƒ ãŒé–‹ã„ã¦ã„ã‚‹ã‹ã‚’ç¢ºèª
     /// </summary>
     bool IsOpen { get; }
 
     /// <summary>
-    /// Å‘å“ü—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
+    /// æœ€å¤§å…¥åŠ›ãƒ¬ãƒãƒ¼ãƒˆé•·ï¼ˆReport ID ã‚’å«ã‚€ï¼‰
     /// </summary>
     int MaxInputReportLength { get; }
 
     /// <summary>
-    /// Å‘åo—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
+    /// æœ€å¤§å‡ºåŠ›ãƒ¬ãƒãƒ¼ãƒˆé•·ï¼ˆReport ID ã‚’å«ã‚€ï¼‰
     /// </summary>
     int MaxOutputReportLength { get; }
 }

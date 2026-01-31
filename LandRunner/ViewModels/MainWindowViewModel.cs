@@ -6,17 +6,17 @@ using GlassBridge;
 namespace LandRunner.ViewModels;
 
 /// <summary>
-/// IMUƒf[ƒ^•\¦—p‚ÌViewModel
-/// GlassBridge‚Ì ConnectAndRecordAsync() ‚ğg—p‚µ‚Äƒf[ƒ^‚ğ©“®˜^‰¹
+/// IMUãƒ‡ãƒ¼ã‚¿è¡¨ç¤ºç”¨ã®ViewModel
+/// GlassBridgeã® ConnectAndRecordAsync() ã‚’ä½¿ç”¨ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’è‡ªå‹•éŒ²éŸ³
 /// </summary>
 public class MainWindowViewModel : ViewModelBase
 {
     private string _statusText = "Status: Disconnected";
     private string _messageCounterText = "Messages: 0";
     private string _lastTimestampText = "Timestamp: 0";
-    private string _rollText = "Roll:  0.00‹";
-    private string _pitchText = "Pitch: 0.00‹";
-    private string _yawText = "Yaw:   0.00‹";
+    private string _rollText = "Roll:  0.00Â°";
+    private string _pitchText = "Pitch: 0.00Â°";
+    private string _yawText = "Yaw:   0.00Â°";
     private string _quatWText = "W: 1.000";
     private string _quatXText = "X: 0.000";
     private string _quatYText = "Y: 0.000";
@@ -161,7 +161,7 @@ public class MainWindowViewModel : ViewModelBase
 
             _deviceManager = new ImuDeviceManager();
             
-            // GlassBridge‚Ì ConnectAndRecordAsync() ‚ğg—p‚µ‚Äƒf[ƒ^‚ğ©“®‹L˜^
+            // GlassBridgeã® ConnectAndRecordAsync() ã‚’ä½¿ç”¨ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’è‡ªå‹•è¨˜éŒ²
             _device = await _deviceManager.ConnectAndRecordAsync(appDataPath);
 
             if (_device == null)
@@ -233,8 +233,8 @@ public class MainWindowViewModel : ViewModelBase
             {
                 count++;
                 
-                // UI‚ÌXV‚ÍƒƒCƒ“ƒXƒŒƒbƒh‚ÅÀs‚³‚ê‚é•K—v‚ª‚ ‚è‚Ü‚·
-                // ViewModelBase‚Ìd‘g‚İ‚ÅUI‚ªXV‚³‚ê‚Ü‚·
+                // UIã®æ›´æ–°ã¯ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œã•ã‚Œã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™
+                // ViewModelBaseã®ä»•çµ„ã¿ã§UIãŒæ›´æ–°ã•ã‚Œã¾ã™
                 UpdateFromImuData(imuData, count);
             }
         }
@@ -257,9 +257,9 @@ public class MainWindowViewModel : ViewModelBase
             LastTimestampText = $"Timestamp: {data.Timestamp}";
 
             var euler = data.EulerAngles;
-            RollText = $"Roll:  {euler.Roll:F2}‹";
-            PitchText = $"Pitch: {euler.Pitch:F2}‹";
-            YawText = $"Yaw:   {euler.Yaw:F2}‹";
+            RollText = $"Roll:  {euler.Roll:F2}Â°";
+            PitchText = $"Pitch: {euler.Pitch:F2}Â°";
+            YawText = $"Yaw:   {euler.Yaw:F2}Â°";
 
             var quat = data.Quaternion;
             QuatWText = $"W: {quat.W:F3}";
@@ -282,9 +282,9 @@ public class MainWindowViewModel : ViewModelBase
     public EulerAngles GetLastEulerAngles()
     {
         // Parse from text fields
-        float roll = float.Parse(RollText.Replace("Roll:  ", "").Replace("‹", ""));
-        float pitch = float.Parse(PitchText.Replace("Pitch: ", "").Replace("‹", ""));
-        float yaw = float.Parse(YawText.Replace("Yaw:   ", "").Replace("‹", ""));
+        float roll = float.Parse(RollText.Replace("Roll:  ", "").Replace("Â°", ""));
+        float pitch = float.Parse(PitchText.Replace("Pitch: ", "").Replace("Â°", ""));
+        float yaw = float.Parse(YawText.Replace("Yaw:   ", "").Replace("Â°", ""));
         return new EulerAngles(roll, pitch, yaw);
     }
 }

@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 namespace GlassBridge;
 
 /// <summary>
-/// ƒeƒXƒg—p‚Ìƒ‚ƒbƒNIMUƒfƒoƒCƒXÀ‘•
+/// ãƒ†ã‚¹ãƒˆç”¨ã®ãƒ¢ãƒƒã‚¯IMUãƒ‡ãƒã‚¤ã‚¹å®Ÿè£…
 /// </summary>
 public sealed class MockImuDevice : IImuDevice
 {
@@ -13,16 +13,16 @@ public sealed class MockImuDevice : IImuDevice
     public bool IsConnected => !_disposed;
 
     /// <summary>
-    /// ƒ‚ƒbƒNƒfƒoƒCƒX‚ğì¬
+    /// ãƒ¢ãƒƒã‚¯ãƒ‡ãƒã‚¤ã‚¹ã‚’ä½œæˆ
     /// </summary>
-    /// <param name="dataSourceFactory">IMUƒf[ƒ^‚ğ¶¬‚·‚éƒtƒ@ƒNƒgƒŠŠÖ”iƒIƒvƒVƒ‡ƒ“j</param>
+    /// <param name="dataSourceFactory">IMUãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆã™ã‚‹ãƒ•ã‚¡ã‚¯ãƒˆãƒªé–¢æ•°ï¼ˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼‰</param>
     public MockImuDevice(Func<CancellationToken, IAsyncEnumerable<ImuData>>? dataSourceFactory = null)
     {
         _dataSourceFactory = dataSourceFactory;
     }
 
     /// <summary>
-    /// ƒeƒXƒg—pF’Pˆê‚ÌIMUƒf[ƒ^‚ğ•Ô‚·ƒ‚ƒbƒNƒfƒoƒCƒX‚ğì¬
+    /// ãƒ†ã‚¹ãƒˆç”¨ï¼šå˜ä¸€ã®IMUãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™ãƒ¢ãƒƒã‚¯ãƒ‡ãƒã‚¤ã‚¹ã‚’ä½œæˆ
     /// </summary>
     public static MockImuDevice CreateWithStaticData(ImuData data)
     {
@@ -30,7 +30,7 @@ public sealed class MockImuDevice : IImuDevice
     }
 
     /// <summary>
-    /// ƒeƒXƒg—pF’èŠú“I‚ÉIMUƒf[ƒ^‚ğ¶¬‚·‚éƒ‚ƒbƒNƒfƒoƒCƒX‚ğì¬
+    /// ãƒ†ã‚¹ãƒˆç”¨ï¼šå®šæœŸçš„ã«IMUãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆã™ã‚‹ãƒ¢ãƒƒã‚¯ãƒ‡ãƒã‚¤ã‚¹ã‚’ä½œæˆ
     /// </summary>
     public static MockImuDevice CreateWithPeriodicData(
         Func<ushort, ImuData> dataFactory,

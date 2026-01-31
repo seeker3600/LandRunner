@@ -6,14 +6,14 @@ using GlassBridge.Internal.HID;
 using Xunit;
 
 /// <summary>
-/// “‡ƒeƒXƒg
-/// •¡”‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‘ŠŒİì—p‚ğƒeƒXƒg
+/// çµ±åˆãƒ†ã‚¹ãƒˆ
+/// è¤‡æ•°ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ç›¸äº’ä½œç”¨ã‚’ãƒ†ã‚¹ãƒˆ
 /// </summary>
 public class IntegrationTests
 {
     /// <summary>
-    /// ƒeƒXƒg1: MockProvider + Device ‚Ì“‡ƒeƒXƒg
-    /// d—lFuProvider‚ªƒXƒgƒŠ[ƒ€‚ğDevice‚É’ñ‹Ÿ‚µA³í‚É“®ì‚·‚év
+    /// ãƒ†ã‚¹ãƒˆ1: MockProvider + Device ã®çµ±åˆãƒ†ã‚¹ãƒˆ
+    /// ä»•æ§˜ï¼šã€ŒProviderãŒã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’Deviceã«æä¾›ã—ã€æ­£å¸¸ã«å‹•ä½œã™ã‚‹ã€
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task MockProvider_WithDevice_ShouldIntegrateCorrectly()
@@ -33,8 +33,8 @@ public class IntegrationTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg2: •¡”‚ÌƒfƒoƒCƒXÚ‘±ƒeƒXƒg
-    /// d—lFu•¡”‰ñ‚ÌÚ‘±EØ’f‚ª³í‚É“®ì‚·‚év
+    /// ãƒ†ã‚¹ãƒˆ2: è¤‡æ•°ã®ãƒ‡ãƒã‚¤ã‚¹æ¥ç¶šãƒ†ã‚¹ãƒˆ
+    /// ä»•æ§˜ï¼šã€Œè¤‡æ•°å›ã®æ¥ç¶šãƒ»åˆ‡æ–­ãŒæ­£å¸¸ã«å‹•ä½œã™ã‚‹ã€
     /// </summary>
     [Fact(Timeout = 10000)]
     public async Task MultipleConnect_ShouldSucceed()
@@ -54,8 +54,8 @@ public class IntegrationTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg3: DisposeAsync ‚Ì“ñdŒÄ‚Ño‚µ
-    /// d—lFu“ñdDispose‚ª—áŠO‚ğ”­¶‚³‚¹‚È‚¢v
+    /// ãƒ†ã‚¹ãƒˆ3: DisposeAsync ã®äºŒé‡å‘¼ã³å‡ºã—
+    /// ä»•æ§˜ï¼šã€ŒäºŒé‡DisposeãŒä¾‹å¤–ã‚’ç™ºç”Ÿã•ã›ãªã„ã€
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task DisposeAsync_MultipleTimes_ShouldNotThrow()
@@ -66,14 +66,14 @@ public class IntegrationTests
 
         // Act & Assert
         await device.DisposeAsync();
-        await device.DisposeAsync(); // 2‰ñ–Ú
+        await device.DisposeAsync(); // 2å›ç›®
         
         Assert.False(device.IsConnected);
     }
 
     /// <summary>
-    /// ƒeƒXƒg4: DisposedŒã‚Ìƒƒ\ƒbƒhŒÄ‚Ño‚µ
-    /// d—lFuDisposedŒã‚ÌGetImuDataStreamAsync‚Í—áŠO‚ğ”­¶‚³‚¹‚év
+    /// ãƒ†ã‚¹ãƒˆ4: Disposedå¾Œã®ãƒ¡ã‚½ãƒƒãƒ‰å‘¼ã³å‡ºã—
+    /// ä»•æ§˜ï¼šã€ŒDisposedå¾Œã®GetImuDataStreamAsyncã¯ä¾‹å¤–ã‚’ç™ºç”Ÿã•ã›ã‚‹ã€
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task MethodCall_AfterDispose_ShouldThrowInvalidOperationException()
@@ -88,7 +88,7 @@ public class IntegrationTests
         {
             await foreach (var data in device.GetImuDataStreamAsync())
             {
-                // ‚±‚±‚É“’B‚µ‚È‚¢‚±‚Æ
+                // ã“ã“ã«åˆ°é”ã—ãªã„ã“ã¨
             }
         });
 
@@ -96,8 +96,8 @@ public class IntegrationTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg5: MockHidStream ‚Æ Crc16Ccitt ‚Ì“‡
-    /// d—lFuƒVƒŠƒAƒ‰ƒCƒY‚³‚ê‚½ƒpƒPƒbƒg‚ÌCRC‚ª³“–v
+    /// ãƒ†ã‚¹ãƒˆ5: MockHidStream ã¨ Crc16Ccitt ã®çµ±åˆ
+    /// ä»•æ§˜ï¼šã€Œã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºã•ã‚ŒãŸãƒ‘ã‚±ãƒƒãƒˆã®CRCãŒæ­£å½“ã€
     /// </summary>
     [Fact]
     public void SerializedPacket_CRC_ShouldBeValid()
@@ -114,16 +114,16 @@ public class IntegrationTests
         var buffer = new byte[64];
         SerializeTestPacket(buffer, imuData);
 
-        // Act: CRC ‚ğŒvZ
+        // Act: CRC ã‚’è¨ˆç®—
         ushort crc = Crc16Ccitt.Calculate(buffer.AsSpan(), 4, 30);
 
-        // Assert: CRC ‚Í—LŒø‚È’l
+        // Assert: CRC ã¯æœ‰åŠ¹ãªå€¤
         Assert.True(crc >= 0, "CRC should be calculated");
     }
 
     /// <summary>
-    /// ƒeƒXƒg6: MockMcuStream ‚Ì•¡”“Ç‚İ‚İ
-    /// d—lFuMCUƒXƒgƒŠ[ƒ€‚©‚ç•¡”‰ñ“Ç‚İ‚İ‚ª‰Â”\v
+    /// ãƒ†ã‚¹ãƒˆ6: MockMcuStream ã®è¤‡æ•°èª­ã¿è¾¼ã¿
+    /// ä»•æ§˜ï¼šã€ŒMCUã‚¹ãƒˆãƒªãƒ¼ãƒ ã‹ã‚‰è¤‡æ•°å›èª­ã¿è¾¼ã¿ãŒå¯èƒ½ã€
     /// </summary>
     [Fact]
     public async Task MockMcuStream_MultiplReadAsync_ShouldWork()
@@ -132,13 +132,13 @@ public class IntegrationTests
         var mcuStream = new MockMcuStream();
         var buffer = new byte[64];
 
-        // Act & Assert: •¡”‰ñ‚Ì“Ç‚İ‚İ
+        // Act & Assert: è¤‡æ•°å›ã®èª­ã¿è¾¼ã¿
         for (int i = 0; i < 3; i++)
         {
             await mcuStream.WriteAsync(buffer, CancellationToken.None);
             int bytesRead = await mcuStream.ReadAsync(buffer, 0, buffer.Length, CancellationToken.None);
             
-            // Å‰‚Ì“Ç‚İ‚İ‚Íƒf[ƒ^‚ğ•Ô‚·AˆÈ~‚Í‹ó
+            // æœ€åˆã®èª­ã¿è¾¼ã¿ã¯ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™ã€ä»¥é™ã¯ç©º
             if (i == 0)
             {
                 Assert.True(bytesRead > 0, $"First read should return data, got {bytesRead}");
@@ -149,8 +149,8 @@ public class IntegrationTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg7: VitureLumaPacket ƒRƒ}ƒ“ƒhŒŸØ
-    /// d—lFuBuildImuEnableCommand ‚Å—LŒø‚ÈƒpƒPƒbƒg‚ª¶¬‚³‚ê‚év
+    /// ãƒ†ã‚¹ãƒˆ7: VitureLumaPacket ã‚³ãƒãƒ³ãƒ‰æ¤œè¨¼
+    /// ä»•æ§˜ï¼šã€ŒBuildImuEnableCommand ã§æœ‰åŠ¹ãªãƒ‘ã‚±ãƒƒãƒˆãŒç”Ÿæˆã•ã‚Œã‚‹ã€
     /// </summary>
     [Fact]
     public void BuildImuEnableCommand_ShouldGenerateValidCommand()
@@ -165,7 +165,7 @@ public class IntegrationTests
         Assert.True(packet1.Length > 0);
         Assert.True(packet2.Length > 0);
         
-        // ƒwƒbƒ_Šm”F
+        // ãƒ˜ãƒƒãƒ€ç¢ºèª
         Assert.Equal(0xFF, packet1[0]);
         Assert.Equal(0xFE, packet1[1]); // MCU Command
         
@@ -174,8 +174,8 @@ public class IntegrationTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg8: MockHidStreamProvider ‚ÌƒXƒgƒŠ[ƒ€ŒÂ”
-    /// d—lFuMockProvider‚ª2‚Â‚ÌƒXƒgƒŠ[ƒ€‚ğ•Ô‚·v
+    /// ãƒ†ã‚¹ãƒˆ8: MockHidStreamProvider ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ å€‹æ•°
+    /// ä»•æ§˜ï¼šã€ŒMockProviderãŒ2ã¤ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’è¿”ã™ã€
     /// </summary>
     [Fact]
     public async Task MockHidStreamProvider_ReturnsCorrectStreamCount()
@@ -198,8 +198,8 @@ public class IntegrationTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg9: Crc16Ccitt ‚ÌˆêŠÑ«
-    /// d—lFu“¯‚¶ƒf[ƒ^‚©‚ç¶¬‚³‚ê‚éCRC‚Íí‚É“¯‚¶v
+    /// ãƒ†ã‚¹ãƒˆ9: Crc16Ccitt ã®ä¸€è²«æ€§
+    /// ä»•æ§˜ï¼šã€ŒåŒã˜ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ç”Ÿæˆã•ã‚Œã‚‹CRCã¯å¸¸ã«åŒã˜ã€
     /// </summary>
     [Fact]
     public void Crc16Ccitt_Consistency()
@@ -214,7 +214,7 @@ public class IntegrationTests
             crcs[i] = Crc16Ccitt.Calculate(data.AsSpan(), 0, data.Length);
         }
 
-        // Assert: ‚·‚×‚Ä“¯‚¶’l
+        // Assert: ã™ã¹ã¦åŒã˜å€¤
         for (int i = 1; i < crcs.Length; i++)
         {
             Assert.Equal(crcs[0], crcs[i]);
@@ -222,8 +222,8 @@ public class IntegrationTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg10: VitureLumaDevice ‚ÌƒvƒƒpƒeƒB‰Šúó‘Ô
-    /// d—lFuƒfƒoƒCƒX‚ÌƒvƒƒpƒeƒB‚ª³‚µ‚­‰Šú‰»‚³‚ê‚év
+    /// ãƒ†ã‚¹ãƒˆ10: VitureLumaDevice ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£åˆæœŸçŠ¶æ…‹
+    /// ä»•æ§˜ï¼šã€Œãƒ‡ãƒã‚¤ã‚¹ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãŒæ­£ã—ãåˆæœŸåŒ–ã•ã‚Œã‚‹ã€
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task VitureLumaDevice_InitialState_ShouldBeCorrect()
@@ -232,16 +232,16 @@ public class IntegrationTests
         var mockProvider = new MockHidStreamProvider(GenerateTestImuData);
         var device = await VitureLumaDevice.ConnectWithProviderAsync(mockProvider);
 
-        // Act & Assert: IsConnected ‚ª true
+        // Act & Assert: IsConnected ãŒ true
         Assert.True(device.IsConnected);
 
         await device.DisposeAsync();
         
-        // Act & Assert: DisposeŒã‚Í false
+        // Act & Assert: Disposeå¾Œã¯ false
         Assert.False(device.IsConnected);
     }
 
-    // ƒwƒ‹ƒp[ƒƒ\ƒbƒh
+    // ãƒ˜ãƒ«ãƒ‘ãƒ¼ãƒ¡ã‚½ãƒƒãƒ‰
     private static async IAsyncEnumerable<ImuData> GenerateTestImuData(
         [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
@@ -264,7 +264,7 @@ public class IntegrationTests
 
     private void SerializeTestPacket(byte[] buffer, ImuData data)
     {
-        // ƒwƒbƒ_
+        // ãƒ˜ãƒƒãƒ€
         buffer[0] = 0xFF;
         buffer[1] = 0xFC;
 
@@ -272,7 +272,7 @@ public class IntegrationTests
         buffer[4] = 30;
         buffer[5] = 0;
 
-        // TimestampiƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“j
+        // Timestampï¼ˆãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ï¼‰
         buffer[6] = (byte)(data.Timestamp & 0xFF);
         buffer[7] = (byte)((data.Timestamp >> 8) & 0xFF);
         buffer[8] = (byte)((data.Timestamp >> 16) & 0xFF);
@@ -292,7 +292,7 @@ public class IntegrationTests
         buffer[16] = (byte)(data.MessageCounter & 0xFF);
         buffer[17] = (byte)((data.MessageCounter >> 8) & 0xFF);
 
-        // IMU ƒf[ƒ^
+        // IMU ãƒ‡ãƒ¼ã‚¿
         var euler = data.EulerAngles;
         float raw0 = -euler.Yaw;
         float raw1 = -euler.Roll;
@@ -313,7 +313,7 @@ public class IntegrationTests
         // End marker
         buffer[30] = 0x03;
 
-        // CRC ‚ğŒvZ‚µ‚Äİ’è
+        // CRC ã‚’è¨ˆç®—ã—ã¦è¨­å®š
         ushort crc = Crc16Ccitt.Calculate(buffer.AsSpan(), 4, 30);
         buffer[2] = (byte)((crc >> 8) & 0xFF);
         buffer[3] = (byte)(crc & 0xFF);

@@ -1,9 +1,9 @@
 namespace GlassBridge.Internal.HID;
 
 /// <summary>
-/// ƒeƒXƒg—p‚Ìƒ‚ƒbƒN HID ƒXƒgƒŠ[ƒ€ƒvƒƒoƒCƒ_[
-/// IHidStreamProvider ‚ÌÀ‘•ƒCƒ“ƒ^[ƒtƒF[ƒX‚É‡‚í‚¹‚é
-/// IMU/MCU ‚Ì2‚Â‚ÌƒXƒgƒŠ[ƒ€‚ğ•Ô‚·
+/// ãƒ†ã‚¹ãƒˆç”¨ã®ãƒ¢ãƒƒã‚¯ HID ã‚¹ãƒˆãƒªãƒ¼ãƒ ãƒ—ãƒ­ãƒã‚¤ãƒ€ãƒ¼
+/// IHidStreamProvider ã®å®Ÿè£…ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã«åˆã‚ã›ã‚‹
+/// IMU/MCU ã®2ã¤ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’è¿”ã™
 /// </summary>
 internal sealed class MockHidStreamProvider : IHidStreamProvider
 {
@@ -25,11 +25,11 @@ internal sealed class MockHidStreamProvider : IHidStreamProvider
 
         var imuDataStream = _imuDataStreamFactory(cancellationToken);
         
-        // ƒeƒXƒg—p: MCU/IMU ‚Ì‡˜‚Å•Ô‚· (MCU ‚ªÅ‰)
-        // MCU ƒXƒgƒŠ[ƒ€: ƒRƒ}ƒ“ƒh‚É‰“š‚µ ACK ƒpƒPƒbƒg‚ğ•Ô‚·
+        // ãƒ†ã‚¹ãƒˆç”¨: MCU/IMU ã®é †åºã§è¿”ã™ (MCU ãŒæœ€åˆ)
+        // MCU ã‚¹ãƒˆãƒªãƒ¼ãƒ : ã‚³ãƒãƒ³ãƒ‰ã«å¿œç­”ã— ACK ãƒ‘ã‚±ãƒƒãƒˆã‚’è¿”ã™
         IHidStream mcuStream = new MockMcuStream();
         
-        // IMU ƒXƒgƒŠ[ƒ€: ƒeƒXƒgƒf[ƒ^‚ğ•Ô‚·
+        // IMU ã‚¹ãƒˆãƒªãƒ¼ãƒ : ãƒ†ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
         IHidStream imuStream = new MockHidStream(imuDataStream, cancellationToken);
         
         return new[] { mcuStream, imuStream };
@@ -46,13 +46,13 @@ internal sealed class MockHidStreamProvider : IHidStreamProvider
 }
 
 /// <summary>
-/// MCU ƒXƒgƒŠ[ƒ€—p‚Ìƒ‚ƒbƒNÀ‘•
-/// ƒRƒ}ƒ“ƒh‚É‰“š‚µ ACK ƒpƒPƒbƒg‚ğ•Ô‚·
+/// MCU ã‚¹ãƒˆãƒªãƒ¼ãƒ ç”¨ã®ãƒ¢ãƒƒã‚¯å®Ÿè£…
+/// ã‚³ãƒãƒ³ãƒ‰ã«å¿œç­”ã— ACK ãƒ‘ã‚±ãƒƒãƒˆã‚’è¿”ã™
 /// </summary>
 internal sealed class MockMcuStream : IHidStream
 {
     /// <summary>
-    /// ƒfƒtƒHƒ‹ƒg‚ÌƒŒƒ|[ƒg’·iVITURE ƒfƒoƒCƒX‚É‡‚í‚¹‚½’lj
+    /// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒ¬ãƒãƒ¼ãƒˆé•·ï¼ˆVITURE ãƒ‡ãƒã‚¤ã‚¹ã«åˆã‚ã›ãŸå€¤ï¼‰
     /// Report ID (1 byte) + Report Data (64 bytes) = 65 bytes
     /// </summary>
     public const int DefaultReportLength = 65;
@@ -63,12 +63,12 @@ internal sealed class MockMcuStream : IHidStream
     public bool IsOpen => !_disposed;
 
     /// <summary>
-    /// Å‘å“ü—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
+    /// æœ€å¤§å…¥åŠ›ãƒ¬ãƒãƒ¼ãƒˆé•·ï¼ˆReport ID ã‚’å«ã‚€ï¼‰
     /// </summary>
     public int MaxInputReportLength { get; } = DefaultReportLength;
 
     /// <summary>
-    /// Å‘åo—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
+    /// æœ€å¤§å‡ºåŠ›ãƒ¬ãƒãƒ¼ãƒˆé•·ï¼ˆReport ID ã‚’å«ã‚€ï¼‰
     /// </summary>
     public int MaxOutputReportLength { get; } = DefaultReportLength;
 
@@ -77,13 +77,13 @@ internal sealed class MockMcuStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(MockMcuStream));
 
-        // 1‰ñ‚¾‚¯ ACK ‚ğ•Ô‚µ‚ÄI—¹
+        // 1å›ã ã‘ ACK ã‚’è¿”ã—ã¦çµ‚äº†
         if (_readCount >= 1)
         {
             return 0;
         }
 
-        // ACK ƒpƒPƒbƒg‚ğ¶¬ (ƒwƒbƒ_: 0xFF 0xFD)
+        // ACK ãƒ‘ã‚±ãƒƒãƒˆã‚’ç”Ÿæˆ (ãƒ˜ãƒƒãƒ€: 0xFF 0xFD)
         var ackPacket = new byte[64];
         ackPacket[0] = 0xFF;  // Header byte 0
         ackPacket[1] = 0xFD;  // Header byte 1 (MCU ACK)
@@ -102,7 +102,7 @@ internal sealed class MockMcuStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(MockMcuStream));
 
-        // ƒ‚ƒbƒN: ‘‚«‚İ‚Í‰½‚à‚µ‚È‚¢
+        // ãƒ¢ãƒƒã‚¯: æ›¸ãè¾¼ã¿ã¯ä½•ã‚‚ã—ãªã„
         await Task.CompletedTask;
     }
 

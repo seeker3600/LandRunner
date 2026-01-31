@@ -1,48 +1,48 @@
 namespace GlassBridge;
 
 /// <summary>
-/// IMUip¨jƒf[ƒ^‚ğ•\‚·\‘¢‘Ì
+/// IMUï¼ˆå§¿å‹¢ï¼‰ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ã™æ§‹é€ ä½“
 /// </summary>
 public record ImuData
 {
     /// <summary>
-    /// ƒNƒH[ƒ^ƒjƒIƒ“ (w, x, y, z)
+    /// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ (w, x, y, z)
     /// </summary>
     public required Quaternion Quaternion { get; init; }
 
     /// <summary>
-    /// ƒIƒCƒ‰[Špi“x’PˆÊj: Roll, Pitch, Yaw
+    /// ã‚ªã‚¤ãƒ©ãƒ¼è§’ï¼ˆåº¦å˜ä½ï¼‰: Roll, Pitch, Yaw
     /// </summary>
     public required EulerAngles EulerAngles { get; init; }
 
     /// <summary>
-    /// ƒpƒPƒbƒg‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv
+    /// ãƒ‘ã‚±ãƒƒãƒˆã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—
     /// </summary>
     public required uint Timestamp { get; init; }
 
     /// <summary>
-    /// ƒƒbƒZ[ƒWƒJƒEƒ“ƒ^[
+    /// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼
     /// </summary>
     public required ushort MessageCounter { get; init; }
 }
 
 /// <summary>
-/// ƒNƒH[ƒ^ƒjƒIƒ“•\Œ» (w, x, y, z)
+/// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³è¡¨ç¾ (w, x, y, z)
 /// </summary>
 public record Quaternion(float W, float X, float Y, float Z)
 {
     /// <summary>
-    /// ’PˆÊƒNƒH[ƒ^ƒjƒIƒ“i‰ñ“]‚È‚µj
+    /// å˜ä½ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ï¼ˆå›è»¢ãªã—ï¼‰
     /// </summary>
     public static readonly Quaternion Identity = new(1.0f, 0.0f, 0.0f, 0.0f);
 
     /// <summary>
-    /// ƒNƒH[ƒ^ƒjƒIƒ“‚Ì‹¤–ğ‚ğŒvZ
+    /// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®å…±å½¹ã‚’è¨ˆç®—
     /// </summary>
     public Quaternion Conjugate() => new(W, -X, -Y, -Z);
 
     /// <summary>
-    /// 2‚Â‚ÌƒNƒH[ƒ^ƒjƒIƒ“‚ğæZiq1 * q2j
+    /// 2ã¤ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’ä¹—ç®—ï¼ˆq1 * q2ï¼‰
     /// </summary>
     public static Quaternion operator *(Quaternion q1, Quaternion q2)
     {
@@ -59,6 +59,6 @@ public record Quaternion(float W, float X, float Y, float Z)
 }
 
 /// <summary>
-/// ƒIƒCƒ‰[Šp•\Œ»i“x’PˆÊj
+/// ã‚ªã‚¤ãƒ©ãƒ¼è§’è¡¨ç¾ï¼ˆåº¦å˜ä½ï¼‰
 /// </summary>
 public record EulerAngles(float Roll, float Pitch, float Yaw);

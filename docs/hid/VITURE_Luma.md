@@ -1,4 +1,4 @@
-﻿# VITURE XR Glasses（Luma 系含む）HID 3DoF（IMU）プロトコル仕様（改訂版）
+# VITURE XR Glasses（Luma 系含む）HID 3DoF（IMU）プロトコル仕様（改訂版）
 
 ## 0. 位置づけ・適用範囲
 

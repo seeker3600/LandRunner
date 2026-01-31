@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 namespace GlassBridge.Internal;
 
 /// <summary>
-/// GlassBridge 内部で使用するロガーファクトリ
+/// GlassBridge 蜀�驛ｨ縺ｧ菴ｿ逕ｨ縺吶ｋ繝ｭ繧ｬ繝ｼ繝輔ぃ繧ｯ繝医Μ
 /// </summary>
 internal static class LoggerFactoryProvider
 {
@@ -20,7 +20,7 @@ internal static class LoggerFactoryProvider
                 {
                     if (_instance == null)
                     {
-                        // フォールバック: デフォルトで空のロガーファクトリを使用
+                        // 繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ: 繝�繝輔か繝ｫ繝医〒遨ｺ縺ｮ繝ｭ繧ｬ繝ｼ繝輔ぃ繧ｯ繝医Μ繧剃ｽｿ逕ｨ
                         _instance = new LoggerFactory();
                     }
                 }

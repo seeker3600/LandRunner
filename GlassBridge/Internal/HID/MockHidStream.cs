@@ -3,12 +3,12 @@ namespace GlassBridge.Internal.HID;
 using System.Runtime.CompilerServices;
 
 /// <summary>
-/// ƒeƒXƒg—p‚Ìƒ‚ƒbƒNHIDƒXƒgƒŠ[ƒ€i”ñ“¯Šú‘Î‰j
+/// ãƒ†ã‚¹ãƒˆç”¨ã®ãƒ¢ãƒƒã‚¯HIDã‚¹ãƒˆãƒªãƒ¼ãƒ ï¼ˆéåŒæœŸå¯¾å¿œï¼‰
 /// </summary>
 internal sealed class MockHidStream : IHidStream
 {
     /// <summary>
-    /// ƒfƒtƒHƒ‹ƒg‚ÌƒŒƒ|[ƒg’·iVITURE ƒfƒoƒCƒX‚É‡‚í‚¹‚½’lj
+    /// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒ¬ãƒãƒ¼ãƒˆé•·ï¼ˆVITURE ãƒ‡ãƒã‚¤ã‚¹ã«åˆã‚ã›ãŸå€¤ï¼‰
     /// Report ID (1 byte) + Report Data (64 bytes) = 65 bytes
     /// </summary>
     public const int DefaultReportLength = 65;
@@ -23,12 +23,12 @@ internal sealed class MockHidStream : IHidStream
     public bool IsOpen => !_disposed;
 
     /// <summary>
-    /// Å‘å“ü—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
+    /// æœ€å¤§å…¥åŠ›ãƒ¬ãƒãƒ¼ãƒˆé•·ï¼ˆReport ID ã‚’å«ã‚€ï¼‰
     /// </summary>
     public int MaxInputReportLength { get; }
 
     /// <summary>
-    /// Å‘åo—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
+    /// æœ€å¤§å‡ºåŠ›ãƒ¬ãƒãƒ¼ãƒˆé•·ï¼ˆReport ID ã‚’å«ã‚€ï¼‰
     /// </summary>
     public int MaxOutputReportLength { get; }
 
@@ -49,7 +49,7 @@ internal sealed class MockHidStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(MockHidStream));
 
-        // ‰‰ñŒÄ‚Ño‚µ‚Éƒf[ƒ^‚ğæ“¾
+        // åˆå›å‘¼ã³å‡ºã—æ™‚ã«ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
         if (_enumerator == null)
         {
             _enumerator = _dataStream.GetAsyncEnumerator(_cancellationToken);
@@ -57,14 +57,14 @@ internal sealed class MockHidStream : IHidStream
                 return 0;
         }
 
-        // Œ»İ‚Ìƒf[ƒ^‚ª‚È‚¢ê‡‚ÍŸ‚Ìƒf[ƒ^‚ğæ“¾
+        // ç¾åœ¨ã®ãƒ‡ãƒ¼ã‚¿ãŒãªã„å ´åˆã¯æ¬¡ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
         if (_currentData == null)
         {
             if (!await FetchNextDataAsync())
-                return 0; // ƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ªI—¹
+                return 0; // ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ãŒçµ‚äº†
         }
 
-        // Œ»İ‚Ìƒf[ƒ^‚ğƒVƒŠƒAƒ‰ƒCƒY‚µ‚Äƒoƒbƒtƒ@‚É‹l‚ß‚é
+        // ç¾åœ¨ã®ãƒ‡ãƒ¼ã‚¿ã‚’ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºã—ã¦ãƒãƒƒãƒ•ã‚¡ã«è©°ã‚ã‚‹
         if (_currentData != null)
         {
             var packet = SerializeImuData(_currentData);
@@ -73,11 +73,11 @@ internal sealed class MockHidStream : IHidStream
 
             _readOffset += bytesToCopy;
 
-            // Ÿ‚Ìƒf[ƒ^‚ğ€”õ
+            // æ¬¡ã®ãƒ‡ãƒ¼ã‚¿ã‚’æº–å‚™
             if (_readOffset >= packet.Length)
             {
                 _readOffset = 0;
-                _currentData = null; // Ÿ‚Ì ReadAsync ‚ÅŸƒf[ƒ^‚ğæ“¾
+                _currentData = null; // æ¬¡ã® ReadAsync ã§æ¬¡ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
             }
 
             return bytesToCopy;
@@ -91,7 +91,7 @@ internal sealed class MockHidStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(MockHidStream));
 
-        // ƒ‚ƒbƒN‚Å‚Í‰½‚à‚µ‚È‚¢
+        // ãƒ¢ãƒƒã‚¯ã§ã¯ä½•ã‚‚ã—ãªã„
         await Task.CompletedTask;
     }
 
@@ -126,55 +126,55 @@ internal sealed class MockHidStream : IHidStream
         }
         catch
         {
-            // ƒGƒ‰[‚ÍI—¹
+            // ã‚¨ãƒ©ãƒ¼æ™‚ã¯çµ‚äº†
         }
 
         return false;
     }
 
     /// <summary>
-    /// ImuData‚ğƒoƒCƒg”z—ñ‚ÉƒVƒŠƒAƒ‰ƒCƒYiVITURE ƒpƒPƒbƒgŒ`®j
-    /// VitureLumaPacket.TryParseImuPacket ‚ÆŒİŠ·«‚Ì‚ ‚éŒ`®
+    /// ImuDataã‚’ãƒã‚¤ãƒˆé…åˆ—ã«ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºï¼ˆVITURE ãƒ‘ã‚±ãƒƒãƒˆå½¢å¼ï¼‰
+    /// VitureLumaPacket.TryParseImuPacket ã¨äº’æ›æ€§ã®ã‚ã‚‹å½¢å¼
     /// </summary>
     private static byte[] SerializeImuData(ImuData data)
     {
         var buffer = new byte[64];
 
-        // ƒwƒbƒ_iVITURE IMU ƒf[ƒ^ƒpƒPƒbƒgj
+        // ãƒ˜ãƒƒãƒ€ï¼ˆVITURE IMU ãƒ‡ãƒ¼ã‚¿ãƒ‘ã‚±ãƒƒãƒˆï¼‰
         buffer[0] = 0xFF;
         buffer[1] = 0xFC;  // IMU Data
 
-        // CRC ‚ÍŠÈ—ª‰»i0‚Å‚à‰Âj
+        // CRC ã¯ç°¡ç•¥åŒ–ï¼ˆ0ã§ã‚‚å¯ï¼‰
         buffer[2] = 0x00;
         buffer[3] = 0x00;
 
-        // Payload lengthioffset 4-5AƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“j
-        ushort payloadLen = 30; // ŠÈ—ª‰»
+        // Payload lengthï¼ˆoffset 4-5ã€ãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ï¼‰
+        ushort payloadLen = 30; // ç°¡ç•¥åŒ–
         buffer[4] = (byte)(payloadLen & 0xFF);
         buffer[5] = (byte)((payloadLen >> 8) & 0xFF);
 
-        // Timestampioffset 6-9AƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“j
+        // Timestampï¼ˆoffset 6-9ã€ãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ï¼‰
         buffer[6] = (byte)(data.Timestamp & 0xFF);
         buffer[7] = (byte)((data.Timestamp >> 8) & 0xFF);
         buffer[8] = (byte)((data.Timestamp >> 16) & 0xFF);
         buffer[9] = (byte)((data.Timestamp >> 24) & 0xFF);
 
-        // Reservedioffset 10-13j
+        // Reservedï¼ˆoffset 10-13ï¼‰
         buffer[10] = 0x00;
         buffer[11] = 0x00;
         buffer[12] = 0x00;
         buffer[13] = 0x00;
 
-        // Command IDioffset 14-15j
+        // Command IDï¼ˆoffset 14-15ï¼‰
         buffer[14] = 0x00;
         buffer[15] = 0x00;
 
-        // Message counterioffset 16-17AƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“j
+        // Message counterï¼ˆoffset 16-17ã€ãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ï¼‰
         buffer[16] = (byte)(data.MessageCounter & 0xFF);
         buffer[17] = (byte)((data.MessageCounter >> 8) & 0xFF);
 
-        // IMU ƒf[ƒ^ioffset 18-29j
-        // raw0, raw1, raw2 (3 x float32 = 12 bytesAƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“)
+        // IMU ãƒ‡ãƒ¼ã‚¿ï¼ˆoffset 18-29ï¼‰
+        // raw0, raw1, raw2 (3 x float32 = 12 bytesã€ãƒ“ãƒƒã‚°ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³)
         var euler = data.EulerAngles;
         
         // yaw = -raw0
@@ -184,7 +184,7 @@ internal sealed class MockHidStream : IHidStream
         // pitch = raw2
         float raw2 = euler.Pitch;
 
-        // ƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“ float32
+        // ãƒ“ãƒƒã‚°ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ float32
         var bytes0 = BitConverter.GetBytes(raw0);
         if (BitConverter.IsLittleEndian)
             System.Array.Reverse(bytes0);

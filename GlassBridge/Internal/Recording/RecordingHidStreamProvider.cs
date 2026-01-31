@@ -3,8 +3,8 @@ namespace GlassBridge.Internal.Recording;
 using GlassBridge.Internal.HID;
 
 /// <summary>
-/// HIDƒXƒgƒŠ[ƒ€ƒvƒƒoƒCƒ_[‚ğƒ‰ƒbƒv‚µ‚Ä‹L˜^‹@”\‚ğ’Ç‰Á
-/// g—p—á: var recordingProvider = new RecordingHidStreamProvider(baseProvider, outputDir)
+/// HIDã‚¹ãƒˆãƒªãƒ¼ãƒ ãƒ—ãƒ­ãƒã‚¤ãƒ€ãƒ¼ã‚’ãƒ©ãƒƒãƒ—ã—ã¦è¨˜éŒ²æ©Ÿèƒ½ã‚’è¿½åŠ 
+/// ä½¿ç”¨ä¾‹: var recordingProvider = new RecordingHidStreamProvider(baseProvider, outputDir)
 /// </summary>
 internal sealed class RecordingHidStreamProvider : IHidStreamProvider
 {
@@ -19,7 +19,7 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
         _outputDirectory = outputDirectory ?? throw new ArgumentNullException(nameof(outputDirectory));
         _recordingStreams = new Dictionary<IHidStream, RecordingHidStream>();
 
-        // o—ÍƒfƒBƒŒƒNƒgƒŠ‚ğì¬
+        // å‡ºåŠ›ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ä½œæˆ
         Directory.CreateDirectory(_outputDirectory);
     }
 
@@ -33,7 +33,7 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
 
         var baseStreams = await _baseProvider.GetStreamsAsync(vendorId, productIds, cancellationToken);
 
-        // ŠeƒXƒgƒŠ[ƒ€‚ğRecordingHidStream‚Åƒ‰ƒbƒv
+        // å„ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’RecordingHidStreamã§ãƒ©ãƒƒãƒ—
         var recordingStreams = new List<IHidStream>();
         for (int i = 0; i < baseStreams.Count; i++)
         {
@@ -49,7 +49,7 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
     }
 
     /// <summary>
-    /// ‹L˜^ƒZƒbƒVƒ‡ƒ“‚ğŠ®—¹‚µ‚Äƒƒ^ƒf[ƒ^‚ğ•Û‘¶
+    /// è¨˜éŒ²ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚’å®Œäº†ã—ã¦ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜
     /// </summary>
     public async Task FinalizeRecordingAsync()
     {
@@ -65,7 +65,7 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
         if (_disposed)
             return;
 
-        // ©“®“I‚Éƒƒ^ƒf[ƒ^‚ğ•Û‘¶
+        // è‡ªå‹•çš„ã«ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜
         await FinalizeRecordingAsync();
 
         foreach (var recordingStream in _recordingStreams.Values)

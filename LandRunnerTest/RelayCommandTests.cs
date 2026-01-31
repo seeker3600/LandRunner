@@ -3,8 +3,8 @@ using LandRunner.ViewModels;
 namespace LandRunnerTest;
 
 /// <summary>
-/// RelayCommand ‚ÌƒeƒXƒg
-/// ƒRƒ}ƒ“ƒhÀs‚Æ CanExecute ƒƒWƒbƒN‚ğŒŸØ
+/// RelayCommand ã®ãƒ†ã‚¹ãƒˆ
+/// ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œã¨ CanExecute ãƒ­ã‚¸ãƒƒã‚¯ã‚’æ¤œè¨¼
 /// </summary>
 public class RelayCommandTests
 {

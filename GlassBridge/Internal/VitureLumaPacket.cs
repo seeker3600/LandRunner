@@ -1,7 +1,7 @@
 namespace GlassBridge.Internal;
 
 /// <summary>
-/// VITURE LumaƒvƒƒgƒRƒ‹‚ÌƒpƒPƒbƒgˆ—ƒ†[ƒeƒBƒŠƒeƒB
+/// VITURE Lumaãƒ—ãƒ­ãƒˆã‚³ãƒ«ã®ãƒ‘ã‚±ãƒƒãƒˆå‡¦ç†ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
 /// </summary>
 internal static class VitureLumaPacket
 {
@@ -15,25 +15,25 @@ internal static class VitureLumaPacket
     public const int PayloadOffset = 18;
     public const int EndMarkerValue = 0x03;
 
-    // ƒpƒPƒbƒgƒwƒbƒ_
+    // ãƒ‘ã‚±ãƒƒãƒˆãƒ˜ãƒƒãƒ€
     public const byte HeaderByte0 = 0xFF;
     public const byte HeaderImuData = 0xFC;
     public const byte HeaderMcuAck = 0xFD;
     public const byte HeaderMcuCommand = 0xFE;
 
     /// <summary>
-    /// IMUƒf[ƒ^ƒpƒPƒbƒg‚ğ‰ğÍ
-    /// HID“Ç‚İæ‚è‚Å‚Íæ“ª‚ÉReport ID (0x00) ‚ª•t‚­‚±‚Æ‚ª‚ ‚é‚½‚ß©“®ŒŸo‚·‚é
+    /// IMUãƒ‡ãƒ¼ã‚¿ãƒ‘ã‚±ãƒƒãƒˆã‚’è§£æ
+    /// HIDèª­ã¿å–ã‚Šã§ã¯å…ˆé ­ã«Report ID (0x00) ãŒä»˜ãã“ã¨ãŒã‚ã‚‹ãŸã‚è‡ªå‹•æ¤œå‡ºã™ã‚‹
     /// </summary>
-    /// <param name="buffer">“ü—Íƒoƒbƒtƒ@</param>
-    /// <param name="imuData">‰ğÍŒ‹‰Ê</param>
-    /// <param name="skipCrcValidation">CRCŒŸØ‚ğƒXƒLƒbƒv‚·‚é‚©‚Ç‚¤‚©iƒfƒtƒHƒ‹ƒg: falsej</param>
+    /// <param name="buffer">å…¥åŠ›ãƒãƒƒãƒ•ã‚¡</param>
+    /// <param name="imuData">è§£æçµæœ</param>
+    /// <param name="skipCrcValidation">CRCæ¤œè¨¼ã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹ã‹ã©ã†ã‹ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: falseï¼‰</param>
     public static bool TryParseImuPacket(ReadOnlySpan<byte> buffer, out ImuData? imuData, bool skipCrcValidation = false)
     {
         imuData = null;
 
-        // Report ID ‚ÌŒŸo‚ÆƒIƒtƒZƒbƒgŒˆ’è
-        // HID“Ç‚İæ‚è‚Å‚Íæ“ª‚É Report ID (0x00) ‚ª•t‚­‚±‚Æ‚ª‚ ‚é
+        // Report ID ã®æ¤œå‡ºã¨ã‚ªãƒ•ã‚»ãƒƒãƒˆæ±ºå®š
+        // HIDèª­ã¿å–ã‚Šã§ã¯å…ˆé ­ã« Report ID (0x00) ãŒä»˜ãã“ã¨ãŒã‚ã‚‹
         int offset = 0;
         if (buffer.Length > 1 && buffer[0] == 0x00 && buffer[1] == HeaderByte0)
         {
@@ -42,28 +42,28 @@ internal static class VitureLumaPacket
 
         var packet = buffer[offset..];
 
-        // ƒoƒbƒtƒ@ƒTƒCƒYƒ`ƒFƒbƒN
+        // ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºãƒã‚§ãƒƒã‚¯
         if (packet.Length < PacketSize)
             return false;
 
-        // ƒwƒbƒ_Šm”F
+        // ãƒ˜ãƒƒãƒ€ç¢ºèª
         if (packet[0] != HeaderByte0 || packet[1] != HeaderImuData)
             return false;
 
-        // CRCŒŸØiƒIƒvƒVƒ‡ƒiƒ‹j
-        // ÀƒfƒoƒCƒX‚Å‚ÍCRCŒvZ‚ªd—l‚ÆˆÙ‚È‚éê‡‚ª‚ ‚é‚½‚ßAƒXƒLƒbƒv‰Â”\
+        // CRCæ¤œè¨¼ï¼ˆã‚ªãƒ—ã‚·ãƒ§ãƒŠãƒ«ï¼‰
+        // å®Ÿãƒ‡ãƒã‚¤ã‚¹ã§ã¯CRCè¨ˆç®—ãŒä»•æ§˜ã¨ç•°ãªã‚‹å ´åˆãŒã‚ã‚‹ãŸã‚ã€ã‚¹ã‚­ãƒƒãƒ—å¯èƒ½
         if (!skipCrcValidation && !VerifyCrc(packet))
             return false;
 
-        // Payload length‚ğæ“¾iƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“j
-        // payload_length ‚Í offset 0x06 ‚©‚ç End marker ‚Ü‚Å‚ÌƒoƒCƒg”
+        // Payload lengthã‚’å–å¾—ï¼ˆãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ï¼‰
+        // payload_length ã¯ offset 0x06 ã‹ã‚‰ End marker ã¾ã§ã®ãƒã‚¤ãƒˆæ•°
         ushort payloadLen = (ushort)(packet[LengthOffset] | (packet[LengthOffset + 1] << 8));
         
-        // End marker ‚ÌˆÊ’u: TimestampOffset (0x06) + payloadLen - 1
+        // End marker ã®ä½ç½®: TimestampOffset (0x06) + payloadLen - 1
         int endMarkerPos = TimestampOffset + payloadLen - 1;
 
-        // End marker‚ğŠm”Fi‘¶İ‚·‚éê‡‚Ì‚İŒŸØA0x00ƒpƒfƒBƒ“ƒO‚Ìê‡‚ÍƒXƒLƒbƒvj
-        // ÀƒfƒoƒCƒX‚Å‚Í End marker ‚ªÈ—ª‚³‚ê‚é‚±‚Æ‚ª‚ ‚é
+        // End markerã‚’ç¢ºèªï¼ˆå­˜åœ¨ã™ã‚‹å ´åˆã®ã¿æ¤œè¨¼ã€0x00ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°ã®å ´åˆã¯ã‚¹ã‚­ãƒƒãƒ—ï¼‰
+        // å®Ÿãƒ‡ãƒã‚¤ã‚¹ã§ã¯ End marker ãŒçœç•¥ã•ã‚Œã‚‹ã“ã¨ãŒã‚ã‚‹
         if (endMarkerPos > 0 && endMarkerPos < packet.Length)
         {
             byte endByte = packet[endMarkerPos];
@@ -71,20 +71,20 @@ internal static class VitureLumaPacket
                 return false;
         }
 
-        // ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğæ“¾
+        // ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’å–å¾—
         uint timestamp = (uint)(packet[TimestampOffset] | 
                                (packet[TimestampOffset + 1] << 8) |
                                (packet[TimestampOffset + 2] << 16) |
                                (packet[TimestampOffset + 3] << 24));
 
-        // ƒƒbƒZ[ƒWƒJƒEƒ“ƒ^[‚ğæ“¾iƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“j
+        // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’å–å¾—ï¼ˆãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ï¼‰
         ushort msgCounter = (ushort)(packet[MessageCounterOffset] | 
                                     (packet[MessageCounterOffset + 1] << 8));
 
-        // ƒIƒCƒ‰[Šp‚ğæ“¾iƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“ float32j
+        // ã‚ªã‚¤ãƒ©ãƒ¼è§’ã‚’å–å¾—ï¼ˆãƒ“ãƒƒã‚°ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ float32ï¼‰
         var euler = ExtractEulerAngles(packet);
 
-        // ƒNƒH[ƒ^ƒjƒIƒ“‚É•ÏŠ·
+        // ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã«å¤‰æ›
         var quat = ConvertEulerToQuaternion(euler);
 
         imuData = new ImuData
@@ -99,43 +99,43 @@ internal static class VitureLumaPacket
     }
 
     /// <summary>
-    /// CRC‚ğŒŸØ
-    /// CRCŒvZ”ÍˆÍ: offset 0x04 ˆÈ~iƒwƒbƒ_‚ÆCRCƒtƒB[ƒ‹ƒh©‘Ì‚ğœŠOj
-    /// payload_length ‚Í offset 0x06 ‚©‚ç End marker ‚Ü‚Å‚ÌƒoƒCƒg”
-    /// ‚æ‚Á‚ÄŒvZ”ÍˆÍ‚Í offset 0x04 ‚©‚ç 2 + payload_length ƒoƒCƒg
+    /// CRCã‚’æ¤œè¨¼
+    /// CRCè¨ˆç®—ç¯„å›²: offset 0x04 ä»¥é™ï¼ˆãƒ˜ãƒƒãƒ€ã¨CRCãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰è‡ªä½“ã‚’é™¤å¤–ï¼‰
+    /// payload_length ã¯ offset 0x06 ã‹ã‚‰ End marker ã¾ã§ã®ãƒã‚¤ãƒˆæ•°
+    /// ã‚ˆã£ã¦è¨ˆç®—ç¯„å›²ã¯ offset 0x04 ã‹ã‚‰ 2 + payload_length ãƒã‚¤ãƒˆ
     /// </summary>
     private static bool VerifyCrc(ReadOnlySpan<byte> buffer)
     {
         if (buffer.Length < 6)
             return false;
 
-        // •Û‘¶‚³‚ê‚½CRCiƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“j
+        // ä¿å­˜ã•ã‚ŒãŸCRCï¼ˆãƒ“ãƒƒã‚°ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ï¼‰
         ushort storedCrc = (ushort)((buffer[CrcOffset] << 8) | buffer[CrcOffset + 1]);
 
-        // Payload length‚ğæ“¾ioffset 0x06 ‚©‚ç End marker ‚Ü‚Å‚ÌƒoƒCƒg”j
+        // Payload lengthã‚’å–å¾—ï¼ˆoffset 0x06 ã‹ã‚‰ End marker ã¾ã§ã®ãƒã‚¤ãƒˆæ•°ï¼‰
         ushort payloadLen = (ushort)(buffer[LengthOffset] | (buffer[LengthOffset + 1] << 8));
         
-        // CRCŒvZ”ÍˆÍ: length field (2ƒoƒCƒg) + payload
+        // CRCè¨ˆç®—ç¯„å›²: length field (2ãƒã‚¤ãƒˆ) + payload
         int crcDataLen = 2 + payloadLen;
 
-        // CRC‚ğÄŒvZioffset 0x04ˆÈ~j
+        // CRCã‚’å†è¨ˆç®—ï¼ˆoffset 0x04ä»¥é™ï¼‰
         ushort calculatedCrc = Crc16Ccitt.Calculate(buffer, LengthOffset, crcDataLen);
 
         return storedCrc == calculatedCrc;
     }
 
     /// <summary>
-    /// ƒoƒbƒtƒ@‚©‚çƒIƒCƒ‰[Šp‚ğ’ŠoiƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“ float32j
+    /// ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰ã‚ªã‚¤ãƒ©ãƒ¼è§’ã‚’æŠ½å‡ºï¼ˆãƒ“ãƒƒã‚°ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ float32ï¼‰
     /// </summary>
     private static EulerAngles ExtractEulerAngles(ReadOnlySpan<byte> buffer)
     {
-        // raw0, raw1, raw2 ‚Í‚»‚ê‚¼‚ê4ƒoƒCƒg‚Ì float32iƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“j
+        // raw0, raw1, raw2 ã¯ãã‚Œãã‚Œ4ãƒã‚¤ãƒˆã® float32ï¼ˆãƒ“ãƒƒã‚°ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ï¼‰
         // offset 0x12 (18), 0x16 (22), 0x1A (26)
         float raw0 = ReadBigEndianFloat(buffer, PayloadOffset);
         float raw1 = ReadBigEndianFloat(buffer, PayloadOffset + 4);
         float raw2 = ReadBigEndianFloat(buffer, PayloadOffset + 8);
 
-        // ²ƒ}ƒbƒsƒ“ƒOiWebXRÀ‘•‚ÉŠî‚Ã‚­j
+        // è»¸ãƒãƒƒãƒ”ãƒ³ã‚°ï¼ˆWebXRå®Ÿè£…ã«åŸºã¥ãï¼‰
         // yaw = -raw0, roll = -raw1, pitch = raw2
         float yaw = -raw0;
         float roll = -raw1;
@@ -145,14 +145,14 @@ internal static class VitureLumaPacket
     }
 
     /// <summary>
-    /// ƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“ float32 ‚ğ“Ç‚Ş
+    /// ãƒ“ãƒƒã‚°ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ float32 ã‚’èª­ã‚€
     /// </summary>
     private static float ReadBigEndianFloat(ReadOnlySpan<byte> buffer, int offset)
     {
         if (offset + 4 > buffer.Length)
             return 0.0f;
 
-        // ƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“‚Ì4ƒoƒCƒg‚ğƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“‚É•ÏŠ·‚µ‚Ä“Ç‚Ş
+        // ãƒ“ãƒƒã‚°ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ã®4ãƒã‚¤ãƒˆã‚’ãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ã«å¤‰æ›ã—ã¦èª­ã‚€
         Span<byte> floatBytes = stackalloc byte[4];
         floatBytes[0] = buffer[offset + 3];
         floatBytes[1] = buffer[offset + 2];
@@ -163,17 +163,17 @@ internal static class VitureLumaPacket
     }
 
     /// <summary>
-    /// ƒIƒCƒ‰[Špi“xj‚ğƒNƒH[ƒ^ƒjƒIƒ“‚É•ÏŠ·
+    /// ã‚ªã‚¤ãƒ©ãƒ¼è§’ï¼ˆåº¦ï¼‰ã‚’ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã«å¤‰æ›
     /// </summary>
     private static Quaternion ConvertEulerToQuaternion(EulerAngles euler)
     {
-        // “x‚ğƒ‰ƒWƒAƒ“‚É•ÏŠ·
+        // åº¦ã‚’ãƒ©ã‚¸ã‚¢ãƒ³ã«å¤‰æ›
         float toRad = (float)(System.Math.PI / 180.0);
         float roll = euler.Roll * toRad;
         float pitch = euler.Pitch * toRad;
         float yaw = euler.Yaw * toRad;
 
-        // Yaw-Pitch-Roll‡‚Å‚Ì‡¬iWebHIDÀ‘•‚ÉŠî‚Ã‚­j
+        // Yaw-Pitch-Rollé †ã§ã®åˆæˆï¼ˆWebHIDå®Ÿè£…ã«åŸºã¥ãï¼‰
         float cr = (float)System.Math.Cos(roll / 2.0f);
         float sr = (float)System.Math.Sin(roll / 2.0f);
         float cp = (float)System.Math.Cos(pitch / 2.0f);
@@ -190,37 +190,37 @@ internal static class VitureLumaPacket
     }
 
     /// <summary>
-    /// MCU IMU—LŒø‰»ƒRƒ}ƒ“ƒhƒpƒPƒbƒg‚ğ\’z
+    /// MCU IMUæœ‰åŠ¹åŒ–ã‚³ãƒãƒ³ãƒ‰ãƒ‘ã‚±ãƒƒãƒˆã‚’æ§‹ç¯‰
     /// </summary>
     public static byte[] BuildImuEnableCommand(bool enable, ushort messageCounter = 0)
     {
         var packet = new byte[PacketSize];
 
-        // ƒwƒbƒ_
+        // ãƒ˜ãƒƒãƒ€
         packet[0] = HeaderByte0;
         packet[1] = HeaderMcuCommand;
 
-        // CRC: Œã‚ÅŒvZ
+        // CRC: å¾Œã§è¨ˆç®—
 
-        // Payload lengthiƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“j: header 2 + CRC 2 + length 2 + reserved 4 + cmd 2 + msg 2 + data 1 + end 1 = 16
+        // Payload lengthï¼ˆãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ï¼‰: header 2 + CRC 2 + length 2 + reserved 4 + cmd 2 + msg 2 + data 1 + end 1 = 16
         ushort payloadLen = 12; // length(2) + reserved(4) + cmd(2) + msg(2) + data(1) + end(1) = 12
         packet[LengthOffset] = (byte)(payloadLen & 0xFF);
         packet[LengthOffset + 1] = (byte)((payloadLen >> 8) & 0xFF);
 
-        // Timestamp: 0iMCUƒRƒ}ƒ“ƒh‚Å‚Íg‚í‚È‚¢j
+        // Timestamp: 0ï¼ˆMCUã‚³ãƒãƒ³ãƒ‰ã§ã¯ä½¿ã‚ãªã„ï¼‰
         packet[TimestampOffset] = 0;
         packet[TimestampOffset + 1] = 0;
         packet[TimestampOffset + 2] = 0;
         packet[TimestampOffset + 3] = 0;
 
-        // Reserved: 0–„‚ßialready 0j
+        // Reserved: 0åŸ‹ã‚ï¼ˆalready 0ï¼‰
 
-        // Command IDiƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“j: 0x0015
+        // Command IDï¼ˆãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ï¼‰: 0x0015
         const ushort cmdId = 0x0015;
         packet[CommandIdOffset] = (byte)(cmdId & 0xFF);
         packet[CommandIdOffset + 1] = (byte)((cmdId >> 8) & 0xFF);
 
-        // Message counteriƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“j
+        // Message counterï¼ˆãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ï¼‰
         packet[MessageCounterOffset] = (byte)(messageCounter & 0xFF);
         packet[MessageCounterOffset + 1] = (byte)((messageCounter >> 8) & 0xFF);
 
@@ -230,7 +230,7 @@ internal static class VitureLumaPacket
         // End marker
         packet[PayloadOffset + 1] = EndMarkerValue;
 
-        // CRCŒvZioffset 0x04ˆÈ~j
+        // CRCè¨ˆç®—ï¼ˆoffset 0x04ä»¥é™ï¼‰
         ushort crc = Crc16Ccitt.Calculate(packet, LengthOffset, payloadLen);
         packet[CrcOffset] = (byte)((crc >> 8) & 0xFF);
         packet[CrcOffset + 1] = (byte)(crc & 0xFF);

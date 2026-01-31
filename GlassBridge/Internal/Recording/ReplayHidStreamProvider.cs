@@ -3,8 +3,8 @@ namespace GlassBridge.Internal.Recording;
 using GlassBridge.Internal.HID;
 
 /// <summary>
-/// ‹L˜^‚³‚ê‚½ƒXƒgƒŠ[ƒ€‚ğÄ¶‚·‚é‚½‚ß‚ÌƒvƒƒoƒCƒ_[
-/// g—p—á: var replayProvider = new ReplayHidStreamProvider(recordingDirectory)
+/// è¨˜éŒ²ã•ã‚ŒãŸã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’å†ç”Ÿã™ã‚‹ãŸã‚ã®ãƒ—ãƒ­ãƒã‚¤ãƒ€ãƒ¼
+/// ä½¿ç”¨ä¾‹: var replayProvider = new ReplayHidStreamProvider(recordingDirectory)
 /// </summary>
 internal sealed class ReplayHidStreamProvider : IHidStreamProvider
 {
@@ -29,7 +29,7 @@ internal sealed class ReplayHidStreamProvider : IHidStreamProvider
 
         var replayStreams = new List<IHidStream>();
 
-        // ƒfƒBƒŒƒNƒgƒŠ‚Ì‘Sframes_*.jsonlƒtƒ@ƒCƒ‹‚ğ’T‚µ‚ÄÄ¶ƒXƒgƒŠ[ƒ€‚ğì¬
+        // ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å…¨frames_*.jsonlãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ¢ã—ã¦å†ç”Ÿã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’ä½œæˆ
         var framesFiles = Directory.GetFiles(_recordingDirectory, "frames_*.jsonl")
             .OrderBy(f => ExtractIndex(f))
             .ToList();

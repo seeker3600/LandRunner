@@ -4,13 +4,13 @@ using GlassBridge.Internal;
 using Xunit;
 
 /// <summary>
-/// Crc16Ccitt ‚ÌƒeƒXƒg
-/// CRC-16-CCITT ŒvZ‚Ì“®ìŠm”F
+/// Crc16Ccitt ã®ãƒ†ã‚¹ãƒˆ
+/// CRC-16-CCITT è¨ˆç®—ã®å‹•ä½œç¢ºèª
 /// </summary>
 public class Crc16CcittTests
 {
     /// <summary>
-    /// ƒeƒXƒg1: ‹ó‚Ìƒf[ƒ^‚É‘Î‚·‚é CRC ŒvZ
+    /// ãƒ†ã‚¹ãƒˆ1: ç©ºã®ãƒ‡ãƒ¼ã‚¿ã«å¯¾ã™ã‚‹ CRC è¨ˆç®—
     /// </summary>
     [Fact]
     public void Calculate_WithEmptyData_ShouldReturnInitialValue()
@@ -22,12 +22,12 @@ public class Crc16CcittTests
         ushort crc = Crc16Ccitt.Calculate(data.AsSpan(), 0, 0);
 
         // Assert
-        // ‹ó‚Ìƒf[ƒ^‚Å‚Í CRC ‚Í‰Šú’l‚Ì‚Ü‚Ü‚©A‚Ü‚½‚Í 0
+        // ç©ºã®ãƒ‡ãƒ¼ã‚¿ã§ã¯ CRC ã¯åˆæœŸå€¤ã®ã¾ã¾ã‹ã€ã¾ãŸã¯ 0
         Assert.True(crc == 0xFFFF || crc == 0, $"Expected 0xFFFF or 0, got {crc:X4}");
     }
 
     /// <summary>
-    /// ƒeƒXƒg2: ’PˆêƒoƒCƒg‚Ì CRC ŒvZ
+    /// ãƒ†ã‚¹ãƒˆ2: å˜ä¸€ãƒã‚¤ãƒˆã® CRC è¨ˆç®—
     /// </summary>
     [Fact]
     public void Calculate_WithSingleByte_ShouldReturnValidCrc()
@@ -43,7 +43,7 @@ public class Crc16CcittTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg3: •¡”ƒoƒCƒg‚Ì CRC ŒvZ
+    /// ãƒ†ã‚¹ãƒˆ3: è¤‡æ•°ãƒã‚¤ãƒˆã® CRC è¨ˆç®—
     /// </summary>
     [Fact]
     public void Calculate_WithMultipleBytes_ShouldCalculateCrc()
@@ -56,11 +56,11 @@ public class Crc16CcittTests
 
         // Assert
         Assert.True(crc >= 0, "CRC should be non-negative");
-        Assert.NotEqual(0xFFFF, crc); // ‰Šú’l‚Æ‚ÍˆÙ‚È‚é
+        Assert.NotEqual(0xFFFF, crc); // åˆæœŸå€¤ã¨ã¯ç•°ãªã‚‹
     }
 
     /// <summary>
-    /// ƒeƒXƒg4: ƒIƒtƒZƒbƒgw’è‚Å‚Ì CRC ŒvZ
+    /// ãƒ†ã‚¹ãƒˆ4: ã‚ªãƒ•ã‚»ãƒƒãƒˆæŒ‡å®šã§ã® CRC è¨ˆç®—
     /// </summary>
     [Fact]
     public void Calculate_WithOffset_ShouldCalculateCrcFromOffset()
@@ -68,10 +68,10 @@ public class Crc16CcittTests
         // Arrange
         var data = new byte[] { 0xFF, 0xFF, 0x00, 0x01, 0x02 };
         
-        // ƒIƒtƒZƒbƒg 2 ‚©‚ç 3 ƒoƒCƒgŒvZ
+        // ã‚ªãƒ•ã‚»ãƒƒãƒˆ 2 ã‹ã‚‰ 3 ãƒã‚¤ãƒˆè¨ˆç®—
         ushort crc1 = Crc16Ccitt.Calculate(data.AsSpan(), 2, 3);
         
-        // “¯‚¶ƒf[ƒ^‚Å’¼ÚŒvZ
+        // åŒã˜ãƒ‡ãƒ¼ã‚¿ã§ç›´æ¥è¨ˆç®—
         var subData = new byte[] { 0x00, 0x01, 0x02 };
         ushort crc2 = Crc16Ccitt.Calculate(subData.AsSpan(), 0, 3);
 
@@ -80,7 +80,7 @@ public class Crc16CcittTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg5: “¯‚¶ƒf[ƒ^‚Í“¯‚¶ CRC ‚ğ¶¬
+    /// ãƒ†ã‚¹ãƒˆ5: åŒã˜ãƒ‡ãƒ¼ã‚¿ã¯åŒã˜ CRC ã‚’ç”Ÿæˆ
     /// </summary>
     [Fact]
     public void Calculate_WithIdenticalData_ShouldProduceSameCrc()
@@ -97,7 +97,7 @@ public class Crc16CcittTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg6: ˆÙ‚È‚éƒf[ƒ^‚ÍˆÙ‚È‚é CRC ‚ğ¶¬
+    /// ãƒ†ã‚¹ãƒˆ6: ç•°ãªã‚‹ãƒ‡ãƒ¼ã‚¿ã¯ç•°ãªã‚‹ CRC ã‚’ç”Ÿæˆ
     /// </summary>
     [Fact]
     public void Calculate_WithDifferentData_ShouldProduceDifferentCrc()
@@ -115,7 +115,7 @@ public class Crc16CcittTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg7: ‘å‚«‚Èƒf[ƒ^‚Ì CRC ŒvZ
+    /// ãƒ†ã‚¹ãƒˆ7: å¤§ããªãƒ‡ãƒ¼ã‚¿ã® CRC è¨ˆç®—
     /// </summary>
     [Fact]
     public void Calculate_WithLargeData_ShouldCalculateCrc()
@@ -135,7 +135,7 @@ public class Crc16CcittTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg8: ’·‚³ 0 ‚Å‚ÌƒIƒtƒZƒbƒgŒvZ
+    /// ãƒ†ã‚¹ãƒˆ8: é•·ã• 0 ã§ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆè¨ˆç®—
     /// </summary>
     [Fact]
     public void Calculate_WithZeroLength_ShouldReturnInitialValue()
@@ -151,23 +151,23 @@ public class Crc16CcittTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg9: VITURE ƒpƒPƒbƒg‚Ì CRC ŒvZƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“
+    /// ãƒ†ã‚¹ãƒˆ9: VITURE ãƒ‘ã‚±ãƒƒãƒˆã® CRC è¨ˆç®—ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
     /// </summary>
     [Fact]
     public void Calculate_WithVitureLumaPacketData_ShouldCalculateCrc()
     {
-        // Arrange: VITURE ƒpƒPƒbƒg‚ÌƒyƒCƒ[ƒh•”•ª‚ğƒVƒ~ƒ…ƒŒ[ƒg
+        // Arrange: VITURE ãƒ‘ã‚±ãƒƒãƒˆã®ãƒšã‚¤ãƒ­ãƒ¼ãƒ‰éƒ¨åˆ†ã‚’ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ãƒˆ
         var payload = new byte[30];
         payload[0] = 0x04; // Payload length low
         payload[1] = 0x00; // Payload length high
         
-        // TimestampiƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“j
+        // Timestampï¼ˆãƒ“ãƒƒã‚°ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ï¼‰
         payload[2] = 0x00;
         payload[3] = 0x00;
         payload[4] = 0x03;
         payload[5] = 0xE8;
 
-        // ‚»‚Ì‘¼‚Ìƒf[ƒ^
+        // ãã®ä»–ã®ãƒ‡ãƒ¼ã‚¿
         for (int i = 6; i < payload.Length; i++)
         {
             payload[i] = (byte)(i & 0xFF);
@@ -181,7 +181,7 @@ public class Crc16CcittTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg10: CRC ‚ÌˆêŠÑ«ƒeƒXƒgi•¡”‰ñŒvZj
+    /// ãƒ†ã‚¹ãƒˆ10: CRC ã®ä¸€è²«æ€§ãƒ†ã‚¹ãƒˆï¼ˆè¤‡æ•°å›è¨ˆç®—ï¼‰
     /// </summary>
     [Fact]
     public void Calculate_Consistency_ShouldProduceSameCrcMultipleTimes()
@@ -189,14 +189,14 @@ public class Crc16CcittTests
         // Arrange
         var data = new byte[] { 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF };
         
-        // Act: •¡”‰ñŒvZ
+        // Act: è¤‡æ•°å›è¨ˆç®—
         var crcValues = new ushort[5];
         for (int i = 0; i < 5; i++)
         {
             crcValues[i] = Crc16Ccitt.Calculate(data.AsSpan(), 0, data.Length);
         }
 
-        // Assert: ‚·‚×‚Ä“¯‚¶’l
+        // Assert: ã™ã¹ã¦åŒã˜å€¤
         for (int i = 1; i < crcValues.Length; i++)
         {
             Assert.Equal(crcValues[0], crcValues[i]);
@@ -204,7 +204,7 @@ public class Crc16CcittTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg11: ƒIƒtƒZƒbƒg‚ª”ÍˆÍŠO‚Ìê‡
+    /// ãƒ†ã‚¹ãƒˆ11: ã‚ªãƒ•ã‚»ãƒƒãƒˆãŒç¯„å›²å¤–ã®å ´åˆ
     /// </summary>
     [Fact]
     public void Calculate_WithOffsetOutOfRange_ShouldHandleGracefully()
@@ -212,33 +212,33 @@ public class Crc16CcittTests
         // Arrange
         var data = new byte[] { 0x00, 0x01, 0x02, 0x03 };
 
-        // Act: ƒIƒtƒZƒbƒg‚ªƒf[ƒ^’·‚ğ’´‚¦‚é
+        // Act: ã‚ªãƒ•ã‚»ãƒƒãƒˆãŒãƒ‡ãƒ¼ã‚¿é•·ã‚’è¶…ãˆã‚‹
         ushort crc = Crc16Ccitt.Calculate(data.AsSpan(), 10, 5);
 
-        // Assert: ƒGƒ‰[‚ª”­¶‚µ‚È‚¢‚±‚Æ‚ğŠm”F
+        // Assert: ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ãªã„ã“ã¨ã‚’ç¢ºèª
         Assert.True(crc >= 0, "Should handle out-of-range offset gracefully");
     }
 
     /// <summary>
-    /// ƒeƒXƒg12: Šù’m‚Ì CRC ’l‚Æ‚Ì”äŠriŒŸØƒeƒXƒgj
+    /// ãƒ†ã‚¹ãƒˆ12: æ—¢çŸ¥ã® CRC å€¤ã¨ã®æ¯”è¼ƒï¼ˆæ¤œè¨¼ãƒ†ã‚¹ãƒˆï¼‰
     /// </summary>
     [Fact]
     public void Calculate_KnownValue_ShouldMatchExpectedCrc()
     {
-        // Arrange: •W€“I‚ÈƒeƒXƒgƒf[ƒ^
+        // Arrange: æ¨™æº–çš„ãªãƒ†ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿
         var data = new byte[] { 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39 }; // "123456789"
         
-        // CRC-16-CCITT ‚ÌŠù’m’li‰Šú’l 0xFFFFj
-        // ‚±‚ÌƒeƒXƒgƒf[ƒ^‚Ì CRC-16-CCITT ‚Í’Êí 0x31C3 ‚Ü‚½‚Í“¯“™‚Ì’l
+        // CRC-16-CCITT ã®æ—¢çŸ¥å€¤ï¼ˆåˆæœŸå€¤ 0xFFFFï¼‰
+        // ã“ã®ãƒ†ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã® CRC-16-CCITT ã¯é€šå¸¸ 0x31C3 ã¾ãŸã¯åŒç­‰ã®å€¤
         
         // Act
         ushort crc = Crc16Ccitt.Calculate(data.AsSpan(), 0, data.Length);
 
-        // Assert: ŒvZ‚³‚ê‚½CRC‚ª—LŒø‚È”ÍˆÍ“à
+        // Assert: è¨ˆç®—ã•ã‚ŒãŸCRCãŒæœ‰åŠ¹ãªç¯„å›²å†…
         Assert.True(crc >= 0, "Should calculate valid CRC");
         
-        // Šù’m‚Ì’l‚Æ”äŠriÀ‘•‚É‰‚¶‚Ä’²®j
+        // æ—¢çŸ¥ã®å€¤ã¨æ¯”è¼ƒï¼ˆå®Ÿè£…ã«å¿œã˜ã¦èª¿æ•´ï¼‰
         // CRC-16-CCITT("123456789") = 0x31C3
-        // ’F‰Šú’l‚âÅIˆ—‚É‚æ‚Á‚ÄˆÙ‚È‚é‰Â”\«‚ª‚ ‚é
+        // æ³¨ï¼šåˆæœŸå€¤ã‚„æœ€çµ‚å‡¦ç†ã«ã‚ˆã£ã¦ç•°ãªã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹
     }
 }

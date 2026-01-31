@@ -1,106 +1,106 @@
-# Copilot ì‹ÆŽwŽ¦‘
+# Copilot ä½œæ¥­æŒ‡ç¤ºæ›¸
 
-LandRunner ƒvƒƒWƒFƒNƒg‚ÌŠJ”­ƒKƒCƒhƒ‰ƒCƒ“‚Å‚·B
-
----
-
-## 1. C# ƒR[ƒfƒBƒ“ƒO‹K‘¥
-
-### ˆê”Ê“I‚ÈƒKƒCƒhƒ‰ƒCƒ“
-- Visual Studio ‚ÌƒxƒXƒgƒvƒ‰ƒNƒeƒBƒX‚É]‚¤
-- ƒtƒ@ƒCƒ‹ŠK‘w‚Æ–¼‘O‹óŠÔ‚ðˆêŠÑ‚³‚¹‚é
-- Šù‘¶‚ÌƒR[ƒh‹K–ñ‚É‡‚í‚¹‚é
-
-### ƒvƒƒWƒFƒNƒgŒÅ—L‚Ìƒ‹[ƒ‹
-- **ŠÖS‚Ì•ª—£**: ŒöŠJAPIi`GlassBridge` –¼‘O‹óŠÔj‚Æ“à•”ŽÀ‘•i`GlassBridge.Internal` –¼‘O‹óŠÔj‚ðŒµ–§‚É•ª—£
-  - “à•”ŽÀ‘•ƒtƒ@ƒCƒ‹‚Í `Internal/` ƒtƒHƒ‹ƒ_‚É”z’u
-  - ŒöŠJƒCƒ“ƒ^[ƒtƒF[ƒX‚Ì‚Ý `ImuDeviceManager`, `IImuDevice` ‚È‚Ç ‚ðƒ‹[ƒg’¼‰º‚É”z’u
-- **VITURE ƒfƒoƒCƒXŒÅ—L‚Ì’mŽ¯**‚Í `GlassBridge.Internal.HID.VitureDeviceIdentifiers` ‚ÅˆêŒ³ŠÇ—
-  - ƒxƒ“ƒ_[IDAƒvƒƒ_ƒNƒgID ‚Í‚±‚Ì’è”ƒNƒ‰ƒX‚ðŽQÆ
-  - V‚µ‚¢ƒ‚ƒfƒ‹’Ç‰ÁŽž‚Í‚±‚Ìƒtƒ@ƒCƒ‹‚Ì‚ÝC³
-- **”ñ“¯Šúˆ—**: `IAsyncDisposable` ‚ðŠˆ—p‚µAƒŠƒ\[ƒX‚ÌŽ©“®ƒNƒŠ[ƒ“ƒAƒbƒv‚ðŽÀ‘•
+LandRunner ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®é–‹ç™ºã‚¬ã‚¤ãƒ‰ãƒ©ã‚¤ãƒ³ã§ã™ã€‚
 
 ---
 
-## 2. ƒhƒLƒ…ƒƒ“ƒg\¬ƒ‹[ƒ‹
+## 1. C# ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°è¦å‰‡
 
-### 2.1 ƒhƒLƒ…ƒƒ“ƒg”z’uƒ‹[ƒ‹
+### ä¸€èˆ¬çš„ãªã‚¬ã‚¤ãƒ‰ãƒ©ã‚¤ãƒ³
+- Visual Studio ã®ãƒ™ã‚¹ãƒˆãƒ—ãƒ©ã‚¯ãƒ†ã‚£ã‚¹ã«å¾“ã†
+- ãƒ•ã‚¡ã‚¤ãƒ«éšŽå±¤ã¨åå‰ç©ºé–“ã‚’ä¸€è²«ã•ã›ã‚‹
+- æ—¢å­˜ã®ã‚³ãƒ¼ãƒ‰è¦ç´„ã«åˆã‚ã›ã‚‹
 
-**Šî–{Œ´‘¥**: ƒhƒLƒ…ƒƒ“ƒgˆÊ’u‚Ì“ˆê‚É‚æ‚èAŽQÆ«‚Æ•ÛŽç«‚ðŒüã‚³‚¹‚é
+### ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆå›ºæœ‰ã®ãƒ«ãƒ¼ãƒ«
+- **é–¢å¿ƒã®åˆ†é›¢**: å…¬é–‹APIï¼ˆ`GlassBridge` åå‰ç©ºé–“ï¼‰ã¨å†…éƒ¨å®Ÿè£…ï¼ˆ`GlassBridge.Internal` åå‰ç©ºé–“ï¼‰ã‚’åŽ³å¯†ã«åˆ†é›¢
+  - å†…éƒ¨å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«ã¯ `Internal/` ãƒ•ã‚©ãƒ«ãƒ€ã«é…ç½®
+  - å…¬é–‹ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ã¿ `ImuDeviceManager`, `IImuDevice` ãªã© ã‚’ãƒ«ãƒ¼ãƒˆç›´ä¸‹ã«é…ç½®
+- **VITURE ãƒ‡ãƒã‚¤ã‚¹å›ºæœ‰ã®çŸ¥è­˜**ã¯ `GlassBridge.Internal.HID.VitureDeviceIdentifiers` ã§ä¸€å…ƒç®¡ç†
+  - ãƒ™ãƒ³ãƒ€ãƒ¼IDã€ãƒ—ãƒ­ãƒ€ã‚¯ãƒˆID ã¯ã“ã®å®šæ•°ã‚¯ãƒ©ã‚¹ã‚’å‚ç…§
+  - æ–°ã—ã„ãƒ¢ãƒ‡ãƒ«è¿½åŠ æ™‚ã¯ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã®ã¿ä¿®æ­£
+- **éžåŒæœŸå‡¦ç†**: `IAsyncDisposable` ã‚’æ´»ç”¨ã—ã€ãƒªã‚½ãƒ¼ã‚¹ã®è‡ªå‹•ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—ã‚’å®Ÿè£…
 
-| ‘ÎÛ | ”z’uêŠ | —p“r |
+---
+
+## 2. ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆæ§‹æˆãƒ«ãƒ¼ãƒ«
+
+### 2.1 ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆé…ç½®ãƒ«ãƒ¼ãƒ«
+
+**åŸºæœ¬åŽŸå‰‡**: ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆä½ç½®ã®çµ±ä¸€ã«ã‚ˆã‚Šã€å‚ç…§æ€§ã¨ä¿å®ˆæ€§ã‚’å‘ä¸Šã•ã›ã‚‹
+
+| å¯¾è±¡ | é…ç½®å ´æ‰€ | ç”¨é€” |
 |------|---------|------|
-| **README.md** | ƒ\ƒŠƒ…[ƒVƒ‡ƒ“’¼‰º | ƒvƒƒWƒFƒNƒg‘S‘Ì‚ÌŠT—vEƒZƒbƒgƒAƒbƒvŽè‡ |
-| **ƒvƒƒWƒFƒNƒg README.md** | `GlassBridge/` ‚È‚Ç | ŠeƒvƒƒWƒFƒNƒg‚ÌŠT—vEˆË‘¶ŠÖŒWEAPI à–¾ |
-| **ARCHITECTURE.md** | ƒvƒƒWƒFƒNƒgƒtƒHƒ‹ƒ_iƒIƒvƒVƒ‡ƒ“j | ƒA[ƒLƒeƒNƒ`ƒƒÝŒvEƒ‚ƒWƒ…[ƒ‹Ó–± |
-| **‚»‚Ì‘¼ƒhƒLƒ…ƒƒ“ƒg** | `docs/` ƒTƒuƒtƒHƒ‹ƒ_ | ƒhƒƒCƒ“’mŽ¯EƒvƒƒgƒRƒ‹Žd—lEƒKƒCƒh |
+| **README.md** | ã‚½ãƒªãƒ¥ãƒ¼ã‚·ãƒ§ãƒ³ç›´ä¸‹ | ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆå…¨ä½“ã®æ¦‚è¦ãƒ»ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—æ‰‹é † |
+| **ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ README.md** | `GlassBridge/` ãªã© | å„ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®æ¦‚è¦ãƒ»ä¾å­˜é–¢ä¿‚ãƒ»API èª¬æ˜Ž |
+| **ARCHITECTURE.md** | ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚©ãƒ«ãƒ€ï¼ˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼‰ | ã‚¢ãƒ¼ã‚­ãƒ†ã‚¯ãƒãƒ£è¨­è¨ˆãƒ»ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«è²¬å‹™ |
+| **ãã®ä»–ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ** | `docs/` ã‚µãƒ–ãƒ•ã‚©ãƒ«ãƒ€ | ãƒ‰ãƒ¡ã‚¤ãƒ³çŸ¥è­˜ãƒ»ãƒ—ãƒ­ãƒˆã‚³ãƒ«ä»•æ§˜ãƒ»ã‚¬ã‚¤ãƒ‰ |
 
-### 2.2 Šù‘¶ƒhƒLƒ…ƒƒ“ƒgˆê——
+### 2.2 æ—¢å­˜ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆä¸€è¦§
 
-#### ƒ\ƒŠƒ…[ƒVƒ‡ƒ“’¼‰º
-- **README.md** - ƒvƒƒWƒFƒNƒg‘S‘Ì‚ÌÐ‰îEƒZƒbƒgƒAƒbƒv•û–@
-- **docs/hid/VITURE_Luma.md** - VITURE HID ƒvƒƒgƒRƒ‹Žd—lid—vj
-- **docs/** - ƒhƒƒCƒ“’mŽ¯EƒvƒƒgƒRƒ‹Žd—lEŽÀ‘•ƒKƒCƒh
+#### ã‚½ãƒªãƒ¥ãƒ¼ã‚·ãƒ§ãƒ³ç›´ä¸‹
+- **README.md** - ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆå…¨ä½“ã®ç´¹ä»‹ãƒ»ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—æ–¹æ³•
+- **docs/hid/VITURE_Luma.md** - VITURE HID ãƒ—ãƒ­ãƒˆã‚³ãƒ«ä»•æ§˜ï¼ˆé‡è¦ï¼‰
+- **docs/** - ãƒ‰ãƒ¡ã‚¤ãƒ³çŸ¥è­˜ãƒ»ãƒ—ãƒ­ãƒˆã‚³ãƒ«ä»•æ§˜ãƒ»å®Ÿè£…ã‚¬ã‚¤ãƒ‰
 
-#### ƒvƒƒWƒFƒNƒgƒŒƒxƒ‹iGlassBridgej
-- **GlassBridge/README.md** - GlassBridge ŒöŠJAPI ‚Ìà–¾
+#### ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ¬ãƒ™ãƒ«ï¼ˆGlassBridgeï¼‰
+- **GlassBridge/README.md** - GlassBridge å…¬é–‹API ã®èª¬æ˜Ž
 
-#### ƒhƒƒCƒ“’mŽ¯EŽÀ‘•ƒKƒCƒhidocs/j
-- **docs/hid/VITURE_Luma.md** - VITURE HID ƒvƒƒgƒRƒ‹Žd—l
-- **docs/recording/API_GUIDE.md** - IMU ƒf[ƒ^‹L˜^EÄ¶‹@”\‚ÌŽg—pƒKƒCƒh
-- **docs/recording/IMPLEMENTATION.md** - ‹L˜^‹@”\‚Ì“à•”ŽÀ‘•à–¾
+#### ãƒ‰ãƒ¡ã‚¤ãƒ³çŸ¥è­˜ãƒ»å®Ÿè£…ã‚¬ã‚¤ãƒ‰ï¼ˆdocs/ï¼‰
+- **docs/hid/VITURE_Luma.md** - VITURE HID ãƒ—ãƒ­ãƒˆã‚³ãƒ«ä»•æ§˜
+- **docs/recording/API_GUIDE.md** - IMU ãƒ‡ãƒ¼ã‚¿è¨˜éŒ²ãƒ»å†ç”Ÿæ©Ÿèƒ½ã®ä½¿ç”¨ã‚¬ã‚¤ãƒ‰
+- **docs/recording/IMPLEMENTATION.md** - è¨˜éŒ²æ©Ÿèƒ½ã®å†…éƒ¨å®Ÿè£…èª¬æ˜Ž
 
 ---
 
-## 3. ŽQÆ‚·‚×‚«ƒhƒLƒ…ƒƒ“ƒg
+## 3. å‚ç…§ã™ã¹ããƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ
 
-### HID ƒvƒƒgƒRƒ‹ŽÀ‘•‚ÉŠÖ‚í‚éê‡
+### HID ãƒ—ãƒ­ãƒˆã‚³ãƒ«å®Ÿè£…ã«é–¢ã‚ã‚‹å ´åˆ
 ?? **docs/hid/VITURE_Luma.md**
-- VITURE ƒfƒoƒCƒX‚Ì USB VID/PID
-- HID ƒCƒ“ƒ^[ƒtƒF[ƒX\¬iIMU/MCU ‚Ì2‚Â‚ÌƒXƒgƒŠ[ƒ€j
-- ƒvƒƒgƒRƒ‹Žd—lEƒpƒPƒbƒgŒ`Ž®
-- ƒfƒoƒCƒXŽ¯•ÊƒƒWƒbƒN
+- VITURE ãƒ‡ãƒã‚¤ã‚¹ã® USB VID/PID
+- HID ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹æ§‹æˆï¼ˆIMU/MCU ã®2ã¤ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ ï¼‰
+- ãƒ—ãƒ­ãƒˆã‚³ãƒ«ä»•æ§˜ãƒ»ãƒ‘ã‚±ãƒƒãƒˆå½¢å¼
+- ãƒ‡ãƒã‚¤ã‚¹è­˜åˆ¥ãƒ­ã‚¸ãƒƒã‚¯
 
-### GlassBridge API ‚ðŽg—p‚·‚éê‡
+### GlassBridge API ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆ
 ?? **GlassBridge/README.md**
-- ŒöŠJƒCƒ“ƒ^[ƒtƒF[ƒXi`IImuDeviceManager`, `IImuDevice` “™j
-- ƒvƒƒWƒFƒNƒg\¬EˆË‘¶ŠÖŒW
+- å…¬é–‹ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ï¼ˆ`IImuDeviceManager`, `IImuDevice` ç­‰ï¼‰
+- ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆæ§‹æˆãƒ»ä¾å­˜é–¢ä¿‚
 
-### IMU ƒf[ƒ^‹L˜^EÄ¶‹@”\‚ÉŠÖ‚í‚éê‡
+### IMU ãƒ‡ãƒ¼ã‚¿è¨˜éŒ²ãƒ»å†ç”Ÿæ©Ÿèƒ½ã«é–¢ã‚ã‚‹å ´åˆ
 ?? **docs/recording/API_GUIDE.md**
-- `ImuDeviceManager.ConnectAndRecordAsync()` ‚ÌŽg—p•û–@
-- `ImuDeviceManager.ConnectFromRecordingAsync()` ‚ÌŽg—p•û–@
-- ‹L˜^ƒtƒ@ƒCƒ‹Œ`Ž®iJSON Linesj
+- `ImuDeviceManager.ConnectAndRecordAsync()` ã®ä½¿ç”¨æ–¹æ³•
+- `ImuDeviceManager.ConnectFromRecordingAsync()` ã®ä½¿ç”¨æ–¹æ³•
+- è¨˜éŒ²ãƒ•ã‚¡ã‚¤ãƒ«å½¢å¼ï¼ˆJSON Linesï¼‰
 
-### HidSharp ƒpƒbƒP[ƒW‚ÉŠÖ‚í‚éê‡
+### HidSharp ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã«é–¢ã‚ã‚‹å ´åˆ
 - https://docs.seekye.com/hidsharp/
 ---
 
-## 4. ƒR[ƒh•iŽ¿
+## 4. ã‚³ãƒ¼ãƒ‰å“è³ª
 
-### ƒeƒXƒg•ûj
-- `GlassBridgeTest/` ƒ†ƒjƒbƒgE“‡ƒeƒXƒg‚ðŽÀ‘•
-- V‹@”\’Ç‰ÁŽž‚ÍƒeƒXƒgƒR[ƒh‚àˆê‚É’Ç‰Á
-- ƒ‚ƒbƒNi`MockHidStreamProvider` “™j‚ðŠˆ—p‚µ‚ÄŽÀƒfƒoƒCƒX•s—v‚ÅŒŸØ
+### ãƒ†ã‚¹ãƒˆæ–¹é‡
+- `GlassBridgeTest/` ãƒ¦ãƒ‹ãƒƒãƒˆãƒ»çµ±åˆãƒ†ã‚¹ãƒˆã‚’å®Ÿè£…
+- æ–°æ©Ÿèƒ½è¿½åŠ æ™‚ã¯ãƒ†ã‚¹ãƒˆã‚³ãƒ¼ãƒ‰ã‚‚ä¸€ç·’ã«è¿½åŠ 
+- ãƒ¢ãƒƒã‚¯ï¼ˆ`MockHidStreamProvider` ç­‰ï¼‰ã‚’æ´»ç”¨ã—ã¦å®Ÿãƒ‡ãƒã‚¤ã‚¹ä¸è¦ã§æ¤œè¨¼
 
-### ƒpƒbƒP[ƒWŠÇ—
-- `HidSharp` - HID ƒfƒoƒCƒX’ÊMiŒ»Ý 2.6.4j
-- V‚µ‚¢ƒpƒbƒP[ƒW’Ç‰ÁŽž‚ÍŒÝŠ·«Šm”Fi“Á‚É .NET 10 ‘Î‰žó‹µj
+### ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ç®¡ç†
+- `HidSharp` - HID ãƒ‡ãƒã‚¤ã‚¹é€šä¿¡ï¼ˆç¾åœ¨ 2.6.4ï¼‰
+- æ–°ã—ã„ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸è¿½åŠ æ™‚ã¯äº’æ›æ€§ç¢ºèªï¼ˆç‰¹ã« .NET 10 å¯¾å¿œçŠ¶æ³ï¼‰
 
 ---
 
-## 5. ŠJ”­ƒ[ƒNƒtƒ[
+## 5. é–‹ç™ºãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼
 
-### V‹@”\’Ç‰ÁŽž
-1. ‘Î‰ž‚·‚éƒhƒLƒ…ƒƒ“ƒgiREADME.md, ARCHITECTURE.md “™j‚ðæ‚ÉXV or ì¬
-2. ƒeƒXƒgƒR[ƒh ¨ ŽÀ‘•ƒR[ƒh ‚Ì‡‚ÅŠJ”­
-3. ƒvƒƒWƒFƒNƒg\¬‚ÌˆêŠÑ«‚ðŠm”FiInternal/Public ‚Ì•ª—£‚È‚Çj
-4. ƒrƒ‹ƒhEƒeƒXƒg‡Ši‚ðŠm”FŒã‚ÉƒRƒ~ƒbƒg
+### æ–°æ©Ÿèƒ½è¿½åŠ æ™‚
+1. å¯¾å¿œã™ã‚‹ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆREADME.md, ARCHITECTURE.md ç­‰ï¼‰ã‚’å…ˆã«æ›´æ–° or ä½œæˆ
+2. ãƒ†ã‚¹ãƒˆã‚³ãƒ¼ãƒ‰ â†’ å®Ÿè£…ã‚³ãƒ¼ãƒ‰ ã®é †ã§é–‹ç™º
+3. ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆæ§‹æˆã®ä¸€è²«æ€§ã‚’ç¢ºèªï¼ˆInternal/Public ã®åˆ†é›¢ãªã©ï¼‰
+4. ãƒ“ãƒ«ãƒ‰ãƒ»ãƒ†ã‚¹ãƒˆåˆæ ¼ã‚’ç¢ºèªå¾Œã«ã‚³ãƒŸãƒƒãƒˆ
 
-### ƒhƒLƒ…ƒƒ“ƒg’Ç‰ÁŽž
-1. ”z’uƒ‹[ƒ‹i˜2.1j‚É]‚¢”z’uêŠ‚ðŒˆ’è
-2. Šù‘¶ƒhƒLƒ…ƒƒ“ƒgi˜2.2j‚Æd•¡‚ª‚È‚¢‚©Šm”F
+### ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆè¿½åŠ æ™‚
+1. é…ç½®ãƒ«ãƒ¼ãƒ«ï¼ˆÂ§2.1ï¼‰ã«å¾“ã„é…ç½®å ´æ‰€ã‚’æ±ºå®š
+2. æ—¢å­˜ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆÂ§2.2ï¼‰ã¨é‡è¤‡ãŒãªã„ã‹ç¢ºèª
 
-## 6. ‚»‚Ì‘¼’ˆÓ“_
-- }‚ð•`‚­‚Æ‚«‚ÍAmermaid‚Å‚Í‚È‚­ƒAƒXƒL[ƒA[ƒg‚ð—Dæ‚·‚é‚±‚ÆB
-- ˆÄ‚ð’ñŽ¦‚·‚éÛ‚É’ñŽ¦‚·‚éƒR[ƒh’f•Ð‚Í”s‚É‚Æ‚Ç‚ß‚é‚±‚ÆB‚ ‚é‚¢‚ÍƒR[ƒh‚Å‚Í‚È‚­}‚ð—p‚¢‚é‚±‚ÆB
+## 6. ãã®ä»–æ³¨æ„ç‚¹
+- å›³ã‚’æãã¨ãã¯ã€mermaidã§ã¯ãªãã‚¢ã‚¹ã‚­ãƒ¼ã‚¢ãƒ¼ãƒˆã‚’å„ªå…ˆã™ã‚‹ã“ã¨ã€‚
+- æ¡ˆã‚’æç¤ºã™ã‚‹éš›ã«æç¤ºã™ã‚‹ã‚³ãƒ¼ãƒ‰æ–­ç‰‡ã¯æ•°è¡Œã«ã¨ã©ã‚ã‚‹ã“ã¨ã€‚ã‚ã‚‹ã„ã¯ã‚³ãƒ¼ãƒ‰ã§ã¯ãªãå›³ã‚’ç”¨ã„ã‚‹ã“ã¨ã€‚

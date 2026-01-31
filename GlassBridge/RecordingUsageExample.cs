@@ -5,27 +5,27 @@ using GlassBridge.Internal.HID;
 using GlassBridge.Internal.Recording;
 
 /// <summary>
-/// IMU ƒf[ƒ^‚Ì‹L˜^EÄ¶‹@”\‚Ìg—p—á
+/// IMU ãƒ‡ãƒ¼ã‚¿ã®è¨˜éŒ²ãƒ»å†ç”Ÿæ©Ÿèƒ½ã®ä½¿ç”¨ä¾‹
 /// 
-/// ƒƒOo—ÍƒNƒ‰ƒXˆê——F
+/// ãƒ­ã‚°å‡ºåŠ›ã‚¯ãƒ©ã‚¹ä¸€è¦§ï¼š
 /// - ImuDeviceManager.cs [line 48-76]
 /// - VitureLumaDevice.cs [line 13, 103, 145, 175, 235, 285, 322, 365]
 /// - HidStreamProvider.cs [line 13, 35, 47, 56, 63]
 /// - RecordingHidStream.cs [line 13, 30, 55, 72, 81, 99]
 /// 
-/// ‹L˜^ƒtƒ[F
+/// è¨˜éŒ²ãƒ•ãƒ­ãƒ¼ï¼š
 /// 1. HidStreamProvider.GetStreamsAsync() [HidStreamProvider line 35-56]
-/// 2. RecordingHidStreamProvider ‚Åƒ‰ƒbƒv
+/// 2. RecordingHidStreamProvider ã§ãƒ©ãƒƒãƒ—
 /// 3. VitureLumaDevice.ConnectWithProviderAsync() [VitureLumaDevice line 13-119]
-/// 4. GetImuDataStreamAsync() ‚Åƒf[ƒ^æ“¾E©“®‹L˜^ [VitureLumaDevice line 235-298]
-/// 5. RecordingHidStream.FinalizeAsync() ‚Åƒƒ^ƒf[ƒ^•Û‘¶ [RecordingHidStream line 99-104]
+/// 4. GetImuDataStreamAsync() ã§ãƒ‡ãƒ¼ã‚¿å–å¾—ãƒ»è‡ªå‹•è¨˜éŒ² [VitureLumaDevice line 235-298]
+/// 5. RecordingHidStream.FinalizeAsync() ã§ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ä¿å­˜ [RecordingHidStream line 99-104]
 /// </summary>
 public class RecordingUsageExample
 {
     /// <summary>
-    /// ƒfƒoƒCƒX‚©‚ç IMU ƒf[ƒ^‚ğ‹L˜^‚·‚é
+    /// ãƒ‡ãƒã‚¤ã‚¹ã‹ã‚‰ IMU ãƒ‡ãƒ¼ã‚¿ã‚’è¨˜éŒ²ã™ã‚‹
     /// 
-    /// ƒƒOo—ÍƒNƒ‰ƒXF
+    /// ãƒ­ã‚°å‡ºåŠ›ã‚¯ãƒ©ã‚¹ï¼š
     /// - ImuDeviceManager.ConnectAndRecordAsync() [line 48-76]
     ///   - HidStreamProvider.GetStreamsAsync() [line 35-56]
     ///   - VitureLumaDevice.ConnectWithProviderAsync() [line 13]
@@ -39,8 +39,8 @@ public class RecordingUsageExample
     {
         using var manager = new ImuDeviceManager();
 
-        // ƒfƒoƒCƒX‚ÉÚ‘±‚µ‚Ä‹L˜^ŠJn
-        // ƒƒOo—Í: ImuDeviceManager.ConnectAndRecordAsync() [line 48-76]
+        // ãƒ‡ãƒã‚¤ã‚¹ã«æ¥ç¶šã—ã¦è¨˜éŒ²é–‹å§‹
+        // ãƒ­ã‚°å‡ºåŠ›: ImuDeviceManager.ConnectAndRecordAsync() [line 48-76]
         //         HidStreamProvider.GetStreamsAsync() [line 35-56]
         //         VitureLumaDevice.InitializeAsync() [line 103-119]
         //         VitureLumaDevice.IdentifyStreamsAsync() [line 145-223]
@@ -50,18 +50,18 @@ public class RecordingUsageExample
 
         try
         {
-            // IMU ƒf[ƒ^ƒXƒgƒŠ[ƒ~ƒ“ƒOæ“¾
-            // ƒƒOo—Í: VitureLumaDevice.GetImuDataStreamAsync() [line 235-298]
+            // IMU ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°å–å¾—
+            // ãƒ­ã‚°å‡ºåŠ›: VitureLumaDevice.GetImuDataStreamAsync() [line 235-298]
             //         VitureLumaDevice.SendImuEnableCommandAsync() [line 365-414]
             //         RecordingHidStream.ReadAsync() [line 30-63]
-            //         FrameCount ‚ª 100 ‚Ì”{”‚ÅƒƒOo—Í [line 55-58]
+            //         FrameCount ãŒ 100 ã®å€æ•°ã§ãƒ­ã‚°å‡ºåŠ› [line 55-58]
             var count = 0;
             await foreach (var imuData in device.GetImuDataStreamAsync())
             {
                 Console.WriteLine($"Timestamp: {imuData.Timestamp}, Roll: {imuData.EulerAngles.Roll}");
                 
                 count++;
-                if (count >= 100)  // 100ƒtƒŒ[ƒ€‹L˜^
+                if (count >= 100)  // 100ãƒ•ãƒ¬ãƒ¼ãƒ è¨˜éŒ²
                     break;
             }
 
@@ -69,29 +69,29 @@ public class RecordingUsageExample
         }
         finally
         {
-            // ƒfƒoƒCƒX”jŠüARecordingHidStream.FinalizeAsync() ‚ªŒÄ‚Î‚ê‚é
-            // ƒƒOo—Í: RecordingHidStream.FinalizeAsync() [line 99-104]
+            // ãƒ‡ãƒã‚¤ã‚¹ç ´æ£„æ™‚ã€RecordingHidStream.FinalizeAsync() ãŒå‘¼ã°ã‚Œã‚‹
+            // ãƒ­ã‚°å‡ºåŠ›: RecordingHidStream.FinalizeAsync() [line 99-104]
             await device.DisposeAsync();
         }
     }
 
     /// <summary>
-    /// ‹L˜^‚³‚ê‚½ƒf[ƒ^‚©‚ç Mock ƒfƒoƒCƒX‚ğÄ¶‚·‚é
+    /// è¨˜éŒ²ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ Mock ãƒ‡ãƒã‚¤ã‚¹ã‚’å†ç”Ÿã™ã‚‹
     /// 
-    /// ƒƒOo—ÍƒNƒ‰ƒXF
+    /// ãƒ­ã‚°å‡ºåŠ›ã‚¯ãƒ©ã‚¹ï¼š
     /// - ImuDeviceManager.ConnectFromRecordingAsync() [line 82-97]
-    ///   - ReplayHidStreamProvider ƒCƒ“ƒXƒ^ƒ“ƒX‰»
+    ///   - ReplayHidStreamProvider ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
     ///   - VitureLumaDevice.ConnectWithProviderAsync() [line 13]
     ///   - VitureLumaDevice.InitializeAsync() [line 103-119]
     /// - VitureLumaDevice.GetImuDataStreamAsync() [line 235-298]
-    /// - ReplayHidStreamProvider.GetStreamsAsync() [À‘•QÆ]
+    /// - ReplayHidStreamProvider.GetStreamsAsync() [å®Ÿè£…å‚ç…§]
     /// </summary>
     public static async Task ReplayFromRecordingAsync(string recordingDirectory)
     {
         using var manager = new ImuDeviceManager();
 
-        // ‹L˜^ƒf[ƒ^‚©‚çÄ¶ƒfƒoƒCƒX‚ğì¬
-        // ƒƒOo—Í: ImuDeviceManager.ConnectFromRecordingAsync() [line 82-97]
+        // è¨˜éŒ²ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰å†ç”Ÿãƒ‡ãƒã‚¤ã‚¹ã‚’ä½œæˆ
+        // ãƒ­ã‚°å‡ºåŠ›: ImuDeviceManager.ConnectFromRecordingAsync() [line 82-97]
         //         VitureLumaDevice.InitializeAsync() [line 103-119]
         var device = await manager.ConnectFromRecordingAsync(recordingDirectory);
         if (device == null)
@@ -99,17 +99,17 @@ public class RecordingUsageExample
 
         try
         {
-            // IMU ƒf[ƒ^ƒXƒgƒŠ[ƒ~ƒ“ƒOÄ¶
-            // ƒƒOo—Í: VitureLumaDevice.GetImuDataStreamAsync() [line 235-298]
+            // IMU ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°å†ç”Ÿ
+            // ãƒ­ã‚°å‡ºåŠ›: VitureLumaDevice.GetImuDataStreamAsync() [line 235-298]
             //         VitureLumaDevice.TryReadImuDataAsync() [line 322-348]
-            //         FrameCount ‚ª 1000 ‚Ì”{”‚ÅƒƒOo—Í [line 245-248]
+            //         FrameCount ãŒ 1000 ã®å€æ•°ã§ãƒ­ã‚°å‡ºåŠ› [line 245-248]
             var count = 0;
             await foreach (var imuData in device.GetImuDataStreamAsync())
             {
                 Console.WriteLine($"Replayed - Timestamp: {imuData.Timestamp}, Pitch: {imuData.EulerAngles.Pitch}");
                 
                 count++;
-                if (count >= 50)  // 50ƒtƒŒ[ƒ€Ä¶
+                if (count >= 50)  // 50ãƒ•ãƒ¬ãƒ¼ãƒ å†ç”Ÿ
                     break;
             }
 
@@ -117,8 +117,8 @@ public class RecordingUsageExample
         }
         finally
         {
-            // ƒfƒoƒCƒX”jŠü
-            // ƒƒOo—Í: VitureLumaDevice.DisposeAsync() [line 415-425]
+            // ãƒ‡ãƒã‚¤ã‚¹ç ´æ£„
+            // ãƒ­ã‚°å‡ºåŠ›: VitureLumaDevice.DisposeAsync() [line 415-425]
             await device.DisposeAsync();
         }
     }

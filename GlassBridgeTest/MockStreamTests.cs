@@ -6,12 +6,12 @@ using GlassBridge.Internal.HID;
 using Xunit;
 
 /// <summary>
-/// MockHidStream ‚Æ MockMcuStream ‚Ì“®ìƒeƒXƒg
+/// MockHidStream ã¨ MockMcuStream ã®å‹•ä½œãƒ†ã‚¹ãƒˆ
 /// </summary>
 public class MockStreamTests
 {
     /// <summary>
-    /// ƒeƒXƒg—pIMUƒf[ƒ^ƒWƒFƒlƒŒ[ƒ^
+    /// ãƒ†ã‚¹ãƒˆç”¨IMUãƒ‡ãƒ¼ã‚¿ã‚¸ã‚§ãƒãƒ¬ãƒ¼ã‚¿
     /// </summary>
     private static async IAsyncEnumerable<ImuData> GenerateTestImuData(
         int count = 1,
@@ -35,7 +35,7 @@ public class MockStreamTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg1: MockMcuStream ‚ªƒRƒ}ƒ“ƒhó‚¯æ‚èŒã‚É ACK ‚ğ•Ô‚·
+    /// ãƒ†ã‚¹ãƒˆ1: MockMcuStream ãŒã‚³ãƒãƒ³ãƒ‰å—ã‘å–ã‚Šå¾Œã« ACK ã‚’è¿”ã™
     /// </summary>
     [Fact]
     public async Task MockMcuStream_ShouldReturnAckAfterWrite()
@@ -59,7 +59,7 @@ public class MockStreamTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg2: MockHidStream ‚ª IMU ƒf[ƒ^‚ğ•Ô‚·
+    /// ãƒ†ã‚¹ãƒˆ2: MockHidStream ãŒ IMU ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
     /// </summary>
     [Fact]
     public async Task MockHidStream_ShouldReturnImuData()
@@ -74,7 +74,7 @@ public class MockStreamTests
         // Assert
         Assert.True(bytesRead > 0, "IMU stream should return data");
         Assert.Equal(0xFF, buffer[0]);
-        // ƒwƒbƒ_Šm”F: IMU ƒf[ƒ^
+        // ãƒ˜ãƒƒãƒ€ç¢ºèª: IMU ãƒ‡ãƒ¼ã‚¿
         if (bytesRead >= 2)
         {
             Assert.Equal(0xFC, buffer[1]);
@@ -84,7 +84,7 @@ public class MockStreamTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg3: MockHidStreamProvider ‚ª 2 ‚Â‚ÌƒXƒgƒŠ[ƒ€‚ğ•Ô‚·
+    /// ãƒ†ã‚¹ãƒˆ3: MockHidStreamProvider ãŒ 2 ã¤ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’è¿”ã™
     /// </summary>
     [Fact]
      public async Task MockHidStreamProvider_ShouldReturnTwoStreams()
@@ -101,7 +101,7 @@ public class MockStreamTests
         // Assert
         Assert.Equal(2, streams.Count);
         
-        // Å‰‚ÍMCUAŸ‚ÍIMU
+        // æœ€åˆã¯MCUã€æ¬¡ã¯IMU
         var mcuStream = streams[0] as MockMcuStream;
         var imuStream = streams[1] as MockHidStream;
 
@@ -112,7 +112,7 @@ public class MockStreamTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg4: MockHidStream ‚©‚ç•¡”‰ñ“Ç‚İ‚İ
+    /// ãƒ†ã‚¹ãƒˆ4: MockHidStream ã‹ã‚‰è¤‡æ•°å›èª­ã¿è¾¼ã¿
     /// </summary>
     [Fact]
     public async Task MockHidStream_ShouldSupportMultipleReads()
@@ -121,10 +121,10 @@ public class MockStreamTests
         var imuStream = new MockHidStream(GenerateTestImuData(2, CancellationToken.None), CancellationToken.None);
         var buffer = new byte[64];
 
-        // Act: 1‰ñ–Ú‚Ì“Ç‚İ‚İ
+        // Act: 1å›ç›®ã®èª­ã¿è¾¼ã¿
         int bytesRead1 = await imuStream.ReadAsync(buffer, 0, buffer.Length, CancellationToken.None);
 
-        // 2‰ñ–Ú‚Ì“Ç‚İ‚İ
+        // 2å›ç›®ã®èª­ã¿è¾¼ã¿
         int bytesRead2 = await imuStream.ReadAsync(buffer, 0, buffer.Length, CancellationToken.None);
 
         // Assert
@@ -135,7 +135,7 @@ public class MockStreamTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg5: MockHidStream ƒf[ƒ^ƒXƒgƒŠ[ƒ€I—¹Œã‚Í 0 ‚ğ•Ô‚·
+    /// ãƒ†ã‚¹ãƒˆ5: MockHidStream ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ çµ‚äº†å¾Œã¯ 0 ã‚’è¿”ã™
     /// </summary>
     [Fact]
     public async Task MockHidStream_ShouldReturnZeroWhenDataExhausted()
@@ -144,23 +144,23 @@ public class MockStreamTests
         var imuStream = new MockHidStream(GenerateTestImuData(1, CancellationToken.None), CancellationToken.None);
         var buffer = new byte[64];
 
-        // Act: 1‰ñ–Ú‚Ì“Ç‚İ‚İ
+        // Act: 1å›ç›®ã®èª­ã¿è¾¼ã¿
         int bytesRead1 = await imuStream.ReadAsync(buffer, 0, buffer.Length, CancellationToken.None);
 
-        // 2‰ñ–ÚˆÈ~‚Ì“Ç‚İ‚İ
+        // 2å›ç›®ä»¥é™ã®èª­ã¿è¾¼ã¿
         int bytesRead2 = await imuStream.ReadAsync(buffer, 0, buffer.Length, CancellationToken.None);
         int bytesRead3 = await imuStream.ReadAsync(buffer, 0, buffer.Length, CancellationToken.None);
 
         // Assert
         Assert.True(bytesRead1 > 0, "First read should return data");
-        Assert.Equal(0, bytesRead2); // ƒf[ƒ^I—¹Œã
-        Assert.Equal(0, bytesRead3); // Œp‘±‚µ‚Ä 0
+        Assert.Equal(0, bytesRead2); // ãƒ‡ãƒ¼ã‚¿çµ‚äº†å¾Œ
+        Assert.Equal(0, bytesRead3); // ç¶™ç¶šã—ã¦ 0
 
         await imuStream.DisposeAsync();
     }
 
     /// <summary>
-    /// ƒeƒXƒg6: MockHidStream ‚ªƒpƒPƒbƒg‚ğƒVƒŠƒAƒ‰ƒCƒY
+    /// ãƒ†ã‚¹ãƒˆ6: MockHidStream ãŒãƒ‘ã‚±ãƒƒãƒˆã‚’ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚º
     /// </summary>
     [Fact]
     public async Task MockHidStream_ShouldSerializePacketCorrectly()

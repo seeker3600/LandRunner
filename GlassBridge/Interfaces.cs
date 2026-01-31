@@ -1,51 +1,51 @@
 namespace GlassBridge;
 
 /// <summary>
-/// IMUƒfƒoƒCƒXŠÇ—ƒCƒ“ƒ^[ƒtƒF[ƒXiƒeƒXƒg‰Â”\«‚ðl—¶j
+/// IMUãƒ‡ãƒã‚¤ã‚¹ç®¡ç†ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ï¼ˆãƒ†ã‚¹ãƒˆå¯èƒ½æ€§ã‚’è€ƒæ…®ï¼‰
 /// </summary>
 public interface IImuDevice : IAsyncDisposable
 {
     /// <summary>
-    /// IMUƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ðŽæ“¾
+    /// IMUãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’å–å¾—
     /// </summary>
     IAsyncEnumerable<ImuData> GetImuDataStreamAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// ƒfƒoƒCƒX‚ªÚ‘±‚³‚ê‚Ä‚¢‚é‚©‚ðŠm”F
+    /// ãƒ‡ãƒã‚¤ã‚¹ãŒæŽ¥ç¶šã•ã‚Œã¦ã„ã‚‹ã‹ã‚’ç¢ºèª
     /// </summary>
     bool IsConnected { get; }
 }
 
 /// <summary>
-/// IMUƒfƒoƒCƒXƒ}ƒl[ƒWƒƒ[‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX
+/// IMUãƒ‡ãƒã‚¤ã‚¹ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 /// </summary>
 public interface IImuDeviceManager : IDisposable
 {
     /// <summary>
-    /// VITURE LumaƒfƒoƒCƒX‚ðŒŸo‚µ‚ÄÚ‘±
+    /// VITURE Lumaãƒ‡ãƒã‚¤ã‚¹ã‚’æ¤œå‡ºã—ã¦æŽ¥ç¶š
     /// </summary>
-    /// <returns>Ú‘±‚³‚ê‚½IMUƒfƒoƒCƒXAÚ‘±Ž¸”sŽž‚Ínull</returns>
+    /// <returns>æŽ¥ç¶šã•ã‚ŒãŸIMUãƒ‡ãƒã‚¤ã‚¹ã€æŽ¥ç¶šå¤±æ•—æ™‚ã¯null</returns>
     Task<IImuDevice?> ConnectAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// ƒfƒoƒCƒX‚ÉÚ‘±‚µ‚Ä IMU ƒf[ƒ^‚ð‹L˜^
-    /// Žæ“¾‚µ‚½ƒfƒoƒCƒX‚©‚ç GetImuDataStreamAsync() ‚ÅŽæ“¾‚µ‚½ƒf[ƒ^‚ÍŽ©“®“I‚É‹L˜^‚³‚ê‚é
-    /// device.DisposeAsync() Žž‚ÉŽ©“®“I‚Éƒƒ^ƒf[ƒ^‚à•Û‘¶‚³‚ê‚é
+    /// ãƒ‡ãƒã‚¤ã‚¹ã«æŽ¥ç¶šã—ã¦ IMU ãƒ‡ãƒ¼ã‚¿ã‚’è¨˜éŒ²
+    /// å–å¾—ã—ãŸãƒ‡ãƒã‚¤ã‚¹ã‹ã‚‰ GetImuDataStreamAsync() ã§å–å¾—ã—ãŸãƒ‡ãƒ¼ã‚¿ã¯è‡ªå‹•çš„ã«è¨˜éŒ²ã•ã‚Œã‚‹
+    /// device.DisposeAsync() æ™‚ã«è‡ªå‹•çš„ã«ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚‚ä¿å­˜ã•ã‚Œã‚‹
     /// </summary>
-    /// <param name="outputDirectory">‹L˜^ƒtƒ@ƒCƒ‹‚Ìo—ÍæƒfƒBƒŒƒNƒgƒŠ</param>
-    /// <param name="cancellationToken">ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“</param>
-    /// <returns>‹L˜^•t‚«‚ÅÚ‘±‚³‚ê‚½IMUƒfƒoƒCƒXAÚ‘±Ž¸”sŽž‚Ínull</returns>
+    /// <param name="outputDirectory">è¨˜éŒ²ãƒ•ã‚¡ã‚¤ãƒ«ã®å‡ºåŠ›å…ˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</param>
+    /// <param name="cancellationToken">ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³</param>
+    /// <returns>è¨˜éŒ²ä»˜ãã§æŽ¥ç¶šã•ã‚ŒãŸIMUãƒ‡ãƒã‚¤ã‚¹ã€æŽ¥ç¶šå¤±æ•—æ™‚ã¯null</returns>
     Task<IImuDevice?> ConnectAndRecordAsync(
         string outputDirectory,
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// ‹L˜^‚³‚ê‚½ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©‚ç IMU ƒfƒoƒCƒX‚ðÄ¶
-    /// ŽÀÛ‚ÌƒfƒoƒCƒX‚Ì‘ã‚í‚è‚ÉA‹L˜^‚³‚ê‚½ƒf[ƒ^‚ðƒXƒgƒŠ[ƒ€”zM‚·‚é Mock ƒfƒoƒCƒX‚ð•Ô‚·
+    /// è¨˜éŒ²ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ IMU ãƒ‡ãƒã‚¤ã‚¹ã‚’å†ç”Ÿ
+    /// å®Ÿéš›ã®ãƒ‡ãƒã‚¤ã‚¹ã®ä»£ã‚ã‚Šã«ã€è¨˜éŒ²ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‚’ã‚¹ãƒˆãƒªãƒ¼ãƒ é…ä¿¡ã™ã‚‹ Mock ãƒ‡ãƒã‚¤ã‚¹ã‚’è¿”ã™
     /// </summary>
-    /// <param name="recordingDirectory">‹L˜^ƒtƒ@ƒCƒ‹‚ª•Û‘¶‚³‚ê‚Ä‚¢‚éƒfƒBƒŒƒNƒgƒŠ</param>
-    /// <param name="cancellationToken">ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“</param>
-    /// <returns>Ä¶—p‚Ì Mock ƒfƒoƒCƒXAƒtƒ@ƒCƒ‹‚È‚µŽž‚Ínull</returns>
+    /// <param name="recordingDirectory">è¨˜éŒ²ãƒ•ã‚¡ã‚¤ãƒ«ãŒä¿å­˜ã•ã‚Œã¦ã„ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª</param>
+    /// <param name="cancellationToken">ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³</param>
+    /// <returns>å†ç”Ÿç”¨ã® Mock ãƒ‡ãƒã‚¤ã‚¹ã€ãƒ•ã‚¡ã‚¤ãƒ«ãªã—æ™‚ã¯null</returns>
     Task<IImuDevice?> ConnectFromRecordingAsync(
         string recordingDirectory,
         CancellationToken cancellationToken = default);

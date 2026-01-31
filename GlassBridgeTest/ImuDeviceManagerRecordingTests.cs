@@ -6,7 +6,7 @@ using System.Text.Json;
 using Xunit;
 
 /// <summary>
-/// ImuDeviceManager ‚Ì‹L˜^EÄ¶‹@”\‚Ì“‡ƒeƒXƒg
+/// ImuDeviceManager ã®è¨˜éŒ²ãƒ»å†ç”Ÿæ©Ÿèƒ½ã®çµ±åˆãƒ†ã‚¹ãƒˆ
 /// </summary>
 public class ImuDeviceManagerRecordingTests : IDisposable
 {
@@ -19,7 +19,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
     }
 
     /// <summary>
-    /// ƒeƒXƒg1: ConnectAndRecordAsync ‚ÌŠî–{“®ì
+    /// ãƒ†ã‚¹ãƒˆ1: ConnectAndRecordAsync ã®åŸºæœ¬å‹•ä½œ
     /// </summary>
     [Fact]
     public async Task ConnectAndRecordAsync_CreatesRecordingFiles()
@@ -29,18 +29,18 @@ public class ImuDeviceManagerRecordingTests : IDisposable
         var recordingDir = Path.Combine(_testOutputDirectory, "test1");
         Directory.CreateDirectory(recordingDir);
 
-        // Act: ÀƒfƒoƒCƒXÚ‘±‚ğ‚İ‚éiƒfƒoƒCƒX‚È‚µ‚Ínull‚ª•Ô‚éj
+        // Act: å®Ÿãƒ‡ãƒã‚¤ã‚¹æ¥ç¶šã‚’è©¦ã¿ã‚‹ï¼ˆãƒ‡ãƒã‚¤ã‚¹ãªã—æ™‚ã¯nullãŒè¿”ã‚‹ï¼‰
         await using var device = await manager.ConnectAndRecordAsync(recordingDir);
 
-        // Assert: ‹L˜^‹@”\‚ª³‚µ‚­‰Šú‰»‚³‚ê‚½‚±‚Æ‚ğŠm”F
-        // ƒfƒoƒCƒX‚ªÚ‘±‚Å‚«‚È‚­‚Ä‚àA‹L˜^‹@”\‚Í‰Šú‰»‚³‚ê‚é
-        Assert.NotNull(manager);  // ƒ}ƒl[ƒWƒƒ[‚ªì¬‚³‚ê‚Ä‚¢‚é
+        // Assert: è¨˜éŒ²æ©Ÿèƒ½ãŒæ­£ã—ãåˆæœŸåŒ–ã•ã‚ŒãŸã“ã¨ã‚’ç¢ºèª
+        // ãƒ‡ãƒã‚¤ã‚¹ãŒæ¥ç¶šã§ããªãã¦ã‚‚ã€è¨˜éŒ²æ©Ÿèƒ½ã¯åˆæœŸåŒ–ã•ã‚Œã‚‹
+        Assert.NotNull(manager);  // ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ãŒä½œæˆã•ã‚Œã¦ã„ã‚‹
         
         manager.Dispose();
     }
 
     /// <summary>
-    /// ƒeƒXƒg2: ConnectFromRecordingAsync - ‹L˜^ƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢ê‡
+    /// ãƒ†ã‚¹ãƒˆ2: ConnectFromRecordingAsync - è¨˜éŒ²ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„å ´åˆ
     /// </summary>
     [Fact]
     public async Task ConnectFromRecordingAsync_WithNoFiles_ReturnsNull()
@@ -54,12 +54,12 @@ public class ImuDeviceManagerRecordingTests : IDisposable
         await using var device = await manager.ConnectFromRecordingAsync(recordingDir);
 
         // Assert
-        Assert.Null(device);  // ƒtƒ@ƒCƒ‹‚È‚µ‚Ínull
+        Assert.Null(device);  // ãƒ•ã‚¡ã‚¤ãƒ«ãªã—æ™‚ã¯null
         manager.Dispose();
     }
 
     /// <summary>
-    /// ƒeƒXƒg3: ConnectFromRecordingAsync - –³Œø‚ÈƒfƒBƒŒƒNƒgƒŠ
+    /// ãƒ†ã‚¹ãƒˆ3: ConnectFromRecordingAsync - ç„¡åŠ¹ãªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
     /// </summary>
     [Fact]
     public async Task ConnectFromRecordingAsync_WithInvalidDirectory_ThrowsException()
@@ -77,7 +77,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
     }
 
     /// <summary>
-    /// ƒeƒXƒg4: ‹L˜^ƒtƒ@ƒCƒ‹‚ğì¬‚µ‚ÄÄ¶ƒeƒXƒg
+    /// ãƒ†ã‚¹ãƒˆ4: è¨˜éŒ²ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã—ã¦å†ç”Ÿãƒ†ã‚¹ãƒˆ
     /// </summary>
     [Fact]
     public async Task ConnectFromRecordingAsync_WithValidRecording_ReplaysData()
@@ -86,7 +86,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
         var recordingDir = Path.Combine(_testOutputDirectory, "test4");
         Directory.CreateDirectory(recordingDir);
 
-        // ƒeƒXƒg—p‚Ì‹L˜^ƒtƒ@ƒCƒ‹‚ğì¬
+        // ãƒ†ã‚¹ãƒˆç”¨ã®è¨˜éŒ²ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆ
         var testData = new ImuData[]
         {
             new ImuData
@@ -108,7 +108,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
         var framesPath = Path.Combine(recordingDir, "frames_0.jsonl");
         var metadataPath = Path.Combine(recordingDir, "metadata_0.json");
 
-        // ƒtƒŒ[ƒ€‚ğ•Û‘¶
+        // ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’ä¿å­˜
         using (var writer = new StreamWriter(framesPath))
         {
             foreach (var frame in testData)
@@ -118,7 +118,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
             }
         }
 
-        // ƒƒ^ƒf[ƒ^‚ğ•Û‘¶
+        // ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜
         var metadata = ImuRecordingSession.CreateNew(frameCount: 2, sampleRate: 100);
         File.WriteAllText(metadataPath, metadata.ToJson());
 
@@ -131,7 +131,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
         {
             Assert.True(device.IsConnected);
 
-            // ƒf[ƒ^‚ğæ“¾‚µ‚Ä‚İ‚é
+            // ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¦ã¿ã‚‹
             var count = 0;
             await foreach (var data in device.GetImuDataStreamAsync())
             {
@@ -149,7 +149,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
     }
 
     /// <summary>
-    /// ƒeƒXƒg5: device.DisposeAsync() ‚É©“®“I‚Éƒƒ^ƒf[ƒ^‚ª•Û‘¶‚³‚ê‚é
+    /// ãƒ†ã‚¹ãƒˆ5: device.DisposeAsync() æ™‚ã«è‡ªå‹•çš„ã«ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ãŒä¿å­˜ã•ã‚Œã‚‹
     /// </summary>
     [Fact]
     public async Task ConnectAndRecordAsync_AutomaticallyFinalizesOnDispose()
@@ -159,19 +159,19 @@ public class ImuDeviceManagerRecordingTests : IDisposable
         var recordingDir = Path.Combine(_testOutputDirectory, "test5");
         Directory.CreateDirectory(recordingDir);
 
-        // Act: device ‚ğ using ‚ÅŠÇ—i©“®“I‚É DisposeAsync ‚ªŒÄ‚Î‚ê‚éj
+        // Act: device ã‚’ using ã§ç®¡ç†ï¼ˆè‡ªå‹•çš„ã« DisposeAsync ãŒå‘¼ã°ã‚Œã‚‹ï¼‰
         await using (var device = await manager.ConnectAndRecordAsync(recordingDir))
         {
-            // ƒfƒoƒCƒX‚ªÚ‘±‚Å‚«‚Ä‚à‚Å‚«‚È‚­‚Ä‚àA‹L˜^‹@”\‚Í‰Šú‰»‚³‚ê‚Ä‚¢‚é
+            // ãƒ‡ãƒã‚¤ã‚¹ãŒæ¥ç¶šã§ãã¦ã‚‚ã§ããªãã¦ã‚‚ã€è¨˜éŒ²æ©Ÿèƒ½ã¯åˆæœŸåŒ–ã•ã‚Œã¦ã„ã‚‹
         }
 
-        // Assert: device ‚ª”pŠü‚³‚ê‚ÄAƒƒ^ƒf[ƒ^ƒtƒ@ƒCƒ‹‚ªì¬‚³‚ê‚½‚±‚Æ‚ğŠm”F
-        // ‹L˜^ƒtƒ@ƒCƒ‹‚ª‚ ‚ê‚ÎAƒƒ^ƒf[ƒ^‚àì¬‚³‚ê‚é‚Í‚¸
+        // Assert: device ãŒå»ƒæ£„ã•ã‚Œã¦ã€ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ãŒä½œæˆã•ã‚ŒãŸã“ã¨ã‚’ç¢ºèª
+        // è¨˜éŒ²ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚Œã°ã€ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚‚ä½œæˆã•ã‚Œã‚‹ã¯ãš
         manager.Dispose();
     }
 
     /// <summary>
-    /// ƒeƒXƒg6: Dispose Œã‚Ìƒƒ\ƒbƒhŒÄ‚Ño‚µ
+    /// ãƒ†ã‚¹ãƒˆ6: Dispose å¾Œã®ãƒ¡ã‚½ãƒƒãƒ‰å‘¼ã³å‡ºã—
     /// </summary>
     [Fact]
     public async Task DisposedManager_ThrowsObjectDisposedException()
@@ -195,7 +195,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
     }
 
     /// <summary>
-    /// ƒeƒXƒg7: ConnectAndRecordAsync ‚Ì–³Œø‚È“ü—Í
+    /// ãƒ†ã‚¹ãƒˆ7: ConnectAndRecordAsync ã®ç„¡åŠ¹ãªå…¥åŠ›
     /// </summary>
     [Fact]
     public async Task ConnectAndRecordAsync_WithNullDirectory_ThrowsException()
@@ -216,7 +216,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
     }
 
     /// <summary>
-    /// ƒeƒXƒg8: ConnectFromRecordingAsync ‚Ì–³Œø‚È“ü—Í
+    /// ãƒ†ã‚¹ãƒˆ8: ConnectFromRecordingAsync ã®ç„¡åŠ¹ãªå…¥åŠ›
     /// </summary>
     [Fact]
     public async Task ConnectFromRecordingAsync_WithNullDirectory_ThrowsException()
@@ -237,7 +237,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
     }
 
     /// <summary>
-    /// ƒeƒXƒg9: ƒ}ƒl[ƒWƒƒ[‚Ì•¡”‹L˜^ƒZƒbƒVƒ‡ƒ“Ø‚è‘Ö‚¦
+    /// ãƒ†ã‚¹ãƒˆ9: ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®è¤‡æ•°è¨˜éŒ²ã‚»ãƒƒã‚·ãƒ§ãƒ³åˆ‡ã‚Šæ›¿ãˆ
     /// </summary>
     [Fact]
     public async Task MultipleRecordingSessions_CanBeSwitched()
@@ -249,25 +249,25 @@ public class ImuDeviceManagerRecordingTests : IDisposable
         Directory.CreateDirectory(recordingDir1);
         Directory.CreateDirectory(recordingDir2);
 
-        // Act: Å‰‚Ì‹L˜^ƒZƒbƒVƒ‡ƒ“
+        // Act: æœ€åˆã®è¨˜éŒ²ã‚»ãƒƒã‚·ãƒ§ãƒ³
         await using var device1 = await manager.ConnectAndRecordAsync(recordingDir1);
         
-        // device ‚ª”pŠü‚³‚ê‚Äƒƒ^ƒf[ƒ^‚ª©“®•Û‘¶‚³‚ê‚é
-        // (await using ‚Å©“®“I‚É DisposeAsync ‚ªŒÄ‚Î‚ê‚é)
+        // device ãŒå»ƒæ£„ã•ã‚Œã¦ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ãŒè‡ªå‹•ä¿å­˜ã•ã‚Œã‚‹
+        // (await using ã§è‡ªå‹•çš„ã« DisposeAsync ãŒå‘¼ã°ã‚Œã‚‹)
 
-        // 2”Ô–Ú‚Ì‹L˜^ƒZƒbƒVƒ‡ƒ“
+        // 2ç•ªç›®ã®è¨˜éŒ²ã‚»ãƒƒã‚·ãƒ§ãƒ³
         await using var device2 = await manager.ConnectAndRecordAsync(recordingDir2);
 
         // Assert
-        // ƒfƒoƒCƒX‚ªÚ‘±‚Å‚«‚Ä‚à‚Å‚«‚È‚­‚Ä‚àAƒ}ƒl[ƒWƒƒ[‚ª‹@”\‚µ‚Ä‚¢‚ê‚ÎOK
+        // ãƒ‡ãƒã‚¤ã‚¹ãŒæ¥ç¶šã§ãã¦ã‚‚ã§ããªãã¦ã‚‚ã€ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ãŒæ©Ÿèƒ½ã—ã¦ã„ã‚Œã°OK
         Assert.NotNull(manager);
         
-        // ƒZƒbƒVƒ‡ƒ“Ø‚è‘Ö‚¦‚ª¬Œ÷idevice2 ”pŠü‚É©“®“I‚Éƒƒ^ƒf[ƒ^•Û‘¶j
+        // ã‚»ãƒƒã‚·ãƒ§ãƒ³åˆ‡ã‚Šæ›¿ãˆãŒæˆåŠŸï¼ˆdevice2 å»ƒæ£„æ™‚ã«è‡ªå‹•çš„ã«ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ä¿å­˜ï¼‰
         manager.Dispose();
     }
 
     /// <summary>
-    /// ƒeƒXƒg10: IImuDeviceManager ƒCƒ“ƒ^[ƒtƒFƒCƒX€‹’ƒeƒXƒg
+    /// ãƒ†ã‚¹ãƒˆ10: IImuDeviceManager ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹æº–æ‹ ãƒ†ã‚¹ãƒˆ
     /// </summary>
     [Fact]
     public void ImuDeviceManager_ImplementsInterface()
@@ -291,7 +291,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
         }
         catch
         {
-            // ƒNƒŠ[ƒ“ƒAƒbƒv¸”s‚Í–³‹
+            // ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—å¤±æ•—ã¯ç„¡è¦–
         }
     }
 }

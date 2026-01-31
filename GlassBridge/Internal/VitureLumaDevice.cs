@@ -5,8 +5,8 @@ using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
-/// VITUREŒnƒOƒ‰ƒX—pIMUƒfƒoƒCƒXÀ‘•
-/// IMU/MCUƒXƒgƒŠ[ƒ€‚Ì”»•Ê‚Í‚±‚ÌƒNƒ‰ƒX‚ªÓ–±iVITUREŒÅ—L‚ÌƒhƒƒCƒ“’m¯j
+/// VITUREç³»ã‚°ãƒ©ã‚¹ç”¨IMUãƒ‡ãƒã‚¤ã‚¹å®Ÿè£…
+/// IMU/MCUã‚¹ãƒˆãƒªãƒ¼ãƒ ã®åˆ¤åˆ¥ã¯ã“ã®ã‚¯ãƒ©ã‚¹ãŒè²¬å‹™ï¼ˆVITUREå›ºæœ‰ã®ãƒ‰ãƒ¡ã‚¤ãƒ³çŸ¥è­˜ï¼‰
 /// </summary>
 internal sealed class VitureLumaDevice : IImuDevice
 {
@@ -25,7 +25,7 @@ internal sealed class VitureLumaDevice : IImuDevice
 
     private readonly IHidStreamProvider _hidProvider;
 
-    // VITUREŒÅ—LFIMU/MCUƒXƒgƒŠ[ƒ€iƒhƒƒCƒ“’m¯j
+    // VITUREå›ºæœ‰ï¼šIMU/MCUã‚¹ãƒˆãƒªãƒ¼ãƒ ï¼ˆãƒ‰ãƒ¡ã‚¤ãƒ³çŸ¥è­˜ï¼‰
     private IHidStream? _imuStream;
     private IHidStream? _mcuStream;
 
@@ -42,17 +42,17 @@ internal sealed class VitureLumaDevice : IImuDevice
     }
 
     /// <summary>
-    /// ƒfƒoƒCƒX‚ÉÚ‘±‚µAIMU—LŒø‰»ƒRƒ}ƒ“ƒh‚ğ‘—M
+    /// ãƒ‡ãƒã‚¤ã‚¹ã«æ¥ç¶šã—ã€IMUæœ‰åŠ¹åŒ–ã‚³ãƒãƒ³ãƒ‰ã‚’é€ä¿¡
     /// </summary>
     public static async Task<VitureLumaDevice?> ConnectAsync(CancellationToken cancellationToken = default)
     {
-        // HidSharp‚Ì”Ä—pƒ‰ƒbƒp[‚ğg—p
+        // HidSharpã®æ±ç”¨ãƒ©ãƒƒãƒ‘ãƒ¼ã‚’ä½¿ç”¨
         var provider = new HidStreamProvider();
         return await ConnectWithProviderAsync(provider, cancellationToken);
     }
 
     /// <summary>
-    /// w’è‚³‚ê‚½ƒvƒƒoƒCƒ_‚ÅƒfƒoƒCƒX‚ğ‰Šú‰»iƒeƒXƒg—pj
+    /// æŒ‡å®šã•ã‚ŒãŸãƒ—ãƒ­ãƒã‚¤ãƒ€ã§ãƒ‡ãƒã‚¤ã‚¹ã‚’åˆæœŸåŒ–ï¼ˆãƒ†ã‚¹ãƒˆç”¨ï¼‰
     /// </summary>
     internal static async Task<VitureLumaDevice?> ConnectWithProviderAsync(
         IHidStreamProvider hidProvider,
@@ -68,8 +68,8 @@ internal sealed class VitureLumaDevice : IImuDevice
     }
 
     /// <summary>
-    /// ƒfƒoƒCƒX‚ğ‰Šú‰»
-    /// IMU/MCUƒXƒgƒŠ[ƒ€‚Ì”»•Ê‚ğs‚¤iVITUREŒÅ—LƒƒWƒbƒNj
+    /// ãƒ‡ãƒã‚¤ã‚¹ã‚’åˆæœŸåŒ–
+    /// IMU/MCUã‚¹ãƒˆãƒªãƒ¼ãƒ ã®åˆ¤åˆ¥ã‚’è¡Œã†ï¼ˆVITUREå›ºæœ‰ãƒ­ã‚¸ãƒƒã‚¯ï¼‰
     /// </summary>
     private async Task<bool> InitializeAsync(CancellationToken cancellationToken)
     {
@@ -77,7 +77,7 @@ internal sealed class VitureLumaDevice : IImuDevice
         {
             _logger.LogDebug("Device initialization started");
 
-            // HidStreamProvider‚©‚ç‘SƒXƒgƒŠ[ƒ€‚ğæ“¾
+            // HidStreamProviderã‹ã‚‰å…¨ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’å–å¾—
             var allStreams = await _hidProvider.GetStreamsAsync(
                 VendorId,
                 SupportedProductIds,
@@ -90,7 +90,7 @@ internal sealed class VitureLumaDevice : IImuDevice
 
             _logger.LogDebug("Found {StreamCount} streams, identifying IMU and MCU...", allStreams.Count);
 
-            // VITUREŒÅ—LFIMU/MCU‚ğ”»•Ê
+            // VITUREå›ºæœ‰ï¼šIMU/MCUã‚’åˆ¤åˆ¥
             await IdentifyStreamsAsync(allStreams, cancellationToken);
 
             if (_imuStream == null || _mcuStream == null)
@@ -101,16 +101,16 @@ internal sealed class VitureLumaDevice : IImuDevice
 
             _logger.LogInformation("Stream identification successful: IMU and MCU identified");
 
-            // ƒXƒgƒŠ[ƒ€”»•ÊŒãAIMU‚ğ–³Œø‰»‚·‚é
-            // GetImuDataStreamAsync ŒÄ‚Ño‚µ‚É‚¾‚¯—LŒø‰»‚·‚é‚±‚Æ‚ÅA
-            // ŒÃ‚¢ƒf[ƒ^‚ªUSBƒoƒbƒtƒ@‚É’~Ï‚³‚ê‚é‚±‚Æ‚ğ–h‚®
+            // ã‚¹ãƒˆãƒªãƒ¼ãƒ åˆ¤åˆ¥å¾Œã€IMUã‚’ç„¡åŠ¹åŒ–ã™ã‚‹
+            // GetImuDataStreamAsync å‘¼ã³å‡ºã—æ™‚ã«ã ã‘æœ‰åŠ¹åŒ–ã™ã‚‹ã“ã¨ã§ã€
+            // å¤ã„ãƒ‡ãƒ¼ã‚¿ãŒUSBãƒãƒƒãƒ•ã‚¡ã«è“„ç©ã•ã‚Œã‚‹ã“ã¨ã‚’é˜²ã
             try
             {
                 await SendImuEnableCommandAsync(enable: false, cancellationToken);
             }
             catch
             {
-                // ‰Šú‰»ˆ—‚Ìˆê•”‚È‚Ì‚ÅA¸”s‚µ‚Ä‚àƒVƒXƒeƒ€‚Í“®ìŒp‘±
+                // åˆæœŸåŒ–å‡¦ç†ã®ä¸€éƒ¨ãªã®ã§ã€å¤±æ•—ã—ã¦ã‚‚ã‚·ã‚¹ãƒ†ãƒ ã¯å‹•ä½œç¶™ç¶š
             }
 
             _isConnected = true;
@@ -125,14 +125,14 @@ internal sealed class VitureLumaDevice : IImuDevice
     }
 
     /// <summary>
-    /// VITUREŒÅ—LFƒXƒgƒŠ[ƒ€‚©‚çIMU/MCU‚ğ”»•Ê
-    /// —LŒø‚ÈƒRƒ}ƒ“ƒhƒpƒPƒbƒg‚ğ‘—M‚µ‚Ä‰“š‚ğƒeƒXƒg
-    /// ƒhƒLƒ…ƒƒ“ƒgQÆFu‘—M‰Â”Û‚ÅƒRƒ}ƒ“ƒh‚Ìˆ¶æ‚ğ–Àã”»•Ê‚µ‚Ä‚¢‚év
+    /// VITUREå›ºæœ‰ï¼šã‚¹ãƒˆãƒªãƒ¼ãƒ ã‹ã‚‰IMU/MCUã‚’åˆ¤åˆ¥
+    /// æœ‰åŠ¹ãªã‚³ãƒãƒ³ãƒ‰ãƒ‘ã‚±ãƒƒãƒˆã‚’é€ä¿¡ã—ã¦å¿œç­”ã‚’ãƒ†ã‚¹ãƒˆ
+    /// ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆå‚ç…§ï¼šã€Œé€ä¿¡å¯å¦ã§ã‚³ãƒãƒ³ãƒ‰ã®å®›å…ˆã‚’äº‹å®Ÿä¸Šåˆ¤åˆ¥ã—ã¦ã„ã‚‹ã€
     /// </summary>
     private async Task IdentifyStreamsAsync(IReadOnlyList<IHidStream> streams, CancellationToken cancellationToken)
     {
-        // ƒVƒ“ƒvƒ‹‚È”»•ÊFÅ‰‚ÌƒXƒgƒŠ[ƒ€‚ğ MCUA2”Ô–Ú‚ğ IMU ‚Æ‚·‚é
-        // iÀ‘•‚Í WebHID ‚Ì”»•Ê•û®‚ÉŠî‚Ã‚­j
+        // ã‚·ãƒ³ãƒ—ãƒ«ãªåˆ¤åˆ¥ï¼šæœ€åˆã®ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’ MCUã€2ç•ªç›®ã‚’ IMU ã¨ã™ã‚‹
+        // ï¼ˆå®Ÿè£…ã¯ WebHID ã®åˆ¤åˆ¥æ–¹å¼ã«åŸºã¥ãï¼‰
         _logger.LogDebug("Identifying IMU and MCU streams from {StreamCount} available streams", streams.Count);
 
         for (int i = 0; i < streams.Count; i++)
@@ -142,10 +142,10 @@ internal sealed class VitureLumaDevice : IImuDevice
 
             try
             {
-                // —LŒø‚È IMU enable ƒRƒ}ƒ“ƒhƒpƒPƒbƒg‚ğ‘—M
+                // æœ‰åŠ¹ãª IMU enable ã‚³ãƒãƒ³ãƒ‰ãƒ‘ã‚±ãƒƒãƒˆã‚’é€ä¿¡
                 var cmdPacket = VitureLumaPacket.BuildImuEnableCommand(enable: true, messageCounter: 0);
                 
-                // ƒfƒoƒCƒX‚Ì MaxOutputReportLength ‚ÉŠî‚Ã‚¢‚Äƒoƒbƒtƒ@‚ğì¬
+                // ãƒ‡ãƒã‚¤ã‚¹ã® MaxOutputReportLength ã«åŸºã¥ã„ã¦ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆ
                 var writeBuffer = new byte[stream.MaxOutputReportLength];
                 writeBuffer[0] = 0x00; // Report ID
                 Array.Copy(cmdPacket, 0, writeBuffer, 1, Math.Min(cmdPacket.Length, writeBuffer.Length - 1));
@@ -153,8 +153,8 @@ internal sealed class VitureLumaDevice : IImuDevice
                 _logger.LogTrace("Sending IMU enable command to stream #{StreamIndex}, packet size: {PacketSize}", i, cmdPacket.Length);
                 await stream.WriteAsync(writeBuffer, cancellationToken);
 
-                // ‰“š‘Ò‹@iƒ^ƒCƒ€ƒAƒEƒg•t‚«j
-                // ƒfƒoƒCƒX‚Ì MaxInputReportLength ‚ÉŠî‚Ã‚¢‚Äƒoƒbƒtƒ@‚ğì¬
+                // å¿œç­”å¾…æ©Ÿï¼ˆã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆä»˜ãï¼‰
+                // ãƒ‡ãƒã‚¤ã‚¹ã® MaxInputReportLength ã«åŸºã¥ã„ã¦ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆ
                 var ackBuffer = new byte[stream.MaxInputReportLength];
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                 cts.CancelAfter(TimeSpan.FromMilliseconds(100));
@@ -163,13 +163,13 @@ internal sealed class VitureLumaDevice : IImuDevice
                 {
                     int bytesRead = await stream.ReadAsync(ackBuffer, 0, ackBuffer.Length, cts.Token);
 
-                    // Report ID ƒIƒtƒZƒbƒg‚ğŒŸo
+                    // Report ID ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’æ¤œå‡º
                     int offset = (bytesRead > 1 && ackBuffer[0] == 0x00 && ackBuffer[1] == 0xFF) ? 1 : 0;
 
-                    // ‰“š‚ª‚ ‚ê‚Î‚±‚ÌƒXƒgƒŠ[ƒ€‚ª MCU
+                    // å¿œç­”ãŒã‚ã‚Œã°ã“ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ ãŒ MCU
                     if (bytesRead > offset && ackBuffer[offset] == 0xFF)
                     {
-                        // MCU ACK ‚© IMU ƒf[ƒ^‚©Šm”F
+                        // MCU ACK ã‹ IMU ãƒ‡ãƒ¼ã‚¿ã‹ç¢ºèª
                         if (ackBuffer[offset + 1] == 0xFD)
                         {
                             _mcuStream = stream;
@@ -178,7 +178,7 @@ internal sealed class VitureLumaDevice : IImuDevice
                         }
                         else if (ackBuffer[offset + 1] == 0xFC)
                         {
-                            // IMU ƒf[ƒ^‚ª•Ô‚Á‚Ä‚«‚½
+                            // IMU ãƒ‡ãƒ¼ã‚¿ãŒè¿”ã£ã¦ããŸ
                             _imuStream = stream;
                             _logger.LogInformation("Stream #{StreamIndex} identified as IMU (data received: 0xFF 0xFC)", i);
                             continue;
@@ -187,7 +187,7 @@ internal sealed class VitureLumaDevice : IImuDevice
                 }
                 catch (OperationCanceledException)
                 {
-                    // ƒ^ƒCƒ€ƒAƒEƒg ¨ IMU
+                    // ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ â†’ IMU
                     if (_imuStream == null)
                     {
                         _imuStream = stream;
@@ -198,7 +198,7 @@ internal sealed class VitureLumaDevice : IImuDevice
             }
             catch (Exception ex)
             {
-                // ƒGƒ‰[ ¨ IMU
+                // ã‚¨ãƒ©ãƒ¼ â†’ IMU
                 if (_imuStream == null)
                 {
                     _imuStream = stream;
@@ -207,7 +207,7 @@ internal sealed class VitureLumaDevice : IImuDevice
             }
         }
 
-        // –¢Š„‚è“–‚Ä‚ÌƒXƒgƒŠ[ƒ€‚ğc‚è‚ÉŠ„‚è“–‚Ä‚é
+        // æœªå‰²ã‚Šå½“ã¦ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’æ®‹ã‚Šã«å‰²ã‚Šå½“ã¦ã‚‹
         if (_mcuStream == null && _imuStream != null)
         {
             for (int i = 0; i < streams.Count; i++)
@@ -237,10 +237,10 @@ internal sealed class VitureLumaDevice : IImuDevice
     }
 
     /// <summary>
-    /// IMUƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ğæ“¾
-    /// ‚±‚Ìƒƒ\ƒbƒhŒÄ‚Ño‚µ‚ÉIMU‚ğ—LŒø‰»‚µAI—¹‚É–³Œø‰»‚·‚é
-    /// ‚±‚ê‚É‚æ‚èAŒÃ‚¢ƒf[ƒ^‚ªUSBƒoƒbƒtƒ@‚É’~Ï‚³‚ê‚é‚Ì‚ğ–h‚¬A
-    /// ŒÄ‚Ño‚µ“_‚Å‚ÌÅVƒf[ƒ^‚ğæ“¾‚Å‚«‚é
+    /// IMUãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’å–å¾—
+    /// ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰å‘¼ã³å‡ºã—æ™‚ã«IMUã‚’æœ‰åŠ¹åŒ–ã—ã€çµ‚äº†æ™‚ã«ç„¡åŠ¹åŒ–ã™ã‚‹
+    /// ã“ã‚Œã«ã‚ˆã‚Šã€å¤ã„ãƒ‡ãƒ¼ã‚¿ãŒUSBãƒãƒƒãƒ•ã‚¡ã«è“„ç©ã•ã‚Œã‚‹ã®ã‚’é˜²ãã€
+    /// å‘¼ã³å‡ºã—æ™‚ç‚¹ã§ã®æœ€æ–°ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã§ãã‚‹
     /// </summary>
     public async IAsyncEnumerable<ImuData> GetImuDataStreamAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
@@ -250,7 +250,7 @@ internal sealed class VitureLumaDevice : IImuDevice
         _logger.LogInformation("IMU data stream started");
         int frameCount = 0;
 
-        // IMU—LŒø‰»iƒXƒgƒŠ[ƒ€ŠJnj
+        // IMUæœ‰åŠ¹åŒ–ï¼ˆã‚¹ãƒˆãƒªãƒ¼ãƒ é–‹å§‹æ™‚ï¼‰
         try
         {
             await SendImuEnableCommandAsync(enable: true, cancellationToken);
@@ -263,8 +263,8 @@ internal sealed class VitureLumaDevice : IImuDevice
 
         try
         {
-            // ƒfƒoƒCƒX‚Ì MaxInputReportLength ‚ÉŠî‚Ã‚¢‚Äƒoƒbƒtƒ@‚ğì¬
-            // VITUREd—l: Report ID (1 byte) + Report Size (64 bytes) = 65 bytes
+            // ãƒ‡ãƒã‚¤ã‚¹ã® MaxInputReportLength ã«åŸºã¥ã„ã¦ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆ
+            // VITUREä»•æ§˜: Report ID (1 byte) + Report Size (64 bytes) = 65 bytes
             var buffer = new byte[_imuStream.MaxInputReportLength];
 
             while (!cancellationToken.IsCancellationRequested && IsConnected)
@@ -288,7 +288,7 @@ internal sealed class VitureLumaDevice : IImuDevice
         }
         finally
         {
-            // IMU–³Œø‰»iƒXƒgƒŠ[ƒ€I—¹ - —áŠO‚à•K‚¸Àsj
+            // IMUç„¡åŠ¹åŒ–ï¼ˆã‚¹ãƒˆãƒªãƒ¼ãƒ çµ‚äº†æ™‚ - ä¾‹å¤–æ™‚ã‚‚å¿…ãšå®Ÿè¡Œï¼‰
             try
             {
                 await SendImuEnableCommandAsync(enable: false, cancellationToken);
@@ -296,7 +296,7 @@ internal sealed class VitureLumaDevice : IImuDevice
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Failed to disable IMU: {ErrorMessage}", ex.Message);
-                // –³Œø‰»¸”s‚Í’v–½“I‚Å‚Í‚È‚¢‚½‚ßA—áŠO‚ğ“f‚©‚È‚¢
+                // ç„¡åŠ¹åŒ–å¤±æ•—ã¯è‡´å‘½çš„ã§ã¯ãªã„ãŸã‚ã€ä¾‹å¤–ã‚’åã‹ãªã„
             }
 
             _logger.LogInformation("IMU data stream ended after {FrameCount} frames", frameCount);
@@ -304,7 +304,7 @@ internal sealed class VitureLumaDevice : IImuDevice
     }
 
     /// <summary>
-    /// HIDƒXƒgƒŠ[ƒ€‚©‚çIMUƒf[ƒ^‚ğ“Ç‚İ‚à‚¤‚Æ‚·‚éi”ñ“¯Šúj
+    /// HIDã‚¹ãƒˆãƒªãƒ¼ãƒ ã‹ã‚‰IMUãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚‚ã†ã¨ã™ã‚‹ï¼ˆéåŒæœŸï¼‰
     /// </summary>
     private async Task<ImuData?> TryReadImuDataAsync(IHidStream stream, byte[] buffer, CancellationToken cancellationToken)
     {
@@ -330,7 +330,7 @@ internal sealed class VitureLumaDevice : IImuDevice
         }
         catch (OperationCanceledException)
         {
-            // ƒLƒƒƒ“ƒZƒ‹‚Í³í‚ÈI—¹
+            // ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã¯æ­£å¸¸ãªçµ‚äº†
             _logger.LogDebug("IMU read cancelled");
         }
         catch (Exception ex)
@@ -342,7 +342,7 @@ internal sealed class VitureLumaDevice : IImuDevice
     }
 
     /// <summary>
-    /// IMU—LŒø‰»/–³Œø‰»ƒRƒ}ƒ“ƒh‚ğ‘—M
+    /// IMUæœ‰åŠ¹åŒ–/ç„¡åŠ¹åŒ–ã‚³ãƒãƒ³ãƒ‰ã‚’é€ä¿¡
     /// </summary>
     private async Task SendImuEnableCommandAsync(bool enable, CancellationToken cancellationToken = default)
     {
@@ -354,7 +354,7 @@ internal sealed class VitureLumaDevice : IImuDevice
 
         var cmdPacket = VitureLumaPacket.BuildImuEnableCommand(enable, _messageCounter++);
 
-        // ƒfƒoƒCƒX‚Ì MaxOutputReportLength ‚ÉŠî‚Ã‚¢‚Äƒoƒbƒtƒ@‚ğì¬
+        // ãƒ‡ãƒã‚¤ã‚¹ã® MaxOutputReportLength ã«åŸºã¥ã„ã¦ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆ
         var writeBuffer = new byte[_mcuStream.MaxOutputReportLength];
         writeBuffer[0] = 0x00; // Report ID
         Array.Copy(cmdPacket, 0, writeBuffer, 1, Math.Min(cmdPacket.Length, writeBuffer.Length - 1));
@@ -364,12 +364,12 @@ internal sealed class VitureLumaDevice : IImuDevice
 
         try
         {
-            // MCUƒXƒgƒŠ[ƒ€u‚Ì‚İv‚É‘—M
+            // MCUã‚¹ãƒˆãƒªãƒ¼ãƒ ã€Œã®ã¿ã€ã«é€ä¿¡
             await _mcuStream.WriteAsync(writeBuffer, cancellationToken);
             _logger.LogTrace("IMU {EnableState} command sent to MCU", enable ? "enable" : "disable");
 
-            // ACKóM‘Ò‹@iƒ^ƒCƒ€ƒAƒEƒg•t‚«j
-            // ƒfƒoƒCƒX‚Ì MaxInputReportLength ‚ÉŠî‚Ã‚¢‚Äƒoƒbƒtƒ@‚ğì¬
+            // ACKå—ä¿¡å¾…æ©Ÿï¼ˆã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆä»˜ãï¼‰
+            // ãƒ‡ãƒã‚¤ã‚¹ã® MaxInputReportLength ã«åŸºã¥ã„ã¦ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆ
             var ackBuffer = new byte[_mcuStream.MaxInputReportLength];
             using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             cts.CancelAfter(TimeSpan.FromMilliseconds(500));
@@ -378,7 +378,7 @@ internal sealed class VitureLumaDevice : IImuDevice
             {
                 int bytesRead = await _mcuStream.ReadAsync(ackBuffer, 0, ackBuffer.Length, cts.Token);
 
-                // Report ID ƒIƒtƒZƒbƒg‚ğŒŸo
+                // Report ID ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’æ¤œå‡º
                 int offset = (bytesRead > 1 && ackBuffer[0] == 0x00 && ackBuffer[1] == 0xFF) ? 1 : 0;
 
                 if (bytesRead >= offset + 2)
@@ -419,7 +419,7 @@ internal sealed class VitureLumaDevice : IImuDevice
         {
             try
             {
-                // IMU–³Œø‰»ƒRƒ}ƒ“ƒh‚ğ‘—M
+                // IMUç„¡åŠ¹åŒ–ã‚³ãƒãƒ³ãƒ‰ã‚’é€ä¿¡
                 await SendImuEnableCommandAsync(enable: false);
             }
             catch (Exception ex)

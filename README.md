@@ -1,114 +1,114 @@
 # LandRunner
 
-LandRunner ‚ÍAVITURE XR ƒOƒ‰ƒX‚ðƒzƒXƒg OS ‚©‚ç§Œä‚·‚é‚½‚ß‚Ì .NET ƒ‰ƒCƒuƒ‰ƒŠ‚¨‚æ‚Ñ WPF ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Å‚·B
+LandRunner ã¯ã€VITURE XR ã‚°ãƒ©ã‚¹ã‚’ãƒ›ã‚¹ãƒˆ OS ã‹ã‚‰åˆ¶å¾¡ã™ã‚‹ãŸã‚ã® .NET ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãŠã‚ˆã³ WPF ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã§ã™ã€‚
 
-## ŠT—v
+## æ¦‚è¦
 
-### ?? GlassBridge ƒ‰ƒCƒuƒ‰ƒŠ
-VITURE ƒfƒoƒCƒXiLumaALuma ProAProAOneAOne Lite ‚È‚Çj‚Æ USB HID ƒCƒ“ƒ^[ƒtƒF[ƒXŒo—R‚Å’ÊM‚µA3DoF ‚Ì IMUiŽp¨jƒf[ƒ^‚ðŽæ“¾E‹L˜^EÄ¶‚µ‚Ü‚·BƒeƒXƒg—p‚Ìƒ‚ƒbƒNŽÀ‘•‚àŠÜ‚Ü‚ê‚Ä‚¨‚èA–{‘ÌƒfƒoƒCƒX‚ª‚È‚­‚Ä‚àŠJ”­EŒŸØ‚ª‰Â”\‚Å‚·B
+### ?? GlassBridge ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
+VITURE ãƒ‡ãƒã‚¤ã‚¹ï¼ˆLumaã€Luma Proã€Proã€Oneã€One Lite ãªã©ï¼‰ã¨ USB HID ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹çµŒç”±ã§é€šä¿¡ã—ã€3DoF ã® IMUï¼ˆå§¿å‹¢ï¼‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ãƒ»è¨˜éŒ²ãƒ»å†ç”Ÿã—ã¾ã™ã€‚ãƒ†ã‚¹ãƒˆç”¨ã®ãƒ¢ãƒƒã‚¯å®Ÿè£…ã‚‚å«ã¾ã‚Œã¦ãŠã‚Šã€æœ¬ä½“ãƒ‡ãƒã‚¤ã‚¹ãŒãªãã¦ã‚‚é–‹ç™ºãƒ»æ¤œè¨¼ãŒå¯èƒ½ã§ã™ã€‚
 
-### ?? LandRunner WPF ƒAƒvƒŠƒP[ƒVƒ‡ƒ“
-GlassBridge ‚ðŽg—p‚µ‚½AVITURE Luma Œü‚¯‚ÌƒŠƒAƒ‹ƒ^ƒCƒ€ IMU ƒf[ƒ^ƒrƒ…[ƒAEƒƒK[BEuler ŠpEQuaternion ‚Ì•\Ž¦A3D ‰ñ“]ƒrƒWƒ…ƒAƒ‰ƒCƒ[[ƒVƒ‡ƒ“AƒfƒoƒbƒOƒƒOo—Í‚É‘Î‰ž‚µ‚Ä‚¢‚Ü‚·B
+### ?? LandRunner WPF ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³
+GlassBridge ã‚’ä½¿ç”¨ã—ãŸã€VITURE Luma å‘ã‘ã®ãƒªã‚¢ãƒ«ã‚¿ã‚¤ãƒ  IMU ãƒ‡ãƒ¼ã‚¿ãƒ“ãƒ¥ãƒ¼ã‚¢ãƒ»ãƒ­ã‚¬ãƒ¼ã€‚Euler è§’ãƒ»Quaternion ã®è¡¨ç¤ºã€3D å›žè»¢ãƒ“ã‚¸ãƒ¥ã‚¢ãƒ©ã‚¤ã‚¼ãƒ¼ã‚·ãƒ§ãƒ³ã€ãƒ‡ãƒãƒƒã‚°ãƒ­ã‚°å‡ºåŠ›ã«å¯¾å¿œã—ã¦ã„ã¾ã™ã€‚
 
-## ƒZƒbƒgƒAƒbƒv
+## ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—
 
-### •K—v‚ÈŠÂ‹«
-- **.NET 10** ˆÈã
-- **Visual Studio 2022** ˆÈãi„§j
-- **Windows**iUSB HID ’ÊM‚Ì‚½‚ßj
+### å¿…è¦ãªç’°å¢ƒ
+- **.NET 10** ä»¥ä¸Š
+- **Visual Studio 2022** ä»¥ä¸Šï¼ˆæŽ¨å¥¨ï¼‰
+- **Windows**ï¼ˆUSB HID é€šä¿¡ã®ãŸã‚ï¼‰
 
-### ƒCƒ“ƒXƒg[ƒ‹Eƒrƒ‹ƒh
+### ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ»ãƒ“ãƒ«ãƒ‰
 
-1. ƒŠƒ|ƒWƒgƒŠ‚ðƒNƒ[ƒ“F
+1. ãƒªãƒã‚¸ãƒˆãƒªã‚’ã‚¯ãƒ­ãƒ¼ãƒ³ï¼š
    ```bash
    git clone https://github.com/seeker3600/LandRunner.git
    cd LandRunner
    ```
 
-2. ƒvƒƒWƒFƒNƒg‚ðƒrƒ‹ƒhF
+2. ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’ãƒ“ãƒ«ãƒ‰ï¼š
    ```bash
    dotnet build
    ```
 
-3. ƒeƒXƒg‚ðŽÀsF
+3. ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œï¼š
    ```bash
    dotnet test
    ```
 
-4. LandRunner ƒAƒvƒŠ‚ðŽÀsiWindows ‚Ì‚ÝjF
+4. LandRunner ã‚¢ãƒ—ãƒªã‚’å®Ÿè¡Œï¼ˆWindows ã®ã¿ï¼‰ï¼š
    ```bash
    dotnet run --project LandRunner
    ```
 
-## ƒvƒƒWƒFƒNƒg\¬
+## ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆæ§‹æˆ
 
-| ƒvƒƒWƒFƒNƒg | à–¾ | ƒ^[ƒQƒbƒgƒtƒŒ[ƒ€ƒ[ƒN |
+| ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ | èª¬æ˜Ž | ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯ |
 |-----------|------|----------------------|
-| **GlassBridge** | ŒöŠJ APIiImuDeviceManagerAImuData ‚È‚Çj | net10.0-windows7.0 |
-| **GlassBridgeTest** | ƒ†ƒjƒbƒgE“‡ƒeƒXƒg | net10.0-windows7.0 |
-| **LandRunner** | WPF IMU ƒrƒ…[ƒAEƒƒK[ | net10.0-windows7.0 |
-| **LandRunnerTest** | LandRunner ‚ÌƒeƒXƒg | net10.0-windows7.0 |
+| **GlassBridge** | å…¬é–‹ APIï¼ˆImuDeviceManagerã€ImuData ãªã©ï¼‰ | net10.0-windows7.0 |
+| **GlassBridgeTest** | ãƒ¦ãƒ‹ãƒƒãƒˆãƒ»çµ±åˆãƒ†ã‚¹ãƒˆ | net10.0-windows7.0 |
+| **LandRunner** | WPF IMU ãƒ“ãƒ¥ãƒ¼ã‚¢ãƒ»ãƒ­ã‚¬ãƒ¼ | net10.0-windows7.0 |
+| **LandRunnerTest** | LandRunner ã®ãƒ†ã‚¹ãƒˆ | net10.0-windows7.0 |
 
-## ?? ƒhƒLƒ…ƒƒ“ƒg\¬‚ÆŽQÆƒKƒCƒh
+## ?? ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆæ§‹æˆã¨å‚ç…§ã‚¬ã‚¤ãƒ‰
 
-### ?? ŽQÆæ•ÊƒKƒCƒh
+### ?? å‚ç…§å…ˆåˆ¥ã‚¬ã‚¤ãƒ‰
 
-#### HID ƒvƒƒgƒRƒ‹Žd—l‚ðŠm”F‚·‚é
-¨ **docs/hid/VITURE_Luma.md**
-- VITURE ƒfƒoƒCƒX‚Ì USB Vendor ID / Product ID
-- HID ƒCƒ“ƒ^[ƒtƒF[ƒXiIMU/MCUj‚Ì\¬EƒpƒPƒbƒg\‘¢
-- ƒvƒƒgƒRƒ‹Žd—lE§ŒäƒRƒ}ƒ“ƒh
-- ƒfƒoƒCƒX•Ê‚ÌŒÝŠ·«î•ñ
+#### HID ãƒ—ãƒ­ãƒˆã‚³ãƒ«ä»•æ§˜ã‚’ç¢ºèªã™ã‚‹
+â†’ **docs/hid/VITURE_Luma.md**
+- VITURE ãƒ‡ãƒã‚¤ã‚¹ã® USB Vendor ID / Product ID
+- HID ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ï¼ˆIMU/MCUï¼‰ã®æ§‹æˆãƒ»ãƒ‘ã‚±ãƒƒãƒˆæ§‹é€ 
+- ãƒ—ãƒ­ãƒˆã‚³ãƒ«ä»•æ§˜ãƒ»åˆ¶å¾¡ã‚³ãƒžãƒ³ãƒ‰
+- ãƒ‡ãƒã‚¤ã‚¹åˆ¥ã®äº’æ›æ€§æƒ…å ±
 
-#### GlassBridge API ‚ðŽg—p‚·‚é
-¨ **GlassBridge/README.md**
-- ŒöŠJƒCƒ“ƒ^[ƒtƒF[ƒXiIImuDeviceManagerAIImuDevice ‚È‚Çj
-- ƒvƒƒWƒFƒNƒg\¬EƒtƒHƒ‹ƒ_”z’u
-- ƒNƒCƒbƒNƒXƒ^[ƒg—áEŠî–{“I‚ÈŽg‚¢•û
+#### GlassBridge API ã‚’ä½¿ç”¨ã™ã‚‹
+â†’ **GlassBridge/README.md**
+- å…¬é–‹ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ï¼ˆIImuDeviceManagerã€IImuDevice ãªã©ï¼‰
+- ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆæ§‹æˆãƒ»ãƒ•ã‚©ãƒ«ãƒ€é…ç½®
+- ã‚¯ã‚¤ãƒƒã‚¯ã‚¹ã‚¿ãƒ¼ãƒˆä¾‹ãƒ»åŸºæœ¬çš„ãªä½¿ã„æ–¹
 
-#### IMU ƒf[ƒ^‹L˜^EÄ¶‹@”\‚ÌÚ×
-¨ **GlassBridge/RECORDING_API_GUIDE.md**
-- `ConnectAndRecordAsync()` ‚ÌŽg—p•û–@
-- `ConnectFromRecordingAsync()` ‚ÌŽg—p•û–@
-- ‹L˜^ƒtƒ@ƒCƒ‹Œ`Ž®iJSON LinesjÚ×
+#### IMU ãƒ‡ãƒ¼ã‚¿è¨˜éŒ²ãƒ»å†ç”Ÿæ©Ÿèƒ½ã®è©³ç´°
+â†’ **GlassBridge/RECORDING_API_GUIDE.md**
+- `ConnectAndRecordAsync()` ã®ä½¿ç”¨æ–¹æ³•
+- `ConnectFromRecordingAsync()` ã®ä½¿ç”¨æ–¹æ³•
+- è¨˜éŒ²ãƒ•ã‚¡ã‚¤ãƒ«å½¢å¼ï¼ˆJSON Linesï¼‰è©³ç´°
 
-#### LandRunner ƒAƒvƒŠƒP[ƒVƒ‡ƒ“
-¨ **LandRunner/README.md**
-- ‹@”\ŠT—viƒŠƒAƒ‹ƒ^ƒCƒ€•\Ž¦A3D ƒrƒWƒ…ƒAƒ‰ƒCƒ[[ƒVƒ‡ƒ“AƒƒMƒ“ƒOj
-- MVVM ƒA[ƒLƒeƒNƒ`ƒƒEƒtƒHƒ‹ƒ_\¬
-- ŽÀs•û–@EƒƒOo—Íæ
-- ƒeƒXƒgˆê——EƒeƒXƒgƒP[ƒX
+#### LandRunner ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³
+â†’ **LandRunner/README.md**
+- æ©Ÿèƒ½æ¦‚è¦ï¼ˆãƒªã‚¢ãƒ«ã‚¿ã‚¤ãƒ è¡¨ç¤ºã€3D ãƒ“ã‚¸ãƒ¥ã‚¢ãƒ©ã‚¤ã‚¼ãƒ¼ã‚·ãƒ§ãƒ³ã€ãƒ­ã‚®ãƒ³ã‚°ï¼‰
+- MVVM ã‚¢ãƒ¼ã‚­ãƒ†ã‚¯ãƒãƒ£ãƒ»ãƒ•ã‚©ãƒ«ãƒ€æ§‹æˆ
+- å®Ÿè¡Œæ–¹æ³•ãƒ»ãƒ­ã‚°å‡ºåŠ›å…ˆ
+- ãƒ†ã‚¹ãƒˆä¸€è¦§ãƒ»ãƒ†ã‚¹ãƒˆã‚±ãƒ¼ã‚¹
 
-### ?? ƒhƒLƒ…ƒƒ“ƒg”z’uƒ‹[ƒ‹
+### ?? ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆé…ç½®ãƒ«ãƒ¼ãƒ«
 
-| ƒhƒLƒ…ƒƒ“ƒg | ”z’uæ | —p“r |
+| ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ | é…ç½®å…ˆ | ç”¨é€” |
 |-----------|-------|------|
-| **README.md** | ƒ\ƒŠƒ…[ƒVƒ‡ƒ“ƒ‹[ƒg | ƒvƒƒWƒFƒNƒg‘S‘Ì‚ÌŠT—vEƒZƒbƒgƒAƒbƒvEƒhƒLƒ…ƒƒ“ƒgƒKƒCƒh |
-| **GlassBridge/README.md** | `GlassBridge/` | GlassBridge ‚ÌŒöŠJ API Žd—lEŽg—p—á |
-| **GlassBridge/RECORDING_API_GUIDE.md** | `GlassBridge/` | ‹L˜^EÄ¶‹@”\‚ÌÚ×ƒKƒCƒh |
-| **LandRunner/README.md** | `LandRunner/` | LandRunner ƒAƒvƒŠ‚Ìà–¾E‹@”\EƒƒMƒ“ƒOî•ñ |
-| **docs/hid/VITURE_Luma.md** | `docs/hid/` | VITURE HID ƒvƒƒgƒRƒ‹Žd—liŠî–{Ž‘—¿j|
-| **‚»‚Ì‘¼ƒhƒLƒ…ƒƒ“ƒg** | `docs/` ƒTƒuƒtƒHƒ‹ƒ_ | ƒhƒ‰ƒCƒo[î•ñEƒvƒƒgƒRƒ‹Ú×EŽÀ‘•ƒKƒCƒh |
+| **README.md** | ã‚½ãƒªãƒ¥ãƒ¼ã‚·ãƒ§ãƒ³ãƒ«ãƒ¼ãƒˆ | ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆå…¨ä½“ã®æ¦‚è¦ãƒ»ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ãƒ»ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã‚¬ã‚¤ãƒ‰ |
+| **GlassBridge/README.md** | `GlassBridge/` | GlassBridge ã®å…¬é–‹ API ä»•æ§˜ãƒ»ä½¿ç”¨ä¾‹ |
+| **GlassBridge/RECORDING_API_GUIDE.md** | `GlassBridge/` | è¨˜éŒ²ãƒ»å†ç”Ÿæ©Ÿèƒ½ã®è©³ç´°ã‚¬ã‚¤ãƒ‰ |
+| **LandRunner/README.md** | `LandRunner/` | LandRunner ã‚¢ãƒ—ãƒªã®èª¬æ˜Žãƒ»æ©Ÿèƒ½ãƒ»ãƒ­ã‚®ãƒ³ã‚°æƒ…å ± |
+| **docs/hid/VITURE_Luma.md** | `docs/hid/` | VITURE HID ãƒ—ãƒ­ãƒˆã‚³ãƒ«ä»•æ§˜ï¼ˆåŸºæœ¬è³‡æ–™ï¼‰|
+| **ãã®ä»–ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ** | `docs/` ã‚µãƒ–ãƒ•ã‚©ãƒ«ãƒ€ | ãƒ‰ãƒ©ã‚¤ãƒãƒ¼æƒ…å ±ãƒ»ãƒ—ãƒ­ãƒˆã‚³ãƒ«è©³ç´°ãƒ»å®Ÿè£…ã‚¬ã‚¤ãƒ‰ |
 
-## ?? ƒR[ƒhŠÇ—•ûj
+## ?? ã‚³ãƒ¼ãƒ‰ç®¡ç†æ–¹é‡
 
-### ŠJ”­Žž‚Ìƒ‹[ƒ‹
-1. **ƒeƒXƒgƒR[ƒh** - V‹@”\‚ð’Ç‰Á‚·‚éê‡‚ÍAƒeƒXƒgƒR[ƒh‚ð‡‚í‚¹‚ÄŽÀ‘•
-2. **ƒR[ƒfƒBƒ“ƒO‹K‘¥** - `.github/copilot-instructions.md` ‚É]‚¤
-3. **ƒhƒLƒ…ƒƒ“ƒg** - V‹@”\’Ç‰ÁŽž‚Í‘Î‰ž‚·‚é README.md ‚â ARCHITECTURE.md ‚ðXV
-4. **ƒ‚ƒWƒ…[ƒ‹\¬** - GlassBridge ‚Å‚ÍAŒöŠJ APIi’¼‰ºj‚Æ“à•”ŽÀ‘•iInternal/j‚ð–¾Šm‚É•ª—£
+### é–‹ç™ºæ™‚ã®ãƒ«ãƒ¼ãƒ«
+1. **ãƒ†ã‚¹ãƒˆã‚³ãƒ¼ãƒ‰** - æ–°æ©Ÿèƒ½ã‚’è¿½åŠ ã™ã‚‹å ´åˆã¯ã€ãƒ†ã‚¹ãƒˆã‚³ãƒ¼ãƒ‰ã‚’åˆã‚ã›ã¦å®Ÿè£…
+2. **ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°è¦å‰‡** - `.github/copilot-instructions.md` ã«å¾“ã†
+3. **ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ** - æ–°æ©Ÿèƒ½è¿½åŠ æ™‚ã¯å¯¾å¿œã™ã‚‹ README.md ã‚„ ARCHITECTURE.md ã‚’æ›´æ–°
+4. **ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«æ§‹æˆ** - GlassBridge ã§ã¯ã€å…¬é–‹ APIï¼ˆç›´ä¸‹ï¼‰ã¨å†…éƒ¨å®Ÿè£…ï¼ˆInternal/ï¼‰ã‚’æ˜Žç¢ºã«åˆ†é›¢
 
-### ƒpƒbƒP[ƒWŠÇ—
-- **HidSharp** 2.6.4 - USB HID ƒfƒoƒCƒX’ÊM
-- V‚µ‚¢ƒpƒbƒP[ƒW’Ç‰ÁŽž‚Í .NET 10 ŒÝŠ·«‚ðŠm”F
+### ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ç®¡ç†
+- **HidSharp** 2.6.4 - USB HID ãƒ‡ãƒã‚¤ã‚¹é€šä¿¡
+- æ–°ã—ã„ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸è¿½åŠ æ™‚ã¯ .NET 10 äº’æ›æ€§ã‚’ç¢ºèª
 
-## ?? ‘ŠŒÝŽQÆi‹ZpŽÒŒü‚¯j
+## ?? ç›¸äº’å‚ç…§ï¼ˆæŠ€è¡“è€…å‘ã‘ï¼‰
 
-- **GlassBridge ‚Å HID ’áƒŒƒxƒ‹ŽÀ‘•‚ð•ÏX‚·‚é** ¨ docs/hid/VITURE_Luma.md ‚ðŽQÆ‚µ‚ÄŽd—l‚ðŠm”F
-- **VITURE ƒfƒoƒCƒX‚Ì‘Î‰žó‹µ‚ðŠm”F‚·‚é** ¨ docs/hid/VITURE_Luma.mdi‘æ2Íj‚ðŠm”F
-- **LandRunner ‚Å GlassBridge ‚ðŽg—p‚·‚é** ¨ GlassBridge/README.md ‚ðŽQÆ
-- **V‚µ‚¢‹L˜^Œ`Ž®‚ð’Ç‰Á‚·‚é** ¨ GlassBridge/RECORDING_API_GUIDE.md ‚ðŽQÆ
+- **GlassBridge ã§ HID ä½Žãƒ¬ãƒ™ãƒ«å®Ÿè£…ã‚’å¤‰æ›´ã™ã‚‹** â†’ docs/hid/VITURE_Luma.md ã‚’å‚ç…§ã—ã¦ä»•æ§˜ã‚’ç¢ºèª
+- **VITURE ãƒ‡ãƒã‚¤ã‚¹ã®å¯¾å¿œçŠ¶æ³ã‚’ç¢ºèªã™ã‚‹** â†’ docs/hid/VITURE_Luma.mdï¼ˆç¬¬2ç« ï¼‰ã‚’ç¢ºèª
+- **LandRunner ã§ GlassBridge ã‚’ä½¿ç”¨ã™ã‚‹** â†’ GlassBridge/README.md ã‚’å‚ç…§
+- **æ–°ã—ã„è¨˜éŒ²å½¢å¼ã‚’è¿½åŠ ã™ã‚‹** â†’ GlassBridge/RECORDING_API_GUIDE.md ã‚’å‚ç…§
 
-## ƒ‰ƒCƒZƒ“ƒX
+## ãƒ©ã‚¤ã‚»ãƒ³ã‚¹
 
-Ú×‚ÍƒŠƒ|ƒWƒgƒŠ‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B
+è©³ç´°ã¯ãƒªãƒã‚¸ãƒˆãƒªã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚

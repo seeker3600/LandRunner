@@ -6,8 +6,8 @@ using LandRunner.ViewModels;
 namespace LandRunnerTest;
 
 /// <summary>
-/// MainWindowViewModel ‚ÌƒeƒXƒg
-/// ViewModel ‚ÌƒvƒƒpƒeƒBƒoƒCƒ“ƒfƒBƒ“ƒO‚Æó‘ÔŠÇ—‚ğŒŸØ
+/// MainWindowViewModel ã®ãƒ†ã‚¹ãƒˆ
+/// ViewModel ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã¨çŠ¶æ…‹ç®¡ç†ã‚’æ¤œè¨¼
 /// </summary>
 public class MainWindowViewModelTests : IDisposable
 {
@@ -15,7 +15,7 @@ public class MainWindowViewModelTests : IDisposable
 
     public MainWindowViewModelTests()
     {
-        // ƒeƒXƒg—p‚ÌƒƒMƒ“ƒO‰Šú‰»i1‰ñ‚Ì‚İj
+        // ãƒ†ã‚¹ãƒˆç”¨ã®ãƒ­ã‚®ãƒ³ã‚°åˆæœŸåŒ–ï¼ˆ1å›ã®ã¿ï¼‰
         if (!_loggerInitialized)
         {
             Log.Logger = new LoggerConfiguration()

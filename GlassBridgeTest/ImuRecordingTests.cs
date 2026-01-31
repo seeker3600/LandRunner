@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 using Xunit;
 
 /// <summary>
-/// IMU ƒf[ƒ^‹L˜^EÄ¶‹@”\‚ÌƒeƒXƒg
+/// IMU ãƒ‡ãƒ¼ã‚¿è¨˜éŒ²ãƒ»å†ç”Ÿæ©Ÿèƒ½ã®ãƒ†ã‚¹ãƒˆ
 /// </summary>
 public class ImuRecordingTests
 {
@@ -22,7 +22,7 @@ public class ImuRecordingTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg1: ƒtƒŒ[ƒ€ƒŒƒR[ƒh‚Ì JSON ƒVƒŠƒAƒ‰ƒCƒ[[ƒVƒ‡ƒ“
+    /// ãƒ†ã‚¹ãƒˆ1: ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ã‚³ãƒ¼ãƒ‰ã® JSON ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚¼ãƒ¼ã‚·ãƒ§ãƒ³
     /// </summary>
     [Fact]
     public void ImuFrameRecord_SerializesCorrectly()
@@ -51,7 +51,7 @@ public class ImuRecordingTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg2: ƒƒ^ƒf[ƒ^‚ÌƒVƒŠƒAƒ‰ƒCƒ[[ƒVƒ‡ƒ“
+    /// ãƒ†ã‚¹ãƒˆ2: ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã®ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚¼ãƒ¼ã‚·ãƒ§ãƒ³
     /// </summary>
     [Fact]
     public void ImuRecordingSession_SerializesMetadata()
@@ -71,7 +71,7 @@ public class ImuRecordingTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg3: ƒtƒ@ƒCƒ‹Œ`®‚Ì‰Â“Ç«Šm”F
+    /// ãƒ†ã‚¹ãƒˆ3: ãƒ•ã‚¡ã‚¤ãƒ«å½¢å¼ã®å¯èª­æ€§ç¢ºèª
     /// </summary>
     [Fact]
     public void RecordingFormat_IsHumanReadable()
@@ -90,17 +90,17 @@ public class ImuRecordingTests
         var frameRecord = ImuFrameRecord.FromImuData(imuData, rawBytes);
         var jsonLine = frameRecord.ToJsonLine();
 
-        // Assert: JSON‚ªlŠÔ‚ª“Ç‚ß‚éŒ`®‚©Šm”F
+        // Assert: JSONãŒäººé–“ãŒèª­ã‚ã‚‹å½¢å¼ã‹ç¢ºèª
         Assert.Contains("timestamp", jsonLine);
         Assert.Contains("messageCounter", jsonLine);
         Assert.Contains("quaternion", jsonLine);
         Assert.Contains("eulerAngles", jsonLine);
-        Assert.Contains("1000", jsonLine);  // timestamp’l
-        Assert.DoesNotContain("\\u", jsonLine);  // Unicode ƒGƒXƒP[ƒv‚ª‚È‚¢‚±‚Æ‚ğŠm”F
+        Assert.Contains("1000", jsonLine);  // timestampå€¤
+        Assert.DoesNotContain("\\u", jsonLine);  // Unicode ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ãŒãªã„ã“ã¨ã‚’ç¢ºèª
     }
 
     /// <summary>
-    /// ƒeƒXƒg4: ƒƒ^ƒf[ƒ^‚Ì JSON Œ`®Šm”F
+    /// ãƒ†ã‚¹ãƒˆ4: ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã® JSON å½¢å¼ç¢ºèª
     /// </summary>
     [Fact]
     public void ImuRecordingSession_JsonIsReadable()
@@ -117,11 +117,11 @@ public class ImuRecordingTests
         Assert.Contains("sampleRate", json);
         Assert.Contains("format", json);
         Assert.Contains("jsonl", json);
-        Assert.Contains("100", json);  // frameCount’l
+        Assert.Contains("100", json);  // frameCountå€¤
     }
 
     /// <summary>
-    /// ƒeƒXƒg5: RecordingSession‚Ìƒ‰ƒEƒ“ƒhƒgƒŠƒbƒvƒVƒŠƒAƒ‰ƒCƒ[[ƒVƒ‡ƒ“
+    /// ãƒ†ã‚¹ãƒˆ5: RecordingSessionã®ãƒ©ã‚¦ãƒ³ãƒ‰ãƒˆãƒªãƒƒãƒ—ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚¼ãƒ¼ã‚·ãƒ§ãƒ³
     /// </summary>
     [Fact]
     public void ImuRecordingSession_RoundTripSerialization()
@@ -142,7 +142,7 @@ public class ImuRecordingTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg6: ƒtƒ@ƒCƒ‹‚Ö‚Ì’¼Ú‘‚«‚İ‚Æ“Ç‚İ‚İ
+    /// ãƒ†ã‚¹ãƒˆ6: ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®ç›´æ¥æ›¸ãè¾¼ã¿ã¨èª­ã¿è¾¼ã¿
     /// </summary>
     [Fact]
     public void RecordingSession_WriteAndReadFromFile()
@@ -165,7 +165,7 @@ public class ImuRecordingTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg7: JSON Lines ƒtƒH[ƒ}ƒbƒg‚Ì•¡”ƒtƒŒ[ƒ€•Û‘¶
+    /// ãƒ†ã‚¹ãƒˆ7: JSON Lines ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¤‡æ•°ãƒ•ãƒ¬ãƒ¼ãƒ ä¿å­˜
     /// </summary>
     [Fact]
     public void ImuFrameRecord_MultipleFramesWriteToFile()
@@ -212,7 +212,7 @@ public class ImuRecordingTests
         // Assert
         Assert.Equal(3, readLines.Length);
         
-        // Šes‚ğƒp[ƒX‚µ‚ÄŒŸØ
+        // å„è¡Œã‚’ãƒ‘ãƒ¼ã‚¹ã—ã¦æ¤œè¨¼
         for (int i = 0; i < readLines.Length; i++)
         {
             var record = ImuFrameRecord.FromJsonLine(readLines[i]);
@@ -223,7 +223,7 @@ public class ImuRecordingTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg8: RecordedHidStream ‚ÌŠî–{“I‚È“®ìŠm”F
+    /// ãƒ†ã‚¹ãƒˆ8: RecordedHidStream ã®åŸºæœ¬çš„ãªå‹•ä½œç¢ºèª
     /// </summary>
     [Fact]
     public async Task RecordedHidStream_BasicFunctionality()
@@ -250,7 +250,7 @@ public class ImuRecordingTests
         var framesPath = Path.Combine(_testOutputDirectory, "replay_test.jsonl");
         var metadataPath = Path.Combine(_testOutputDirectory, "replay_test_metadata.json");
 
-        // ƒtƒŒ[ƒ€ƒtƒ@ƒCƒ‹‚ğì¬
+        // ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆ
         using (var writer = new StreamWriter(framesPath))
         {
             foreach (var frame in testData)
@@ -260,7 +260,7 @@ public class ImuRecordingTests
             }
         }
 
-        // ƒƒ^ƒf[ƒ^ƒtƒ@ƒCƒ‹‚ğì¬
+        // ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆ
         var metadata = ImuRecordingSession.CreateNew(frameCount: 2, sampleRate: 100);
         File.WriteAllText(metadataPath, metadata.ToJson());
 
@@ -281,13 +281,13 @@ public class ImuRecordingTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg9: ’á‘¬ƒf[ƒ^ƒXƒgƒŠ[ƒ€óM‚ÌƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“iƒpƒtƒH[ƒ}ƒ“ƒXŒv‘ª—pj
-    /// ’x‰„‚È‚µ‚Åƒf[ƒ^‚ğóM‚·‚é
+    /// ãƒ†ã‚¹ãƒˆ9: ä½é€Ÿãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ å—ä¿¡ã®ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ï¼ˆãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹è¨ˆæ¸¬ç”¨ï¼‰
+    /// é…å»¶ãªã—ã§ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã™ã‚‹
     /// </summary>
     [Fact]
     public void ImuFrameRecord_HighSpeedDataGeneration()
     {
-        // Arrange: ’x‰„‚È‚µ‚Åƒf[ƒ^‚ğ¶¬
+        // Arrange: é…å»¶ãªã—ã§ãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆ
         var imuDataEnumerable = GenerateTestImuData(count: 100, delayMs: 0);
         var recordList = new List<ImuFrameRecord>();
 
@@ -309,13 +309,13 @@ public class ImuRecordingTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg10: ÀƒfƒoƒCƒX‘Š“–‚Ì’x‰„‚Å‚Ìƒf[ƒ^óM
-    /// 10ms ‚Ì’x‰„iÀƒfƒoƒCƒX‚Ìƒf[ƒ^‘—Mƒ^ƒCƒ~ƒ“ƒO‚ğƒVƒ~ƒ…ƒŒ[ƒgj
+    /// ãƒ†ã‚¹ãƒˆ10: å®Ÿãƒ‡ãƒã‚¤ã‚¹ç›¸å½“ã®é…å»¶ã§ã®ãƒ‡ãƒ¼ã‚¿å—ä¿¡
+    /// 10ms ã®é…å»¶ï¼ˆå®Ÿãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿é€ä¿¡ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã‚’ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ãƒˆï¼‰
     /// </summary>
     [Fact]
     public void ImuFrameRecord_WithDeviceLatencySimulation()
     {
-        // Arrange: 10ms ’x‰„‚Åƒf[ƒ^‚ğ¶¬iÀƒfƒoƒCƒXƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“j
+        // Arrange: 10ms é…å»¶ã§ãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆï¼ˆå®Ÿãƒ‡ãƒã‚¤ã‚¹ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ï¼‰
         var imuDataEnumerable = GenerateTestImuData(count: 20, delayMs: 10);
         var recordList = new List<ImuFrameRecord>();
 
@@ -335,7 +335,7 @@ public class ImuRecordingTests
         Assert.True(recordList.Count > 0, "Should have received some frames");
         Assert.True(recordList.Count <= 20, "Should not exceed requested count");
         
-        // ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ª‡˜’Ê‚è‚Å‚ ‚é‚±‚Æ‚ğŠm”F
+        // ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ãŒé †åºé€šã‚Šã§ã‚ã‚‹ã“ã¨ã‚’ç¢ºèª
         for (int i = 1; i < recordList.Count; i++)
         {
             Assert.True(recordList[i].Timestamp >= recordList[i - 1].Timestamp, 
@@ -369,13 +369,13 @@ public class ImuRecordingTests
 
     private MockHidStreamProvider CreateMockProvider(int delayMs = 0)
     {
-        // MockHidStreamProvider ‚Í Func ‚ğŠú‘Ò
+        // MockHidStreamProvider ã¯ Func ã‚’æœŸå¾…
         return new MockHidStreamProvider(_ => GenerateTestImuData(count: 20, delayMs: delayMs));
     }
 
     public void Dispose()
     {
-        // ƒeƒXƒgI—¹‚ÉƒfƒBƒŒƒNƒgƒŠ‚ğíœ
+        // ãƒ†ã‚¹ãƒˆçµ‚äº†æ™‚ã«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’å‰Šé™¤
         try
         {
             if (Directory.Exists(_testOutputDirectory))
@@ -383,7 +383,7 @@ public class ImuRecordingTests
         }
         catch
         {
-            // ƒNƒŠ[ƒ“ƒAƒbƒv¸”s‚Í–³‹
+            // ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—å¤±æ•—ã¯ç„¡è¦–
         }
     }
 }

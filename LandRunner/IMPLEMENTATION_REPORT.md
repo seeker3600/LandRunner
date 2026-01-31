@@ -1,105 +1,105 @@
-# LandRunner À‘•Š®—¹•ñ
+# LandRunner å®Ÿè£…å®Œäº†å ±å‘Š
 
-## ? À‘•Š®—¹“à—e
+## ? å®Ÿè£…å®Œäº†å†…å®¹
 
-### 1. **IMU ƒŠƒAƒ‹ƒ^ƒCƒ€•\¦ƒAƒvƒŠƒP[ƒVƒ‡ƒ“**
-- VITURE Luma ‚©‚ç‚ÌIMUƒf[ƒ^‚ğWPF‚Å•\¦
-- ƒŠƒAƒ‹ƒ^ƒCƒ€ƒXƒe[ƒ^ƒX•\¦iƒXƒe[ƒ^ƒXƒo[j
-- 3D²‚Ì‰Â‹‰»iX/Y/Z²‚Æ Yaw ‰ñ“]²j
-- EulerŠp“x‚ÆQuaternion’l‚Ì•\¦
+### 1. **IMU ãƒªã‚¢ãƒ«ã‚¿ã‚¤ãƒ è¡¨ç¤ºã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³**
+- VITURE Luma ã‹ã‚‰ã®IMUãƒ‡ãƒ¼ã‚¿ã‚’WPFã§è¡¨ç¤º
+- ãƒªã‚¢ãƒ«ã‚¿ã‚¤ãƒ ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è¡¨ç¤ºï¼ˆã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒãƒ¼ï¼‰
+- 3Dè»¸ã®å¯è¦–åŒ–ï¼ˆX/Y/Zè»¸ã¨ Yaw å›è»¢è»¸ï¼‰
+- Eulerè§’åº¦ã¨Quaternionå€¤ã®è¡¨ç¤º
 
-### 2. **ƒƒOo—Í‹@”\**
-- **ƒfƒoƒbƒOƒƒO**: `debug_<timestamp>.log` - “ú•t‚«ƒƒO
-- **IMUƒf[ƒ^ CSV**: `imu_data_<timestamp>.csv` - ƒZƒ“ƒT[ƒf[ƒ^‚ğ CSVŒ`®‚Å‹L˜^
-- •Û‘¶æ: `%AppData%/LandRunner/`
+### 2. **ãƒ­ã‚°å‡ºåŠ›æ©Ÿèƒ½**
+- **ãƒ‡ãƒãƒƒã‚°ãƒ­ã‚°**: `debug_<timestamp>.log` - æ—¥æ™‚ä»˜ããƒ­ã‚°
+- **IMUãƒ‡ãƒ¼ã‚¿ CSV**: `imu_data_<timestamp>.csv` - ã‚»ãƒ³ã‚µãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’ CSVå½¢å¼ã§è¨˜éŒ²
+- ä¿å­˜å…ˆ: `%AppData%/LandRunner/`
 
-### 3. **MVVM ƒpƒ^[ƒ“iƒxƒXƒgƒvƒ‰ƒNƒeƒBƒXj**
+### 3. **MVVM ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼ˆãƒ™ã‚¹ãƒˆãƒ—ãƒ©ã‚¯ãƒ†ã‚£ã‚¹ï¼‰**
 ```
 LandRunner/
-„¥„Ÿ„Ÿ Models/ImuLogger.cs              © ƒƒMƒ“ƒOEƒf[ƒ^o—Í
-„¥„Ÿ„Ÿ ViewModels/
-„    „¥„Ÿ„Ÿ ViewModelBase.cs             © INotifyPropertyChangedÀ‘•
-„    „¥„Ÿ„Ÿ RelayCommand.cs              © ICommand (“¯ŠúE”ñ“¯Šú‘Î‰)
-„    „¤„Ÿ„Ÿ MainWindowViewModel.cs       © ó‘ÔŠÇ—EƒƒWƒbƒN
-„¤„Ÿ„Ÿ Views/
-    „¥„Ÿ„Ÿ MainWindow.xaml              © UIƒŒƒCƒAƒEƒgiDataBindingj
-    „¤„Ÿ„Ÿ MainWindow.xaml.cs           © CodeBehindiÅ¬ŒÀj
+â”œâ”€â”€ Models/ImuLogger.cs              â† ãƒ­ã‚®ãƒ³ã‚°ãƒ»ãƒ‡ãƒ¼ã‚¿å‡ºåŠ›
+â”œâ”€â”€ ViewModels/
+â”‚   â”œâ”€â”€ ViewModelBase.cs             â† INotifyPropertyChangedå®Ÿè£…
+â”‚   â”œâ”€â”€ RelayCommand.cs              â† ICommand (åŒæœŸãƒ»éåŒæœŸå¯¾å¿œ)
+â”‚   â””â”€â”€ MainWindowViewModel.cs       â† çŠ¶æ…‹ç®¡ç†ãƒ»ãƒ­ã‚¸ãƒƒã‚¯
+â””â”€â”€ Views/
+    â”œâ”€â”€ MainWindow.xaml              â† UIãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆï¼ˆDataBindingï¼‰
+    â””â”€â”€ MainWindow.xaml.cs           â† CodeBehindï¼ˆæœ€å°é™ï¼‰
 ```
 
-### 4. **ƒeƒXƒgi‘S10Œ ? ‡Šij**
+### 4. **ãƒ†ã‚¹ãƒˆï¼ˆå…¨10ä»¶ ? åˆæ ¼ï¼‰**
 
-#### ImuLoggerTests (5Œ)
+#### ImuLoggerTests (5ä»¶)
 - `ImuLogger_Initialize_CreatesLogFiles` ?
 - `ImuLogger_LogDebug_WritesMessage` ?
 - `ImuLogger_LogImuData_WritesCsvRow` ?
 - `ImuLogger_MultipleDataPoints_PreservesOrder` ?
 - `ImuLogger_Dispose_ClosesFiles` ?
 
-#### DeviceConnectionIntegrationTests (4Œ)
+#### DeviceConnectionIntegrationTests (4ä»¶)
 - `ImuDeviceManager_CreateInstance_ShouldNotThrow` ?
 - `MockDevice_StreamData_ProducesData` ?
 - `ImuData_EulerAngles_ShouldBeAccurate` ?
 - `Quaternion_Operations_ShouldWork` ?
 
-#### LoggerThreadSafetyTests (1Œ)
+#### LoggerThreadSafetyTests (1ä»¶)
 - `ImuLogger_ConcurrentWrites_ShouldNotCorrupt` ?
 
-**ƒeƒXƒgŒ‹‰Ê: ¬Œ÷ 10/10 (¸”s 0)**
+**ãƒ†ã‚¹ãƒˆçµæœ: æˆåŠŸ 10/10 (å¤±æ•— 0)**
 
 ---
 
-## ?? å—v‹@”\
+## ?? ä¸»è¦æ©Ÿèƒ½
 
-### ƒXƒe[ƒ^ƒXƒo[iã•”j
-- Ú‘±ó‘Ô•\¦
-- ƒŠƒAƒ‹ƒ^ƒCƒ€ƒƒbƒZ[ƒWƒJƒEƒ“ƒg
-- ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv•\¦
+### ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒãƒ¼ï¼ˆä¸Šéƒ¨ï¼‰
+- æ¥ç¶šçŠ¶æ…‹è¡¨ç¤º
+- ãƒªã‚¢ãƒ«ã‚¿ã‚¤ãƒ ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚«ã‚¦ãƒ³ãƒˆ
+- ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—è¡¨ç¤º
 
-### ƒrƒWƒ…ƒAƒ‰ƒCƒ[[ƒVƒ‡ƒ“i¶‘¤j
-- X/Y/Z²‚Ì•`‰æiÔ/—Î/Âj
-- YawŠp“x‚É‚æ‚é‰ñ“]²•\¦i‡Fj
-- Œ´“_ƒ}[ƒN
+### ãƒ“ã‚¸ãƒ¥ã‚¢ãƒ©ã‚¤ã‚¼ãƒ¼ã‚·ãƒ§ãƒ³ï¼ˆå·¦å´ï¼‰
+- X/Y/Zè»¸ã®æç”»ï¼ˆèµ¤/ç·‘/é’ï¼‰
+- Yawè§’åº¦ã«ã‚ˆã‚‹å›è»¢è»¸è¡¨ç¤ºï¼ˆç´«è‰²ï¼‰
+- åŸç‚¹ãƒãƒ¼ã‚¯
 
-### ƒf[ƒ^•\¦ƒpƒlƒ‹i‰E‘¤j
-- **Euler Angles**: Roll, Pitch, Yawi“xj
+### ãƒ‡ãƒ¼ã‚¿è¡¨ç¤ºãƒ‘ãƒãƒ«ï¼ˆå³å´ï¼‰
+- **Euler Angles**: Roll, Pitch, Yawï¼ˆåº¦ï¼‰
 - **Quaternion**: W, X, Y, Z
-- **ƒƒ^ƒf[ƒ^**: Timestamp, Message Counter
+- **ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿**: Timestamp, Message Counter
 
-### ƒRƒ“ƒgƒ[ƒ‹i‰º•”j
-- Connect Device ƒ{ƒ^ƒ“
-- Disconnect ƒ{ƒ^ƒ“
-- ƒXƒe[ƒ^ƒXƒeƒLƒXƒg
+### ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ï¼ˆä¸‹éƒ¨ï¼‰
+- Connect Device ãƒœã‚¿ãƒ³
+- Disconnect ãƒœã‚¿ãƒ³
+- ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ†ã‚­ã‚¹ãƒˆ
 
 ---
 
-## ??? MVVM ƒpƒ^[ƒ“‚ÌÀ‘•
+## ??? MVVM ãƒ‘ã‚¿ãƒ¼ãƒ³ã®å®Ÿè£…
 
 ### ViewModelBase
 ```csharp
 public class ViewModelBase : INotifyPropertyChanged
 {
-    // PropertyChanged ƒCƒxƒ“ƒg©“®ŠÇ—
-    // SetProperty<T>() ‚Å•ÏXŒŸ’m‚Æ’Ê’m‚ğ©“®‰»
+    // PropertyChanged ã‚¤ãƒ™ãƒ³ãƒˆè‡ªå‹•ç®¡ç†
+    // SetProperty<T>() ã§å¤‰æ›´æ¤œçŸ¥ã¨é€šçŸ¥ã‚’è‡ªå‹•åŒ–
 }
 ```
 
 ### RelayCommand
 ```csharp
-// ”ñ“¯ŠúƒRƒ}ƒ“ƒh‘Î‰
+// éåŒæœŸã‚³ãƒãƒ³ãƒ‰å¯¾å¿œ
 public class AsyncRelayCommand : ICommand
 {
-    // ƒf[ƒ^ƒoƒCƒ“ƒh ¨ ƒRƒ}ƒ“ƒhÀs ¨ ”ñ“¯Šúˆ—
+    // ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‰ â†’ ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œ â†’ éåŒæœŸå‡¦ç†
 }
 ```
 
 ### MainWindowViewModel
-- `StatusText`, `RollText`, `YawText` ‚È‚Ç‚ÌƒvƒƒpƒeƒB
+- `StatusText`, `RollText`, `YawText` ãªã©ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 - `ConnectCommand`, `DisconnectCommand`
-- `UpdateFromImuData()` ‚Åƒf[ƒ^XV‚ğ©“®”½‰f
+- `UpdateFromImuData()` ã§ãƒ‡ãƒ¼ã‚¿æ›´æ–°ã‚’è‡ªå‹•åæ˜ 
 
 ---
 
-## ?? ƒƒOo—Í—á
+## ?? ãƒ­ã‚°å‡ºåŠ›ä¾‹
 
 ### debug_20260126_214611.log
 ```
@@ -120,94 +120,94 @@ Timestamp,MessageCounter,Yaw,Pitch,Roll,W,X,Y,Z
 
 ---
 
-## ?? ƒeƒXƒgÀs•û–@
+## ?? ãƒ†ã‚¹ãƒˆå®Ÿè¡Œæ–¹æ³•
 
 ```bash
-# ‚·‚×‚Ä‚ÌƒeƒXƒgÀs
+# ã™ã¹ã¦ã®ãƒ†ã‚¹ãƒˆå®Ÿè¡Œ
 dotnet test
 
-# LandRunnerTest ‚Ì‚İÀs
+# LandRunnerTest ã®ã¿å®Ÿè¡Œ
 dotnet test LandRunnerTest
 
-# Ú×o—Í
+# è©³ç´°å‡ºåŠ›
 dotnet test --verbosity detailed
 ```
 
 ---
 
-## ?? Às•û–@
+## ?? å®Ÿè¡Œæ–¹æ³•
 
 ```bash
-# ƒAƒvƒŠƒP[ƒVƒ‡ƒ“Às
+# ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³å®Ÿè¡Œ
 dotnet run --project LandRunner
 
-# ‚Ü‚½‚Íƒrƒ‹ƒhŒãAEXE‚ğ’¼ÚÀs
+# ã¾ãŸã¯ãƒ“ãƒ«ãƒ‰å¾Œã€EXEã‚’ç›´æ¥å®Ÿè¡Œ
 LandRunner\bin\Debug\net10.0-windows\LandRunner.exe
 ```
 
 ---
 
-## ?? ƒtƒ@ƒCƒ‹\‘¢
+## ?? ãƒ•ã‚¡ã‚¤ãƒ«æ§‹é€ 
 
 ```
 LandRunner/
-„¥„Ÿ„Ÿ Models/
-„    „¤„Ÿ„Ÿ ImuLogger.cs                 # ƒƒOECSVo—Í
-„¥„Ÿ„Ÿ ViewModels/
-„    „¥„Ÿ„Ÿ ViewModelBase.cs             # INotifyPropertyChanged
-„    „¥„Ÿ„Ÿ RelayCommand.cs              # ICommandÀ‘•
-„    „¤„Ÿ„Ÿ MainWindowViewModel.cs       # ƒrƒWƒlƒXƒƒWƒbƒNEó‘ÔŠÇ—
-„¥„Ÿ„Ÿ Views/ (‚Ü‚½‚Í Views ƒtƒHƒ‹ƒ_)
-„    „¥„Ÿ„Ÿ MainWindow.xaml              # UI’è‹`
-„    „¤„Ÿ„Ÿ MainWindow.xaml.cs           # CodeBehind
-„¥„Ÿ„Ÿ ImuLogger.cs                     # ŒİŠ·«—piƒ‹[ƒgj
-„¥„Ÿ„Ÿ README.md                        # ‚±‚ÌƒhƒLƒ…ƒƒ“ƒg
-„¤„Ÿ„Ÿ app.xaml, App.xaml.cs
+â”œâ”€â”€ Models/
+â”‚   â””â”€â”€ ImuLogger.cs                 # ãƒ­ã‚°ãƒ»CSVå‡ºåŠ›
+â”œâ”€â”€ ViewModels/
+â”‚   â”œâ”€â”€ ViewModelBase.cs             # INotifyPropertyChanged
+â”‚   â”œâ”€â”€ RelayCommand.cs              # ICommandå®Ÿè£…
+â”‚   â””â”€â”€ MainWindowViewModel.cs       # ãƒ“ã‚¸ãƒã‚¹ãƒ­ã‚¸ãƒƒã‚¯ãƒ»çŠ¶æ…‹ç®¡ç†
+â”œâ”€â”€ Views/ (ã¾ãŸã¯ Views ãƒ•ã‚©ãƒ«ãƒ€)
+â”‚   â”œâ”€â”€ MainWindow.xaml              # UIå®šç¾©
+â”‚   â””â”€â”€ MainWindow.xaml.cs           # CodeBehind
+â”œâ”€â”€ ImuLogger.cs                     # äº’æ›æ€§ç”¨ï¼ˆãƒ«ãƒ¼ãƒˆï¼‰
+â”œâ”€â”€ README.md                        # ã“ã®ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ
+â””â”€â”€ app.xaml, App.xaml.cs
 
 LandRunnerTest/
-„¥„Ÿ„Ÿ UnitTest1.cs                     # ƒeƒXƒgƒXƒC[ƒgi10Œj
-„¤„Ÿ„Ÿ LandRunnerTest.csproj
+â”œâ”€â”€ UnitTest1.cs                     # ãƒ†ã‚¹ãƒˆã‚¹ã‚¤ãƒ¼ãƒˆï¼ˆ10ä»¶ï¼‰
+â””â”€â”€ LandRunnerTest.csproj
 ```
 
 ---
 
-## ?? MVVM ƒpƒ^[ƒ“‚Ì—˜“_
+## ?? MVVM ãƒ‘ã‚¿ãƒ¼ãƒ³ã®åˆ©ç‚¹
 
-1. **ƒeƒXƒg—eˆÕ«**: ViewModel ‚Ì‚İ‚ğƒeƒXƒg‰Â”\
-2. **UI/ƒƒWƒbƒN•ª—£**: MainWindow.xaml.cs ‚ª”–‚¢iƒR[ƒhƒrƒnƒCƒ“ƒhÅ¬‰»j
-3. **•Ûç«Œüã**: Ó”C‚ª–¾Šm‚É•ª—£
-4. **Ä—˜—p«**: ViewModel ‚Í•Ê‚Ì View ‚Å‚àg—p‰Â”\
-5. **DataBinding**: éŒ¾“I UI XV
-
----
-
-## ? ¡Œã‚ÌŠg’£ˆÄ
-
-1. **ƒOƒ‰ƒt•\¦**: ‰Á‘¬“xEŠp‘¬“x‚ÌƒŠƒAƒ‹ƒ^ƒCƒ€ƒOƒ‰ƒt
-2. **ƒLƒƒƒŠƒuƒŒ[ƒVƒ‡ƒ“**: ƒZƒ“ƒT[ƒLƒƒƒŠƒuƒŒ[ƒVƒ‡ƒ“‹@”\
-3. **•¡”ƒfƒoƒCƒX**: •¡” VITURE ƒfƒoƒCƒX‚Ì“¯Ú‘±‘Î‰
-4. **ƒlƒbƒgƒ[ƒN**: UDP/TCP ‚Å‚Ìƒf[ƒ^‘—M
-5. **˜^‰æEÄ¶**: IMU ƒf[ƒ^‚Ì˜^‰æEÄ¶‹@”\
+1. **ãƒ†ã‚¹ãƒˆå®¹æ˜“æ€§**: ViewModel ã®ã¿ã‚’ãƒ†ã‚¹ãƒˆå¯èƒ½
+2. **UI/ãƒ­ã‚¸ãƒƒã‚¯åˆ†é›¢**: MainWindow.xaml.cs ãŒè–„ã„ï¼ˆã‚³ãƒ¼ãƒ‰ãƒ“ãƒã‚¤ãƒ³ãƒ‰æœ€å°åŒ–ï¼‰
+3. **ä¿å®ˆæ€§å‘ä¸Š**: è²¬ä»»ãŒæ˜ç¢ºã«åˆ†é›¢
+4. **å†åˆ©ç”¨æ€§**: ViewModel ã¯åˆ¥ã® View ã§ã‚‚ä½¿ç”¨å¯èƒ½
+5. **DataBinding**: å®£è¨€çš„ UI æ›´æ–°
 
 ---
 
-## ?? ‹ZpƒXƒ^ƒbƒN
+## ? ä»Šå¾Œã®æ‹¡å¼µæ¡ˆ
+
+1. **ã‚°ãƒ©ãƒ•è¡¨ç¤º**: åŠ é€Ÿåº¦ãƒ»è§’é€Ÿåº¦ã®ãƒªã‚¢ãƒ«ã‚¿ã‚¤ãƒ ã‚°ãƒ©ãƒ•
+2. **ã‚­ãƒ£ãƒªãƒ–ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³**: ã‚»ãƒ³ã‚µãƒ¼ã‚­ãƒ£ãƒªãƒ–ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³æ©Ÿèƒ½
+3. **è¤‡æ•°ãƒ‡ãƒã‚¤ã‚¹**: è¤‡æ•° VITURE ãƒ‡ãƒã‚¤ã‚¹ã®åŒæ™‚æ¥ç¶šå¯¾å¿œ
+4. **ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯**: UDP/TCP ã§ã®ãƒ‡ãƒ¼ã‚¿é€ä¿¡
+5. **éŒ²ç”»ãƒ»å†ç”Ÿ**: IMU ãƒ‡ãƒ¼ã‚¿ã®éŒ²ç”»ãƒ»å†ç”Ÿæ©Ÿèƒ½
+
+---
+
+## ?? æŠ€è¡“ã‚¹ã‚¿ãƒƒã‚¯
 
 - **Framework**: .NET 10.0
 - **UI**: WPF (Windows Presentation Foundation)
-- **ƒpƒ^[ƒ“**: MVVM (Model-View-ViewModel)
-- **ƒeƒXƒg**: XUnit 2.9.3
-- **ƒfƒoƒCƒX’ÊM**: GlassBridgeiHIDŒo—Rj
+- **ãƒ‘ã‚¿ãƒ¼ãƒ³**: MVVM (Model-View-ViewModel)
+- **ãƒ†ã‚¹ãƒˆ**: XUnit 2.9.3
+- **ãƒ‡ãƒã‚¤ã‚¹é€šä¿¡**: GlassBridgeï¼ˆHIDçµŒç”±ï¼‰
 
 ---
 
-## ?? ’‹L
+## ?? æ³¨è¨˜
 
-- ƒƒOƒtƒ@ƒCƒ‹‚ÍƒNƒŠƒA‚Èè‚Å•¡”ƒXƒŒƒbƒh‚©‚ç‚ÌˆÀ‘S‚È‘‚«‚İ‚É‘Î‰i`lock` ‚Å“¯Šúj
-- ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹‚Í–¾¦“I‚Éƒtƒ‰ƒbƒVƒ…‚µ‚ÄŠmÀ‚ÉƒNƒ[ƒY
-- ƒeƒXƒgŒã‚Í GC ‚É‚æ‚éŠmÀ‚ÈƒŠƒŠ[ƒX‚ğ‘Ò‚Â
+- ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã¯ã‚¯ãƒªã‚¢ãªæ‰‹ã§è¤‡æ•°ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰ã®å®‰å…¨ãªæ›¸ãè¾¼ã¿ã«å¯¾å¿œï¼ˆ`lock` ã§åŒæœŸï¼‰
+- ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã¯æ˜ç¤ºçš„ã«ãƒ•ãƒ©ãƒƒã‚·ãƒ¥ã—ã¦ç¢ºå®Ÿã«ã‚¯ãƒ­ãƒ¼ã‚º
+- ãƒ†ã‚¹ãƒˆå¾Œã¯ GC ã«ã‚ˆã‚‹ç¢ºå®Ÿãªãƒªãƒªãƒ¼ã‚¹ã‚’å¾…ã¤
 
 ---
 
-**À‘•Š®—¹“ú**: 2026”N01Œ26“ú
-**ƒXƒe[ƒ^ƒX**: ? Š®¬EƒeƒXƒg‡Ši
+**å®Ÿè£…å®Œäº†æ—¥**: 2026å¹´01æœˆ26æ—¥
+**ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹**: ? å®Œæˆãƒ»ãƒ†ã‚¹ãƒˆåˆæ ¼

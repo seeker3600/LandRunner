@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 /// <summary>
-/// IMU‹L˜^ƒZƒbƒVƒ‡ƒ“‚Ìƒƒ^ƒf[ƒ^‚ğŠÇ—
+/// IMUè¨˜éŒ²ã‚»ãƒƒã‚·ãƒ§ãƒ³ã®ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’ç®¡ç†
 /// </summary>
 internal class ImuRecordingSession
 {
@@ -21,7 +21,7 @@ internal class ImuRecordingSession
     public string Format { get; set; } = "jsonl";
 
     /// <summary>
-    /// V‚µ‚¢ƒZƒbƒVƒ‡ƒ“‚ğì¬
+    /// æ–°ã—ã„ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚’ä½œæˆ
     /// </summary>
     public static ImuRecordingSession CreateNew(int frameCount = 0, int sampleRate = 100)
     {
@@ -35,7 +35,7 @@ internal class ImuRecordingSession
     }
 
     /// <summary>
-    /// ƒƒ^ƒf[ƒ^‚ğJSON‚Åæ“¾
+    /// ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’JSONã§å–å¾—
     /// </summary>
     public string ToJson()
     {
@@ -43,7 +43,7 @@ internal class ImuRecordingSession
     }
 
     /// <summary>
-    /// JSON‚©‚çƒƒ^ƒf[ƒ^‚ğ•œŒ³
+    /// JSONã‹ã‚‰ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’å¾©å…ƒ
     /// </summary>
     public static ImuRecordingSession FromJson(string json)
     {

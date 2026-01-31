@@ -5,8 +5,8 @@ using GlassBridge;
 using GlassBridge.Internal;
 
 /// <summary>
-/// IMU ƒpƒPƒbƒg‰ğÍ‚Ìƒxƒ“ƒ`ƒ}[ƒN
-/// HIDóMƒf[ƒ^‚©‚çImuData‚Ö‚Ì•ÏŠ·ƒpƒtƒH[ƒ}ƒ“ƒX‚ğŒv‘ª
+/// IMU ãƒ‘ã‚±ãƒƒãƒˆè§£æã®ãƒ™ãƒ³ãƒãƒãƒ¼ã‚¯
+/// HIDå—ä¿¡ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ImuDataã¸ã®å¤‰æ›ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ã‚’è¨ˆæ¸¬
 /// </summary>
 [MemoryDiagnoser]
 [RankColumn]
@@ -19,57 +19,57 @@ public class ImuPacketParseBenchmark
     [GlobalSetup]
     public void Setup()
     {
-        // —LŒø‚ÈIMUƒpƒPƒbƒgi64ƒoƒCƒgj
+        // æœ‰åŠ¹ãªIMUãƒ‘ã‚±ãƒƒãƒˆï¼ˆ64ãƒã‚¤ãƒˆï¼‰
         _validImuPacket = CreateValidImuPacket();
 
-        // Report ID•t‚«ƒpƒPƒbƒgi65ƒoƒCƒgAHID“Ç‚İæ‚è‚ÌŒ`®j
+        // Report IDä»˜ããƒ‘ã‚±ãƒƒãƒˆï¼ˆ65ãƒã‚¤ãƒˆã€HIDèª­ã¿å–ã‚Šæ™‚ã®å½¢å¼ï¼‰
         _validImuPacketWithReportId = new byte[65];
         _validImuPacketWithReportId[0] = 0x00; // Report ID
         Array.Copy(_validImuPacket, 0, _validImuPacketWithReportId, 1, 64);
 
-        // –³Œø‚ÈƒpƒPƒbƒg
+        // ç„¡åŠ¹ãªãƒ‘ã‚±ãƒƒãƒˆ
         _invalidPacket = new byte[64];
         _invalidPacket[0] = 0xAA;
         _invalidPacket[1] = 0xBB;
     }
 
     /// <summary>
-    /// —LŒø‚ÈIMUƒpƒPƒbƒg‚ğì¬iƒeƒXƒgƒf[ƒ^j
+    /// æœ‰åŠ¹ãªIMUãƒ‘ã‚±ãƒƒãƒˆã‚’ä½œæˆï¼ˆãƒ†ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ï¼‰
     /// </summary>
     private static byte[] CreateValidImuPacket()
     {
         var packet = new byte[64];
 
-        // ƒwƒbƒ_
+        // ãƒ˜ãƒƒãƒ€
         packet[0] = 0xFF;
         packet[1] = 0xFC; // IMU Data
 
-        // Payload length (ƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“): 30ƒoƒCƒg
+        // Payload length (ãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³): 30ãƒã‚¤ãƒˆ
         packet[4] = 30;
         packet[5] = 0;
 
-        // Timestamp (ƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“): ”CˆÓ‚Ì’l
+        // Timestamp (ãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³): ä»»æ„ã®å€¤
         packet[6] = 0x10;
         packet[7] = 0x27;
         packet[8] = 0x00;
         packet[9] = 0x00;
 
-        // Message counter (ƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“)
+        // Message counter (ãƒªãƒˆãƒ«ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³)
         packet[16] = 0x01;
         packet[17] = 0x00;
 
-        // Euler angles (ƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“ float32)
-        // Roll: 10.5“x
+        // Euler angles (ãƒ“ãƒƒã‚°ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ float32)
+        // Roll: 10.5åº¦
         WriteFloat32BigEndian(packet, 18, 10.5f);
-        // Pitch: -5.2“x
+        // Pitch: -5.2åº¦
         WriteFloat32BigEndian(packet, 22, -5.2f);
-        // Yaw: 45.0“x
+        // Yaw: 45.0åº¦
         WriteFloat32BigEndian(packet, 26, 45.0f);
 
         // End marker
         packet[35] = 0x03;
 
-        // CRCŒvZiƒXƒLƒbƒv‰Â”\‚È‚Ì‚Åƒ_ƒ~[’lj
+        // CRCè¨ˆç®—ï¼ˆã‚¹ã‚­ãƒƒãƒ—å¯èƒ½ãªã®ã§ãƒ€ãƒŸãƒ¼å€¤ï¼‰
         packet[2] = 0x00;
         packet[3] = 0x00;
 
@@ -86,7 +86,7 @@ public class ImuPacketParseBenchmark
     }
 
     /// <summary>
-    /// Report ID•t‚«ƒpƒPƒbƒg‰ğÍiHID“Ç‚İæ‚è‚ÌÀÛ‚ÌŒ`®j
+    /// Report IDä»˜ããƒ‘ã‚±ãƒƒãƒˆè§£æï¼ˆHIDèª­ã¿å–ã‚Šæ™‚ã®å®Ÿéš›ã®å½¢å¼ï¼‰
     /// </summary>
     [Benchmark]
     public ImuData? ParseValidPacket()

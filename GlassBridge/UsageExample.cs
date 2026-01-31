@@ -1,26 +1,26 @@
 namespace GlassBridge;
 
 /// <summary>
-/// GlassBridge ƒ‰ƒCƒuƒ‰ƒŠ‚Ìg—p—á
+/// GlassBridge ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ä½¿ç”¨ä¾‹
 /// 
-/// ƒƒOo—ÍƒNƒ‰ƒXˆê——F
+/// ãƒ­ã‚°å‡ºåŠ›ã‚¯ãƒ©ã‚¹ä¸€è¦§ï¼š
 /// - ImuDeviceManager.cs (lines 7, 27, 48, 64, 82, 97)
 /// - VitureLumaDevice.cs (lines 13, 103, 145, 175, 235, 285, 322, 365, 384)
 /// - HidStreamProvider.cs (lines 13, 35, 47, 56, 63)
 /// 
-/// Ú×ƒƒOƒŒƒxƒ‹F
-/// - DEBUG: Ú‘±ƒtƒ[AƒtƒŒ[ƒ€”ƒJƒEƒ“ƒgAƒfƒoƒCƒXî•ñ
-/// - INFO: d—v‚ÈƒCƒxƒ“ƒgiÚ‘±¬Œ÷AƒXƒgƒŠ[ƒ€ŠJn/I—¹j
-/// - WARN: ‰ñ•œ‰Â”\‚ÈƒGƒ‰[iƒfƒoƒCƒXŒŸo¸”s‚È‚Çj
-/// - ERROR: “®ì¸”siÚ‘±¸”sAƒRƒ}ƒ“ƒh‘—M¸”sj
-/// - TRACE: Å‚àÚ×i’ÊM“à—eAƒpƒPƒbƒgî•ñj- –{”ÔŠÂ‹«‚Å‚Í–³Œø‰»„§
+/// è©³ç´°ãƒ­ã‚°ãƒ¬ãƒ™ãƒ«ï¼š
+/// - DEBUG: æ¥ç¶šãƒ•ãƒ­ãƒ¼ã€ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚«ã‚¦ãƒ³ãƒˆã€ãƒ‡ãƒã‚¤ã‚¹æƒ…å ±
+/// - INFO: é‡è¦ãªã‚¤ãƒ™ãƒ³ãƒˆï¼ˆæ¥ç¶šæˆåŠŸã€ã‚¹ãƒˆãƒªãƒ¼ãƒ é–‹å§‹/çµ‚äº†ï¼‰
+/// - WARN: å›å¾©å¯èƒ½ãªã‚¨ãƒ©ãƒ¼ï¼ˆãƒ‡ãƒã‚¤ã‚¹æ¤œå‡ºå¤±æ•—ãªã©ï¼‰
+/// - ERROR: å‹•ä½œå¤±æ•—ï¼ˆæ¥ç¶šå¤±æ•—ã€ã‚³ãƒãƒ³ãƒ‰é€ä¿¡å¤±æ•—ï¼‰
+/// - TRACE: æœ€ã‚‚è©³ç´°ï¼ˆé€šä¿¡å†…å®¹ã€ãƒ‘ã‚±ãƒƒãƒˆæƒ…å ±ï¼‰- æœ¬ç•ªç’°å¢ƒã§ã¯ç„¡åŠ¹åŒ–æ¨å¥¨
 /// </summary>
 public static class UsageExample
 {
     /// <summary>
-    /// VITURE Luma ƒfƒoƒCƒX‚©‚ç IMU ƒf[ƒ^ƒXƒgƒŠ[ƒ~ƒ“ƒO‚ğæ“¾
+    /// VITURE Luma ãƒ‡ãƒã‚¤ã‚¹ã‹ã‚‰ IMU ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°ã‚’å–å¾—
     /// 
-    /// ƒƒOo—ÍƒNƒ‰ƒXF
+    /// ãƒ­ã‚°å‡ºåŠ›ã‚¯ãƒ©ã‚¹ï¼š
     /// - ImuDeviceManager.ConnectAsync() [line 27-30]
     /// - VitureLumaDevice.ConnectAsync() [line 13]
     /// - VitureLumaDevice.InitializeAsync() [line 103-119]
@@ -33,8 +33,8 @@ public static class UsageExample
     {
         using var manager = new ImuDeviceManager();
 
-        // ƒfƒoƒCƒX‚ÉÚ‘±
-        // ƒƒOo—Í: ImuDeviceManager.ConnectAsync() [line 27-30]
+        // ãƒ‡ãƒã‚¤ã‚¹ã«æ¥ç¶š
+        // ãƒ­ã‚°å‡ºåŠ›: ImuDeviceManager.ConnectAsync() [line 27-30]
         var device = await manager.ConnectAsync();
         if (device == null)
         {
@@ -46,8 +46,8 @@ public static class UsageExample
         {
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
 
-            // IMU ƒf[ƒ^ƒXƒgƒŠ[ƒ~ƒ“ƒOæ“¾
-            // ƒƒOo—Í: VitureLumaDevice.GetImuDataStreamAsync() [line 235-298]
+            // IMU ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°å–å¾—
+            // ãƒ­ã‚°å‡ºåŠ›: VitureLumaDevice.GetImuDataStreamAsync() [line 235-298]
             //         VitureLumaDevice.SendImuEnableCommandAsync() [line 365-414]
             //         VitureLumaDevice.TryReadImuDataAsync() [line 322-348]
             await foreach (var imuData in device.GetImuDataStreamAsync(cts.Token))
@@ -64,18 +64,18 @@ public static class UsageExample
     }
 
     /// <summary>
-    /// ƒeƒXƒg—pFƒ‚ƒbƒNƒfƒoƒCƒX‚Ìg—p—á
+    /// ãƒ†ã‚¹ãƒˆç”¨ï¼šãƒ¢ãƒƒã‚¯ãƒ‡ãƒã‚¤ã‚¹ã®ä½¿ç”¨ä¾‹
     /// 
-    /// ƒƒOo—ÍF‚È‚µiƒ‚ƒbƒNƒfƒoƒCƒX‚ÍƒƒMƒ“ƒO–¢‘Î‰j
+    /// ãƒ­ã‚°å‡ºåŠ›ï¼šãªã—ï¼ˆãƒ¢ãƒƒã‚¯ãƒ‡ãƒã‚¤ã‚¹ã¯ãƒ­ã‚®ãƒ³ã‚°æœªå¯¾å¿œï¼‰
     /// </summary>
     public static async Task MockDeviceExampleAsync()
     {
-        // ƒeƒXƒg—p‚Ìƒ‚ƒbƒNƒfƒoƒCƒX‚ğì¬
+        // ãƒ†ã‚¹ãƒˆç”¨ã®ãƒ¢ãƒƒã‚¯ãƒ‡ãƒã‚¤ã‚¹ã‚’ä½œæˆ
         var mockDevice = MockImuDevice.CreateWithPeriodicData(
             counter =>
             {
-                // ƒJƒEƒ“ƒ^[’l‚ÉŠî‚Ã‚¢‚Ä‰ñ“]’l‚ğ¶¬
-                float angle = counter * 5.0f; // 5“x‚¸‚Â‰ñ“]
+                // ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼å€¤ã«åŸºã¥ã„ã¦å›è»¢å€¤ã‚’ç”Ÿæˆ
+                float angle = counter * 5.0f; // 5åº¦ãšã¤å›è»¢
                 return new ImuData
                 {
                     Quaternion = new Quaternion(1.0f, 0.0f, 0.0f, 0.0f),

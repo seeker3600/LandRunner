@@ -6,8 +6,8 @@ using GlassBridge.Internal.Recording;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
-/// IMUƒfƒoƒCƒXƒ}ƒl[ƒWƒƒ[‚ÌÀ‘•
-/// ƒfƒoƒCƒXÚ‘±A‹L˜^AÄ¶‹@”\‚ğ’ñ‹Ÿ
+/// IMUãƒ‡ãƒã‚¤ã‚¹ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®å®Ÿè£…
+/// ãƒ‡ãƒã‚¤ã‚¹æ¥ç¶šã€è¨˜éŒ²ã€å†ç”Ÿæ©Ÿèƒ½ã‚’æä¾›
 /// </summary>
 public sealed class ImuDeviceManager : IImuDeviceManager
 {
@@ -18,7 +18,7 @@ public sealed class ImuDeviceManager : IImuDeviceManager
     private RecordingHidStreamProvider? _recordingProvider;
 
     /// <summary>
-    /// VITURE LumaƒfƒoƒCƒX‚É’ÊíÚ‘±
+    /// VITURE Lumaãƒ‡ãƒã‚¤ã‚¹ã«é€šå¸¸æ¥ç¶š
     /// </summary>
     public async Task<IImuDevice?> ConnectAsync(CancellationToken cancellationToken = default)
     {
@@ -41,9 +41,9 @@ public sealed class ImuDeviceManager : IImuDeviceManager
     }
 
     /// <summary>
-    /// ƒfƒoƒCƒX‚ÉÚ‘±‚µ‚Ä IMU ƒf[ƒ^‚ğ‹L˜^
-    /// æ“¾‚µ‚½ƒfƒoƒCƒX‚©‚ç GetImuDataStreamAsync() ‚Åæ“¾‚µ‚½ƒf[ƒ^‚Í©“®“I‚É‹L˜^‚³‚ê‚é
-    /// device.DisposeAsync() ‚É©“®“I‚Éƒƒ^ƒf[ƒ^‚à•Û‘¶‚³‚ê‚é
+    /// ãƒ‡ãƒã‚¤ã‚¹ã«æ¥ç¶šã—ã¦ IMU ãƒ‡ãƒ¼ã‚¿ã‚’è¨˜éŒ²
+    /// å–å¾—ã—ãŸãƒ‡ãƒã‚¤ã‚¹ã‹ã‚‰ GetImuDataStreamAsync() ã§å–å¾—ã—ãŸãƒ‡ãƒ¼ã‚¿ã¯è‡ªå‹•çš„ã«è¨˜éŒ²ã•ã‚Œã‚‹
+    /// device.DisposeAsync() æ™‚ã«è‡ªå‹•çš„ã«ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚‚ä¿å­˜ã•ã‚Œã‚‹
     /// </summary>
     public async Task<IImuDevice?> ConnectAndRecordAsync(
         string outputDirectory,
@@ -57,20 +57,20 @@ public sealed class ImuDeviceManager : IImuDeviceManager
 
         _logger.LogDebug("Starting device connection with recording to: {OutputDirectory}", outputDirectory);
 
-        // ‘O‰ñ‚Ì‹L˜^ƒZƒbƒVƒ‡ƒ“‚ğI—¹
+        // å‰å›ã®è¨˜éŒ²ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚’çµ‚äº†
         if (_recordingProvider != null)
         {
             _logger.LogDebug("Disposing previous recording session");
             await _recordingProvider.DisposeAsync();
         }
 
-        // Šî–{“I‚ÈHIDƒXƒgƒŠ[ƒ€ƒvƒƒoƒCƒ_[‚ğì¬
+        // åŸºæœ¬çš„ãªHIDã‚¹ãƒˆãƒªãƒ¼ãƒ ãƒ—ãƒ­ãƒã‚¤ãƒ€ãƒ¼ã‚’ä½œæˆ
         var baseProvider = new HidStreamProvider();
 
-        // ‹L˜^‹@”\‚Åƒ‰ƒbƒv
+        // è¨˜éŒ²æ©Ÿèƒ½ã§ãƒ©ãƒƒãƒ—
         _recordingProvider = new RecordingHidStreamProvider(baseProvider, outputDirectory);
 
-        // ƒfƒoƒCƒX‚ÉÚ‘±
+        // ãƒ‡ãƒã‚¤ã‚¹ã«æ¥ç¶š
         var device = await VitureLumaDevice.ConnectWithProviderAsync(_recordingProvider, cancellationToken);
         
         if (device != null)
@@ -86,8 +86,8 @@ public sealed class ImuDeviceManager : IImuDeviceManager
     }
 
     /// <summary>
-    /// ‹L˜^‚³‚ê‚½ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©‚ç IMU ƒfƒoƒCƒX‚ğÄ¶
-    /// ÀÛ‚ÌƒfƒoƒCƒX‚Ì‘ã‚í‚è‚ÉA‹L˜^‚³‚ê‚½ƒf[ƒ^‚ğƒXƒgƒŠ[ƒ€”zM‚·‚é Mock ƒfƒoƒCƒX‚ğ•Ô‚·
+    /// è¨˜éŒ²ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ IMU ãƒ‡ãƒã‚¤ã‚¹ã‚’å†ç”Ÿ
+    /// å®Ÿéš›ã®ãƒ‡ãƒã‚¤ã‚¹ã®ä»£ã‚ã‚Šã«ã€è¨˜éŒ²ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‚’ã‚¹ãƒˆãƒªãƒ¼ãƒ é…ä¿¡ã™ã‚‹ Mock ãƒ‡ãƒã‚¤ã‚¹ã‚’è¿”ã™
     /// </summary>
     public async Task<IImuDevice?> ConnectFromRecordingAsync(
         string recordingDirectory,
@@ -104,10 +104,10 @@ public sealed class ImuDeviceManager : IImuDeviceManager
 
         _logger.LogDebug("Starting device connection from recording: {RecordingDirectory}", recordingDirectory);
 
-        // Ä¶ƒvƒƒoƒCƒ_[‚ğì¬
+        // å†ç”Ÿãƒ—ãƒ­ãƒã‚¤ãƒ€ãƒ¼ã‚’ä½œæˆ
         var replayProvider = new ReplayHidStreamProvider(recordingDirectory);
 
-        // Mock ƒfƒoƒCƒX‚Æ‚µ‚ÄÄ¶
+        // Mock ãƒ‡ãƒã‚¤ã‚¹ã¨ã—ã¦å†ç”Ÿ
         var device = await VitureLumaDevice.ConnectWithProviderAsync(replayProvider, cancellationToken);
 
         if (device != null)
@@ -135,7 +135,7 @@ public sealed class ImuDeviceManager : IImuDeviceManager
             }
             catch
             {
-                // ƒfƒBƒXƒ|[ƒY‚ÌƒGƒ‰[‚Í–³‹
+                // ãƒ‡ã‚£ã‚¹ãƒãƒ¼ã‚ºæ™‚ã®ã‚¨ãƒ©ãƒ¼ã¯ç„¡è¦–
             }
         }
 

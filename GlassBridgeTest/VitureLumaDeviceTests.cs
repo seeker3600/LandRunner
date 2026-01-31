@@ -6,18 +6,18 @@ using GlassBridge.Internal.HID;
 using Xunit;
 
 /// <summary>
-/// VitureLumaDevice ‚ÌƒeƒXƒg
-/// d—lŠm”FƒeƒXƒgiŠÈ—ª”Åj
+/// VitureLumaDevice ã®ãƒ†ã‚¹ãƒˆ
+/// ä»•æ§˜ç¢ºèªãƒ†ã‚¹ãƒˆï¼ˆç°¡ç•¥ç‰ˆï¼‰
 /// </summary>
 public class VitureLumaDeviceTests
 {
     /// <summary>
-    /// ƒeƒXƒg—pIMUƒf[ƒ^ƒWƒFƒlƒŒ[ƒ^
-    /// ƒf[ƒ^óM‘¬“x‚ğƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‰Â”\
+    /// ãƒ†ã‚¹ãƒˆç”¨IMUãƒ‡ãƒ¼ã‚¿ã‚¸ã‚§ãƒãƒ¬ãƒ¼ã‚¿
+    /// ãƒ‡ãƒ¼ã‚¿å—ä¿¡é€Ÿåº¦ã‚’ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³å¯èƒ½
     /// </summary>
-    /// <param name="count">¶¬‚·‚éƒf[ƒ^”</param>
-    /// <param name="delayMs">ƒtƒŒ[ƒ€ŠÔ‚Ì’x‰„imsjB0 ‚ÅƒpƒtƒH[ƒ}ƒ“ƒXŒv‘ªA>0 ‚Åƒ^ƒCƒ€ƒAƒEƒg“™‚ğƒeƒXƒg</param>
-    /// <param name="cancellationToken">ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“</param>
+    /// <param name="count">ç”Ÿæˆã™ã‚‹ãƒ‡ãƒ¼ã‚¿æ•°</param>
+    /// <param name="delayMs">ãƒ•ãƒ¬ãƒ¼ãƒ é–“ã®é…å»¶ï¼ˆmsï¼‰ã€‚0 ã§ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹è¨ˆæ¸¬ã€>0 ã§ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆç­‰ã‚’ãƒ†ã‚¹ãƒˆ</param>
+    /// <param name="cancellationToken">ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³</param>
     private static async IAsyncEnumerable<ImuData> GenerateTestImuData(
         int count = 10,
         int delayMs = 0,
@@ -44,9 +44,9 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg1: ƒfƒoƒCƒXÚ‘±iƒpƒtƒH[ƒ}ƒ“ƒXŒv‘ª—pj
-    /// d—lFuƒfƒoƒCƒXÚ‘±‚ÉIsConnected‚ªtrue‚É‚È‚év
-    /// ’x‰„‚È‚µ‚Å‚‘¬Às
+    /// ãƒ†ã‚¹ãƒˆ1: ãƒ‡ãƒã‚¤ã‚¹æ¥ç¶šï¼ˆãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹è¨ˆæ¸¬ç”¨ï¼‰
+    /// ä»•æ§˜ï¼šã€Œãƒ‡ãƒã‚¤ã‚¹æ¥ç¶šæ™‚ã«IsConnectedãŒtrueã«ãªã‚‹ã€
+    /// é…å»¶ãªã—ã§é«˜é€Ÿå®Ÿè¡Œ
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task ConnectAsync_ShouldSucceed()
@@ -65,9 +65,9 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg2: GetImuDataStreamAsync ƒƒ\ƒbƒh‚ª‘¶İ‚µAŒÄ‚Ño‚µ‰Â”\iƒpƒtƒH[ƒ}ƒ“ƒXŒv‘ª—pj
-    /// d—lFuIMUƒf[ƒ^ƒXƒgƒŠ[ƒ€ƒƒ\ƒbƒh‚ªÀ‘•‚³‚ê‚Ä‚¢‚év
-    /// ’x‰„‚È‚µ‚Å‚‘¬Às
+    /// ãƒ†ã‚¹ãƒˆ2: GetImuDataStreamAsync ãƒ¡ã‚½ãƒƒãƒ‰ãŒå­˜åœ¨ã—ã€å‘¼ã³å‡ºã—å¯èƒ½ï¼ˆãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹è¨ˆæ¸¬ç”¨ï¼‰
+    /// ä»•æ§˜ï¼šã€ŒIMUãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ãƒ¡ã‚½ãƒƒãƒ‰ãŒå®Ÿè£…ã•ã‚Œã¦ã„ã‚‹ã€
+    /// é…å»¶ãªã—ã§é«˜é€Ÿå®Ÿè¡Œ
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task GetImuDataStreamAsync_ShouldBeCallable()
@@ -78,10 +78,10 @@ public class VitureLumaDeviceTests
         Assert.NotNull(device);
         Assert.True(device.IsConnected);
 
-        // Act: GetImuDataStreamAsync ƒƒ\ƒbƒh‚ªŒÄ‚Ño‚µ‰Â”\‚©Šm”F
+        // Act: GetImuDataStreamAsync ãƒ¡ã‚½ãƒƒãƒ‰ãŒå‘¼ã³å‡ºã—å¯èƒ½ã‹ç¢ºèª
         var streamMethod = device.GetType().GetMethod("GetImuDataStreamAsync");
 
-        // Assert: ƒƒ\ƒbƒh‚ª‘¶İ‚µAÀ‘•‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
+        // Assert: ãƒ¡ã‚½ãƒƒãƒ‰ãŒå­˜åœ¨ã—ã€å®Ÿè£…ã•ã‚Œã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
         Assert.NotNull(streamMethod);
         Assert.True(streamMethod.ReturnType.IsGenericType);
 
@@ -89,9 +89,9 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg3: Dispose‚Ì³íI—¹iƒpƒtƒH[ƒ}ƒ“ƒXŒv‘ª—pj
-    /// d—lFuDisposeasync‚ÅIsConnected‚ªfalse‚É‚È‚év
-    /// ’x‰„‚È‚µ‚Å‚‘¬Às
+    /// ãƒ†ã‚¹ãƒˆ3: Disposeæ™‚ã®æ­£å¸¸çµ‚äº†ï¼ˆãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹è¨ˆæ¸¬ç”¨ï¼‰
+    /// ä»•æ§˜ï¼šã€ŒDisposeasyncã§IsConnectedãŒfalseã«ãªã‚‹ã€
+    /// é…å»¶ãªã—ã§é«˜é€Ÿå®Ÿè¡Œ
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task DisposeAsync_ShouldDisconnect()
@@ -110,14 +110,14 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg4: ’á‘¬ƒf[ƒ^ƒXƒgƒŠ[ƒ€óM‚ÌƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“
-    /// ÀƒfƒoƒCƒX‚Í” ms`”\ ms ‚Ìƒ^ƒCƒ~ƒ“ƒO‚Åƒf[ƒ^‚ğ‘—M‚·‚é
-    /// ƒ^ƒCƒ€ƒAƒEƒgˆ—‚âƒoƒbƒtƒ@ƒŠƒ“ƒO“®ì‚ÌŠm”F—p
+    /// ãƒ†ã‚¹ãƒˆ4: ä½é€Ÿãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ å—ä¿¡ã®ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
+    /// å®Ÿãƒ‡ãƒã‚¤ã‚¹ã¯æ•° msï½æ•°å ms ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã§ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã™ã‚‹
+    /// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå‡¦ç†ã‚„ãƒãƒƒãƒ•ã‚¡ãƒªãƒ³ã‚°å‹•ä½œã®ç¢ºèªç”¨
     /// </summary>
     [Fact(Timeout = 10000)]
     public async Task ConnectAsync_WithDelayedData_ShouldSucceed()
     {
-        // Arrange: 10ms ‚Ì’x‰„‚Åƒf[ƒ^‚ğ‘—MiÀƒfƒoƒCƒXƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“j
+        // Arrange: 10ms ã®é…å»¶ã§ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ï¼ˆå®Ÿãƒ‡ãƒã‚¤ã‚¹ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ï¼‰
         var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(10, delayMs: 10, cancellationToken: ct));
 
         // Act
@@ -131,13 +131,13 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg5: ƒfƒoƒCƒX‰Šú‰»‚Æ•¡”‰ñ‚ÌÚ‘±ƒeƒXƒg
-    /// •¡”‚ÌƒfƒoƒCƒXÚ‘±ƒV[ƒPƒ“ƒX‚ª³í‚É“®ì‚·‚é‚±‚Æ‚ğŠm”F
+    /// ãƒ†ã‚¹ãƒˆ5: ãƒ‡ãƒã‚¤ã‚¹åˆæœŸåŒ–ã¨è¤‡æ•°å›ã®æ¥ç¶šãƒ†ã‚¹ãƒˆ
+    /// è¤‡æ•°ã®ãƒ‡ãƒã‚¤ã‚¹æ¥ç¶šã‚·ãƒ¼ã‚±ãƒ³ã‚¹ãŒæ­£å¸¸ã«å‹•ä½œã™ã‚‹ã“ã¨ã‚’ç¢ºèª
     /// </summary>
     [Fact(Timeout = 10000)]
     public async Task ConnectAsync_MultipleConnections_ShouldSucceed()
     {
-        // Arrange & Act: •¡”‰ñ‚ÌÚ‘±‚ğs
+        // Arrange & Act: è¤‡æ•°å›ã®æ¥ç¶šã‚’è©¦è¡Œ
         for (int i = 0; i < 3; i++)
         {
             var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(3, delayMs: 0, cancellationToken: ct));
@@ -153,8 +153,8 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg6: ƒfƒoƒCƒX‰Šú‰»Œã‚Í IMU ‚ª–³Œø‰»‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
-    /// DisposeAsync ‚Å‚à–³Œø‰»ƒRƒ}ƒ“ƒh‚ª‘—M‚³‚ê‚é
+    /// ãƒ†ã‚¹ãƒˆ6: ãƒ‡ãƒã‚¤ã‚¹åˆæœŸåŒ–å¾Œã¯ IMU ãŒç„¡åŠ¹åŒ–ã•ã‚Œã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+    /// DisposeAsync ã§ã‚‚ç„¡åŠ¹åŒ–ã‚³ãƒãƒ³ãƒ‰ãŒé€ä¿¡ã•ã‚Œã‚‹
     /// </summary>
     [Fact(Timeout = 10000)]
     public async Task DisposeAsync_ShouldDisableImuOnCleanup()
@@ -165,12 +165,12 @@ public class VitureLumaDeviceTests
         Assert.NotNull(device);
         Assert.True(device.IsConnected);
 
-        // Act: Dispose ‚ğŒÄ‚Ño‚·
+        // Act: Dispose ã‚’å‘¼ã³å‡ºã™
         await device.DisposeAsync();
 
-        // Assert: ƒfƒoƒCƒX‚ªØ’f‚³‚ê‚½‚±‚Æ‚ğŠm”F
+        // Assert: ãƒ‡ãƒã‚¤ã‚¹ãŒåˆ‡æ–­ã•ã‚ŒãŸã“ã¨ã‚’ç¢ºèª
         Assert.False(device.IsConnected);
-        // Dispose ‚É IMU –³Œø‰»ƒRƒ}ƒ“ƒh‚ª‘—M‚³‚ê‚éiÀ‘•Ú×‚¾‚ªŠm”F‰Â”\j
+        // Dispose æ™‚ã« IMU ç„¡åŠ¹åŒ–ã‚³ãƒãƒ³ãƒ‰ãŒé€ä¿¡ã•ã‚Œã‚‹ï¼ˆå®Ÿè£…è©³ç´°ã ãŒç¢ºèªå¯èƒ½ï¼‰
     }
 }
 
