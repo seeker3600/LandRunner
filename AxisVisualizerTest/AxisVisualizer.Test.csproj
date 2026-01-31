@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LandRunner\LandRunner.csproj" />
+    <ProjectReference Include="..\AxisVisualizer\AxisVisualizer.csproj" />
     <ProjectReference Include="..\GlassBridge\GlassBridge.csproj" />
     <ProjectReference Include="..\GlassBridge.Utils\GlassBridge.Utils.csproj" />
   </ItemGroup>
