@@ -2,7 +2,7 @@ namespace GlassBridgeTest;
 
 using GlassBridge;
 using GlassBridge.Internal;
-using GlassBridge.Internal.HID;
+using GlassBridge.Utils;
 using GlassBridge.Internal.Recording;
 using System.Text.Json;
 using System.Text.Json.Serialization;

@@ -1,4 +1,7 @@
-namespace GlassBridge.Internal.HID;
+namespace GlassBridge.Utils;
+
+using GlassBridge;
+using GlassBridge.Internal.HID;
 
 /// <summary>
 /// テスト用のモック HID ストリームプロバイダー
@@ -120,4 +123,3 @@ internal sealed class MockMcuStream : IHidStream
         DisposeAsync().GetAwaiter().GetResult();
     }
 }
-

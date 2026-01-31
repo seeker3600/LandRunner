@@ -1,6 +1,7 @@
-namespace GlassBridge.Internal.HID;
+namespace GlassBridge.Utils;
 
-using System.Runtime.CompilerServices;
+using GlassBridge;
+using GlassBridge.Internal.HID;
 
 /// <summary>
 /// テスト用のモックHIDストリーム（非同期対応）
@@ -206,5 +207,3 @@ internal sealed class MockHidStream : IHidStream
         return buffer;
     }
 }
-
-

@@ -2,38 +2,15 @@ namespace GlassBridgeTest;
 
 using GlassBridge;
 using GlassBridge.Internal;
-using GlassBridge.Internal.HID;
+using GlassBridge.Utils;
 using Xunit;
+using static GlassBridge.Utils.TestDataGenerators;
 
 /// <summary>
 /// MockHidStream と MockMcuStream の動作テスト
 /// </summary>
 public class MockStreamTests
 {
-    /// <summary>
-    /// テスト用IMUデータジェネレータ
-    /// </summary>
-    private static async IAsyncEnumerable<ImuData> GenerateTestImuData(
-        int count = 1,
-        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            if (cancellationToken.IsCancellationRequested)
-                yield break;
-
-            yield return new ImuData
-            {
-                Quaternion = new GlassBridge.Quaternion(0.707f, 0f, 0f, 0.707f),
-                EulerAngles = new EulerAngles(0f, 45f, 0f),
-                Timestamp = (uint)(1000 + i),
-                MessageCounter = (ushort)i
-            };
-
-            await Task.Delay(1, cancellationToken);
-        }
-    }
-
     /// <summary>
     /// テスト1: MockMcuStream がコマンド受け取り後に ACK を返す
     /// </summary>
@@ -65,7 +42,7 @@ public class MockStreamTests
     public async Task MockHidStream_ShouldReturnImuData()
     {
         // Arrange
-        var imuStream = new MockHidStream(GenerateTestImuData(1, CancellationToken.None), CancellationToken.None);
+        var imuStream = new MockHidStream(GenerateTestImuData(count: 1, delayMs: 1), CancellationToken.None);
         var buffer = new byte[64];
 
         // Act
@@ -90,7 +67,7 @@ public class MockStreamTests
      public async Task MockHidStreamProvider_ShouldReturnTwoStreams()
     {
         // Arrange
-        var provider = new MockHidStreamProvider(ct => GenerateTestImuData(1, ct));
+        var provider = new MockHidStreamProvider(ct => GenerateTestImuData(count: 1, cancellationToken: ct));
 
         // Act
         var streams = await provider.GetStreamsAsync(
@@ -118,7 +95,7 @@ public class MockStreamTests
     public async Task MockHidStream_ShouldSupportMultipleReads()
     {
         // Arrange
-        var imuStream = new MockHidStream(GenerateTestImuData(2, CancellationToken.None), CancellationToken.None);
+        var imuStream = new MockHidStream(GenerateTestImuData(count: 2, delayMs: 1), CancellationToken.None);
         var buffer = new byte[64];
 
         // Act: 1回目の読み込み
@@ -141,7 +118,7 @@ public class MockStreamTests
     public async Task MockHidStream_ShouldReturnZeroWhenDataExhausted()
     {
         // Arrange
-        var imuStream = new MockHidStream(GenerateTestImuData(1, CancellationToken.None), CancellationToken.None);
+        var imuStream = new MockHidStream(GenerateTestImuData(count: 1, delayMs: 1), CancellationToken.None);
         var buffer = new byte[64];
 
         // Act: 1回目の読み込み
@@ -166,7 +143,7 @@ public class MockStreamTests
     public async Task MockHidStream_ShouldSerializePacketCorrectly()
     {
         // Arrange
-        var imuStream = new MockHidStream(GenerateTestImuData(1, CancellationToken.None), CancellationToken.None);
+        var imuStream = new MockHidStream(GenerateTestImuData(count: 1, delayMs: 1), CancellationToken.None);
         var buffer = new byte[64];
 
         // Act

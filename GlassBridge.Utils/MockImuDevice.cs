@@ -1,6 +1,7 @@
-using System.Runtime.CompilerServices;
+namespace GlassBridge.Utils;
 
-namespace GlassBridge;
+using System.Runtime.CompilerServices;
+using GlassBridge;
 
 /// <summary>
 /// テスト用のモックIMUデバイス実装
@@ -69,19 +70,6 @@ public sealed class MockImuDevice : IImuDevice
     {
         yield return data;
         await Task.CompletedTask;
-    }
-
-    private static async IAsyncEnumerable<ImuData> GeneratePeriodicData(
-        Func<ushort, ImuData> dataFactory,
-        int intervalMs,
-        int maxIterations,
-        System.Collections.Generic.IAsyncEnumerable<int> cancellationToken)
-    {
-        for (ushort i = 0; i < maxIterations; i++)
-        {
-            yield return dataFactory(i);
-            await Task.Delay(intervalMs);
-        }
     }
 
     private static async IAsyncEnumerable<ImuData> GeneratePeriodicData(

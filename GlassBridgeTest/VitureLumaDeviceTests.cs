@@ -2,8 +2,9 @@ namespace GlassBridgeTest;
 
 using GlassBridge;
 using GlassBridge.Internal;
-using GlassBridge.Internal.HID;
+using GlassBridge.Utils;
 using Xunit;
+using static GlassBridge.Utils.TestDataGenerators;
 
 /// <summary>
 /// VitureLumaDevice のテスト
@@ -11,38 +12,6 @@ using Xunit;
 /// </summary>
 public class VitureLumaDeviceTests
 {
-    /// <summary>
-    /// テスト用IMUデータジェネレータ
-    /// データ受信速度をシミュレーション可能
-    /// </summary>
-    /// <param name="count">生成するデータ数</param>
-    /// <param name="delayMs">フレーム間の遅延（ms）。0 でパフォーマンス計測、>0 でタイムアウト等をテスト</param>
-    /// <param name="cancellationToken">キャンセルトークン</param>
-    private static async IAsyncEnumerable<ImuData> GenerateTestImuData(
-        int count = 10,
-        int delayMs = 0,
-        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            if (cancellationToken.IsCancellationRequested)
-                yield break;
-
-            yield return new ImuData
-            {
-                Quaternion = new GlassBridge.Quaternion(0.707f, 0f, 0f, 0.707f),
-                EulerAngles = new EulerAngles(0f, 45f, 0f),
-                Timestamp = (uint)(1000 + i),
-                MessageCounter = (ushort)i
-            };
-
-            if (delayMs > 0)
-            {
-                await Task.Delay(delayMs, cancellationToken);
-            }
-        }
-    }
-
     /// <summary>
     /// テスト1: デバイス接続（パフォーマンス計測用）
     /// 仕様：「デバイス接続時にIsConnectedがtrueになる」

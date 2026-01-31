@@ -2,8 +2,9 @@ namespace GlassBridgeTest;
 
 using GlassBridge;
 using GlassBridge.Internal;
-using GlassBridge.Internal.HID;
+using GlassBridge.Utils;
 using Xunit;
+using static GlassBridge.Utils.TestDataGenerators;
 
 /// <summary>
 /// 統合テスト
@@ -19,7 +20,7 @@ public class IntegrationTests
     public async Task MockProvider_WithDevice_ShouldIntegrateCorrectly()
     {
         // Arrange
-        var mockProvider = new MockHidStreamProvider(GenerateTestImuData);
+        var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(count: 5, delayMs: 5, cancellationToken: ct));
 
         // Act
         var device = await VitureLumaDevice.ConnectWithProviderAsync(mockProvider);
@@ -42,7 +43,7 @@ public class IntegrationTests
         // Act & Assert
         for (int i = 0; i < 3; i++)
         {
-            var mockProvider = new MockHidStreamProvider(GenerateTestImuData);
+            var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(count: 5, delayMs: 5, cancellationToken: ct));
             var device = await VitureLumaDevice.ConnectWithProviderAsync(mockProvider);
 
             Assert.NotNull(device);
@@ -61,7 +62,7 @@ public class IntegrationTests
     public async Task DisposeAsync_MultipleTimes_ShouldNotThrow()
     {
         // Arrange
-        var mockProvider = new MockHidStreamProvider(GenerateTestImuData);
+        var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(count: 5, delayMs: 5, cancellationToken: ct));
         var device = await VitureLumaDevice.ConnectWithProviderAsync(mockProvider);
 
         // Act & Assert
@@ -79,7 +80,7 @@ public class IntegrationTests
     public async Task MethodCall_AfterDispose_ShouldThrowInvalidOperationException()
     {
         // Arrange
-        var mockProvider = new MockHidStreamProvider(GenerateTestImuData);
+        var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(count: 5, delayMs: 5, cancellationToken: ct));
         var device = await VitureLumaDevice.ConnectWithProviderAsync(mockProvider);
         await device.DisposeAsync();
 
@@ -181,7 +182,7 @@ public class IntegrationTests
     public async Task MockHidStreamProvider_ReturnsCorrectStreamCount()
     {
         // Arrange
-        var provider = new MockHidStreamProvider(GenerateTestImuData);
+        var provider = new MockHidStreamProvider(ct => GenerateTestImuData(count: 5, delayMs: 5, cancellationToken: ct));
 
         // Act
         var streams = await provider.GetStreamsAsync(
@@ -229,7 +230,7 @@ public class IntegrationTests
     public async Task VitureLumaDevice_InitialState_ShouldBeCorrect()
     {
         // Arrange
-        var mockProvider = new MockHidStreamProvider(GenerateTestImuData);
+        var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(count: 5, delayMs: 5, cancellationToken: ct));
         var device = await VitureLumaDevice.ConnectWithProviderAsync(mockProvider);
 
         // Act & Assert: IsConnected が true
@@ -239,27 +240,6 @@ public class IntegrationTests
         
         // Act & Assert: Dispose後は false
         Assert.False(device.IsConnected);
-    }
-
-    // ヘルパーメソッド
-    private static async IAsyncEnumerable<ImuData> GenerateTestImuData(
-        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            if (cancellationToken.IsCancellationRequested)
-                yield break;
-
-            yield return new ImuData
-            {
-                Quaternion = new Quaternion(0.707f, 0f, 0f, 0.707f),
-                EulerAngles = new EulerAngles(0f, 45f, 0f),
-                Timestamp = (uint)(1000 + i),
-                MessageCounter = (ushort)i
-            };
-
-            await Task.Delay(5, cancellationToken);
-        }
     }
 
     private void SerializeTestPacket(byte[] buffer, ImuData data)
