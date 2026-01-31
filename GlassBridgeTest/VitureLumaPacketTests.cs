@@ -5,13 +5,13 @@ using GlassBridge.Internal;
 using Xunit;
 
 /// <summary>
-/// VitureLumaPacket ï¿½Ìƒeï¿½Xï¿½g
-/// ï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½Í‚Ì“ï¿½ï¿½ï¿½mï¿½F
+/// VitureLumaPacket ‚ÌƒeƒXƒg
+/// ƒpƒPƒbƒg¶¬E‰ğÍ‚Ì“®ìŠm”F
 /// </summary>
 public class VitureLumaPacketTests
 {
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g1: IMU enable ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½pï¿½Pï¿½bï¿½gï¿½Ìï¿½ï¿½ï¿½
+    /// ƒeƒXƒg1: IMU enable ƒRƒ}ƒ“ƒhƒpƒPƒbƒg‚Ì¶¬
     /// </summary>
     [Fact]
     public void BuildImuEnableCommand_ShouldGenerateValidPacket()
@@ -23,13 +23,13 @@ public class VitureLumaPacketTests
         Assert.NotNull(packet);
         Assert.True(packet.Length > 0);
         
-        // ï¿½wï¿½bï¿½_ï¿½mï¿½F
+        // ƒwƒbƒ_Šm”F
         Assert.Equal(0xFF, packet[0]);
         Assert.Equal(0xFE, packet[1]); // MCU Command
     }
 
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g2: IMU disable ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½pï¿½Pï¿½bï¿½gï¿½Ìï¿½ï¿½ï¿½
+    /// ƒeƒXƒg2: IMU disable ƒRƒ}ƒ“ƒhƒpƒPƒbƒg‚Ì¶¬
     /// </summary>
     [Fact]
     public void BuildImuEnableCommand_WithDisable_ShouldGenerateDisablePacket()
@@ -41,28 +41,28 @@ public class VitureLumaPacketTests
         Assert.NotNull(packet);
         Assert.True(packet.Length > 0);
         
-        // ï¿½wï¿½bï¿½_ï¿½mï¿½F
+        // ƒwƒbƒ_Šm”F
         Assert.Equal(0xFF, packet[0]);
         Assert.Equal(0xFE, packet[1]); // MCU Command
     }
 
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g3: IMU ï¿½fï¿½[ï¿½^ï¿½pï¿½Pï¿½bï¿½gï¿½\ï¿½ï¿½ï¿½ÌŒï¿½ï¿½Øiï¿½wï¿½bï¿½_ï¿½ï¿½End markerï¿½j
+    /// ƒeƒXƒg3: IMU ƒf[ƒ^ƒpƒPƒbƒg\‘¢‚ÌŒŸØiƒwƒbƒ_‚ÆEnd markerj
     /// </summary>
     [Fact]
     public void VitureLumaPacket_PacketStructure_IsValid()
     {
-        // Arrange: ï¿½pï¿½Pï¿½bï¿½gï¿½\ï¿½ï¿½ï¿½ÌŒï¿½ï¿½ï¿½
+        // Arrange: ƒpƒPƒbƒg\‘¢‚ÌŒŸØ
         var buffer = new byte[64];
         
-        // ï¿½wï¿½bï¿½_
+        // ƒwƒbƒ_
         buffer[0] = 0xFF;
         buffer[1] = 0xFC;  // IMU Data
         buffer[4] = 30;
         buffer[5] = 0;
         buffer[30] = 0x03;  // End marker
 
-        // Act: ï¿½pï¿½Pï¿½bï¿½gï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½mï¿½F
+        // Act: ƒpƒPƒbƒg\‘¢‚ª—LŒø‚©Šm”F
         bool headerValid = buffer[0] == 0xFF && buffer[1] == 0xFC;
         bool endMarkerValid = buffer[30] == 0x03;
         ushort payloadLen = (ushort)(buffer[4] | (buffer[5] << 8));
@@ -74,14 +74,14 @@ public class VitureLumaPacketTests
     }
 
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g4: ï¿½sï¿½ï¿½ï¿½Èƒwï¿½bï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½Âƒpï¿½Pï¿½bï¿½g
+    /// ƒeƒXƒg4: •s³‚Èƒwƒbƒ_‚ğ‚ÂƒpƒPƒbƒg
     /// </summary>
     [Fact]
     public void TryParseImuPacket_WithInvalidHeader_ShouldReturnFalse()
     {
         // Arrange
         var buffer = new byte[64];
-        buffer[0] = 0xAA; // ï¿½sï¿½ï¿½ï¿½Èƒwï¿½bï¿½_
+        buffer[0] = 0xAA; // •s³‚Èƒwƒbƒ_
         buffer[1] = 0xBB;
 
         // Act
@@ -93,13 +93,13 @@ public class VitureLumaPacketTests
     }
 
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g5: ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½bï¿½tï¿½@
+    /// ƒeƒXƒg5: ’Z‚·‚¬‚éƒoƒbƒtƒ@
     /// </summary>
     [Fact]
     public void TryParseImuPacket_WithShortBuffer_ShouldReturnFalse()
     {
         // Arrange
-        var buffer = new byte[10]; // 64ï¿½oï¿½Cï¿½gï¿½ï¿½ï¿½ï¿½
+        var buffer = new byte[10]; // 64ƒoƒCƒg–¢–
         buffer[0] = 0xFF;
         buffer[1] = 0xFC;
 
@@ -112,7 +112,7 @@ public class VitureLumaPacketTests
     }
 
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g6: End marker ï¿½ï¿½ï¿½È‚ï¿½ï¿½ê‡
+    /// ƒeƒXƒg6: End marker ‚ª‚È‚¢ê‡
     /// </summary>
     [Fact]
     public void TryParseImuPacket_WithoutEndMarker_ShouldReturnFalse()
@@ -123,9 +123,9 @@ public class VitureLumaPacketTests
         buffer[1] = 0xFC;
         buffer[4] = 30;
         buffer[5] = 0;
-        buffer[30] = 0x00; // End marker ï¿½ï¿½ï¿½È‚ï¿½
+        buffer[30] = 0x00; // End marker ‚ª‚È‚¢
         
-        // CRC ï¿½ï¿½ï¿½vï¿½Z
+        // CRC ‚ğŒvZ
         ushort crc = CalculateCrc16Ccitt(buffer, 4, 30);
         buffer[2] = (byte)((crc >> 8) & 0xFF);
         buffer[3] = (byte)(crc & 0xFF);
@@ -139,7 +139,7 @@ public class VitureLumaPacketTests
     }
 
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g7: ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    /// ƒeƒXƒg7: ƒRƒ}ƒ“ƒhƒpƒPƒbƒg‚ª³‚µ‚­¶¬‚³‚ê‚é
     /// </summary>
     [Fact]
     public void BuildImuEnableCommand_ShouldGenerateCorrectCommandPacket()
@@ -155,7 +155,7 @@ public class VitureLumaPacketTests
     }
 
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g8: Message Counter ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½ï¿½ï¿½
+    /// ƒeƒXƒg8: Message Counter ‚ª³‚µ‚­”½‰f‚³‚ê‚é
     /// </summary>
     [Fact]
     public void BuildImuEnableCommand_WithDifferentCounter_ShouldUpdateCounter()
@@ -172,14 +172,14 @@ public class VitureLumaPacketTests
     }
 
     /// <summary>
-    /// CRC-16-CCITT ï¿½ï¿½ï¿½vï¿½Zï¿½iï¿½eï¿½Xï¿½gï¿½pï¿½j
+    /// CRC-16-CCITT ‚ğŒvZiƒeƒXƒg—pj
     /// </summary>
     private ushort CalculateCrc16Ccitt(byte[] data, int offset, int length)
     {
         const ushort polynomial = 0x1021;
         ushort[] crcTable = new ushort[256];
 
-        // CRC ï¿½eï¿½[ï¿½uï¿½ï¿½ï¿½ğ¶ï¿½
+        // CRC ƒe[ƒuƒ‹‚ğ¶¬
         for (int i = 0; i < 256; i++)
         {
             ushort crc = (ushort)(i << 8);
@@ -190,7 +190,7 @@ public class VitureLumaPacketTests
             crcTable[i] = crc;
         }
 
-        // CRC ï¿½ï¿½ï¿½vï¿½Z
+        // CRC ‚ğŒvZ
         ushort result = 0xFFFF;
         for (int i = offset; i < offset + length && i < data.Length; i++)
         {
@@ -202,12 +202,12 @@ public class VitureLumaPacketTests
     }
 
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g: CRCï¿½vï¿½Zï¿½Ìƒfï¿½oï¿½bï¿½O - ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½CRCï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½é‚©ï¿½mï¿½F
+    /// ƒeƒXƒg: CRCŒvZ‚ÌƒfƒoƒbƒO - Àƒf[ƒ^‚ÅCRC‚ªˆê’v‚·‚é‚©Šm”F
     /// </summary>
     [Fact]
     public void VerifyCrc_WithRealDeviceData_ShouldMatch()
     {
-        // Arrange: 444.csv ï¿½Ìï¿½ï¿½fï¿½[ï¿½^ï¿½iReport IDï¿½È‚ï¿½ï¿½A64ï¿½oï¿½Cï¿½gï¿½j
+        // Arrange: 444.csv ‚ÌÀƒf[ƒ^iReport ID‚È‚µA64ƒoƒCƒgj
         byte[] packet =
         [
             255, 252,            // [0-1] Header: 0xFF 0xFC
@@ -238,29 +238,29 @@ public class VitureLumaPacketTests
         ushort payloadLen = (ushort)(packet[4] | (packet[5] << 8));
         Assert.Equal(58, payloadLen);
 
-        // ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½Å‚ï¿½CRCï¿½ï¿½ï¿½Ø‚ï¿½ï¿½Xï¿½Lï¿½bï¿½vï¿½ï¿½ï¿½ÄAï¿½fï¿½[ï¿½^ï¿½\ï¿½ï¿½ï¿½ÌŒï¿½ï¿½Ø‚ï¿½ï¿½sï¿½ï¿½
-        // CRCï¿½vï¿½Zï¿½Íˆï¿½: offset 4 ï¿½ï¿½ï¿½ï¿½ payloadLen ï¿½oï¿½Cï¿½gï¿½iï¿½hï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½dï¿½lï¿½Ê‚ï¿½j
+        // Àƒf[ƒ^‚Å‚ÍCRCŒŸØ‚ğƒXƒLƒbƒv‚µ‚ÄAƒf[ƒ^\‘¢‚ÌŒŸØ‚ğs‚¤
+        // CRCŒvZ”ÍˆÍ: offset 4 ‚©‚ç payloadLen ƒoƒCƒgiƒhƒLƒ…ƒƒ“ƒgd—l’Ê‚èj
         ushort calculatedCrc = CalculateCrc16Ccitt(packet, 4, payloadLen);
 
-        // Note: CRC ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½ÍAï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½Ìï¿½ï¿½ï¿½ï¿½Æƒhï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½Ìï¿½ï¿½Ù‚Ì‰Â”\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-        // ï¿½ï¿½ï¿½^ï¿½pï¿½Å‚ï¿½ CRC ï¿½ï¿½ï¿½Ø‚ï¿½ï¿½É˜aï¿½ï¿½ï¿½é‚©ï¿½Aï¿½Xï¿½Lï¿½bï¿½vï¿½ï¿½ï¿½ï¿½Kï¿½vï¿½ï¿½ï¿½ï¿½ï¿½é‚©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
-        // Assert.Equal(storedCrc, calculatedCrc); // ï¿½ï¿½Uï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½gï¿½Aï¿½Eï¿½g
+        // Note: CRC ‚ªˆê’v‚µ‚È‚¢ê‡‚ÍAÀƒfƒoƒCƒX‚ÌÀ‘•‚ÆƒhƒLƒ…ƒƒ“ƒg‚Ì·ˆÙ‚Ì‰Â”\«‚ª‚ ‚é
+        // À‰^—p‚Å‚Í CRC ŒŸØ‚ğŠÉ˜a‚·‚é‚©AƒXƒLƒbƒv‚·‚é•K—v‚ª‚ ‚é‚©‚à‚µ‚ê‚È‚¢
+        // Assert.Equal(storedCrc, calculatedCrc); // ˆê’UƒRƒƒ“ƒgƒAƒEƒg
         
-        // ï¿½ï¿½ï¿½ï¿½ÉAï¿½fï¿½[ï¿½^ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½mï¿½F
+        // ‘ã‚í‚è‚ÉAƒf[ƒ^\‘¢‚ª³‚µ‚¢‚±‚Æ‚ğŠm”F
         Assert.Equal(0xFF, packet[0]);
         Assert.Equal(0xFC, packet[1]);
         Assert.True(payloadLen > 0 && payloadLen <= 60);
     }
 
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g9: ï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½IMUï¿½fï¿½[ï¿½^ï¿½pï¿½Pï¿½bï¿½gï¿½Ì‰ï¿½ÍiReport IDï¿½tï¿½ï¿½ï¿½j
-    /// 444.csv ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½gï¿½p
+    /// ƒeƒXƒg9: ÀƒfƒoƒCƒX‚©‚çæ“¾‚µ‚½IMUƒf[ƒ^ƒpƒPƒbƒg‚Ì‰ğÍiReport ID•t‚«j
+    /// 444.csv ‚©‚çæ“¾‚µ‚½Àƒf[ƒ^‚ğg—p
     /// </summary>
     [Fact]
     public void TryParseImuPacket_WithRealDeviceData_ShouldParseSuccessfully()
     {
-        // Arrange: 444.csv ï¿½Ìï¿½ï¿½fï¿½[ï¿½^ï¿½ioffset 0-64ï¿½AReport ID 0x00 ï¿½tï¿½ï¿½ï¿½A65ï¿½oï¿½Cï¿½gï¿½j
-        // CSVï¿½Ì\ï¿½ï¿½:
+        // Arrange: 444.csv ‚ÌÀƒf[ƒ^ioffset 0-64AReport ID 0x00 •t‚«A65ƒoƒCƒgj
+        // CSV‚Ì\‘¢:
         // [0]=Report ID, [1-2]=Header(0xFF 0xFC), [3-4]=CRC, [5-6]=Length, [7-10]=Timestamp, ...
         byte[] realData =
         [
@@ -285,7 +285,7 @@ public class VitureLumaPacketTests
             0, 0, 0              // [63-65] padding (total 66 bytes with Report ID, 65 bytes packet)
         ];
 
-        // Act: CRCï¿½ï¿½ï¿½Ø‚ÍƒXï¿½Lï¿½bï¿½vï¿½iï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½CRCï¿½vï¿½Zï¿½ï¿½ï¿½dï¿½lï¿½ÆˆÙ‚È‚ï¿½Â”\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ßj
+        // Act: CRCŒŸØ‚ÍƒXƒLƒbƒviÀƒfƒoƒCƒX‚ÌCRCŒvZ‚ªd—l‚ÆˆÙ‚È‚é‰Â”\«‚ª‚ ‚é‚½‚ßj
         bool result = VitureLumaPacket.TryParseImuPacket(realData.AsSpan(), out var imuData, skipCrcValidation: true);
 
         // Assert
@@ -295,12 +295,12 @@ public class VitureLumaPacketTests
     }
 
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g10: ï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½fï¿½[ï¿½^ï¿½iReport IDï¿½È‚ï¿½ï¿½jï¿½Ì‰ï¿½ï¿½
+    /// ƒeƒXƒg10: ÀƒfƒoƒCƒXƒf[ƒ^iReport ID‚È‚µj‚Ì‰ğÍ
     /// </summary>
     [Fact]
     public void TryParseImuPacket_WithRealDeviceDataWithoutReportId_ShouldParseSuccessfully()
     {
-        // Arrange: 444.csv ï¿½Ìï¿½ï¿½fï¿½[ï¿½^ï¿½iReport ID ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 64ï¿½oï¿½Cï¿½gï¿½j
+        // Arrange: 444.csv ‚ÌÀƒf[ƒ^iReport ID ‚ğœ‚¢‚½ 64ƒoƒCƒgj
         byte[] realDataWithoutReportId =
         [
             255, 252,            // [0-1] Header: 0xFF 0xFC (IMU Data)
@@ -323,7 +323,7 @@ public class VitureLumaPacketTests
             0, 0                 // [62-63] (total 64 bytes)
         ];
 
-        // Act: CRCï¿½ï¿½ï¿½Ø‚ÍƒXï¿½Lï¿½bï¿½vï¿½iï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½CRCï¿½vï¿½Zï¿½ï¿½ï¿½dï¿½lï¿½ÆˆÙ‚È‚ï¿½Â”\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ßj
+        // Act: CRCŒŸØ‚ÍƒXƒLƒbƒviÀƒfƒoƒCƒX‚ÌCRCŒvZ‚ªd—l‚ÆˆÙ‚È‚é‰Â”\«‚ª‚ ‚é‚½‚ßj
         bool result = VitureLumaPacket.TryParseImuPacket(realDataWithoutReportId.AsSpan(), out var imuData, skipCrcValidation: true);
 
         // Assert
@@ -333,12 +333,12 @@ public class VitureLumaPacketTests
     }
 
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g11: ï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½fï¿½[ï¿½^ï¿½ÌƒIï¿½Cï¿½ï¿½ï¿½[ï¿½pï¿½ï¿½ï¿½Ã“ï¿½ï¿½È”ÍˆÍ“ï¿½ï¿½ï¿½ï¿½mï¿½F
+    /// ƒeƒXƒg11: ÀƒfƒoƒCƒXƒf[ƒ^‚ÌƒIƒCƒ‰[Šp‚ª‘Ã“–‚È”ÍˆÍ“à‚©Šm”F
     /// </summary>
     [Fact]
     public void TryParseImuPacket_WithRealDeviceData_ShouldHaveValidEulerAngles()
     {
-        // Arrange: 444.csv ï¿½Ìï¿½ï¿½fï¿½[ï¿½^
+        // Arrange: 444.csv ‚ÌÀƒf[ƒ^
         byte[] realData =
         [
             0,                   // Report ID
@@ -362,26 +362,26 @@ public class VitureLumaPacketTests
             0, 0, 0
         ];
 
-        // Act: CRCï¿½ï¿½ï¿½Ø‚ÍƒXï¿½Lï¿½bï¿½v
+        // Act: CRCŒŸØ‚ÍƒXƒLƒbƒv
         bool result = VitureLumaPacket.TryParseImuPacket(realData.AsSpan(), out var imuData, skipCrcValidation: true);
 
         // Assert
         Assert.True(result);
         Assert.NotNull(imuData);
         
-        // ï¿½Iï¿½Cï¿½ï¿½ï¿½[ï¿½pï¿½Í’Êï¿½ -180 ? +180 ï¿½xï¿½Ì”Íˆï¿½
+        // ƒIƒCƒ‰[Šp‚Í’Êí -180 ? +180 “x‚Ì”ÍˆÍ
         Assert.InRange(imuData.EulerAngles.Roll, -180.0f, 180.0f);
         Assert.InRange(imuData.EulerAngles.Pitch, -180.0f, 180.0f);
         Assert.InRange(imuData.EulerAngles.Yaw, -360.0f, 360.0f);
     }
 
     /// <summary>
-    /// ï¿½eï¿½Xï¿½g12: ï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½fï¿½[ï¿½^ï¿½ÌƒNï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Kï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½mï¿½F
+    /// ƒeƒXƒg12: ÀƒfƒoƒCƒXƒf[ƒ^‚ÌƒNƒH[ƒ^ƒjƒIƒ“‚ª³‹K‰»‚³‚ê‚Ä‚¢‚é‚©Šm”F
     /// </summary>
     [Fact]
     public void TryParseImuPacket_WithRealDeviceData_ShouldHaveNormalizedQuaternion()
     {
-        // Arrange: 444.csv ï¿½Ìï¿½ï¿½fï¿½[ï¿½^
+        // Arrange: 444.csv ‚ÌÀƒf[ƒ^
         byte[] realData =
         [
             0,                   // Report ID
@@ -405,14 +405,14 @@ public class VitureLumaPacketTests
             0, 0, 0
         ];
 
-        // Act: CRCï¿½ï¿½ï¿½Ø‚ÍƒXï¿½Lï¿½bï¿½v
+        // Act: CRCŒŸØ‚ÍƒXƒLƒbƒv
         bool result = VitureLumaPacket.TryParseImuPacket(realData.AsSpan(), out var imuData, skipCrcValidation: true);
 
         // Assert
         Assert.True(result);
         Assert.NotNull(imuData);
         
-        // ï¿½Nï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½ï¿½Ì’ï¿½ï¿½ï¿½ï¿½Í–ï¿½1.0ï¿½iï¿½ï¿½ï¿½Kï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½j
+        // ƒNƒH[ƒ^ƒjƒIƒ“‚Ì’·‚³‚Í–ñ1.0i³‹K‰»‚³‚ê‚Ä‚¢‚éj
         var q = imuData.Quaternion;
         float length = (float)Math.Sqrt(q.W * q.W + q.X * q.X + q.Y * q.Y + q.Z * q.Z);
         Assert.InRange(length, 0.99f, 1.01f);

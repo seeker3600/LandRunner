@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace LandRunner.ViewModels;
 
 /// <summary>
-/// MVVMï¿½pï¿½ÌŠï¿½{ViewModel
+/// MVVM—p‚ÌŠî–{ViewModel
 /// </summary>
 public class ViewModelBase : INotifyPropertyChanged
 {

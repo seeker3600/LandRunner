@@ -3,8 +3,8 @@ using GlassBridge;
 namespace LandRunnerTest;
 
 /// <summary>
-/// IImuDeviceManager ï¿½Æï¿½ï¿½ï¿½ï¿½Ìƒeï¿½Xï¿½g
-/// ï¿½fï¿½oï¿½Cï¿½Xï¿½Ú‘ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+/// IImuDeviceManager ‚ÆÀ‘•‚ÌƒeƒXƒg
+/// ƒfƒoƒCƒXÚ‘±E‰Šú‰»‚ğŒŸØ
 /// </summary>
 public class ImuDeviceManagerTests
 {

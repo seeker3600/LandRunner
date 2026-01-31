@@ -1,76 +1,76 @@
 # GlassBridge
 
-XRï¿½Oï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½IMUï¿½iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è‘•ï¿½uï¿½jï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½é‚½ï¿½ß‚ï¿½ .NET ï¿½ï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ï¿½B
+XRƒOƒ‰ƒX‚©‚ç‚ÌIMUiŠµ«‘ª’è‘•’ujƒf[ƒ^‚ðŽæ“¾‚·‚é‚½‚ß‚Ì .NET ƒ‰ƒCƒuƒ‰ƒŠB
 
-**ï¿½ï¿½ï¿½Ý‘Î‰ï¿½ï¿½F** VITURE Lumaï¿½AVITURE Proï¿½AVITURE Oneï¿½AVITURE One Liteï¿½AVITURE Luma Pro
+**Œ»Ý‘Î‰žF** VITURE LumaAVITURE ProAVITURE OneAVITURE One LiteAVITURE Luma Pro
 
-## ï¿½Tï¿½v
+## ŠT—v
 
-GlassBridgeï¿½ÍAWindowsï¿½ï¿½ï¿½VITUREï¿½nï¿½Vï¿½[ï¿½Xï¿½ï¿½ï¿½[ï¿½Oï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½3DoFï¿½iï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Aï¿½sï¿½bï¿½`ï¿½Aï¿½ï¿½ï¿½[ï¿½jï¿½Ì“ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ñ“¯Šï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ÅŽæ“¾ï¿½Å‚ï¿½ï¿½éƒ‰ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½B
+GlassBridge‚ÍAWindowsã‚ÅVITUREŒnƒV[ƒXƒ‹[ƒOƒ‰ƒX‚©‚ç3DoFiƒ[ƒ‹Aƒsƒbƒ`Aƒˆ[j‚Ì“ª•”Žp¨ƒf[ƒ^‚ð”ñ“¯ŠúƒXƒgƒŠ[ƒ€‚ÅŽæ“¾‚Å‚«‚éƒ‰ƒCƒuƒ‰ƒŠ‚Å‚·B
 
-HIDï¿½vï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½ï¿½ÌÚ×‚ï¿½ï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Vï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Å”ñ“¯Šï¿½ï¿½Iï¿½ï¿½APIï¿½ï¿½ñ‹Ÿ‚ï¿½ï¿½Ü‚ï¿½ï¿½Bï¿½Ü‚ï¿½ï¿½Aï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½É‚Íƒï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½Å—eï¿½Õ‚ÉƒVï¿½~ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½Ü‚ï¿½ï¿½B
+HIDƒvƒƒgƒRƒ‹‚ÌÚ×‚ð‰B•Á‚µAƒVƒ“ƒvƒ‹‚Å”ñ“¯Šú“I‚ÈAPI‚ð’ñ‹Ÿ‚µ‚Ü‚·B‚Ü‚½AƒeƒXƒgŽž‚É‚Íƒ‚ƒbƒNŽÀ‘•‚Å—eˆÕ‚ÉƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚Å‚«‚Ü‚·B
 
-## ï¿½ï¿½ï¿½ï¿½
+## “Á’¥
 
-- ? **ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Î‰ï¿½** - VITURE Lumaï¿½EProï¿½EOneï¿½nï¿½ï¿½ï¿½ï¿½Tï¿½|ï¿½[ï¿½g
-- ? **ï¿½ñ“¯Šï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½** - `IAsyncEnumerable<ImuData>`ï¿½ÅŽï¿½ï¿½Rï¿½Èƒfï¿½[ï¿½^ï¿½tï¿½ï¿½ï¿½[
-- ? **ï¿½eï¿½Xï¿½gï¿½Â”\** - ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½Æƒï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½
-- ? **ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½gï¿½Î‰ï¿½** - ï¿½Iï¿½Cï¿½ï¿½ï¿½[ï¿½pï¿½ÆƒNï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½ï¿½Ì—ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-- ? **CRCï¿½ï¿½ï¿½ï¿½** - ï¿½pï¿½Pï¿½bï¿½gï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½F
-- ? **ï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½Ç—ï¿½** - `IAsyncDisposable`ï¿½É‚ï¿½éŽ©ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Aï¿½bï¿½v
+- ? **•¡”ƒ‚ƒfƒ‹‘Î‰ž** - VITURE LumaEProEOneŒn—ñ‚ðƒTƒ|[ƒg
+- ? **”ñ“¯ŠúƒXƒgƒŠ[ƒ€** - `IAsyncEnumerable<ImuData>`‚ÅŽ©‘R‚Èƒf[ƒ^ƒtƒ[
+- ? **ƒeƒXƒg‰Â”\** - ƒCƒ“ƒ^[ƒtƒF[ƒX•ª—£‚Æƒ‚ƒbƒNŽÀ‘•
+- ? **•¡”ƒtƒH[ƒ}ƒbƒg‘Î‰ž** - ƒIƒCƒ‰[Šp‚ÆƒNƒH[ƒ^ƒjƒIƒ“‚Ì—¼•û‚ð’ñ‹Ÿ
+- ? **CRCŒŸØ** - ƒpƒPƒbƒg‚Ì®‡«Šm”F
+- ? **ƒŠƒ\[ƒXŠÇ—** - `IAsyncDisposable`‚É‚æ‚éŽ©“®ƒNƒŠ[ƒ“ƒAƒbƒv
 
-## ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½\ï¿½ï¿½
+## ƒvƒƒWƒFƒNƒg\¬
 
 ```
 GlassBridge/
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½J API
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ImuData.cs                 IMUï¿½fï¿½[ï¿½^ï¿½^ï¿½irecordï¿½j
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Interfaces.cs              ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½ï¿½`
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ImuDeviceManager.cs        ï¿½fï¿½oï¿½Cï¿½Xï¿½Ú‘ï¿½ï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½[
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MockImuDevice.cs           ï¿½eï¿½Xï¿½gï¿½pï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (GlassBridge.Internal namespace)
-    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ VitureLumaDevice.cs        HIDï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½
-    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ VitureLumaPacket.cs        ï¿½vï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½ï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½ï¿½
-    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Crc16Ccitt.cs              CRC-16ï¿½vï¿½Zï¿½ï¿½ï¿½[ï¿½eï¿½Bï¿½ï¿½ï¿½eï¿½B
+„¥„Ÿ„Ÿ ŒöŠJ API
+„    „¥„Ÿ„Ÿ ImuData.cs                 IMUƒf[ƒ^Œ^irecordj
+„    „¥„Ÿ„Ÿ Interfaces.cs              ƒCƒ“ƒ^[ƒtƒF[ƒX’è‹`
+„    „¥„Ÿ„Ÿ ImuDeviceManager.cs        ƒfƒoƒCƒXÚ‘±ƒ}ƒl[ƒWƒƒ[
+„    „¤„Ÿ„Ÿ MockImuDevice.cs           ƒeƒXƒg—pƒ‚ƒbƒNŽÀ‘•
+„¤„Ÿ„Ÿ “à•”ŽÀ‘• (GlassBridge.Internal namespace)
+    „¥„Ÿ„Ÿ VitureLumaDevice.cs        HIDƒfƒoƒCƒXŽÀ‘•
+    „¥„Ÿ„Ÿ VitureLumaPacket.cs        ƒvƒƒgƒRƒ‹ƒpƒPƒbƒgˆ—
+    „¤„Ÿ„Ÿ Crc16Ccitt.cs              CRC-16ŒvŽZƒ†[ƒeƒBƒŠƒeƒB
 ```
 
-### ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½
+### –¼‘O‹óŠÔ
 
-- **GlassBridge** - ï¿½ï¿½ï¿½JAPIï¿½i`ImuDeviceManager`ï¿½A`ImuData` ï¿½ï¿½ï¿½j
-- **GlassBridge.Internal** - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú×iHIDï¿½fï¿½oï¿½Cï¿½Xï¿½Aï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½j
+- **GlassBridge** - ŒöŠJAPIi`ImuDeviceManager`A`ImuData` “™j
+- **GlassBridge.Internal** - “à•”ŽÀ‘•Ú×iHIDƒfƒoƒCƒXAƒpƒPƒbƒgˆ—“™j
 
-## ï¿½Cï¿½ï¿½ï¿½Xï¿½gï¿½[ï¿½ï¿½
+## ƒCƒ“ƒXƒg[ƒ‹
 
-ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ï¿½Íƒ\ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ìˆê•”ï¿½Æ‚ï¿½ï¿½ÄŠÜ‚Ü‚ï¿½Ü‚ï¿½ï¿½Bï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ÅŽQï¿½Æ‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+‚±‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚Íƒ\ƒŠƒ…[ƒVƒ‡ƒ“‚Ìˆê•”‚Æ‚µ‚ÄŠÜ‚Ü‚ê‚Ü‚·BƒvƒƒWƒFƒNƒgƒtƒ@ƒCƒ‹‚ÅŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B
 
-### ï¿½Ë‘ï¿½ï¿½pï¿½bï¿½Pï¿½[ï¿½W
+### ˆË‘¶ƒpƒbƒP[ƒW
 
-- **HidSharp** 2.6.4 - HIDï¿½fï¿½oï¿½Cï¿½Xï¿½ÊM
+- **HidSharp** 2.6.4 - HIDƒfƒoƒCƒX’ÊM
 
-### ï¿½vï¿½ï¿½
+### —vŒ
 
-- **.NET 10** ï¿½Èï¿½
-- **Windows** (USB HIDï¿½ÊMï¿½Ì‚ï¿½ï¿½ï¿½)
+- **.NET 10** ˆÈã
+- **Windows** (USB HID’ÊM‚Ì‚½‚ß)
 
-## ï¿½Nï¿½Cï¿½bï¿½Nï¿½Xï¿½^ï¿½[ï¿½g
+## ƒNƒCƒbƒNƒXƒ^[ƒg
 
-### ï¿½ï¿½{ï¿½Iï¿½ÈŽgï¿½pï¿½ï¿½ï¿½@
+### Šî–{“I‚ÈŽg—p•û–@
 
 ```csharp
 using GlassBridge;
 
-// ï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ì¬
+// ƒ}ƒl[ƒWƒƒ[‚ðì¬
 using var manager = new ImuDeviceManager();
 
-// VITURE Lumaï¿½ÉÚ‘ï¿½
+// VITURE Luma‚ÉÚ‘±
 var device = await manager.ConnectAsync();
 if (device == null)
 {
-    Console.WriteLine("ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
+    Console.WriteLine("ƒfƒoƒCƒX‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
     return;
 }
 
-// IMUï¿½fï¿½[ï¿½^ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// IMUƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ðˆ—
 await using (device)
 {
     var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
@@ -80,23 +80,23 @@ await using (device)
         var euler = imuData.EulerAngles;
         var quat = imuData.Quaternion;
         
-        Console.WriteLine($"Roll: {euler.Roll:F1}ï¿½ï¿½, Pitch: {euler.Pitch:F1}ï¿½ï¿½, Yaw: {euler.Yaw:F1}ï¿½ï¿½");
+        Console.WriteLine($"Roll: {euler.Roll:F1}‹, Pitch: {euler.Pitch:F1}‹, Yaw: {euler.Yaw:F1}‹");
         Console.WriteLine($"Quaternion: W={quat.W:F3}, X={quat.X:F3}, Y={quat.Y:F3}, Z={quat.Z:F3}");
     }
 }
 ```
 
-## API ï¿½ï¿½ï¿½tï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½X
+## API ƒŠƒtƒ@ƒŒƒ“ƒX
 
 ### ImuDeviceManager
 
-ï¿½ï¿½ï¿½[ï¿½Uï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Cï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½|ï¿½Cï¿½ï¿½ï¿½gï¿½B
+ƒ†[ƒU[Œü‚¯‚ÌƒƒCƒ“ƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒgB
 
 #### `ConnectAsync(CancellationToken = default)`
 
-VITURE Lumaï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ÄÚ‘ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+VITURE LumaƒfƒoƒCƒX‚ðŒŸo‚µ‚ÄÚ‘±‚µ‚Ü‚·B
 
-**ï¿½ß‚ï¿½l:** `Task<IImuDevice?>` - ï¿½Ú‘ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½fï¿½oï¿½Cï¿½Xï¿½Aï¿½Ü‚ï¿½ï¿½ÍÚ‘ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½`null`
+**–ß‚è’l:** `Task<IImuDevice?>` - Ú‘±‚³‚ê‚½ƒfƒoƒCƒXA‚Ü‚½‚ÍÚ‘±Ž¸”sŽž‚Í`null`
 
 ```csharp
 var device = await manager.ConnectAsync();
@@ -104,35 +104,35 @@ var device = await manager.ConnectAsync();
 
 ### IImuDevice
 
-ï¿½Ú‘ï¿½ï¿½ï¿½ï¿½ê‚½IMUï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½\ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+Ú‘±‚³‚ê‚½IMUƒfƒoƒCƒX‚ð•\‚µ‚Ü‚·B
 
 #### `GetImuDataStreamAsync(CancellationToken = default)`
 
-IMUï¿½fï¿½[ï¿½^ï¿½Ì”ñ“¯Šï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+IMUƒf[ƒ^‚Ì”ñ“¯ŠúƒXƒgƒŠ[ƒ€‚ðŽæ“¾‚µ‚Ü‚·B
 
-**ï¿½ß‚ï¿½l:** `IAsyncEnumerable<ImuData>`
+**–ß‚è’l:** `IAsyncEnumerable<ImuData>`
 
 ```csharp
 await foreach (var data in device.GetImuDataStreamAsync(cancellationToken))
 {
-    // ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½
+    // ƒf[ƒ^ˆ—
 }
 ```
 
 #### `IsConnected`
 
-ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½Ú‘ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½pï¿½eï¿½Bï¿½B
+ƒfƒoƒCƒX‚ªÚ‘±‚³‚ê‚Ä‚¢‚é‚©‚ðŽ¦‚·ƒvƒƒpƒeƒBB
 
 ```csharp
 if (device.IsConnected)
 {
-    // ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½Ú‘ï¿½ï¿½ï¿½
+    // ƒfƒoƒCƒX‚ªÚ‘±’†
 }
 ```
 
 ### ImuData
 
-IMUï¿½fï¿½[ï¿½^ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½[ï¿½hï¿½^ï¿½B
+IMUƒf[ƒ^‚ð•\‚·ƒŒƒR[ƒhŒ^B
 
 ```csharp
 public record ImuData
@@ -146,36 +146,36 @@ public record ImuData
 
 ### Quaternion
 
-ï¿½Nï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½B
+ƒNƒH[ƒ^ƒjƒIƒ“•\Œ»B
 
 ```csharp
 public record Quaternion(float W, float X, float Y, float Z)
 ```
 
-**ï¿½ï¿½ï¿½\ï¿½bï¿½h:**
-- `Conjugate()` - ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Z
-- `operator *(Quaternion q1, Quaternion q2)` - 2ï¿½Â‚ÌƒNï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Z
+**ƒƒ\ƒbƒh:**
+- `Conjugate()` - ‹¤–ðƒNƒH[ƒ^ƒjƒIƒ“‚ðŒvŽZ
+- `operator *(Quaternion q1, Quaternion q2)` - 2‚Â‚ÌƒNƒH[ƒ^ƒjƒIƒ“‚ðæŽZ
 
 ```csharp
 var conjugate = quat.Conjugate();
-var combined = quat1 * quat2;  // ï¿½ï¿½]ï¿½Ìï¿½ï¿½ï¿½
+var combined = quat1 * quat2;  // ‰ñ“]‚Ì‡¬
 ```
 
 ### EulerAngles
 
-ï¿½Iï¿½Cï¿½ï¿½ï¿½[ï¿½pï¿½\ï¿½ï¿½ï¿½iï¿½xï¿½Pï¿½Êjï¿½B
+ƒIƒCƒ‰[Šp•\Œ»i“x’PˆÊjB
 
 ```csharp
 public record EulerAngles(float Roll, float Pitch, float Yaw);
 ```
 
-## ï¿½eï¿½Xï¿½g
+## ƒeƒXƒg
 
-### ï¿½ï¿½ï¿½bï¿½Nï¿½fï¿½oï¿½Cï¿½Xï¿½ÌŽgï¿½p
+### ƒ‚ƒbƒNƒfƒoƒCƒX‚ÌŽg—p
 
-ï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½É‚ï¿½`MockImuDevice`ï¿½ÅŽï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½Ì‘ï¿½ï¿½è‚ªï¿½Å‚ï¿½ï¿½Ü‚ï¿½ï¿½B
+ƒeƒXƒgŽž‚É‚Í`MockImuDevice`‚ÅŽÀƒfƒoƒCƒX‚Ì‘ã‚í‚è‚ª‚Å‚«‚Ü‚·B
 
-#### ï¿½Ã“Iï¿½fï¿½[ï¿½^ï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½bï¿½N
+#### Ã“Iƒf[ƒ^‚ð•Ô‚·ƒ‚ƒbƒN
 
 ```csharp
 var testData = new ImuData
@@ -196,13 +196,13 @@ await using (mockDevice)
 }
 ```
 
-#### ï¿½ï¿½ï¿½ï¿½Iï¿½Éƒfï¿½[ï¿½^ï¿½ð¶ï¿½ï¿½ï¿½ï¿½éƒ‚ï¿½bï¿½N
+#### ’èŠú“I‚Éƒf[ƒ^‚ð¶¬‚·‚éƒ‚ƒbƒN
 
 ```csharp
 var mockDevice = MockImuDevice.CreateWithPeriodicData(
     counter =>
     {
-        float angle = counter * 5.0f;  // 5ï¿½xï¿½ï¿½ï¿½Â‰ï¿½]
+        float angle = counter * 5.0f;  // 5“x‚¸‚Â‰ñ“]
         return new ImuData
         {
             Quaternion = Quaternion.Identity,
@@ -211,7 +211,7 @@ var mockDevice = MockImuDevice.CreateWithPeriodicData(
             MessageCounter = counter
         };
     },
-    intervalMs: 16,      // 60FPSï¿½ï¿½ï¿½ï¿½
+    intervalMs: 16,      // 60FPS‘Š“–
     maxIterations: 100
 );
 
@@ -226,9 +226,9 @@ await using (mockDevice)
 }
 ```
 
-#### ï¿½eï¿½Xï¿½gï¿½Å‚ÌƒCï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½ï¿½ï¿½p
+#### ƒeƒXƒg‚Å‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX—˜—p
 
-`IImuDevice`ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½ÎAï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½ÉØ‚ï¿½Ö‚ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½F
+`IImuDevice`ƒCƒ“ƒ^[ƒtƒF[ƒX‚ðŽg—p‚·‚ê‚ÎAŽÀ‘•‚ðƒeƒXƒgŽž‚ÉØ‚è‘Ö‚¦‚ç‚ê‚Ü‚·F
 
 ```csharp
 public class ImuDataProcessor
@@ -237,19 +237,19 @@ public class ImuDataProcessor
 
     public ImuDataProcessor(IImuDevice device)
     {
-        _device = device;  // ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^ï¿½Cï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½
+        _device = device;  // ƒRƒ“ƒXƒgƒ‰ƒNƒ^ƒCƒ“ƒWƒFƒNƒVƒ‡ƒ“
     }
 
     public async Task ProcessDataAsync()
     {
         await foreach (var data in _device.GetImuDataStreamAsync())
         {
-            // ï¿½ï¿½ï¿½ï¿½
+            // ˆ—
         }
     }
 }
 
-// ï¿½eï¿½Xï¿½gï¿½ï¿½
+// ƒeƒXƒgŽž
 [Fact]
 public async Task TestWithMockDevice()
 {
@@ -260,97 +260,97 @@ public async Task TestWithMockDevice()
     var processor = new ImuDataProcessor(mockDevice);
     await processor.ProcessDataAsync();
     
-    // ï¿½ï¿½ï¿½ï¿½
+    // ŒŸØ
 }
 ```
 
-## ï¿½Zï¿½pï¿½dï¿½l
+## ‹ZpŽd—l
 
-### ï¿½Î‰ï¿½ï¿½fï¿½oï¿½Cï¿½X
+### ‘Î‰žƒfƒoƒCƒX
 
-| ï¿½fï¿½oï¿½Cï¿½X | VID | PID | ï¿½Tï¿½|ï¿½[ï¿½g |
+| ƒfƒoƒCƒX | VID | PID | ƒTƒ|[ƒg |
 |---------|-----|-----|---------|
 | VITURE Luma | 0x35CA | 0x1131 | ? |
 
-### VITURE Lumaï¿½vï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½
+### VITURE LumaƒvƒƒgƒRƒ‹
 
-ï¿½Ú×‚ï¿½ `docs/hid/VITURE_Luma.md` ï¿½ï¿½ï¿½Qï¿½Æ‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+Ú×‚Í `docs/hid/VITURE_Luma.md` ‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B
 
-#### ï¿½pï¿½Pï¿½bï¿½gï¿½\ï¿½ï¿½
+#### ƒpƒPƒbƒg\‘¢
 
-- **IMU ï¿½fï¿½[ï¿½^**: ï¿½wï¿½bï¿½_ `0xFF 0xFC`
-- **MCU ACK**: ï¿½wï¿½bï¿½_ `0xFF 0xFD`
-- **MCU ï¿½Rï¿½}ï¿½ï¿½ï¿½h**: ï¿½wï¿½bï¿½_ `0xFF 0xFE`
+- **IMU ƒf[ƒ^**: ƒwƒbƒ_ `0xFF 0xFC`
+- **MCU ACK**: ƒwƒbƒ_ `0xFF 0xFD`
+- **MCU ƒRƒ}ƒ“ƒh**: ƒwƒbƒ_ `0xFF 0xFE`
 
-#### ï¿½fï¿½[ï¿½^ï¿½`ï¿½ï¿½
+#### ƒf[ƒ^Œ`Ž®
 
-- **ï¿½Iï¿½Cï¿½ï¿½ï¿½[ï¿½p**: ï¿½rï¿½bï¿½Oï¿½Gï¿½ï¿½ï¿½fï¿½Bï¿½Aï¿½ï¿½ IEEE754 float32
-- **ï¿½Nï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½**: ï¿½Iï¿½Cï¿½ï¿½ï¿½[ï¿½pï¿½ï¿½ï¿½ï¿½ÏŠï¿½
+- **ƒIƒCƒ‰[Šp**: ƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“ IEEE754 float32
+- **ƒNƒH[ƒ^ƒjƒIƒ“**: ƒIƒCƒ‰[Šp‚©‚ç•ÏŠ·
 - **CRC**: CRC-16-CCITT (polynomial 0x1021, initial 0xFFFF)
 
-### IMUï¿½fï¿½[ï¿½^ï¿½Xï¿½Vï¿½ï¿½ï¿½[ï¿½g
+### IMUƒf[ƒ^XVƒŒ[ƒg
 
-VITURE Lumaï¿½Í•Wï¿½ï¿½ï¿½Å–ï¿½60?100Hzï¿½Åƒfï¿½[ï¿½^ï¿½ð‘—Mï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+VITURE Luma‚Í•W€‚Å–ñ60?100Hz‚Åƒf[ƒ^‚ð‘—M‚µ‚Ü‚·B
 
-## ï¿½gï¿½ï¿½ï¿½uï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½[ï¿½eï¿½Bï¿½ï¿½ï¿½O
+## ƒgƒ‰ƒuƒ‹ƒVƒ…[ƒeƒBƒ“ƒO
 
-### ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½È‚ï¿½
+### ƒfƒoƒCƒX‚ªŒ©‚Â‚©‚ç‚È‚¢
 
-1. VITURE Lumaï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½USBï¿½Ú‘ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½mï¿½F
-2. ï¿½ï¿½ï¿½ÌƒAï¿½vï¿½ï¿½ï¿½Pï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½iSpaceWalkerï¿½È‚Çjï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½mï¿½F
-3. ï¿½fï¿½oï¿½Cï¿½Xï¿½hï¿½ï¿½ï¿½Cï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Xï¿½gï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½mï¿½F
-4. `ImuDeviceManager.ConnectAsync()`ï¿½ï¿½`null`ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½ê‚½ï¿½ê‡ï¿½Aï¿½fï¿½oï¿½Cï¿½Xï¿½Ç—ï¿½ï¿½ï¿½Ê‚ï¿½VITUREï¿½Oï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½Fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½mï¿½F
+1. VITURE Luma‚ª³‚µ‚­USBÚ‘±‚³‚ê‚Ä‚¢‚é‚©Šm”F
+2. ‘¼‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“iSpaceWalker‚È‚Çj‚ªƒOƒ‰ƒX‚ðŽg—p‚µ‚Ä‚¢‚È‚¢‚©Šm”F
+3. ƒfƒoƒCƒXƒhƒ‰ƒCƒo‚ª³‚µ‚­ƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚é‚©Šm”F
+4. `ImuDeviceManager.ConnectAsync()`‚Å`null`‚ª•Ô‚³‚ê‚½ê‡AƒfƒoƒCƒXŠÇ—‰æ–Ê‚ÅVITUREƒOƒ‰ƒX‚ª”FŽ¯‚³‚ê‚Ä‚¢‚é‚©Šm”F
 
-### ï¿½fï¿½[ï¿½^ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Ü‚ï¿½
+### ƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ªŽ~‚Ü‚é
 
-1. ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½Ô‚ï¿½ï¿½mï¿½F
-2. ï¿½fï¿½oï¿½Cï¿½Xï¿½ÌÚ‘ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½mï¿½F (`IImuDevice.IsConnected`)
-3. USBï¿½Ú‘ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ï¿½ï¿½mï¿½F
+1. ƒLƒƒƒ“ƒZƒŒ[ƒVƒ‡ƒ“‚Ìó‘Ô‚ðŠm”F
+2. ƒfƒoƒCƒX‚ÌÚ‘±ó‘Ô‚ðŠm”F (`IImuDevice.IsConnected`)
+3. USBÚ‘±‚ª•sˆÀ’è‚Å‚È‚¢‚©Šm”F
 
-### CRC ï¿½Gï¿½ï¿½ï¿½[ï¿½ÍŽï¿½ï¿½ï¿½ï¿½Iï¿½ÉƒXï¿½Lï¿½bï¿½vï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
+### CRC ƒGƒ‰[‚ÍŽ©“®“I‚ÉƒXƒLƒbƒv‚³‚ê‚Ü‚·
 
-ï¿½jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½Pï¿½bï¿½gï¿½ÍŽï¿½ï¿½ï¿½ï¿½Iï¿½É”jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Ì—Lï¿½ï¿½ï¿½Èƒpï¿½Pï¿½bï¿½gï¿½ï¿½Ò‚ï¿½ï¿½Ü‚ï¿½ï¿½B
+”j‘¹‚µ‚½ƒpƒPƒbƒg‚ÍŽ©“®“I‚É”jŠü‚³‚êAŽŸ‚Ì—LŒø‚ÈƒpƒPƒbƒg‚ð‘Ò‚¿‚Ü‚·B
 
-## ï¿½ï¿½ï¿½}ï¿½bï¿½sï¿½ï¿½ï¿½O
+## Ž²ƒ}ƒbƒsƒ“ƒO
 
-**ï¿½dï¿½v:** ï¿½ï¿½ï¿½}ï¿½bï¿½sï¿½ï¿½ï¿½Oï¿½ÍŽï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì•Wï¿½ï¿½ï¿½lï¿½Å‚ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½@ï¿½Å‚ÌŒï¿½ï¿½Ø‚ð„ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+**d—v:** Ž²ƒ}ƒbƒsƒ“ƒO‚ÍŽÀ‘•Žž‚Ì•W€’l‚Å‚·‚ªAŽÀ‹@‚Å‚ÌŒŸØ‚ð„§‚µ‚Ü‚·B
 
-ï¿½ï¿½ï¿½Ý‚ÌŽï¿½ï¿½ï¿½ï¿½iWebXRï¿½dï¿½lï¿½ÉŠï¿½Ã‚ï¿½ï¿½j:
+Œ»Ý‚ÌŽÀ‘•iWebXRŽd—l‚ÉŠî‚Ã‚­j:
 - `Yaw = -raw0`
 - `Roll = -raw1`
 - `Pitch = raw2`
 
-ï¿½ï¿½ï¿½Û‚ÌƒAï¿½vï¿½ï¿½ï¿½Pï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ÅŠï¿½ï¿½Ò‚ÆˆÙ‚È‚ï¿½ê‡ï¿½ÍAï¿½È‰ï¿½ï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½F
+ŽÀÛ‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÅŠú‘Ò‚ÆˆÙ‚È‚éê‡‚ÍAˆÈ‰º‚ðŠm”F‚µ‚Ä‚­‚¾‚³‚¢F
 
-1. "ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" ï¿½ï¿½ Yawï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚©
-2. "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" ï¿½ï¿½ Pitchï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚©
-3. "ï¿½Eï¿½ÉŒXï¿½ï¿½ï¿½ï¿½" ï¿½ï¿½ Rollï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚©
+1. "‰E‚ðŒü‚­" ¨ Yaw‚ª‘‰Á‚·‚é‚©
+2. "ã‚ðŒü‚­" ¨ Pitch‚ª‘‰Á‚·‚é‚©
+3. "‰E‚ÉŒX‚¯‚é" ¨ Roll‚ª‘‰Á‚·‚é‚©
 
-## ï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½Ç—ï¿½
+## ƒŠƒ\[ƒXŠÇ—
 
-`IImuDevice`ï¿½ï¿½`IAsyncDisposable`ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Aï¿½Ú‘ï¿½ï¿½ï¿½Kï¿½Ø‚ÉƒNï¿½ï¿½ï¿½[ï¿½Yï¿½ï¿½ï¿½Ü‚ï¿½ï¿½F
+`IImuDevice`‚Í`IAsyncDisposable`‚ðŽÀ‘•‚µ‚Ä‚¨‚èAÚ‘±‚ð“KØ‚ÉƒNƒ[ƒY‚µ‚Ü‚·F
 
 ```csharp
-// usingï¿½ï¿½ï¿½ÅŽï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½Disposeï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
+// using•¶‚ÅŽ©“®“I‚ÉDispose‚³‚ê‚Ü‚·
 await using (var device = await manager.ConnectAsync())
 {
-    // ï¿½gï¿½p
-}  // ï¿½ï¿½ï¿½ï¿½ï¿½ÅŽï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½IMUï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
+    // Žg—p
+}  // ‚±‚±‚ÅŽ©“®“I‚ÉIMU–³Œø‰»ƒRƒ}ƒ“ƒh‚ª‘—M‚³‚ê‚Ü‚·
 ```
 
-## ï¿½gï¿½ï¿½ï¿½ï¿½
+## Šg’£«
 
-ï¿½ï¿½ï¿½ã‘¼ï¿½Ìƒfï¿½oï¿½Cï¿½Xï¿½É‘Î‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ÍAï¿½È‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½F
+¡Œã‘¼‚ÌƒfƒoƒCƒX‚É‘Î‰ž‚³‚¹‚éê‡‚ÍAˆÈ‰º‚ðŽÀ‘•‚µ‚Ä‚­‚¾‚³‚¢F
 
-1. `IImuDevice`ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½Nï¿½ï¿½ï¿½X
-2. ï¿½fï¿½oï¿½Cï¿½Xï¿½Å—Lï¿½Ìƒvï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½ï¿½pï¿½[ï¿½Tï¿½[
-3. `IImuDeviceManager.ConnectAsync()`ï¿½ÅVï¿½fï¿½oï¿½Cï¿½Xï¿½ÌŒï¿½ï¿½oï¿½ï¿½Ç‰ï¿½
+1. `IImuDevice`‚ðŽÀ‘•‚µ‚½V‚µ‚¢ƒfƒoƒCƒXƒNƒ‰ƒX
+2. ƒfƒoƒCƒXŒÅ—L‚ÌƒvƒƒgƒRƒ‹ƒp[ƒT[
+3. `IImuDeviceManager.ConnectAsync()`‚ÅVƒfƒoƒCƒX‚ÌŒŸo‚ð’Ç‰Á
 
-## ï¿½ï¿½ï¿½Cï¿½Zï¿½ï¿½ï¿½X
+## ƒ‰ƒCƒZƒ“ƒX
 
-[ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½Ìƒï¿½ï¿½Cï¿½Zï¿½ï¿½ï¿½Xï¿½Éï¿½ï¿½ï¿½ï¿½Ü‚ï¿½]
+[ƒvƒƒWƒFƒNƒg‚Ìƒ‰ƒCƒZƒ“ƒX‚É€‚¶‚Ü‚·]
 
-## ï¿½Ö˜Aï¿½ï¿½ï¿½\ï¿½[ï¿½X
+## ŠÖ˜AƒŠƒ\[ƒX
 
-- [VITURE Luma HID ï¿½vï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½ï¿½dï¿½l](../docs/hid/VITURE_Luma.md)
-- [bfvogel/viture-webxr-extension](https://github.com/bfvogel/viture-webxr-extension) - ï¿½ï¿½ï¿½oï¿½[ï¿½Xï¿½Gï¿½ï¿½ï¿½Wï¿½jï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½Ìoï¿½T
+- [VITURE Luma HID ƒvƒƒgƒRƒ‹Žd—l](../docs/hid/VITURE_Luma.md)
+- [bfvogel/viture-webxr-extension](https://github.com/bfvogel/viture-webxr-extension) - ƒŠƒo[ƒXƒGƒ“ƒWƒjƒAƒŠƒ“ƒOŽ‘—¿‚Ìo“T

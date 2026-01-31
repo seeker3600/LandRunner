@@ -1,9 +1,9 @@
 namespace GlassBridge.Internal.HID;
 
 /// <summary>
-/// ï¿½eï¿½Xï¿½gï¿½pï¿½Ìƒï¿½ï¿½bï¿½N HID ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½oï¿½Cï¿½_ï¿½[
-/// IHidStreamProvider ï¿½Ìï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½Éï¿½ï¿½í‚¹ï¿½ï¿½
-/// IMU/MCU ï¿½ï¿½2ï¿½Â‚ÌƒXï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½
+/// ƒeƒXƒg—p‚Ìƒ‚ƒbƒN HID ƒXƒgƒŠ[ƒ€ƒvƒƒoƒCƒ_[
+/// IHidStreamProvider ‚ÌÀ‘•ƒCƒ“ƒ^[ƒtƒF[ƒX‚É‡‚í‚¹‚é
+/// IMU/MCU ‚Ì2‚Â‚ÌƒXƒgƒŠ[ƒ€‚ğ•Ô‚·
 /// </summary>
 internal sealed class MockHidStreamProvider : IHidStreamProvider
 {
@@ -25,11 +25,11 @@ internal sealed class MockHidStreamProvider : IHidStreamProvider
 
         var imuDataStream = _imuDataStreamFactory(cancellationToken);
         
-        // ï¿½eï¿½Xï¿½gï¿½p: MCU/IMU ï¿½Ìï¿½ï¿½ï¿½ï¿½Å•Ô‚ï¿½ (MCU ï¿½ï¿½ï¿½Åï¿½)
-        // MCU ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½: ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½É‰ï¿½ï¿½ï¿½ï¿½ï¿½ ACK ï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½Ô‚ï¿½
+        // ƒeƒXƒg—p: MCU/IMU ‚Ì‡˜‚Å•Ô‚· (MCU ‚ªÅ‰)
+        // MCU ƒXƒgƒŠ[ƒ€: ƒRƒ}ƒ“ƒh‚É‰“š‚µ ACK ƒpƒPƒbƒg‚ğ•Ô‚·
         IHidStream mcuStream = new MockMcuStream();
         
-        // IMU ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½: ï¿½eï¿½Xï¿½gï¿½fï¿½[ï¿½^ï¿½ï¿½Ô‚ï¿½
+        // IMU ƒXƒgƒŠ[ƒ€: ƒeƒXƒgƒf[ƒ^‚ğ•Ô‚·
         IHidStream imuStream = new MockHidStream(imuDataStream, cancellationToken);
         
         return new[] { mcuStream, imuStream };
@@ -46,13 +46,13 @@ internal sealed class MockHidStreamProvider : IHidStreamProvider
 }
 
 /// <summary>
-/// MCU ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½pï¿½Ìƒï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½
-/// ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½É‰ï¿½ï¿½ï¿½ï¿½ï¿½ ACK ï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½Ô‚ï¿½
+/// MCU ƒXƒgƒŠ[ƒ€—p‚Ìƒ‚ƒbƒNÀ‘•
+/// ƒRƒ}ƒ“ƒh‚É‰“š‚µ ACK ƒpƒPƒbƒg‚ğ•Ô‚·
 /// </summary>
 internal sealed class MockMcuStream : IHidStream
 {
     /// <summary>
-    /// ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ìƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iVITURE ï¿½fï¿½oï¿½Cï¿½Xï¿½Éï¿½ï¿½í‚¹ï¿½ï¿½ï¿½lï¿½j
+    /// ƒfƒtƒHƒ‹ƒg‚ÌƒŒƒ|[ƒg’·iVITURE ƒfƒoƒCƒX‚É‡‚í‚¹‚½’lj
     /// Report ID (1 byte) + Report Data (64 bytes) = 65 bytes
     /// </summary>
     public const int DefaultReportLength = 65;
@@ -63,12 +63,12 @@ internal sealed class MockMcuStream : IHidStream
     public bool IsOpen => !_disposed;
 
     /// <summary>
-    /// ï¿½Å‘ï¿½ï¿½ï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iReport ID ï¿½ï¿½ï¿½Ü‚Şj
+    /// Å‘å“ü—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
     /// </summary>
     public int MaxInputReportLength { get; } = DefaultReportLength;
 
     /// <summary>
-    /// ï¿½Å‘ï¿½oï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iReport ID ï¿½ï¿½ï¿½Ü‚Şj
+    /// Å‘åo—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
     /// </summary>
     public int MaxOutputReportLength { get; } = DefaultReportLength;
 
@@ -77,13 +77,13 @@ internal sealed class MockMcuStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(MockMcuStream));
 
-        // 1ï¿½ñ‚¾‚ï¿½ ACK ï¿½ï¿½Ô‚ï¿½ï¿½ÄIï¿½ï¿½
+        // 1‰ñ‚¾‚¯ ACK ‚ğ•Ô‚µ‚ÄI—¹
         if (_readCount >= 1)
         {
             return 0;
         }
 
-        // ACK ï¿½pï¿½Pï¿½bï¿½gï¿½ğ¶ï¿½ (ï¿½wï¿½bï¿½_: 0xFF 0xFD)
+        // ACK ƒpƒPƒbƒg‚ğ¶¬ (ƒwƒbƒ_: 0xFF 0xFD)
         var ackPacket = new byte[64];
         ackPacket[0] = 0xFF;  // Header byte 0
         ackPacket[1] = 0xFD;  // Header byte 1 (MCU ACK)
@@ -102,7 +102,7 @@ internal sealed class MockMcuStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(MockMcuStream));
 
-        // ï¿½ï¿½ï¿½bï¿½N: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ‚Í‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
+        // ƒ‚ƒbƒN: ‘‚«‚İ‚Í‰½‚à‚µ‚È‚¢
         await Task.CompletedTask;
     }
 

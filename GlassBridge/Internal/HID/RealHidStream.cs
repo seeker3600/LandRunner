@@ -3,7 +3,7 @@ namespace GlassBridge.Internal.HID;
 using HidSharp;
 
 /// <summary>
-/// HidSharpï¿½ï¿½ HidStream ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½ñ“¯Šï¿½ï¿½Î‰ï¿½ï¿½j
+/// HidSharp‚Ì HidStream ‚ğƒ‰ƒbƒv‚µ‚½À‘•i”ñ“¯Šú‘Î‰j
 /// </summary>
 internal sealed class RealHidStream : IHidStream
 {
@@ -14,12 +14,12 @@ internal sealed class RealHidStream : IHidStream
     public bool IsOpen => !_disposed;
 
     /// <summary>
-    /// ï¿½Å‘ï¿½ï¿½ï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iReport ID ï¿½ï¿½ï¿½Ü‚Şj
+    /// Å‘å“ü—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
     /// </summary>
     public int MaxInputReportLength => _device.GetMaxInputReportLength();
 
     /// <summary>
-    /// ï¿½Å‘ï¿½oï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iReport ID ï¿½ï¿½ï¿½Ü‚Şj
+    /// Å‘åo—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
     /// </summary>
     public int MaxOutputReportLength => _device.GetMaxOutputReportLength();
 
@@ -34,7 +34,7 @@ internal sealed class RealHidStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(RealHidStream));
 
-        // HidSharp ï¿½Å‚ï¿½ BeginRead/EndRead ï¿½ï¿½ APM ï¿½pï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½p
+        // HidSharp ‚Å‚Í BeginRead/EndRead ‚Ì APM ƒpƒ^[ƒ“‚ğg—p
         return await Task.Factory.FromAsync(
             (callback, state) => _hidStream.BeginRead(buffer, offset, count, callback, state),
             ar => _hidStream.EndRead(ar),
@@ -46,7 +46,7 @@ internal sealed class RealHidStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(RealHidStream));
 
-        // HidSharp ï¿½Å‚ï¿½ BeginWrite/EndWrite ï¿½ï¿½ APM ï¿½pï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½p
+        // HidSharp ‚Å‚Í BeginWrite/EndWrite ‚Ì APM ƒpƒ^[ƒ“‚ğg—p
         await Task.Factory.FromAsync(
             (callback, state) => _hidStream.BeginWrite(buffer, 0, buffer.Length, callback, state),
             ar => _hidStream.EndWrite(ar),

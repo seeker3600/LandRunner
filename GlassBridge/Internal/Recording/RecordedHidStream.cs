@@ -3,13 +3,13 @@ namespace GlassBridge.Internal.Recording;
 using GlassBridge.Internal.HID;
 
 /// <summary>
-/// ï¿½Lï¿½^ï¿½ï¿½ï¿½ê‚½JSONï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ç¶ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½HIDï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½
-/// ï¿½gï¿½pï¿½ï¿½: var replayStream = new RecordedHidStream(framesJsonPath, metadataJsonPath)
+/// ‹L˜^‚³‚ê‚½JSONƒtƒ@ƒCƒ‹‚©‚ç¶ƒf[ƒ^‚ğÄ¶‚·‚éHIDƒXƒgƒŠ[ƒ€
+/// g—p—á: var replayStream = new RecordedHidStream(framesJsonPath, metadataJsonPath)
 /// </summary>
 internal sealed class RecordedHidStream : IHidStream
 {
     /// <summary>
-    /// ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ìƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iVITURE ï¿½fï¿½oï¿½Cï¿½Xï¿½Éï¿½ï¿½í‚¹ï¿½ï¿½ï¿½lï¿½j
+    /// ƒfƒtƒHƒ‹ƒg‚ÌƒŒƒ|[ƒg’·iVITURE ƒfƒoƒCƒX‚É‡‚í‚¹‚½’lj
     /// Report ID (1 byte) + Report Data (64 bytes) = 65 bytes
     /// </summary>
     public const int DefaultReportLength = 65;
@@ -23,22 +23,22 @@ internal sealed class RecordedHidStream : IHidStream
     public bool IsOpen => !_disposed;
 
     /// <summary>
-    /// ï¿½Å‘ï¿½ï¿½ï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iReport ID ï¿½ï¿½ï¿½Ü‚Şj
+    /// Å‘å“ü—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
     /// </summary>
     public int MaxInputReportLength { get; }
 
     /// <summary>
-    /// ï¿½Å‘ï¿½oï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iReport ID ï¿½ï¿½ï¿½Ü‚Şj
+    /// Å‘åo—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
     /// </summary>
     public int MaxOutputReportLength { get; }
 
     /// <summary>
-    /// ï¿½Lï¿½^ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ì¬
+    /// ‹L˜^ƒtƒ@ƒCƒ‹‚©‚çÄ¶ƒXƒgƒŠ[ƒ€‚ğì¬
     /// </summary>
-    /// <param name="framesJsonLinesPath">frames.jsonlï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ìƒpï¿½X</param>
-    /// <param name="metadataJsonPath">metadata.jsonï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ìƒpï¿½Xï¿½iï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½j</param>
-    /// <param name="maxInputReportLength">ï¿½Å‘ï¿½ï¿½ï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½g: 65ï¿½j</param>
-    /// <param name="maxOutputReportLength">ï¿½Å‘ï¿½oï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½g: 65ï¿½j</param>
+    /// <param name="framesJsonLinesPath">frames.jsonlƒtƒ@ƒCƒ‹‚ÌƒpƒX</param>
+    /// <param name="metadataJsonPath">metadata.jsonƒtƒ@ƒCƒ‹‚ÌƒpƒXiƒIƒvƒVƒ‡ƒ“j</param>
+    /// <param name="maxInputReportLength">Å‘å“ü—ÍƒŒƒ|[ƒg’·iƒfƒtƒHƒ‹ƒg: 65j</param>
+    /// <param name="maxOutputReportLength">Å‘åo—ÍƒŒƒ|[ƒg’·iƒfƒtƒHƒ‹ƒg: 65j</param>
     public RecordedHidStream(
         string framesJsonLinesPath,
         string? metadataJsonPath = null,
@@ -53,7 +53,7 @@ internal sealed class RecordedHidStream : IHidStream
         MaxInputReportLength = maxInputReportLength;
         MaxOutputReportLength = maxOutputReportLength;
 
-        // ï¿½ï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½ï¿½Ç‚İï¿½ï¿½ï¿½
+        // ƒƒ^ƒf[ƒ^‚ğ“Ç‚İ‚Ş
         ImuRecordingSession? metadata = null;
         if (!string.IsNullOrEmpty(metadataJsonPath) && File.Exists(metadataJsonPath))
         {
@@ -64,11 +64,11 @@ internal sealed class RecordedHidStream : IHidStream
             }
             catch
             {
-                // ï¿½ï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½Ç‚İï¿½ï¿½İï¿½ï¿½sï¿½Í–ï¿½ï¿½ï¿½
+                // ƒƒ^ƒf[ƒ^“Ç‚İ‚İ¸”s‚Í–³‹
             }
         }
 
-        // ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½Ç‚İï¿½ï¿½ï¿½ÅƒLï¿½ï¿½ï¿½[ï¿½ÉÏ‚ï¿½
+        // ƒtƒŒ[ƒ€‚ğ“Ç‚İ‚ñ‚ÅƒLƒ…[‚ÉÏ‚Ş
         LoadFramesFromJsonLines(framesJsonLinesPath);
     }
 
@@ -89,7 +89,7 @@ internal sealed class RecordedHidStream : IHidStream
                 var frameRecord = ImuFrameRecord.FromJsonLine(line);
                 var rawBytes = Convert.FromBase64String(frameRecord.RawBytes);
                 
-                // ï¿½^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½Äƒfï¿½Bï¿½ï¿½ï¿½Cï¿½ï¿½İ’ï¿½
+                // ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Ì·•ª‚ğŒvZ‚µ‚ÄƒfƒBƒŒƒC‚ğİ’è
                 long delayMs = 0;
                 if (previousTimestamp != 0)
                 {
@@ -101,7 +101,7 @@ internal sealed class RecordedHidStream : IHidStream
             }
             catch
             {
-                // ï¿½sï¿½ï¿½ï¿½Èƒtï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Í–ï¿½ï¿½ï¿½
+                // •s³‚ÈƒtƒŒ[ƒ€‚Í–³‹
             }
         }
 
@@ -113,24 +113,24 @@ internal sealed class RecordedHidStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(RecordedHidStream));
 
-        // ï¿½ï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½ï¿½ï¿½ÉÄï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Lï¿½^
+        // ‰‰ñŒÄ‚Ño‚µ‚ÉÄ¶ŠJn‚ğ‹L˜^
         if (_playbackStartTime == default)
         {
             _playbackStartTime = DateTime.UtcNow;
         }
 
         if (_frameEnumerator == null || !_frameEnumerator.MoveNext())
-            return 0; // ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Iï¿½ï¿½
+            return 0; // ƒXƒgƒŠ[ƒ€I—¹
 
         var (delayMs, frameData) = _frameEnumerator.Current;
 
-        // ï¿½^ï¿½Cï¿½~ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½Fï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ô‚Ìƒfï¿½Bï¿½ï¿½ï¿½Cï¿½ï¿½Ò‹@
+        // ƒ^ƒCƒ~ƒ“ƒO§ŒäFƒtƒŒ[ƒ€ŠÔ‚ÌƒfƒBƒŒƒC‚ğ‘Ò‹@
         if (delayMs > 0)
         {
             await Task.Delay((int)delayMs, cancellationToken);
         }
 
-        // ï¿½oï¿½bï¿½tï¿½@ï¿½ÉƒRï¿½sï¿½[
+        // ƒoƒbƒtƒ@‚ÉƒRƒs[
         int bytesToCopy = Math.Min(frameData.Length, count);
         Array.Copy(frameData, 0, buffer, offset, bytesToCopy);
 
@@ -142,7 +142,7 @@ internal sealed class RecordedHidStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(RecordedHidStream));
 
-        // ï¿½Äï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Å‚Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ‚Í‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
+        // Ä¶ƒXƒgƒŠ[ƒ€‚Å‚Í‘‚«‚İ‚Í‰½‚à‚µ‚È‚¢
         await Task.CompletedTask;
     }
 

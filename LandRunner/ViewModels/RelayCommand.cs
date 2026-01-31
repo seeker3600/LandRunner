@@ -5,7 +5,7 @@ using GlassBridge;
 namespace LandRunner.ViewModels;
 
 /// <summary>
-/// ï¿½ñ“¯Šï¿½ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ÌŽï¿½ï¿½ï¿½
+/// ”ñ“¯ŠúƒRƒ}ƒ“ƒh‚ÌŽÀ‘•
 /// </summary>
 public class AsyncRelayCommand : ICommand
 {
@@ -51,7 +51,7 @@ public class AsyncRelayCommand : ICommand
 }
 
 /// <summary>
-/// ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ÌŽï¿½ï¿½ï¿½
+/// “¯ŠúƒRƒ}ƒ“ƒh‚ÌŽÀ‘•
 /// </summary>
 public class RelayCommand : ICommand
 {

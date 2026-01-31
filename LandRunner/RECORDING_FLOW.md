@@ -1,210 +1,210 @@
-# LandRunner IMUï¿½fï¿½[ï¿½^ï¿½Lï¿½^ï¿½tï¿½ï¿½ï¿½[ï¿½iGlassBridgeï¿½ï¿½ï¿½ï¿½ï¿½Åj
+# LandRunner IMUƒf[ƒ^‹L˜^ƒtƒ[iGlassBridge“‡”Åj
 
-## ?? ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½Aï¿½[ï¿½Lï¿½eï¿½Nï¿½`ï¿½ï¿½ï¿½}
-
-```
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-ï¿½ï¿½         LandRunner WPF Application                       ï¿½ï¿½
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-                        ï¿½ï¿½
-        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-        ï¿½ï¿½               ï¿½ï¿½               ï¿½ï¿½
-        ï¿½ï¿½               ï¿½ï¿½               ï¿½ï¿½
-    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    ï¿½ï¿½MainWnd  ï¿½ï¿½  ï¿½ï¿½ViewModelsï¿½ï¿½  ï¿½ï¿½DebugLogger   ï¿½ï¿½
-    ï¿½ï¿½ (XAML)  ï¿½ï¿½  ï¿½ï¿½(Logic)   ï¿½ï¿½  ï¿½ï¿½(File Output) ï¿½ï¿½
-    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-         ï¿½ï¿½            ï¿½ï¿½               ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-                      ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-         ï¿½ï¿½  GlassBridge Library      ï¿½ï¿½
-         ï¿½ï¿½  (ImuDeviceManager)       ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-                  ï¿½ï¿½         ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-         ï¿½ï¿½HID Comm  ï¿½ï¿½  ï¿½ï¿½Recording      ï¿½ï¿½
-         ï¿½ï¿½(USB)     ï¿½ï¿½  ï¿½ï¿½(JSON Lines)   ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-              ï¿½ï¿½             ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-         ï¿½ï¿½  imu_data_<ts>.jsonl   ï¿½ï¿½
-         ï¿½ï¿½  (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)             ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-```
-
-## ?? IMUï¿½fï¿½[ï¿½^ï¿½Lï¿½^ï¿½tï¿½ï¿½ï¿½[ï¿½iï¿½Vï¿½[ï¿½Pï¿½ï¿½ï¿½Xï¿½}ï¿½j
+## ?? ‚ƒŒƒxƒ‹ƒA[ƒLƒeƒNƒ`ƒƒ}
 
 ```
-ï¿½ï¿½ï¿½[ï¿½Uï¿½[         LandRunner         GlassBridge         ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Vï¿½Xï¿½eï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½  [Connect]      ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½ ConnectAndRecord  ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½ Open HID Device     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½ (VITURE Luma)       ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½ Create Recording    ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½ (imu_data_*.jsonl)  ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½  ? Connected      ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½  ? Ready        ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½ï¿½ï¿½ (??? ?? ??)                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½ GetImuDataStream()ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½  Read Sensor Data   ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½ (Euler, Quaternion) ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½ ImuData #1        ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  Auto-Record JSON   ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-  ï¿½ï¿½  ?? Display     ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½ ImuData #2        ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  Auto-Record JSON   ï¿½ï¿½
-  ï¿½ï¿½  ?? Display     ï¿½ï¿½                   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½  (ï¿½pï¿½ï¿½...)          ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½  [Disconnect]   ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½ Finalize Recordingï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½ Close File/HID      ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½ (Flush JSON Lines)  ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½  ? Done           ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½  ? Disconnected ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
-  ï¿½ï¿½                 ï¿½ï¿½                   ï¿½ï¿½                     ï¿½ï¿½
+„¡„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„¢
+„          LandRunner WPF Application                       „ 
+„¤„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„£
+                        „ 
+        „¡„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„¢
+        „                „                „ 
+        ¥               ¥               ¥
+    „¡„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„¢  „¡„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„¢  „¡„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„¢
+    „ MainWnd  „   „ ViewModels„   „ DebugLogger   „ 
+    „  (XAML)  „   „ (Logic)   „   „ (File Output) „ 
+    „¤„Ÿ„Ÿ„Ÿ„Ÿ„¦„Ÿ„Ÿ„Ÿ„Ÿ„£  „¤„Ÿ„Ÿ„Ÿ„Ÿ„¦„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„£  „¤„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„¦„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„£
+         „             „                „ 
+         „¤„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„£
+                      „ 
+         „¡„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„¢
+         „   GlassBridge Library      „ 
+         „   (ImuDeviceManager)       „ 
+         „¤„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„¦„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„¦„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„£
+                  „          „ 
+         „¡„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¥„Ÿ„¢  „¡„Ÿ„Ÿ„Ÿ„Ÿ¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„¢
+         „ HID Comm  „   „ Recording      „ 
+         „ (USB)     „   „ (JSON Lines)   „ 
+         „¤„Ÿ„Ÿ„Ÿ„Ÿ„¦„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„£  „¤„Ÿ„Ÿ„Ÿ„Ÿ„¦„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„£
+              „              „ 
+         „¡„Ÿ„Ÿ„Ÿ„Ÿ¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„¢
+         „   imu_data_<ts>.jsonl   „ 
+         „   (Ž©“®¶¬)             „ 
+         „¤„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„£
 ```
 
-## ?? ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½oï¿½Í\ï¿½ï¿½
+## ?? IMUƒf[ƒ^‹L˜^ƒtƒ[iƒV[ƒPƒ“ƒX}j
+
+```
+ƒ†[ƒU[         LandRunner         GlassBridge         ƒtƒ@ƒCƒ‹ƒVƒXƒeƒ€
+  „                  „                    „                      „ 
+  „   [Connect]      „                    „                      „ 
+  „¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¨„                    „                      „ 
+  „                  „                    „                      „ 
+  „                  „  ConnectAndRecord  „                      „ 
+  „                  „¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¨„                      „ 
+  „                  „                    „                      „ 
+  „                  „                    „  Open HID Device     „ 
+  „                  „                    „¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¨„ 
+  „                  „                    „  (VITURE Luma)       „ 
+  „                  „                    „                      „ 
+  „                  „                    „  Create Recording    „ 
+  „                  „                    „¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¨„ 
+  „                  „                    „  (imu_data_*.jsonl)  „ 
+  „                  „   ? Connected      „                      „ 
+  „                  „ ©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„§                     „ 
+  „   ? Ready        „                    „                      „ 
+  „ ©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„§                   „                      „ 
+  „                  „                    „                      „ 
+  „¥„Ÿ (??? ?? ??)                   „                      „ 
+  „                  „  GetImuDataStream()„                      „ 
+  „                  „¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¨„                      „ 
+  „                  „                    „                      „ 
+  „                  „                    „   Read Sensor Data   „ 
+  „                  „                    „¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¨„ 
+  „                  „                    „  (Euler, Quaternion) „ 
+  „                  „                    „                      „ 
+  „                  „  ImuData #1        „                      „ 
+  „                  „ ©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„§  Auto-Record JSON   „ 
+  „                  „                    „ ©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„§
+  „   ?? Display     „                    „                      „ 
+  „ ©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„§                   „                      „ 
+  „                  „                    „                      „ 
+  „                  „  ImuData #2        „                      „ 
+  „                  „ ©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„§  Auto-Record JSON   „ 
+  „   ?? Display     „                    „ ©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„§
+  „ ©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„§                   „                      „ 
+  „                  „                    „                      „ 
+  „                  „   (Œp‘±...)          „                      „ 
+  „                  „                    „                      „ 
+  „   [Disconnect]   „                    „                      „ 
+  „¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¨„                    „                      „ 
+  „                  „                    „                      „ 
+  „                  „  Finalize Recording„                      „ 
+  „                  „¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¨„                      „ 
+  „                  „                    „                      „ 
+  „                  „                    „  Close File/HID      „ 
+  „                  „                    „¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¨„ 
+  „                  „                    „  (Flush JSON Lines)  „ 
+  „                  „   ? Done           „                      „ 
+  „                  „ ©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„§                     „ 
+  „   ? Disconnected „                    „                      „ 
+  „ ©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„§                   „                      „ 
+  „                  „                    „                      „ 
+```
+
+## ?? ƒtƒ@ƒCƒ‹o—Í\‘¢
 
 ```
 %AppData%/LandRunner/
-ï¿½ï¿½
-ï¿½ï¿½ï¿½ï¿½ debug_20260126_214611.log
-ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ [2026-01-26 21:46:11.110] ImuLogger initialized
-ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ [2026-01-26 21:46:11.111] Debug log: C:\Users\...\debug_20260126_214611.log
-ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ [2026-01-26 21:46:11.112] Recording IMU data to: C:\Users\...\LandRunner
-ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ [2026-01-26 21:46:12.200] Starting device connection with GlassBridge recording
-ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ [2026-01-26 21:46:12.500] Successfully connected to device
-ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ [2026-01-26 21:46:12.501] Recording IMU data to: C:\Users\...\LandRunner
-ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ [2026-01-26 21:46:20.000] Device disconnected
-ï¿½ï¿½
-ï¿½ï¿½ï¿½ï¿½ imu_data_20260126_214611.jsonl
-   ï¿½ï¿½ï¿½ï¿½ {"Timestamp":12345,"MessageCounter":100,"Quaternion":{...},"EulerAngles":{...}}
-   ï¿½ï¿½ï¿½ï¿½ {"Timestamp":12350,"MessageCounter":101,"Quaternion":{...},"EulerAngles":{...}}
-   ï¿½ï¿½ï¿½ï¿½ ...
+„ 
+„¥„Ÿ debug_20260126_214611.log
+„   „¥„Ÿ [2026-01-26 21:46:11.110] ImuLogger initialized
+„   „¥„Ÿ [2026-01-26 21:46:11.111] Debug log: C:\Users\...\debug_20260126_214611.log
+„   „¥„Ÿ [2026-01-26 21:46:11.112] Recording IMU data to: C:\Users\...\LandRunner
+„   „¥„Ÿ [2026-01-26 21:46:12.200] Starting device connection with GlassBridge recording
+„   „¥„Ÿ [2026-01-26 21:46:12.500] Successfully connected to device
+„   „¥„Ÿ [2026-01-26 21:46:12.501] Recording IMU data to: C:\Users\...\LandRunner
+„   „¤„Ÿ [2026-01-26 21:46:20.000] Device disconnected
+„ 
+„¤„Ÿ imu_data_20260126_214611.jsonl
+   „¥„Ÿ {"Timestamp":12345,"MessageCounter":100,"Quaternion":{...},"EulerAngles":{...}}
+   „¥„Ÿ {"Timestamp":12350,"MessageCounter":101,"Quaternion":{...},"EulerAngles":{...}}
+   „¤„Ÿ ...
 ```
 
-## ?? ï¿½Xï¿½ï¿½ï¿½bï¿½hï¿½Zï¿½[ï¿½tï¿½Èï¿½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[
+## ?? ƒXƒŒƒbƒhƒZ[ƒt‚Èˆ—ƒtƒ[
 
 ```
 Main Thread              Worker Thread (Streaming)
-    ï¿½ï¿½                              ï¿½ï¿½
-    ï¿½ï¿½ï¿½ï¿½ DebugLogger                 ï¿½ï¿½
-    ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ lock()                   ï¿½ï¿½
-    ï¿½ï¿½     ï¿½ï¿½ï¿½ï¿½ LogDebug()            ï¿½ï¿½
-    ï¿½ï¿½        ï¿½ï¿½ï¿½ï¿½ unlock()           ï¿½ï¿½
-    ï¿½ï¿½                              ï¿½ï¿½
-    ï¿½ï¿½                    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    ï¿½ï¿½                    ï¿½ï¿½         ï¿½ï¿½          ï¿½ï¿½
-    ï¿½ï¿½                    ï¿½ï¿½         ï¿½ï¿½          ï¿½ï¿½
-    ï¿½ï¿½              Thread 1    Thread 2   Thread 3
-    ï¿½ï¿½              (Recv #1)  (Recv #2)  (Display)
-    ï¿½ï¿½                ï¿½ï¿½         ï¿½ï¿½          ï¿½ï¿½
-    ï¿½ï¿½                ï¿½ï¿½ï¿½ï¿½ lock() ï¿½ï¿½ï¿½ï¿½         ï¿½ï¿½
-    ï¿½ï¿½                ï¿½ï¿½  LogImu  ï¿½ï¿½         ï¿½ï¿½
-    ï¿½ï¿½                ï¿½ï¿½  Flush   ï¿½ï¿½         ï¿½ï¿½
-    ï¿½ï¿½                ï¿½ï¿½ï¿½ï¿½ unlock()ï¿½ï¿½ï¿½ï¿½         ï¿½ï¿½
-    ï¿½ï¿½                ï¿½ï¿½          ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Update UI
-    ï¿½ï¿½                ï¿½ï¿½          ï¿½ï¿½
-    ï¿½ï¿½                ï¿½ï¿½          ï¿½ï¿½ï¿½ï¿½ lock() ï¿½ï¿½ï¿½ï¿½
-    ï¿½ï¿½                ï¿½ï¿½          ï¿½ï¿½  LogImu  ï¿½ï¿½
-    ï¿½ï¿½                ï¿½ï¿½          ï¿½ï¿½  Flush   ï¿½ï¿½
-    ï¿½ï¿½                ï¿½ï¿½          ï¿½ï¿½ï¿½ï¿½ unlock()ï¿½ï¿½ï¿½ï¿½
-    ï¿½ï¿½                ï¿½ï¿½                     ï¿½ï¿½
-    ï¿½ï¿½                                      ï¿½ï¿½
-    ï¿½ï¿½                            imu_data_*.jsonl
-    ï¿½ï¿½                            (ï¿½fï¿½Bï¿½Xï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
-    ï¿½ï¿½
-    ï¿½ï¿½ [Disconnect]
-    ï¿½ï¿½     ï¿½ï¿½
-    ï¿½ï¿½     ï¿½ï¿½ï¿½ï¿½ cancel token
-    ï¿½ï¿½        ï¿½ï¿½
-    ï¿½ï¿½        ï¿½ï¿½ï¿½ï¿½ DebugLogger.Dispose()
-    ï¿½ï¿½           ï¿½ï¿½ï¿½ï¿½ Flush & Close all files
-    ï¿½ï¿½
-    ï¿½ï¿½
+    „                               „ 
+    „¥„Ÿ DebugLogger                 „ 
+    „   „¤„Ÿ lock()                   „ 
+    „      „¤„Ÿ LogDebug()            „ 
+    „         „¤„Ÿ unlock()           „ 
+    „                               „ 
+    „                     „¡„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„©„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„¢
+    „                     „          „           „ 
+    „                     ¥         ¥          ¥
+    „               Thread 1    Thread 2   Thread 3
+    „               (Recv #1)  (Recv #2)  (Display)
+    „                 „          „           „ 
+    „                 „¥„Ÿ lock() „Ÿ„§         „ 
+    „                 „   LogImu  „          „ 
+    „                 „   Flush   „          „ 
+    „                 „¤„Ÿ unlock()„Ÿ„§         „ 
+    „                 „           „¥„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ¨ Update UI
+    „                 „           „ 
+    „                 „           „¥„Ÿ lock() „Ÿ„¢
+    „                 „           „   LogImu  „ 
+    „                 „           „   Flush   „ 
+    „                 „           „¤„Ÿ unlock()„Ÿ„§
+    „                 „                      „ 
+    „                                       ¥
+    „                             imu_data_*.jsonl
+    „                             (ƒfƒBƒXƒN‘‚«ž‚Ý)
+    „ 
+    „  [Disconnect]
+    „      „ 
+    „      „¤„Ÿ cancel token
+    „         „ 
+    „         „¤„Ÿ DebugLogger.Dispose()
+    „            „¤„Ÿ Flush & Close all files
+    „ 
+    ¥
 ```
 
-## ?? ï¿½fï¿½[ï¿½^ï¿½tï¿½ï¿½ï¿½[ï¿½iGlassBridgeï¿½Lï¿½^ï¿½@ï¿½\ï¿½j
+## ?? ƒf[ƒ^ƒtƒ[iGlassBridge‹L˜^‹@”\j
 
 ```
-1??  ï¿½Ú‘ï¿½ï¿½tï¿½Fï¿½[ï¿½Y
+1??  Ú‘±ƒtƒF[ƒY
 
     ConnectAndRecordAsync(outputDirectory)
-         ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RecordingHidStreamProvider ï¿½ï¿½ï¿½ï¿½
-             ï¿½ï¿½ï¿½ï¿½ outputDirectory ï¿½ï¿½Ý’ï¿½
-             ï¿½ï¿½ï¿½ï¿½ HID ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ = ï¿½Lï¿½^ï¿½ï¿½ï¿½bï¿½pï¿½[
+         „ 
+         „¤„Ÿ¨ RecordingHidStreamProvider ¶¬
+             „¥„Ÿ outputDirectory ‚ðÝ’è
+             „¤„Ÿ HID ƒXƒgƒŠ[ƒ€ = ‹L˜^ƒ‰ƒbƒp[
 
-2??  ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½~ï¿½ï¿½ï¿½Oï¿½tï¿½Fï¿½[ï¿½Y
+2??  ƒXƒgƒŠ[ƒ~ƒ“ƒOƒtƒF[ƒY
 
     GetImuDataStreamAsync()
-         ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ VITURE Luma ï¿½ï¿½ HID ï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½M
-         ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ ImuData ï¿½pï¿½[ï¿½X
-         ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ JSON Lines ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½g
-         ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ {"Timestamp":...,"MessageCounter":...,"Quaternion":{...},"EulerAngles":{...}}
-         ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýiï¿½ï¿½ï¿½ï¿½ï¿½j
-         ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ imu_data_<timestamp>.jsonl ï¿½É’Ç‰ï¿½
-         ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ LandRunner ï¿½É•Ô‹p
-            ï¿½ï¿½ï¿½ï¿½ UIï¿½Xï¿½V & DebugLogger.LogDebug()
+         „ 
+         „¥„Ÿ VITURE Luma ¨ HID ƒpƒPƒbƒgŽóM
+         „ 
+         „¥„Ÿ ImuData ƒp[ƒX
+         „ 
+         „¥„Ÿ JSON Lines ƒtƒH[ƒ}ƒbƒg
+         „   „¤„Ÿ {"Timestamp":...,"MessageCounter":...,"Quaternion":{...},"EulerAngles":{...}}
+         „ 
+         „¥„Ÿ ƒtƒ@ƒCƒ‹‘‚«ž‚ÝiŽ©“®j
+         „   „¤„Ÿ imu_data_<timestamp>.jsonl ‚É’Ç‰Á
+         „ 
+         „¤„Ÿ LandRunner ‚É•Ô‹p
+            „¤„Ÿ UIXV & DebugLogger.LogDebug()
 
-3??  ï¿½Iï¿½ï¿½ï¿½tï¿½Fï¿½[ï¿½Y
+3??  I—¹ƒtƒF[ƒY
 
     device.DisposeAsync()
-         ï¿½ï¿½
-         ï¿½ï¿½ï¿½ï¿½ RecordingHidStreamProvider.FinalizeRecordingAsync()
-            ï¿½ï¿½ï¿½ï¿½ JSON Lines ï¿½tï¿½@ï¿½Cï¿½ï¿½ Flush
-            ï¿½ï¿½ï¿½ï¿½ HID ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ Close
-            ï¿½ï¿½ï¿½ï¿½ ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ Release
+         „ 
+         „¤„Ÿ RecordingHidStreamProvider.FinalizeRecordingAsync()
+            „¥„Ÿ JSON Lines ƒtƒ@ƒCƒ‹ Flush
+            „¥„Ÿ HID ƒXƒgƒŠ[ƒ€ Close
+            „¤„Ÿ ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹ Release
 
 ```
 
-## ? ï¿½ï¿½ï¿½Pï¿½_ï¿½iï¿½ï¿½ï¿½Å‚Æ‚Ì”ï¿½rï¿½j
+## ? ‰ü‘P“_i‹Œ”Å‚Æ‚Ì”äŠrj
 
-| ï¿½ï¿½ï¿½ï¿½ | ï¿½ï¿½ï¿½ï¿½ | ï¿½Vï¿½ÅiGlassBridgeï¿½ï¿½ï¿½ï¿½ï¿½j |
+| €–Ú | ‹Œ”Å | V”ÅiGlassBridge“‡j |
 |------|------|----------------------|
-| **IMUï¿½fï¿½[ï¿½^ï¿½Lï¿½^** | ï¿½è“®ï¿½iCSVï¿½`ï¿½ï¿½ï¿½j | ï¿½ï¿½ï¿½ï¿½ï¿½iJSON Linesï¿½j |
-| **DebugLoggerï¿½Ó–ï¿½** | 1. IMUï¿½Lï¿½^ + 2. ï¿½ï¿½ï¿½O | ï¿½ï¿½ï¿½Oï¿½Ì‚ï¿½ |
-| **GlassBridgeï¿½ï¿½ï¿½p** | ï¿½Ú‘ï¿½ï¿½Ì‚ï¿½ | ï¿½Ú‘ï¿½ + ï¿½Lï¿½^ + ï¿½Äï¿½ |
-| **ï¿½Rï¿½[ï¿½hï¿½ï¿½** | ï¿½ï¿½ï¿½ï¿½ï¿½iCSVï¿½oï¿½Íƒï¿½ï¿½Wï¿½bï¿½Nï¿½j | ï¿½ï¿½ï¿½È‚ï¿½ï¿½iï¿½Vï¿½ï¿½ï¿½vï¿½ï¿½ï¿½j |
-| **ï¿½Wï¿½ï¿½ï¿½ï¿½** | ï¿½ÆŽï¿½ï¿½`ï¿½ï¿½ | JSON Linesï¿½Wï¿½ï¿½ |
-| **ï¿½Äï¿½ï¿½@ï¿½\** | ï¿½È‚ï¿½ | `ConnectFromRecordingAsync()` ï¿½Å‰Â”\ |
+| **IMUƒf[ƒ^‹L˜^** | Žè“®iCSVŒ`Ž®j | Ž©“®iJSON Linesj |
+| **DebugLoggerÓ–±** | 1. IMU‹L˜^ + 2. ƒƒO | ƒƒO‚Ì‚Ý |
+| **GlassBridgeŠˆ—p** | Ú‘±‚Ì‚Ý | Ú‘± + ‹L˜^ + Ä¶ |
+| **ƒR[ƒh—Ê** | ‘½‚¢iCSVo—ÍƒƒWƒbƒNj | ­‚È‚¢iƒVƒ“ƒvƒ‹j |
+| **•W€‰»** | “ÆŽ©Œ`Ž® | JSON Lines•W€ |
+| **Ä¶‹@”\** | ‚È‚µ | `ConnectFromRecordingAsync()` ‚Å‰Â”\ |
 
 ---
 
-**ï¿½ÝŒvï¿½Xï¿½Vï¿½ï¿½**: 2026ï¿½N01ï¿½ï¿½26ï¿½ï¿½
-**ï¿½Xï¿½eï¿½[ï¿½^ï¿½X**: ? GlassBridgeï¿½ï¿½ï¿½ï¿½ï¿½Å‚Æ‚ï¿½ï¿½ÄŠï¿½ï¿½ï¿½
+**ÝŒvXV“ú**: 2026”N01ŒŽ26“ú
+**ƒXƒe[ƒ^ƒX**: ? GlassBridge“‡”Å‚Æ‚µ‚ÄŠ®¬

@@ -1,48 +1,48 @@
 namespace GlassBridge;
 
 /// <summary>
-/// IMUï¿½iï¿½pï¿½ï¿½ï¿½jï¿½fï¿½[ï¿½^ï¿½ï¿½\ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½
+/// IMUip¨jƒf[ƒ^‚ğ•\‚·\‘¢‘Ì
 /// </summary>
 public record ImuData
 {
     /// <summary>
-    /// ï¿½Nï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½ (w, x, y, z)
+    /// ƒNƒH[ƒ^ƒjƒIƒ“ (w, x, y, z)
     /// </summary>
     public required Quaternion Quaternion { get; init; }
 
     /// <summary>
-    /// ï¿½Iï¿½Cï¿½ï¿½ï¿½[ï¿½pï¿½iï¿½xï¿½Pï¿½Êj: Roll, Pitch, Yaw
+    /// ƒIƒCƒ‰[Špi“x’PˆÊj: Roll, Pitch, Yaw
     /// </summary>
     public required EulerAngles EulerAngles { get; init; }
 
     /// <summary>
-    /// ï¿½pï¿½Pï¿½bï¿½gï¿½Ìƒ^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½v
+    /// ƒpƒPƒbƒg‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv
     /// </summary>
     public required uint Timestamp { get; init; }
 
     /// <summary>
-    /// ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[
+    /// ƒƒbƒZ[ƒWƒJƒEƒ“ƒ^[
     /// </summary>
     public required ushort MessageCounter { get; init; }
 }
 
 /// <summary>
-/// ï¿½Nï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½ï¿½\ï¿½ï¿½ (w, x, y, z)
+/// ƒNƒH[ƒ^ƒjƒIƒ“•\Œ» (w, x, y, z)
 /// </summary>
 public record Quaternion(float W, float X, float Y, float Z)
 {
     /// <summary>
-    /// ï¿½Pï¿½ÊƒNï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½ï¿½iï¿½ï¿½]ï¿½È‚ï¿½ï¿½j
+    /// ’PˆÊƒNƒH[ƒ^ƒjƒIƒ“i‰ñ“]‚È‚µj
     /// </summary>
     public static readonly Quaternion Identity = new(1.0f, 0.0f, 0.0f, 0.0f);
 
     /// <summary>
-    /// ï¿½Nï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½ï¿½Ì‹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Z
+    /// ƒNƒH[ƒ^ƒjƒIƒ“‚Ì‹¤–ğ‚ğŒvZ
     /// </summary>
     public Quaternion Conjugate() => new(W, -X, -Y, -Z);
 
     /// <summary>
-    /// 2ï¿½Â‚ÌƒNï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½iq1 * q2ï¿½j
+    /// 2‚Â‚ÌƒNƒH[ƒ^ƒjƒIƒ“‚ğæZiq1 * q2j
     /// </summary>
     public static Quaternion operator *(Quaternion q1, Quaternion q2)
     {
@@ -59,6 +59,6 @@ public record Quaternion(float W, float X, float Y, float Z)
 }
 
 /// <summary>
-/// ï¿½Iï¿½Cï¿½ï¿½ï¿½[ï¿½pï¿½\ï¿½ï¿½ï¿½iï¿½xï¿½Pï¿½Êj
+/// ƒIƒCƒ‰[Šp•\Œ»i“x’PˆÊj
 /// </summary>
 public record EulerAngles(float Roll, float Pitch, float Yaw);

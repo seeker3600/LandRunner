@@ -1,105 +1,105 @@
-# LandRunner ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+# LandRunner ŽÀ‘•Š®—¹•ñ
 
-## ? ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½e
+## ? ŽÀ‘•Š®—¹“à—e
 
-### 1. **IMU ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½Aï¿½vï¿½ï¿½ï¿½Pï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½**
-- VITURE Luma ï¿½ï¿½ï¿½ï¿½ï¿½IMUï¿½fï¿½[ï¿½^ï¿½ï¿½WPFï¿½Å•\ï¿½ï¿½
-- ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½\ï¿½ï¿½ï¿½iï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½oï¿½[ï¿½j
-- 3Dï¿½ï¿½ï¿½Ì‰ÂŽï¿½ï¿½ï¿½ï¿½iX/Y/Zï¿½ï¿½ï¿½ï¿½ Yaw ï¿½ï¿½]ï¿½ï¿½ï¿½j
-- Eulerï¿½pï¿½xï¿½ï¿½Quaternionï¿½lï¿½Ì•\ï¿½ï¿½
+### 1. **IMU ƒŠƒAƒ‹ƒ^ƒCƒ€•\Ž¦ƒAƒvƒŠƒP[ƒVƒ‡ƒ“**
+- VITURE Luma ‚©‚ç‚ÌIMUƒf[ƒ^‚ðWPF‚Å•\Ž¦
+- ƒŠƒAƒ‹ƒ^ƒCƒ€ƒXƒe[ƒ^ƒX•\Ž¦iƒXƒe[ƒ^ƒXƒo[j
+- 3DŽ²‚Ì‰ÂŽ‹‰»iX/Y/ZŽ²‚Æ Yaw ‰ñ“]Ž²j
+- EulerŠp“x‚ÆQuaternion’l‚Ì•\Ž¦
 
-### 2. **ï¿½ï¿½ï¿½Oï¿½oï¿½Í‹@ï¿½\**
-- **ï¿½fï¿½oï¿½bï¿½Oï¿½ï¿½ï¿½O**: `debug_<timestamp>.log` - ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½ï¿½ï¿½O
-- **IMUï¿½fï¿½[ï¿½^ CSV**: `imu_data_<timestamp>.csv` - ï¿½Zï¿½ï¿½ï¿½Tï¿½[ï¿½fï¿½[ï¿½^ï¿½ï¿½ CSVï¿½`ï¿½ï¿½ï¿½Å‹Lï¿½^
-- ï¿½Û‘ï¿½ï¿½ï¿½: `%AppData%/LandRunner/`
+### 2. **ƒƒOo—Í‹@”\**
+- **ƒfƒoƒbƒOƒƒO**: `debug_<timestamp>.log` - “úŽž•t‚«ƒƒO
+- **IMUƒf[ƒ^ CSV**: `imu_data_<timestamp>.csv` - ƒZƒ“ƒT[ƒf[ƒ^‚ð CSVŒ`Ž®‚Å‹L˜^
+- •Û‘¶æ: `%AppData%/LandRunner/`
 
-### 3. **MVVM ï¿½pï¿½^ï¿½[ï¿½ï¿½ï¿½iï¿½xï¿½Xï¿½gï¿½vï¿½ï¿½ï¿½Nï¿½eï¿½Bï¿½Xï¿½j**
+### 3. **MVVM ƒpƒ^[ƒ“iƒxƒXƒgƒvƒ‰ƒNƒeƒBƒXj**
 ```
 LandRunner/
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Models/ImuLogger.cs              ï¿½ï¿½ ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½Oï¿½Eï¿½fï¿½[ï¿½^ï¿½oï¿½ï¿½
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ViewModels/
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ViewModelBase.cs             ï¿½ï¿½ INotifyPropertyChangedï¿½ï¿½ï¿½ï¿½
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RelayCommand.cs              ï¿½ï¿½ ICommand (ï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ñ“¯Šï¿½ï¿½Î‰ï¿½)
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MainWindowViewModel.cs       ï¿½ï¿½ ï¿½ï¿½ÔŠÇ—ï¿½ï¿½Eï¿½ï¿½ï¿½Wï¿½bï¿½N
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Views/
-    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MainWindow.xaml              ï¿½ï¿½ UIï¿½ï¿½ï¿½Cï¿½Aï¿½Eï¿½gï¿½iDataBindingï¿½j
-    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MainWindow.xaml.cs           ï¿½ï¿½ CodeBehindï¿½iï¿½Åï¿½ï¿½ï¿½ï¿½j
+„¥„Ÿ„Ÿ Models/ImuLogger.cs              © ƒƒMƒ“ƒOEƒf[ƒ^o—Í
+„¥„Ÿ„Ÿ ViewModels/
+„    „¥„Ÿ„Ÿ ViewModelBase.cs             © INotifyPropertyChangedŽÀ‘•
+„    „¥„Ÿ„Ÿ RelayCommand.cs              © ICommand (“¯ŠúE”ñ“¯Šú‘Î‰ž)
+„    „¤„Ÿ„Ÿ MainWindowViewModel.cs       © ó‘ÔŠÇ—EƒƒWƒbƒN
+„¤„Ÿ„Ÿ Views/
+    „¥„Ÿ„Ÿ MainWindow.xaml              © UIƒŒƒCƒAƒEƒgiDataBindingj
+    „¤„Ÿ„Ÿ MainWindow.xaml.cs           © CodeBehindiÅ¬ŒÀj
 ```
 
-### 4. **ï¿½eï¿½Xï¿½gï¿½iï¿½S10ï¿½ï¿½ ? ï¿½ï¿½ï¿½iï¿½j**
+### 4. **ƒeƒXƒgi‘S10Œ ? ‡Šij**
 
-#### ImuLoggerTests (5ï¿½ï¿½)
+#### ImuLoggerTests (5Œ)
 - `ImuLogger_Initialize_CreatesLogFiles` ?
 - `ImuLogger_LogDebug_WritesMessage` ?
 - `ImuLogger_LogImuData_WritesCsvRow` ?
 - `ImuLogger_MultipleDataPoints_PreservesOrder` ?
 - `ImuLogger_Dispose_ClosesFiles` ?
 
-#### DeviceConnectionIntegrationTests (4ï¿½ï¿½)
+#### DeviceConnectionIntegrationTests (4Œ)
 - `ImuDeviceManager_CreateInstance_ShouldNotThrow` ?
 - `MockDevice_StreamData_ProducesData` ?
 - `ImuData_EulerAngles_ShouldBeAccurate` ?
 - `Quaternion_Operations_ShouldWork` ?
 
-#### LoggerThreadSafetyTests (1ï¿½ï¿½)
+#### LoggerThreadSafetyTests (1Œ)
 - `ImuLogger_ConcurrentWrites_ShouldNotCorrupt` ?
 
-**ï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ 10/10 (ï¿½ï¿½ï¿½s 0)**
+**ƒeƒXƒgŒ‹‰Ê: ¬Œ÷ 10/10 (Ž¸”s 0)**
 
 ---
 
-## ?? ï¿½ï¿½vï¿½@ï¿½\
+## ?? Žå—v‹@”\
 
-### ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½oï¿½[ï¿½iï¿½ã•”ï¿½j
-- ï¿½Ú‘ï¿½ï¿½ï¿½Ô•\ï¿½ï¿½
-- ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½Jï¿½Eï¿½ï¿½ï¿½g
-- ï¿½^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½\ï¿½ï¿½
+### ƒXƒe[ƒ^ƒXƒo[iã•”j
+- Ú‘±ó‘Ô•\Ž¦
+- ƒŠƒAƒ‹ƒ^ƒCƒ€ƒƒbƒZ[ƒWƒJƒEƒ“ƒg
+- ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv•\Ž¦
 
-### ï¿½rï¿½Wï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Cï¿½[ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½j
-- X/Y/Zï¿½ï¿½ï¿½Ì•`ï¿½ï¿½iï¿½ï¿½/ï¿½ï¿½/ï¿½Âj
-- Yawï¿½pï¿½xï¿½É‚ï¿½ï¿½ï¿½]ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½Fï¿½j
-- ï¿½ï¿½ï¿½_ï¿½}ï¿½[ï¿½N
+### ƒrƒWƒ…ƒAƒ‰ƒCƒ[[ƒVƒ‡ƒ“i¶‘¤j
+- X/Y/ZŽ²‚Ì•`‰æiÔ/—Î/Âj
+- YawŠp“x‚É‚æ‚é‰ñ“]Ž²•\Ž¦iŽ‡Fj
+- Œ´“_ƒ}[ƒN
 
-### ï¿½fï¿½[ï¿½^ï¿½\ï¿½ï¿½ï¿½pï¿½lï¿½ï¿½ï¿½iï¿½Eï¿½ï¿½ï¿½j
-- **Euler Angles**: Roll, Pitch, Yawï¿½iï¿½xï¿½j
+### ƒf[ƒ^•\Ž¦ƒpƒlƒ‹i‰E‘¤j
+- **Euler Angles**: Roll, Pitch, Yawi“xj
 - **Quaternion**: W, X, Y, Z
-- **ï¿½ï¿½ï¿½^ï¿½fï¿½[ï¿½^**: Timestamp, Message Counter
+- **ƒƒ^ƒf[ƒ^**: Timestamp, Message Counter
 
-### ï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½j
-- Connect Device ï¿½{ï¿½^ï¿½ï¿½
-- Disconnect ï¿½{ï¿½^ï¿½ï¿½
-- ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½eï¿½Lï¿½Xï¿½g
+### ƒRƒ“ƒgƒ[ƒ‹i‰º•”j
+- Connect Device ƒ{ƒ^ƒ“
+- Disconnect ƒ{ƒ^ƒ“
+- ƒXƒe[ƒ^ƒXƒeƒLƒXƒg
 
 ---
 
-## ??? MVVM ï¿½pï¿½^ï¿½[ï¿½ï¿½ï¿½ÌŽï¿½ï¿½ï¿½
+## ??? MVVM ƒpƒ^[ƒ“‚ÌŽÀ‘•
 
 ### ViewModelBase
 ```csharp
 public class ViewModelBase : INotifyPropertyChanged
 {
-    // PropertyChanged ï¿½Cï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Ç—ï¿½
-    // SetProperty<T>() ï¿½Å•ÏXï¿½ï¿½ï¿½mï¿½Æ’Ê’mï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // PropertyChanged ƒCƒxƒ“ƒgŽ©“®ŠÇ—
+    // SetProperty<T>() ‚Å•ÏXŒŸ’m‚Æ’Ê’m‚ðŽ©“®‰»
 }
 ```
 
 ### RelayCommand
 ```csharp
-// ï¿½ñ“¯Šï¿½ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½Î‰ï¿½
+// ”ñ“¯ŠúƒRƒ}ƒ“ƒh‘Î‰ž
 public class AsyncRelayCommand : ICommand
 {
-    // ï¿½fï¿½[ï¿½^ï¿½oï¿½Cï¿½ï¿½ï¿½h ï¿½ï¿½ ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½s ï¿½ï¿½ ï¿½ñ“¯Šï¿½ï¿½ï¿½ï¿½ï¿½
+    // ƒf[ƒ^ƒoƒCƒ“ƒh ¨ ƒRƒ}ƒ“ƒhŽÀs ¨ ”ñ“¯Šúˆ—
 }
 ```
 
 ### MainWindowViewModel
-- `StatusText`, `RollText`, `YawText` ï¿½È‚Ç‚Ìƒvï¿½ï¿½ï¿½pï¿½eï¿½B
+- `StatusText`, `RollText`, `YawText` ‚È‚Ç‚ÌƒvƒƒpƒeƒB
 - `ConnectCommand`, `DisconnectCommand`
-- `UpdateFromImuData()` ï¿½Åƒfï¿½[ï¿½^ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½f
+- `UpdateFromImuData()` ‚Åƒf[ƒ^XV‚ðŽ©“®”½‰f
 
 ---
 
-## ?? ï¿½ï¿½ï¿½Oï¿½oï¿½Í—ï¿½
+## ?? ƒƒOo—Í—á
 
 ### debug_20260126_214611.log
 ```
@@ -120,94 +120,94 @@ Timestamp,MessageCounter,Yaw,Pitch,Roll,W,X,Y,Z
 
 ---
 
-## ?? ï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½sï¿½ï¿½ï¿½@
+## ?? ƒeƒXƒgŽÀs•û–@
 
 ```bash
-# ï¿½ï¿½ï¿½×‚Ä‚Ìƒeï¿½Xï¿½gï¿½ï¿½ï¿½s
+# ‚·‚×‚Ä‚ÌƒeƒXƒgŽÀs
 dotnet test
 
-# LandRunnerTest ï¿½Ì‚ÝŽï¿½ï¿½s
+# LandRunnerTest ‚Ì‚ÝŽÀs
 dotnet test LandRunnerTest
 
-# ï¿½Ú×oï¿½ï¿½
+# Ú×o—Í
 dotnet test --verbosity detailed
 ```
 
 ---
 
-## ?? ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½@
+## ?? ŽÀs•û–@
 
 ```bash
-# ï¿½Aï¿½vï¿½ï¿½ï¿½Pï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s
+# ƒAƒvƒŠƒP[ƒVƒ‡ƒ“ŽÀs
 dotnet run --project LandRunner
 
-# ï¿½Ü‚ï¿½ï¿½Íƒrï¿½ï¿½ï¿½hï¿½ï¿½AEXEï¿½ð’¼ÚŽï¿½ï¿½s
+# ‚Ü‚½‚Íƒrƒ‹ƒhŒãAEXE‚ð’¼ÚŽÀs
 LandRunner\bin\Debug\net10.0-windows\LandRunner.exe
 ```
 
 ---
 
-## ?? ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½\ï¿½ï¿½
+## ?? ƒtƒ@ƒCƒ‹\‘¢
 
 ```
 LandRunner/
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Models/
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ImuLogger.cs                 # ï¿½ï¿½ï¿½Oï¿½ECSVï¿½oï¿½ï¿½
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ViewModels/
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ViewModelBase.cs             # INotifyPropertyChanged
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RelayCommand.cs              # ICommandï¿½ï¿½ï¿½ï¿½
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MainWindowViewModel.cs       # ï¿½rï¿½Wï¿½lï¿½Xï¿½ï¿½ï¿½Wï¿½bï¿½Nï¿½Eï¿½ï¿½ÔŠÇ—ï¿½
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Views/ (ï¿½Ü‚ï¿½ï¿½ï¿½ Views ï¿½tï¿½Hï¿½ï¿½ï¿½_)
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MainWindow.xaml              # UIï¿½ï¿½`
-ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MainWindow.xaml.cs           # CodeBehind
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ImuLogger.cs                     # ï¿½ÝŠï¿½ï¿½ï¿½ï¿½pï¿½iï¿½ï¿½ï¿½[ï¿½gï¿½j
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ README.md                        # ï¿½ï¿½ï¿½Ìƒhï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½g
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ app.xaml, App.xaml.cs
+„¥„Ÿ„Ÿ Models/
+„    „¤„Ÿ„Ÿ ImuLogger.cs                 # ƒƒOECSVo—Í
+„¥„Ÿ„Ÿ ViewModels/
+„    „¥„Ÿ„Ÿ ViewModelBase.cs             # INotifyPropertyChanged
+„    „¥„Ÿ„Ÿ RelayCommand.cs              # ICommandŽÀ‘•
+„    „¤„Ÿ„Ÿ MainWindowViewModel.cs       # ƒrƒWƒlƒXƒƒWƒbƒNEó‘ÔŠÇ—
+„¥„Ÿ„Ÿ Views/ (‚Ü‚½‚Í Views ƒtƒHƒ‹ƒ_)
+„    „¥„Ÿ„Ÿ MainWindow.xaml              # UI’è‹`
+„    „¤„Ÿ„Ÿ MainWindow.xaml.cs           # CodeBehind
+„¥„Ÿ„Ÿ ImuLogger.cs                     # ŒÝŠ·«—piƒ‹[ƒgj
+„¥„Ÿ„Ÿ README.md                        # ‚±‚ÌƒhƒLƒ…ƒƒ“ƒg
+„¤„Ÿ„Ÿ app.xaml, App.xaml.cs
 
 LandRunnerTest/
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UnitTest1.cs                     # ï¿½eï¿½Xï¿½gï¿½Xï¿½Cï¿½[ï¿½gï¿½i10ï¿½ï¿½ï¿½j
-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ LandRunnerTest.csproj
+„¥„Ÿ„Ÿ UnitTest1.cs                     # ƒeƒXƒgƒXƒC[ƒgi10Œj
+„¤„Ÿ„Ÿ LandRunnerTest.csproj
 ```
 
 ---
 
-## ?? MVVM ï¿½pï¿½^ï¿½[ï¿½ï¿½ï¿½Ì—ï¿½ï¿½_
+## ?? MVVM ƒpƒ^[ƒ“‚Ì—˜“_
 
-1. **ï¿½eï¿½Xï¿½gï¿½eï¿½Õï¿½**: ViewModel ï¿½Ì‚Ý‚ï¿½ï¿½eï¿½Xï¿½gï¿½Â”\
-2. **UI/ï¿½ï¿½ï¿½Wï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½**: MainWindow.xaml.cs ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½Rï¿½[ï¿½hï¿½rï¿½nï¿½Cï¿½ï¿½ï¿½hï¿½Åï¿½ï¿½ï¿½ï¿½j
-3. **ï¿½ÛŽç«ï¿½ï¿½ï¿½ï¿½**: ï¿½Ó”Cï¿½ï¿½ï¿½ï¿½ï¿½mï¿½É•ï¿½ï¿½ï¿½
-4. **ï¿½Ä—ï¿½ï¿½pï¿½ï¿½**: ViewModel ï¿½Í•Ê‚ï¿½ View ï¿½Å‚ï¿½ï¿½gï¿½pï¿½Â”\
-5. **DataBinding**: ï¿½éŒ¾ï¿½I UI ï¿½Xï¿½V
-
----
-
-## ? ï¿½ï¿½ï¿½ï¿½ÌŠgï¿½ï¿½ï¿½ï¿½
-
-1. **ï¿½Oï¿½ï¿½ï¿½tï¿½\ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Eï¿½pï¿½ï¿½ï¿½xï¿½Ìƒï¿½ï¿½Aï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½t
-2. **ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½**: ï¿½Zï¿½ï¿½ï¿½Tï¿½[ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½@ï¿½\
-3. **ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½X**: ï¿½ï¿½ï¿½ï¿½ VITURE ï¿½fï¿½oï¿½Cï¿½Xï¿½Ì“ï¿½ï¿½ï¿½ï¿½Ú‘ï¿½ï¿½Î‰ï¿½
-4. **ï¿½lï¿½bï¿½gï¿½ï¿½ï¿½[ï¿½N**: UDP/TCP ï¿½Å‚Ìƒfï¿½[ï¿½^ï¿½ï¿½ï¿½M
-5. **ï¿½^ï¿½ï¿½Eï¿½Äï¿½**: IMU ï¿½fï¿½[ï¿½^ï¿½Ì˜^ï¿½ï¿½Eï¿½Äï¿½ï¿½@ï¿½\
+1. **ƒeƒXƒg—eˆÕ«**: ViewModel ‚Ì‚Ý‚ðƒeƒXƒg‰Â”\
+2. **UI/ƒƒWƒbƒN•ª—£**: MainWindow.xaml.cs ‚ª”–‚¢iƒR[ƒhƒrƒnƒCƒ“ƒhÅ¬‰»j
+3. **•ÛŽç«Œüã**: Ó”C‚ª–¾Šm‚É•ª—£
+4. **Ä—˜—p«**: ViewModel ‚Í•Ê‚Ì View ‚Å‚àŽg—p‰Â”\
+5. **DataBinding**: éŒ¾“I UI XV
 
 ---
 
-## ?? ï¿½Zï¿½pï¿½Xï¿½^ï¿½bï¿½N
+## ? ¡Œã‚ÌŠg’£ˆÄ
+
+1. **ƒOƒ‰ƒt•\Ž¦**: ‰Á‘¬“xEŠp‘¬“x‚ÌƒŠƒAƒ‹ƒ^ƒCƒ€ƒOƒ‰ƒt
+2. **ƒLƒƒƒŠƒuƒŒ[ƒVƒ‡ƒ“**: ƒZƒ“ƒT[ƒLƒƒƒŠƒuƒŒ[ƒVƒ‡ƒ“‹@”\
+3. **•¡”ƒfƒoƒCƒX**: •¡” VITURE ƒfƒoƒCƒX‚Ì“¯ŽžÚ‘±‘Î‰ž
+4. **ƒlƒbƒgƒ[ƒN**: UDP/TCP ‚Å‚Ìƒf[ƒ^‘—M
+5. **˜^‰æEÄ¶**: IMU ƒf[ƒ^‚Ì˜^‰æEÄ¶‹@”\
+
+---
+
+## ?? ‹ZpƒXƒ^ƒbƒN
 
 - **Framework**: .NET 10.0
 - **UI**: WPF (Windows Presentation Foundation)
-- **ï¿½pï¿½^ï¿½[ï¿½ï¿½**: MVVM (Model-View-ViewModel)
-- **ï¿½eï¿½Xï¿½g**: XUnit 2.9.3
-- **ï¿½fï¿½oï¿½Cï¿½Xï¿½ÊM**: GlassBridgeï¿½iHIDï¿½oï¿½Rï¿½j
+- **ƒpƒ^[ƒ“**: MVVM (Model-View-ViewModel)
+- **ƒeƒXƒg**: XUnit 2.9.3
+- **ƒfƒoƒCƒX’ÊM**: GlassBridgeiHIDŒo—Rj
 
 ---
 
-## ?? ï¿½ï¿½ï¿½L
+## ?? ’‹L
 
-- ï¿½ï¿½ï¿½Oï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ÍƒNï¿½ï¿½ï¿½Aï¿½ÈŽï¿½Å•ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½hï¿½ï¿½ï¿½ï¿½Ìˆï¿½ï¿½Sï¿½Èï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý‚É‘Î‰ï¿½ï¿½i`lock` ï¿½Å“ï¿½ï¿½ï¿½ï¿½j
-- ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Í–ï¿½ï¿½ï¿½ï¿½Iï¿½Éƒtï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ÄŠmï¿½ï¿½ï¿½ÉƒNï¿½ï¿½ï¿½[ï¿½Y
-- ï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½ GC ï¿½É‚ï¿½ï¿½mï¿½ï¿½ï¿½Èƒï¿½ï¿½ï¿½ï¿½[ï¿½Xï¿½ï¿½Ò‚ï¿½
+- ƒƒOƒtƒ@ƒCƒ‹‚ÍƒNƒŠƒA‚ÈŽè‚Å•¡”ƒXƒŒƒbƒh‚©‚ç‚ÌˆÀ‘S‚È‘‚«ž‚Ý‚É‘Î‰ži`lock` ‚Å“¯Šúj
+- ƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹‚Í–¾Ž¦“I‚Éƒtƒ‰ƒbƒVƒ…‚µ‚ÄŠmŽÀ‚ÉƒNƒ[ƒY
+- ƒeƒXƒgŒã‚Í GC ‚É‚æ‚éŠmŽÀ‚ÈƒŠƒŠ[ƒX‚ð‘Ò‚Â
 
 ---
 
-**ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½**: 2026ï¿½N01ï¿½ï¿½26ï¿½ï¿½
-**ï¿½Xï¿½eï¿½[ï¿½^ï¿½X**: ? ï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½i
+**ŽÀ‘•Š®—¹“ú**: 2026”N01ŒŽ26“ú
+**ƒXƒe[ƒ^ƒX**: ? Š®¬EƒeƒXƒg‡Ši

@@ -1,32 +1,32 @@
 namespace GlassBridge.Internal.HID;
 
 /// <summary>
-/// HIDï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì’ï¿½ï¿½Û‰ï¿½ï¿½iHidSharpï¿½Ö‚Ì’ï¿½ï¿½ÚˆË‘ï¿½ï¿½ï¿½rï¿½ï¿½ï¿½j
+/// HIDƒXƒgƒŠ[ƒ€‘€ì‚Ì’ŠÛ‰»iHidSharp‚Ö‚Ì’¼ÚˆË‘¶‚ğ”rœj
 /// </summary>
 internal interface IHidStream : IAsyncDisposable, IDisposable
 {
     /// <summary>
-    /// ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ñ“¯Šï¿½ï¿½Å“Ç‚İï¿½ï¿½ï¿½
+    /// ƒXƒgƒŠ[ƒ€‚©‚çƒf[ƒ^‚ğ”ñ“¯Šú‚Å“Ç‚İ‚Ş
     /// </summary>
     Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Éƒfï¿½[ï¿½^ï¿½ï¿½ñ“¯Šï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    /// ƒXƒgƒŠ[ƒ€‚Éƒf[ƒ^‚ğ”ñ“¯Šú‚Å‘‚«‚Ş
     /// </summary>
     Task WriteAsync(byte[] buffer, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½ï¿½ï¿½mï¿½F
+    /// ƒXƒgƒŠ[ƒ€‚ªŠJ‚¢‚Ä‚¢‚é‚©‚ğŠm”F
     /// </summary>
     bool IsOpen { get; }
 
     /// <summary>
-    /// ï¿½Å‘ï¿½ï¿½ï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iReport ID ï¿½ï¿½ï¿½Ü‚Şj
+    /// Å‘å“ü—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
     /// </summary>
     int MaxInputReportLength { get; }
 
     /// <summary>
-    /// ï¿½Å‘ï¿½oï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iReport ID ï¿½ï¿½ï¿½Ü‚Şj
+    /// Å‘åo—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
     /// </summary>
     int MaxOutputReportLength { get; }
 }

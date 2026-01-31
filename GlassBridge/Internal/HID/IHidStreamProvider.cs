@@ -1,12 +1,12 @@
 namespace GlassBridge.Internal.HID;
 
 /// <summary>
-/// HIDï¿½fï¿½oï¿½Cï¿½Xï¿½Ú‘ï¿½ï¿½Ì’ï¿½ï¿½Û‰ï¿½ï¿½iï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½Ë‘ï¿½ï¿½Ì”ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½pï¿½[ï¿½j
+/// HIDƒfƒoƒCƒXÚ‘±‚Ì’ŠÛ‰»iƒfƒoƒCƒX”ñˆË‘¶‚Ì”–‚¢ƒ‰ƒbƒp[j
 /// </summary>
 internal interface IHidStreamProvider : IAsyncDisposable
 {
     /// <summary>
-    /// ï¿½wï¿½ï¿½VID/PIDï¿½Ìƒfï¿½oï¿½Cï¿½Xï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
+    /// w’èVID/PID‚ÌƒfƒoƒCƒXƒXƒgƒŠ[ƒ€‚ğæ“¾
     /// </summary>
     Task<IReadOnlyList<IHidStream>> GetStreamsAsync(
         int vendorId,

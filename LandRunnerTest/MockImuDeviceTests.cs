@@ -3,8 +3,8 @@ using GlassBridge;
 namespace LandRunnerTest;
 
 /// <summary>
-/// MockImuDevice ï¿½Ìƒeï¿½Xï¿½g
-/// ï¿½ï¿½ï¿½bï¿½Nï¿½fï¿½oï¿½Cï¿½Xï¿½Ìƒfï¿½[ï¿½^ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½~ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+/// MockImuDevice ‚ÌƒeƒXƒg
+/// ƒ‚ƒbƒNƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ~ƒ“ƒO‚ğŒŸØ
 /// </summary>
 public class MockImuDeviceTests
 {

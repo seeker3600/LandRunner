@@ -1,15 +1,15 @@
-# ImuDeviceManager ï¿½Ì‹Lï¿½^ï¿½Eï¿½Äï¿½ï¿½@ï¿½\ - ï¿½gï¿½pï¿½Kï¿½Cï¿½h
+# ImuDeviceManager ‚Ì‹L˜^EÄ¶‹@”\ - Žg—pƒKƒCƒh
 
-`ImuDeviceManager` ï¿½É‹Lï¿½^ï¿½Eï¿½Äï¿½ï¿½@ï¿½\ï¿½ï¿½ï¿½gï¿½Ýï¿½ï¿½Ü‚ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½Bï¿½Nï¿½ï¿½ï¿½Cï¿½Aï¿½ï¿½ï¿½gï¿½Jï¿½ï¿½ï¿½Ò‚ÍŠÈ’Pï¿½É—ï¿½ï¿½pï¿½Å‚ï¿½ï¿½Ü‚ï¿½ï¿½B
+`ImuDeviceManager` ‚É‹L˜^EÄ¶‹@”\‚ª‘g‚Ýž‚Ü‚ê‚Ä‚¢‚Ü‚·BƒNƒ‰ƒCƒAƒ“ƒgŠJ”­ŽÒ‚ÍŠÈ’P‚É—˜—p‚Å‚«‚Ü‚·B
 
-## ï¿½ï¿½{ï¿½Iï¿½ÈŽgï¿½pï¿½ï¿½ï¿½@
+## Šî–{“I‚ÈŽg—p•û–@
 
-### 1. ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½Ìƒfï¿½[ï¿½^ï¿½Lï¿½^
+### 1. ƒfƒoƒCƒX‚©‚ç‚Ìƒf[ƒ^‹L˜^
 
 ```csharp
 using var manager = new ImuDeviceManager();
 
-// ï¿½fï¿½oï¿½Cï¿½Xï¿½ÉÚ‘ï¿½ï¿½ï¿½ï¿½Ä‹Lï¿½^ï¿½ï¿½ï¿½Jï¿½n
+// ƒfƒoƒCƒX‚ÉÚ‘±‚µ‚Ä‹L˜^‚ðŠJŽn
 await using var device = await manager.ConnectAndRecordAsync(@"C:\IMU_Records");
 if (device == null)
 {
@@ -17,28 +17,28 @@ if (device == null)
     return;
 }
 
-// IMU ï¿½fï¿½[ï¿½^ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
-// ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ C:\IMU_Records ï¿½ï¿½ frames_0.jsonl, metadata_0.json ï¿½Æ‚ï¿½ï¿½Ä•Û‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// IMU ƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ðŽæ“¾
+// I—¹Žž‚É C:\IMU_Records ‚É frames_0.jsonl, metadata_0.json ‚Æ‚µ‚Ä•Û‘¶‚³‚ê‚é
 var count = 0;
 await foreach (var imuData in device.GetImuDataStreamAsync())
 {
     Console.WriteLine($"Timestamp: {imuData.Timestamp}, Roll: {imuData.EulerAngles.Roll}");
     
     count++;
-    if (count >= 1000)  // 1000ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Lï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½
+    if (count >= 1000)  // 1000ƒtƒŒ[ƒ€‹L˜^‚µ‚½‚çI—¹
         break;
 }
 
 Console.WriteLine($"Recorded {count} frames");
-// device.DisposeAsync() ï¿½ï¿½ï¿½ÉÅIï¿½Iï¿½Éƒï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// device.DisposeAsync() Žž‚ÉÅI“I‚Éƒƒ^ƒf[ƒ^‚ª•Û‘¶‚³‚ê‚é
 ```
 
-### 2. ï¿½Lï¿½^ï¿½ï¿½ï¿½ê‚½ï¿½fï¿½[ï¿½^ï¿½ÌÄï¿½ï¿½iï¿½eï¿½Xï¿½gï¿½Eï¿½pï¿½tï¿½Hï¿½[ï¿½}ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½Íj
+### 2. ‹L˜^‚³‚ê‚½ƒf[ƒ^‚ÌÄ¶iƒeƒXƒgEƒpƒtƒH[ƒ}ƒ“ƒX•ªÍj
 
 ```csharp
 using var manager = new ImuDeviceManager();
 
-// ï¿½Lï¿½^ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ì¬
+// ‹L˜^ƒtƒ@ƒCƒ‹‚©‚çÄ¶ƒfƒoƒCƒX‚ðì¬
 await using var replayDevice = await manager.ConnectFromRecordingAsync(@"C:\IMU_Records");
 if (replayDevice == null)
 {
@@ -46,28 +46,28 @@ if (replayDevice == null)
     return;
 }
 
-// ï¿½Lï¿½^ï¿½ï¿½ï¿½ê‚½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Å‘ï¿½ï¿½M
-// ï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½Æ“ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½Å—ï¿½ï¿½pï¿½Â”\
+// ‹L˜^‚³‚ê‚½ƒf[ƒ^‚ðƒXƒgƒŠ[ƒ€‚Å‘—M
+// ŽÀƒfƒoƒCƒX‚Æ“¯‚¶ƒCƒ“ƒ^[ƒtƒF[ƒX‚Å—˜—p‰Â”\
 var count = 0;
 await foreach (var imuData in replayDevice.GetImuDataStreamAsync())
 {
-    // ï¿½eï¿½Xï¿½gï¿½â«ï¿½\ï¿½ï¿½ï¿½Í—pï¿½ï¿½ï¿½Wï¿½bï¿½N
+    // ƒeƒXƒg‚â«”\•ªÍ—pƒƒWƒbƒN
     Console.WriteLine($"Replayed - Timestamp: {imuData.Timestamp}");
     
     count++;
-    if (count >= 100)  // 100ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½
+    if (count >= 100)  // 100ƒtƒŒ[ƒ€Ä¶‚µ‚½‚çI—¹
         break;
 }
 
 Console.WriteLine($"Replayed {count} frames");
 ```
 
-### 3. ï¿½Êï¿½Ìƒfï¿½oï¿½Cï¿½Xï¿½Ú‘ï¿½ï¿½iï¿½ÏXï¿½È‚ï¿½ï¿½j
+### 3. ’Êí‚ÌƒfƒoƒCƒXÚ‘±i•ÏX‚È‚µj
 
 ```csharp
 using var manager = new ImuDeviceManager();
 
-// ï¿½Êï¿½Ìƒfï¿½oï¿½Cï¿½Xï¿½Ú‘ï¿½
+// ’Êí‚ÌƒfƒoƒCƒXÚ‘±
 var device = await manager.ConnectAsync();
 if (device == null)
 {
@@ -88,23 +88,23 @@ finally
 }
 ```
 
-## API ï¿½ï¿½ï¿½tï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½X
+## API ƒŠƒtƒ@ƒŒƒ“ƒX
 
 ### IImuDeviceManager
 
 #### ConnectAsync()
-ï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½ÉÚ‘ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½Bï¿½ÏXï¿½È‚ï¿½ï¿½B
+ŽÀƒfƒoƒCƒX‚ÉÚ‘±‚µ‚Ü‚·B•ÏX‚È‚µB
 
 ```csharp
 Task<IImuDevice?> ConnectAsync(CancellationToken cancellationToken = default);
 ```
 
-**ï¿½ß‚ï¿½l**: ï¿½Ú‘ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½fï¿½oï¿½Cï¿½Xï¿½Aï¿½Ú‘ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ `null`
+**–ß‚è’l**: Ú‘±‚³‚ê‚½ƒfƒoƒCƒXAÚ‘±Ž¸”sŽž‚Í `null`
 
 ---
 
 #### ConnectAndRecordAsync()
-ï¿½fï¿½oï¿½Cï¿½Xï¿½ÉÚ‘ï¿½ï¿½ï¿½ï¿½Aï¿½æ“¾ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½É‹Lï¿½^ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+ƒfƒoƒCƒX‚ÉÚ‘±‚µAŽæ“¾‚µ‚½ƒf[ƒ^‚ðƒtƒ@ƒCƒ‹‚É‹L˜^‚µ‚Ü‚·B
 
 ```csharp
 Task<IImuDevice?> ConnectAndRecordAsync(
@@ -112,27 +112,27 @@ Task<IImuDevice?> ConnectAndRecordAsync(
     CancellationToken cancellationToken = default);
 ```
 
-**ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^**:
-- `outputDirectory`: ï¿½Lï¿½^ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ìoï¿½Íƒfï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½iï¿½È‚ï¿½ï¿½ï¿½Îì¬ï¿½j
-- `cancellationToken`: ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½gï¿½[ï¿½Nï¿½ï¿½ï¿½iï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½j
+**ƒpƒ‰ƒ[ƒ^**:
+- `outputDirectory`: ‹L˜^ƒtƒ@ƒCƒ‹‚Ìo—ÍƒfƒBƒŒƒNƒgƒŠi‚È‚¯‚ê‚Îì¬j
+- `cancellationToken`: ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“iƒIƒvƒVƒ‡ƒ“j
 
-**ï¿½ß‚ï¿½l**: ï¿½Lï¿½^ï¿½@ï¿½\ï¿½tï¿½ï¿½ï¿½Ìƒfï¿½oï¿½Cï¿½Xï¿½Aï¿½Ú‘ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ `null`
+**–ß‚è’l**: ‹L˜^‹@”\•t‚«‚ÌƒfƒoƒCƒXAÚ‘±Ž¸”sŽž‚Í `null`
 
-**ï¿½oï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½**:
-- `frames_0.jsonl`: IMU ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½iJSON Linesï¿½`ï¿½ï¿½ï¿½j
-- `metadata_0.json`: ï¿½Lï¿½^ï¿½Zï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½^ï¿½fï¿½[ï¿½^
+**o—Íƒtƒ@ƒCƒ‹**:
+- `frames_0.jsonl`: IMU ƒtƒŒ[ƒ€ƒf[ƒ^iJSON LinesŒ`Ž®j
+- `metadata_0.json`: ‹L˜^ƒZƒbƒVƒ‡ƒ“‚Ìƒƒ^ƒf[ƒ^
 
-**ï¿½ï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½Ì’ï¿½ï¿½ï¿½Û‘ï¿½**:
-- `device.DisposeAsync()` ï¿½ï¿½ï¿½ÉÅIï¿½Iï¿½ï¿½ `metadata_*.json` ï¿½ï¿½ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
-- `await using` ï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½ÄŠmï¿½ï¿½ï¿½Éƒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+**ƒƒ^ƒf[ƒ^‚Ì’èŠú•Û‘¶**:
+- `device.DisposeAsync()` Žž‚ÉÅI“I‚É `metadata_*.json` ‚ª•Û‘¶‚³‚ê‚Ü‚·
+- `await using` ‚ðŽg—p‚µ‚ÄŠmŽÀ‚Éƒƒ‚ƒŠ‚ð‰ð•ú‚·‚é‚æ‚¤‚É‚µ‚Ä‚­‚¾‚³‚¢
 
-**ï¿½ï¿½O**:
-- `ArgumentException`: `outputDirectory` ï¿½ï¿½ null ï¿½Ü‚ï¿½ï¿½ï¿½ empty ï¿½Ìê‡
+**—áŠO**:
+- `ArgumentException`: `outputDirectory` ‚ª null ‚Ü‚½‚Í empty ‚Ìê‡
 
 ---
 
 #### ConnectFromRecordingAsync()
-ï¿½Lï¿½^ï¿½ï¿½ï¿½ê‚½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Mock ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ì¬ï¿½ï¿½ï¿½ÄÄï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+‹L˜^‚³‚ê‚½ƒtƒ@ƒCƒ‹‚©‚ç Mock ƒfƒoƒCƒX‚ðì¬‚µ‚ÄÄ¶‚µ‚Ü‚·B
 
 ```csharp
 Task<IImuDevice?> ConnectFromRecordingAsync(
@@ -140,21 +140,21 @@ Task<IImuDevice?> ConnectFromRecordingAsync(
     CancellationToken cancellationToken = default);
 ```
 
-**ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^**:
-- `recordingDirectory`: ï¿½Lï¿½^ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½
-- `cancellationToken`: ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½gï¿½[ï¿½Nï¿½ï¿½ï¿½iï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½j
+**ƒpƒ‰ƒ[ƒ^**:
+- `recordingDirectory`: ‹L˜^ƒtƒ@ƒCƒ‹‚ª•Û‘¶‚³‚ê‚Ä‚¢‚éƒfƒBƒŒƒNƒgƒŠ
+- `cancellationToken`: ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“iƒIƒvƒVƒ‡ƒ“j
 
-**ï¿½ß‚ï¿½l**: ï¿½Äï¿½ï¿½pï¿½ï¿½ Mock ï¿½fï¿½oï¿½Cï¿½Xï¿½Aï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ `null`
+**–ß‚è’l**: Ä¶—p‚Ì Mock ƒfƒoƒCƒXAƒtƒ@ƒCƒ‹‚È‚¯‚ê‚Î `null`
 
-**ï¿½ï¿½O**:
-- `ArgumentException`: `recordingDirectory` ï¿½ï¿½ null ï¿½Ü‚ï¿½ï¿½ï¿½ empty ï¿½Ìê‡
-- `DirectoryNotFoundException`: ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½È‚ï¿½ï¿½ê‡
+**—áŠO**:
+- `ArgumentException`: `recordingDirectory` ‚ª null ‚Ü‚½‚Í empty ‚Ìê‡
+- `DirectoryNotFoundException`: ƒfƒBƒŒƒNƒgƒŠ‚ªŒ©‚Â‚©‚ç‚È‚¢ê‡
 
 ---
 
-## ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Fï¿½eï¿½Xï¿½gï¿½Vï¿½iï¿½ï¿½ï¿½I
+## ŽÀ‘•—áFƒeƒXƒgƒVƒiƒŠƒI
 
-### ï¿½eï¿½Xï¿½gï¿½Ì—ï¿½ï¿½ï¿½ÆŽï¿½ï¿½s
+### ƒeƒXƒg‚Ì—¬‚ê‚ÆŽÀs
 
 ```csharp
 public class ImuDataProcessingTests
@@ -164,14 +164,14 @@ public class ImuDataProcessingTests
     {
         using var manager = new ImuDeviceManager();
         
-        // ï¿½Lï¿½^ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äï¿½
+        // ‹L˜^ƒtƒ@ƒCƒ‹‚©‚çÄ¶
         await using var replayDevice = await manager.ConnectFromRecordingAsync(@"C:\TestRecordings");
         if (replayDevice == null)
             throw new InvalidOperationException("No recording found");
 
         var processingResults = new List<ProcessingResult>();
         
-        // ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½
+        // ƒf[ƒ^ˆ—
         await foreach (var imuData in replayDevice.GetImuDataStreamAsync())
         {
             var result = ProcessImuData(imuData);
@@ -181,20 +181,20 @@ public class ImuDataProcessingTests
                 break;
         }
 
-        // ï¿½ï¿½ï¿½ÊŠmï¿½F
+        // Œ‹‰ÊŠm”F
         Assert.NotEmpty(processingResults);
         Assert.All(processingResults, r => Assert.True(r.IsValid));
     }
 
     private ProcessingResult ProcessImuData(ImuData data)
     {
-        // ï¿½Jï¿½Xï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½bï¿½N
+        // ƒJƒXƒ^ƒ€ƒƒWƒbƒN
         return new ProcessingResult { IsValid = true };
     }
 }
 ```
 
-### ï¿½pï¿½tï¿½Hï¿½[ï¿½}ï¿½ï¿½ï¿½Xï¿½vï¿½ï¿½
+### ƒpƒtƒH[ƒ}ƒ“ƒXŒv‘ª
 
 ```csharp
 using var manager = new ImuDeviceManager();
@@ -209,7 +209,7 @@ var frameCount = 0;
 
 await foreach (var imuData in replayDevice.GetImuDataStreamAsync())
 {
-    // ï¿½xï¿½ï¿½ï¿½`ï¿½}ï¿½[ï¿½Nï¿½ÎÛ‚Ìƒï¿½ï¿½Wï¿½bï¿½N
+    // ƒxƒ“ƒ`ƒ}[ƒN‘ÎÛ‚ÌƒƒWƒbƒN
     var euler = imuData.EulerAngles;
     var quat = imuData.Quaternion;
     
@@ -223,24 +223,24 @@ Console.WriteLine($"Processed {frameCount} frames in {stopwatch.ElapsedMilliseco
 Console.WriteLine($"Average: {stopwatch.ElapsedMilliseconds / (double)frameCount}ms per frame");
 ```
 
-## ï¿½Lï¿½^ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ì\ï¿½ï¿½
+## ‹L˜^ƒtƒ@ƒCƒ‹‚Ì\‘¢
 
 ### frames_*.jsonl
-JSON Lines ï¿½`ï¿½ï¿½ï¿½Ìƒtï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½B1ï¿½sï¿½ï¿½1ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Å‚ï¿½ï¿½B
+JSON Lines Œ`Ž®‚ÌƒtƒŒ[ƒ€ƒf[ƒ^B1s‚ª1ƒtƒŒ[ƒ€‚Å‚·B
 
 ```json
 {"timestamp":0,"messageCounter":0,"quaternion":{"w":1.0,"x":0.0,"y":0.0,"z":0.0},"eulerAngles":{"roll":0.0,"pitch":0.0,"yaw":0.0},"rawBytes":"..."}
 ```
 
-**ï¿½tï¿½Bï¿½[ï¿½ï¿½ï¿½h**:
-- `timestamp`: ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ìƒ^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½iuint32ï¿½j
-- `messageCounter`: ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½Jï¿½Eï¿½ï¿½ï¿½^ï¿½[ï¿½iushortï¿½j
-- `quaternion`: ï¿½Nï¿½Hï¿½[ï¿½^ï¿½jï¿½Iï¿½ï¿½ï¿½iw, x, y, zï¿½j
-- `eulerAngles`: ï¿½Iï¿½Cï¿½ï¿½ï¿½[ï¿½pï¿½iroll, pitch, yawï¿½j
-- `rawBytes`: ï¿½ï¿½ï¿½oï¿½Cï¿½gï¿½ï¿½iBase64ï¿½Gï¿½ï¿½ï¿½Rï¿½[ï¿½hï¿½j
+**ƒtƒB[ƒ‹ƒh**:
+- `timestamp`: ƒtƒŒ[ƒ€‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒviuint32j
+- `messageCounter`: ƒƒbƒZ[ƒWƒJƒEƒ“ƒ^[iushortj
+- `quaternion`: ƒNƒH[ƒ^ƒjƒIƒ“iw, x, y, zj
+- `eulerAngles`: ƒIƒCƒ‰[Špiroll, pitch, yawj
+- `rawBytes`: ¶ƒoƒCƒg—ñiBase64ƒGƒ“ƒR[ƒhj
 
 ### metadata_*.json
-ï¿½Lï¿½^ï¿½Zï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½B**device.DisposeAsync() ï¿½ï¿½ï¿½ÉÅIï¿½Iï¿½Éì¬**ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+‹L˜^ƒZƒbƒVƒ‡ƒ“‚Ìƒƒ^ƒf[ƒ^B**device.DisposeAsync() Žž‚ÉÅI“I‚Éì¬**‚³‚ê‚Ü‚·B
 
 ```json
 {
@@ -251,20 +251,20 @@ JSON Lines ï¿½`ï¿½ï¿½ï¿½Ìƒtï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½B1ï¿½sï¿½ï¿½1ï¿½tï¿½ï¿
 }
 ```
 
-**ï¿½tï¿½Bï¿½[ï¿½ï¿½ï¿½h**:
-- `recordedAt`: ï¿½Lï¿½^ï¿½Jï¿½nï¿½ï¿½ï¿½ï¿½ï¿½iISO 8601ï¿½`ï¿½ï¿½ï¿½j
-- `frameCount`: ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½
-- `sampleRate`: ï¿½Tï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½[ï¿½gï¿½iHzï¿½j
-- `format`: ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½iï¿½Êï¿½ "jsonl"ï¿½j
+**ƒtƒB[ƒ‹ƒh**:
+- `recordedAt`: ‹L˜^ŠJŽnŽžiISO 8601Œ`Ž®j
+- `frameCount`: ƒtƒŒ[ƒ€”
+- `sampleRate`: ƒTƒ“ƒvƒŠƒ“ƒOƒŒ[ƒgiHzj
+- `format`: ƒtƒ@ƒCƒ‹Œ`Ž®i’Êí "jsonl"j
 
-## ï¿½Gï¿½ï¿½ï¿½[ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½O
+## ƒGƒ‰[ƒnƒ“ƒhƒŠƒ“ƒO
 
 ```csharp
 using var manager = new ImuDeviceManager();
 
 try
 {
-    // ï¿½Lï¿½^
+    // ‹L˜^
     await using var device = await manager.ConnectAndRecordAsync(recordingDir);
     if (device == null)
     {
@@ -272,8 +272,8 @@ try
         return;
     }
 
-    // ï¿½fï¿½[ï¿½^ï¿½æ“¾
-    // device.DisposeAsync() ï¿½ï¿½ï¿½ÉÅIï¿½Iï¿½Éƒï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ƒf[ƒ^Žæ“¾
+    // device.DisposeAsync() Žž‚ÉÅI“I‚Éƒƒ^ƒf[ƒ^‚ª•Û‘¶‚³‚ê‚é
 }
 catch (ArgumentException ex)
 {
@@ -293,21 +293,21 @@ finally
 }
 ```
 
-## ï¿½ï¿½ï¿½ÓŽï¿½ï¿½ï¿½ï¿½Eï¿½xï¿½Xï¿½gï¿½vï¿½ï¿½ï¿½Nï¿½eï¿½Bï¿½X
+## ’ˆÓŽ–€EƒxƒXƒgƒvƒ‰ƒNƒeƒBƒX
 
-1. **ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Vï¿½Xï¿½eï¿½ï¿½ I/O**: ï¿½Lï¿½^ï¿½ï¿½ï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½ï¿½Vï¿½Xï¿½eï¿½ï¿½ï¿½Ö‚Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ßAï¿½fï¿½Bï¿½Xï¿½Nï¿½ï¿½ï¿½xï¿½Éï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
-2. **ï¿½Vï¿½[ï¿½Pï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½ï¿½**: ï¿½Äï¿½ï¿½ï¿½1ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Pï¿½Ê‚ï¿½1ï¿½sï¿½Ç‚Ýï¿½ï¿½Þ‚ï¿½ï¿½ßAï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½Aï¿½Nï¿½Zï¿½Xï¿½Å‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½
-3. **ï¿½}ï¿½ï¿½ï¿½`ï¿½Zï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½ï¿½ï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½[ï¿½Å“ï¿½ï¿½ï¿½ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½É‹Lï¿½^ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Aï¿½Ù‚È‚ï¿½Zï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ device ï¿½Í‰ï¿½ï¿½ï¿½ï¿½ï¿½Kï¿½vï¿½Å‚ï¿½
-4. **ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ï¿½fï¿½Bï¿½ï¿½ï¿½C**: ï¿½Äï¿½ï¿½Í‹Lï¿½^ï¿½ï¿½ï¿½Ìƒ^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½sï¿½ï¿½ï¿½xï¿½Ì‚ï¿½ï¿½ï¿½Éï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
-5. **ï¿½ï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½Û‘ï¿½**: `device.DisposeAsync()` ï¿½ÅÅIï¿½Iï¿½Éƒï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ßA`await using` ï¿½ÌŽgï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
+1. **ƒtƒ@ƒCƒ‹ƒVƒXƒeƒ€ I/O**: ‹L˜^Žž‚Íƒtƒ@ƒCƒ‹ƒVƒXƒeƒ€‚Ö‚Ì‘‚«ž‚Ý‚ª”­¶‚·‚é‚½‚ßAƒfƒBƒXƒN‘¬“x‚É¶‰E‚³‚ê‚Ü‚·
+2. **ƒV[ƒPƒ“ƒVƒƒƒ‹**: Ä¶‚Í1ƒtƒŒ[ƒ€’PˆÊ‚Å1s“Ç‚Ýž‚Þ‚½‚ßAƒ‰ƒ“ƒ_ƒ€ƒAƒNƒZƒX‚Å‚«‚Ü‚¹‚ñ
+3. **ƒ}ƒ‹ƒ`ƒZƒbƒVƒ‡ƒ“**: •¡”ƒ}ƒl[ƒWƒƒ[‚Å“¯‚¶ƒfƒBƒŒƒNƒgƒŠ‚É‹L˜^‚·‚éê‡AˆÙ‚È‚éƒZƒbƒVƒ‡ƒ“‚²‚Æ‚É device ‚Í‰ð•ú‚ª•K—v‚Å‚·
+4. **ƒŠƒAƒ‹ƒ^ƒCƒ€ƒfƒBƒŒƒC**: Ä¶‚Í‹L˜^Žž‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ðŽg—p‚µ‚Ü‚·‚ªAŽÀs‘¬“x‚Ì‚¸‚ê‚É¶‰E‚³‚ê‚Ü‚·
+5. **ƒƒ^ƒf[ƒ^•Û‘¶**: `device.DisposeAsync()` ‚ÅÅI“I‚Éƒƒ^ƒf[ƒ^‚ª•Û‘¶‚³‚ê‚é‚½‚ßA`await using` ‚ÌŽg—p‚ð‹­§‚µ‚Ü‚·
 
-## ï¿½eï¿½Xï¿½gï¿½dï¿½lï¿½ê——
+## ƒeƒXƒgŽd—lˆê——
 
-? ï¿½fï¿½oï¿½Cï¿½Xï¿½Ú‘ï¿½ï¿½ï¿½ï¿½Ìƒfï¿½[ï¿½^ï¿½Lï¿½^
-? ï¿½Lï¿½^ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌÄï¿½
-? device.DisposeAsync() ï¿½ï¿½ï¿½Ìƒï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½Û‘ï¿½
-? ï¿½}ï¿½ï¿½ï¿½`ï¿½Zï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½
-? ï¿½Gï¿½ï¿½ï¿½[ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½iï¿½gï¿½ï¿½ï¿½dï¿½lï¿½È‚Çj
-? ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½mï¿½F
+? ƒfƒoƒCƒXÚ‘±Žž‚Ìƒf[ƒ^‹L˜^
+? ‹L˜^ƒtƒ@ƒCƒ‹‚©‚ç‚ÌÄ¶
+? device.DisposeAsync() Žž‚Ìƒƒ^ƒf[ƒ^•Û‘¶
+? ƒ}ƒ‹ƒ`ƒZƒbƒVƒ‡ƒ“Ø‚è‘Ö‚¦
+? ƒGƒ‰[ƒnƒ“ƒhƒŠƒ“ƒOiŠg’£Žd—l‚È‚Çj
+? ƒCƒ“ƒ^[ƒtƒF[ƒXŠm”F
 
-ï¿½ï¿½ï¿½×‚Ä‚Ìƒeï¿½Xï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½B
+‚·‚×‚Ä‚ÌƒeƒXƒg‚ªŽÀ‘•‚³‚ê‚Ä‚¢‚Ü‚·B
