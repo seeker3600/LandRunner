@@ -1,6 +1,7 @@
 namespace GlassBridgeBenchmark;
 
 using BenchmarkDotNet.Attributes;
+using Microsoft.VSDiagnostics;
 using GlassBridge;
 using GlassBridge.Internal;
 
@@ -9,6 +10,7 @@ using GlassBridge.Internal;
 /// HID受信データからImuDataへの変換パフォーマンスを計測
 /// </summary>
 [MemoryDiagnoser]
+[CPUUsageDiagnoser]
 [RankColumn]
 public class ImuPacketParseBenchmark
 {

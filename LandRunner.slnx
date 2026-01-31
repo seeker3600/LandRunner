@@ -4,12 +4,12 @@
     <File Path="docs/hid/VITURE_Luma.md" />
     <File Path="README.md" />
   </Folder>
-  <Project Path="GlassBridge.Utils/GlassBridge.Utils.csproj" />
-  <Project Path="GlassBridge/GlassBridge.csproj" />
+  <Project Path="AxisVisualizer.Test/AxisVisualizer.Test.csproj" Id="8e4ccc79-18eb-4dbd-a129-78c820a821d9" />
+  <Project Path="AxisVisualizer/AxisVisualizer.csproj" />
   <Project Path="GlassBridge.Benchmark/GlassBridge.Benchmark.csproj" Id="d4c1ec20-a5a7-44af-ba05-82a32ec4bd5c" />
   <Project Path="GlassBridge.Test/GlassBridge.Test.csproj" Id="66072987-92e2-458a-81da-3a1c89e48168">
     <BuildDependency Project="GlassBridge/GlassBridge.csproj" />
   </Project>
-  <Project Path="AxisVisualizer/AxisVisualizer.csproj" />
-  <Project Path="AxisVisualizer.Test/AxisVisualizer.Test.csproj" Id="8e4ccc79-18eb-4dbd-a129-78c820a821d9" />
+  <Project Path="GlassBridge.Utils/GlassBridge.Utils.csproj" />
+  <Project Path="GlassBridge/GlassBridge.csproj" />
 </Solution>
