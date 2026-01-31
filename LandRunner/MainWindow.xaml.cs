@@ -42,42 +42,71 @@ namespace LandRunner
 
             double centerX = AxisCanvas.ActualWidth / 2;
             double centerY = AxisCanvas.ActualHeight / 2;
-            double axisLength = 60;
+            double axisLength = 80;
 
-            DrawAxis(centerX, centerY, axisLength, 0, 0, Colors.Red, "X");
-            DrawAxis(centerX, centerY, axisLength, 90, 0, Colors.LimeGreen, "Y");
-            DrawAxis(centerX, centerY, axisLength, 0, 90, Colors.DeepSkyBlue, "Z");
+            // Convert euler angles to radians
+            double rollRad = euler.Roll * Math.PI / 180.0;
+            double pitchRad = euler.Pitch * Math.PI / 180.0;
+            double yawRad = euler.Yaw * Math.PI / 180.0;
 
-            var yawRad = euler.Yaw * Math.PI / 180.0;
-            double rotatedX = axisLength * Math.Cos(yawRad);
-            double rotatedY = axisLength * Math.Sin(yawRad);
+            // Draw reference axes (fixed, semi-transparent)
+            DrawReferenceAxis(centerX, centerY, axisLength, 0, Colors.Red, "X?");
+            DrawReferenceAxis(centerX, centerY, axisLength, 90, Colors.LimeGreen, "Y?");
 
-            var line = new Line
-            {
-                X1 = centerX,
-                Y1 = centerY,
-                X2 = centerX + rotatedX,
-                Y2 = centerY + rotatedY,
-                Stroke = new SolidColorBrush(Colors.Purple),
-                StrokeThickness = 3
-            };
-            AxisCanvas.Children.Add(line);
+            // Apply 3D rotation using rotation matrix (Yaw -> Pitch -> Roll order)
+            // X axis after rotation
+            var (xEndX, xEndY) = RotatePoint3DTo2D(axisLength, 0, 0, rollRad, pitchRad, yawRad);
+            DrawRotatedAxis(centerX, centerY, xEndX, xEndY, Colors.Red, "X");
 
+            // Y axis after rotation
+            var (yEndX, yEndY) = RotatePoint3DTo2D(0, axisLength, 0, rollRad, pitchRad, yawRad);
+            DrawRotatedAxis(centerX, centerY, yEndX, yEndY, Colors.LimeGreen, "Y");
+
+            // Z axis after rotation (pointing out of screen initially)
+            var (zEndX, zEndY) = RotatePoint3DTo2D(0, 0, axisLength, rollRad, pitchRad, yawRad);
+            DrawRotatedAxis(centerX, centerY, zEndX, zEndY, Colors.DeepSkyBlue, "Z");
+
+            // Draw origin point
             var origin = new Ellipse
             {
-                Width = 8,
-                Height = 8,
+                Width = 10,
+                Height = 10,
                 Fill = new SolidColorBrush(Colors.Black)
             };
-            Canvas.SetLeft(origin, centerX - 4);
-            Canvas.SetTop(origin, centerY - 4);
+            Canvas.SetLeft(origin, centerX - 5);
+            Canvas.SetTop(origin, centerY - 5);
             AxisCanvas.Children.Add(origin);
         }
 
-        private void DrawAxis(double centerX, double centerY, double length, double angleX, double angleY, Color color, string label)
+        /// <summary>
+        /// Rotate a 3D point and project to 2D canvas
+        /// </summary>
+        private (double x, double y) RotatePoint3DTo2D(double x, double y, double z, double roll, double pitch, double yaw)
         {
-            double x = length * Math.Cos(angleY * Math.PI / 180.0);
-            double y = length * Math.Sin(angleX * Math.PI / 180.0);
+            // Rotation around Z axis (Yaw)
+            double x1 = x * Math.Cos(yaw) - y * Math.Sin(yaw);
+            double y1 = x * Math.Sin(yaw) + y * Math.Cos(yaw);
+            double z1 = z;
+
+            // Rotation around Y axis (Pitch)
+            double x2 = x1 * Math.Cos(pitch) + z1 * Math.Sin(pitch);
+            double y2 = y1;
+            double z2 = -x1 * Math.Sin(pitch) + z1 * Math.Cos(pitch);
+
+            // Rotation around X axis (Roll)
+            double x3 = x2;
+            double y3 = y2 * Math.Cos(roll) - z2 * Math.Sin(roll);
+            // double z3 = y2 * Math.Sin(roll) + z2 * Math.Cos(roll); // Not needed for 2D projection
+
+            // Project to 2D (orthographic projection: X -> right, Y -> down)
+            return (x3, y3);
+        }
+
+        private void DrawReferenceAxis(double centerX, double centerY, double length, double angleDeg, Color color, string label)
+        {
+            double angleRad = angleDeg * Math.PI / 180.0;
+            double x = length * Math.Cos(angleRad);
+            double y = length * Math.Sin(angleRad);
 
             var line = new Line
             {
@@ -85,20 +114,69 @@ namespace LandRunner
                 Y1 = centerY,
                 X2 = centerX + x,
                 Y2 = centerY + y,
-                Stroke = new SolidColorBrush(color),
-                StrokeThickness = 2
+                Stroke = new SolidColorBrush(color) { Opacity = 0.2 },
+                StrokeThickness = 1,
+                StrokeDashArray = new DoubleCollection { 4, 2 }
             };
             AxisCanvas.Children.Add(line);
 
             var textBlock = new TextBlock
             {
                 Text = label,
-                Foreground = new SolidColorBrush(color),
-                FontSize = 12,
-                FontWeight = System.Windows.FontWeights.Bold
+                Foreground = new SolidColorBrush(color) { Opacity = 0.4 },
+                FontSize = 10
             };
             Canvas.SetLeft(textBlock, centerX + x + 5);
-            Canvas.SetTop(textBlock, centerY + y - 8);
+            Canvas.SetTop(textBlock, centerY + y - 6);
+            AxisCanvas.Children.Add(textBlock);
+        }
+
+        private void DrawRotatedAxis(double centerX, double centerY, double endX, double endY, Color color, string label)
+        {
+            var line = new Line
+            {
+                X1 = centerX,
+                Y1 = centerY,
+                X2 = centerX + endX,
+                Y2 = centerY + endY,
+                Stroke = new SolidColorBrush(color),
+                StrokeThickness = 3
+            };
+            AxisCanvas.Children.Add(line);
+
+            // Draw arrowhead
+            double angle = Math.Atan2(endY, endX);
+            double arrowSize = 10;
+            var arrow1 = new Line
+            {
+                X1 = centerX + endX,
+                Y1 = centerY + endY,
+                X2 = centerX + endX - arrowSize * Math.Cos(angle - 0.4),
+                Y2 = centerY + endY - arrowSize * Math.Sin(angle - 0.4),
+                Stroke = new SolidColorBrush(color),
+                StrokeThickness = 2
+            };
+            var arrow2 = new Line
+            {
+                X1 = centerX + endX,
+                Y1 = centerY + endY,
+                X2 = centerX + endX - arrowSize * Math.Cos(angle + 0.4),
+                Y2 = centerY + endY - arrowSize * Math.Sin(angle + 0.4),
+                Stroke = new SolidColorBrush(color),
+                StrokeThickness = 2
+            };
+            AxisCanvas.Children.Add(arrow1);
+            AxisCanvas.Children.Add(arrow2);
+
+            var textBlock = new TextBlock
+            {
+                Text = label,
+                Foreground = new SolidColorBrush(color),
+                FontSize = 14,
+                FontWeight = System.Windows.FontWeights.Bold
+            };
+            Canvas.SetLeft(textBlock, centerX + endX + 8);
+            Canvas.SetTop(textBlock, centerY + endY - 10);
             AxisCanvas.Children.Add(textBlock);
         }
     }
