@@ -12,4 +12,5 @@
   </Project>
   <Project Path="GlassBridge.Utils/GlassBridge.Utils.csproj" />
   <Project Path="GlassBridge/GlassBridge.csproj" />
+  <Project Path="LandRunner/LandRunner.csproj" Id="c1f7c09f-bd40-45cc-8aac-fe3a26c2e527" />
 </Solution>
