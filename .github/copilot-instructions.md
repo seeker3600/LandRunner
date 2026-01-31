@@ -1,106 +1,106 @@
-# Copilot ì‹ÆŽwŽ¦‘
+# Copilot ï¿½ï¿½ÆŽwï¿½ï¿½ï¿½ï¿½
 
-LandRunner ƒvƒƒWƒFƒNƒg‚ÌŠJ”­ƒKƒCƒhƒ‰ƒCƒ“‚Å‚·B
-
----
-
-## 1. C# ƒR[ƒfƒBƒ“ƒO‹K‘¥
-
-### ˆê”Ê“I‚ÈƒKƒCƒhƒ‰ƒCƒ“
-- Visual Studio ‚ÌƒxƒXƒgƒvƒ‰ƒNƒeƒBƒX‚É]‚¤
-- ƒtƒ@ƒCƒ‹ŠK‘w‚Æ–¼‘O‹óŠÔ‚ðˆêŠÑ‚³‚¹‚é
-- Šù‘¶‚ÌƒR[ƒh‹K–ñ‚É‡‚í‚¹‚é
-
-### ƒvƒƒWƒFƒNƒgŒÅ—L‚Ìƒ‹[ƒ‹
-- **ŠÖS‚Ì•ª—£**: ŒöŠJAPIi`GlassBridge` –¼‘O‹óŠÔj‚Æ“à•”ŽÀ‘•i`GlassBridge.Internal` –¼‘O‹óŠÔj‚ðŒµ–§‚É•ª—£
-  - “à•”ŽÀ‘•ƒtƒ@ƒCƒ‹‚Í `Internal/` ƒtƒHƒ‹ƒ_‚É”z’u
-  - ŒöŠJƒCƒ“ƒ^[ƒtƒF[ƒX‚Ì‚Ý `ImuDeviceManager`, `IImuDevice` ‚È‚Ç ‚ðƒ‹[ƒg’¼‰º‚É”z’u
-- **VITURE ƒfƒoƒCƒXŒÅ—L‚Ì’mŽ¯**‚Í `GlassBridge.Internal.HID.VitureDeviceIdentifiers` ‚ÅˆêŒ³ŠÇ—
-  - ƒxƒ“ƒ_[IDAƒvƒƒ_ƒNƒgID ‚Í‚±‚Ì’è”ƒNƒ‰ƒX‚ðŽQÆ
-  - V‚µ‚¢ƒ‚ƒfƒ‹’Ç‰ÁŽž‚Í‚±‚Ìƒtƒ@ƒCƒ‹‚Ì‚ÝC³
-- **”ñ“¯Šúˆ—**: `IAsyncDisposable` ‚ðŠˆ—p‚µAƒŠƒ\[ƒX‚ÌŽ©“®ƒNƒŠ[ƒ“ƒAƒbƒv‚ðŽÀ‘•
+LandRunner ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½ÌŠJï¿½ï¿½ï¿½Kï¿½Cï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Å‚ï¿½ï¿½B
 
 ---
 
-## 2. ƒhƒLƒ…ƒƒ“ƒg\¬ƒ‹[ƒ‹
+## 1. C# ï¿½Rï¿½[ï¿½fï¿½Bï¿½ï¿½ï¿½Oï¿½Kï¿½ï¿½
 
-### 2.1 ƒhƒLƒ…ƒƒ“ƒg”z’uƒ‹[ƒ‹
+### ï¿½ï¿½Ê“Iï¿½ÈƒKï¿½Cï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½
+- Visual Studio ï¿½Ìƒxï¿½Xï¿½gï¿½vï¿½ï¿½ï¿½Nï¿½eï¿½Bï¿½Xï¿½É]ï¿½ï¿½
+- ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Kï¿½wï¿½Æ–ï¿½ï¿½Oï¿½ï¿½Ô‚ï¿½ï¿½ï¿½Ñ‚ï¿½ï¿½ï¿½ï¿½ï¿½
+- ï¿½ï¿½ï¿½ï¿½ï¿½ÌƒRï¿½[ï¿½hï¿½Kï¿½ï¿½Éï¿½ï¿½í‚¹ï¿½ï¿½
 
-**Šî–{Œ´‘¥**: ƒhƒLƒ…ƒƒ“ƒgˆÊ’u‚Ì“ˆê‚É‚æ‚èAŽQÆ«‚Æ•ÛŽç«‚ðŒüã‚³‚¹‚é
+### ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½Å—Lï¿½Ìƒï¿½ï¿½[ï¿½ï¿½
+- **ï¿½ÖSï¿½Ì•ï¿½ï¿½ï¿½**: ï¿½ï¿½ï¿½JAPIï¿½i`GlassBridge` ï¿½ï¿½ï¿½Oï¿½ï¿½Ôjï¿½Æ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½i`GlassBridge.Internal` ï¿½ï¿½ï¿½Oï¿½ï¿½Ôjï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É•ï¿½ï¿½ï¿½
+  - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ `Internal/` ï¿½tï¿½Hï¿½ï¿½ï¿½_ï¿½É”zï¿½u
+  - ï¿½ï¿½ï¿½Jï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½Ì‚ï¿½ `ImuDeviceManager`, `IImuDevice` ï¿½È‚ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½É”zï¿½u
+- **VITURE ï¿½fï¿½oï¿½Cï¿½Xï¿½Å—Lï¿½Ì’mï¿½ï¿½**ï¿½ï¿½ `GlassBridge.Internal.HID.VitureDeviceIdentifiers` ï¿½ÅˆêŒ³ï¿½Ç—ï¿½
+  - ï¿½xï¿½ï¿½ï¿½_ï¿½[IDï¿½Aï¿½vï¿½ï¿½ï¿½_ï¿½Nï¿½gID ï¿½Í‚ï¿½ï¿½Ì’è”ï¿½Nï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½Qï¿½ï¿½
+  - ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Í‚ï¿½ï¿½Ìƒtï¿½@ï¿½Cï¿½ï¿½ï¿½Ì‚ÝCï¿½ï¿½
+- **ï¿½ñ“¯Šï¿½ï¿½ï¿½ï¿½ï¿½**: `IAsyncDisposable` ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½ÌŽï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Aï¿½bï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-| ‘ÎÛ | ”z’uêŠ | —p“r |
+---
+
+## 2. ï¿½hï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½
+
+### 2.1 ï¿½hï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½zï¿½uï¿½ï¿½ï¿½[ï¿½ï¿½
+
+**ï¿½ï¿½{ï¿½ï¿½ï¿½ï¿½**: ï¿½hï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½Ê’uï¿½Ì“ï¿½ï¿½ï¿½É‚ï¿½ï¿½Aï¿½Qï¿½Æï¿½ï¿½Æ•ÛŽç«ï¿½ï¿½ï¿½ï¿½ï¿½ã‚³ï¿½ï¿½ï¿½ï¿½
+
+| ï¿½Îï¿½ | ï¿½zï¿½uï¿½êŠ | ï¿½pï¿½r |
 |------|---------|------|
-| **README.md** | ƒ\ƒŠƒ…[ƒVƒ‡ƒ“’¼‰º | ƒvƒƒWƒFƒNƒg‘S‘Ì‚ÌŠT—vEƒZƒbƒgƒAƒbƒvŽè‡ |
-| **ƒvƒƒWƒFƒNƒg README.md** | `GlassBridge/` ‚È‚Ç | ŠeƒvƒƒWƒFƒNƒg‚ÌŠT—vEˆË‘¶ŠÖŒWEAPI à–¾ |
-| **ARCHITECTURE.md** | ƒvƒƒWƒFƒNƒgƒtƒHƒ‹ƒ_iƒIƒvƒVƒ‡ƒ“j | ƒA[ƒLƒeƒNƒ`ƒƒÝŒvEƒ‚ƒWƒ…[ƒ‹Ó–± |
-| **‚»‚Ì‘¼ƒhƒLƒ…ƒƒ“ƒg** | `docs/` ƒTƒuƒtƒHƒ‹ƒ_ | ƒhƒƒCƒ“’mŽ¯EƒvƒƒgƒRƒ‹Žd—lEƒKƒCƒh |
+| **README.md** | ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ | ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½Sï¿½Ì‚ÌŠTï¿½vï¿½Eï¿½Zï¿½bï¿½gï¿½Aï¿½bï¿½vï¿½è‡ |
+| **ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½g README.md** | `GlassBridge/` ï¿½È‚ï¿½ | ï¿½eï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½ÌŠTï¿½vï¿½Eï¿½Ë‘ï¿½ï¿½ÖŒWï¿½EAPI ï¿½ï¿½ï¿½ï¿½ |
+| **ARCHITECTURE.md** | ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½tï¿½Hï¿½ï¿½ï¿½_ï¿½iï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½j | ï¿½Aï¿½[ï¿½Lï¿½eï¿½Nï¿½`ï¿½ï¿½ï¿½ÝŒvï¿½Eï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ó–ï¿½ |
+| **ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½hï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½g** | `docs/` ï¿½Tï¿½uï¿½tï¿½Hï¿½ï¿½ï¿½_ | ï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½mï¿½ï¿½ï¿½Eï¿½vï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½ï¿½dï¿½lï¿½Eï¿½Kï¿½Cï¿½h |
 
-### 2.2 Šù‘¶ƒhƒLƒ…ƒƒ“ƒgˆê——
+### 2.2 ï¿½ï¿½ï¿½ï¿½ï¿½hï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ê——
 
-#### ƒ\ƒŠƒ…[ƒVƒ‡ƒ“’¼‰º
-- **README.md** - ƒvƒƒWƒFƒNƒg‘S‘Ì‚ÌÐ‰îEƒZƒbƒgƒAƒbƒv•û–@
-- **docs/hid/VITURE_Luma.md** - VITURE HID ƒvƒƒgƒRƒ‹Žd—lid—vj
-- **docs/** - ƒhƒƒCƒ“’mŽ¯EƒvƒƒgƒRƒ‹Žd—lEŽÀ‘•ƒKƒCƒh
+#### ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+- **README.md** - ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½Sï¿½Ì‚ÌÐ‰ï¿½Eï¿½Zï¿½bï¿½gï¿½Aï¿½bï¿½vï¿½ï¿½ï¿½@
+- **docs/hid/VITURE_Luma.md** - VITURE HID ï¿½vï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½ï¿½dï¿½lï¿½iï¿½dï¿½vï¿½j
+- **docs/** - ï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½mï¿½ï¿½ï¿½Eï¿½vï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½ï¿½dï¿½lï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Kï¿½Cï¿½h
 
-#### ƒvƒƒWƒFƒNƒgƒŒƒxƒ‹iGlassBridgej
-- **GlassBridge/README.md** - GlassBridge ŒöŠJAPI ‚Ìà–¾
+#### ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½xï¿½ï¿½ï¿½iGlassBridgeï¿½j
+- **GlassBridge/README.md** - GlassBridge ï¿½ï¿½ï¿½JAPI ï¿½Ìï¿½ï¿½ï¿½
 
-#### ƒhƒƒCƒ“’mŽ¯EŽÀ‘•ƒKƒCƒhidocs/j
-- **docs/hid/VITURE_Luma.md** - VITURE HID ƒvƒƒgƒRƒ‹Žd—l
-- **docs/recording/API_GUIDE.md** - IMU ƒf[ƒ^‹L˜^EÄ¶‹@”\‚ÌŽg—pƒKƒCƒh
-- **docs/recording/IMPLEMENTATION.md** - ‹L˜^‹@”\‚Ì“à•”ŽÀ‘•à–¾
+#### ï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½mï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Kï¿½Cï¿½hï¿½idocs/ï¿½j
+- **docs/hid/VITURE_Luma.md** - VITURE HID ï¿½vï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½ï¿½dï¿½l
+- **docs/recording/API_GUIDE.md** - IMU ï¿½fï¿½[ï¿½^ï¿½Lï¿½^ï¿½Eï¿½Äï¿½ï¿½@ï¿½\ï¿½ÌŽgï¿½pï¿½Kï¿½Cï¿½h
+- **docs/recording/IMPLEMENTATION.md** - ï¿½Lï¿½^ï¿½@ï¿½\ï¿½Ì“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 ---
 
-## 3. ŽQÆ‚·‚×‚«ƒhƒLƒ…ƒƒ“ƒg
+## 3. ï¿½Qï¿½Æ‚ï¿½ï¿½×‚ï¿½ï¿½hï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½g
 
-### HID ƒvƒƒgƒRƒ‹ŽÀ‘•‚ÉŠÖ‚í‚éê‡
+### HID ï¿½vï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉŠÖ‚ï¿½ï¿½ê‡
 ?? **docs/hid/VITURE_Luma.md**
-- VITURE ƒfƒoƒCƒX‚Ì USB VID/PID
-- HID ƒCƒ“ƒ^[ƒtƒF[ƒX\¬iIMU/MCU ‚Ì2‚Â‚ÌƒXƒgƒŠ[ƒ€j
-- ƒvƒƒgƒRƒ‹Žd—lEƒpƒPƒbƒgŒ`Ž®
-- ƒfƒoƒCƒXŽ¯•ÊƒƒWƒbƒN
+- VITURE ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ USB VID/PID
+- HID ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½\ï¿½ï¿½ï¿½iIMU/MCU ï¿½ï¿½2ï¿½Â‚ÌƒXï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½j
+- ï¿½vï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½ï¿½dï¿½lï¿½Eï¿½pï¿½Pï¿½bï¿½gï¿½`ï¿½ï¿½
+- ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½Êƒï¿½ï¿½Wï¿½bï¿½N
 
-### GlassBridge API ‚ðŽg—p‚·‚éê‡
+### GlassBridge API ï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½ê‡
 ?? **GlassBridge/README.md**
-- ŒöŠJƒCƒ“ƒ^[ƒtƒF[ƒXi`IImuDeviceManager`, `IImuDevice` “™j
-- ƒvƒƒWƒFƒNƒg\¬EˆË‘¶ŠÖŒW
+- ï¿½ï¿½ï¿½Jï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½i`IImuDeviceManager`, `IImuDevice` ï¿½ï¿½ï¿½j
+- ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½\ï¿½ï¿½ï¿½Eï¿½Ë‘ï¿½ï¿½ÖŒW
 
-### IMU ƒf[ƒ^‹L˜^EÄ¶‹@”\‚ÉŠÖ‚í‚éê‡
+### IMU ï¿½fï¿½[ï¿½^ï¿½Lï¿½^ï¿½Eï¿½Äï¿½ï¿½@ï¿½\ï¿½ÉŠÖ‚ï¿½ï¿½ê‡
 ?? **docs/recording/API_GUIDE.md**
-- `ImuDeviceManager.ConnectAndRecordAsync()` ‚ÌŽg—p•û–@
-- `ImuDeviceManager.ConnectFromRecordingAsync()` ‚ÌŽg—p•û–@
-- ‹L˜^ƒtƒ@ƒCƒ‹Œ`Ž®iJSON Linesj
+- `ImuDeviceManager.ConnectAndRecordAsync()` ï¿½ÌŽgï¿½pï¿½ï¿½ï¿½@
+- `ImuDeviceManager.ConnectFromRecordingAsync()` ï¿½ÌŽgï¿½pï¿½ï¿½ï¿½@
+- ï¿½Lï¿½^ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½iJSON Linesï¿½j
 
-### HidSharp ƒpƒbƒP[ƒW‚ÉŠÖ‚í‚éê‡
+### HidSharp ï¿½pï¿½bï¿½Pï¿½[ï¿½Wï¿½ÉŠÖ‚ï¿½ï¿½ê‡
 - https://docs.seekye.com/hidsharp/
 ---
 
-## 4. ƒR[ƒh•iŽ¿
+## 4. ï¿½Rï¿½[ï¿½hï¿½iï¿½ï¿½
 
-### ƒeƒXƒg•ûj
-- `GlassBridgeTest/` ƒ†ƒjƒbƒgE“‡ƒeƒXƒg‚ðŽÀ‘•
-- V‹@”\’Ç‰ÁŽž‚ÍƒeƒXƒgƒR[ƒh‚àˆê‚É’Ç‰Á
-- ƒ‚ƒbƒNi`MockHidStreamProvider` “™j‚ðŠˆ—p‚µ‚ÄŽÀƒfƒoƒCƒX•s—v‚ÅŒŸØ
+### ï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½j
+- `GlassBridgeTest/` ï¿½ï¿½ï¿½jï¿½bï¿½gï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+- ï¿½Vï¿½@ï¿½\ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Íƒeï¿½Xï¿½gï¿½Rï¿½[ï¿½hï¿½ï¿½ï¿½êï¿½É’Ç‰ï¿½
+- ï¿½ï¿½ï¿½bï¿½Nï¿½i`MockHidStreamProvider` ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ÄŽï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½sï¿½vï¿½ÅŒï¿½ï¿½ï¿½
 
-### ƒpƒbƒP[ƒWŠÇ—
-- `HidSharp` - HID ƒfƒoƒCƒX’ÊMiŒ»Ý 2.6.4j
-- V‚µ‚¢ƒpƒbƒP[ƒW’Ç‰ÁŽž‚ÍŒÝŠ·«Šm”Fi“Á‚É .NET 10 ‘Î‰žó‹µj
+### ï¿½pï¿½bï¿½Pï¿½[ï¿½Wï¿½Ç—ï¿½
+- `HidSharp` - HID ï¿½fï¿½oï¿½Cï¿½Xï¿½ÊMï¿½iï¿½ï¿½ï¿½ï¿½ 2.6.4ï¿½j
+- ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½pï¿½bï¿½Pï¿½[ï¿½Wï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ÍŒÝŠï¿½ï¿½ï¿½ï¿½mï¿½Fï¿½iï¿½ï¿½ï¿½ï¿½ .NET 10 ï¿½Î‰ï¿½ï¿½ó‹µj
 
 ---
 
-## 5. ŠJ”­ƒ[ƒNƒtƒ[
+## 5. ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Nï¿½tï¿½ï¿½ï¿½[
 
-### V‹@”\’Ç‰ÁŽž
-1. ‘Î‰ž‚·‚éƒhƒLƒ…ƒƒ“ƒgiREADME.md, ARCHITECTURE.md “™j‚ðæ‚ÉXV or ì¬
-2. ƒeƒXƒgƒR[ƒh ¨ ŽÀ‘•ƒR[ƒh ‚Ì‡‚ÅŠJ”­
-3. ƒvƒƒWƒFƒNƒg\¬‚ÌˆêŠÑ«‚ðŠm”FiInternal/Public ‚Ì•ª—£‚È‚Çj
-4. ƒrƒ‹ƒhEƒeƒXƒg‡Ši‚ðŠm”FŒã‚ÉƒRƒ~ƒbƒg
+### ï¿½Vï¿½@ï¿½\ï¿½Ç‰ï¿½ï¿½ï¿½
+1. ï¿½Î‰ï¿½ï¿½ï¿½ï¿½ï¿½hï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½iREADME.md, ARCHITECTURE.md ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½ÉXï¿½V or ï¿½ì¬
+2. ï¿½eï¿½Xï¿½gï¿½Rï¿½[ï¿½h ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½[ï¿½h ï¿½Ìï¿½ï¿½ÅŠJï¿½ï¿½
+3. ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½\ï¿½ï¿½ï¿½Ìˆï¿½Ñï¿½ï¿½ï¿½ï¿½mï¿½Fï¿½iInternal/Public ï¿½Ì•ï¿½ï¿½ï¿½ï¿½È‚Çj
+4. ï¿½rï¿½ï¿½ï¿½hï¿½Eï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½iï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ÉƒRï¿½~ï¿½bï¿½g
 
-### ƒhƒLƒ…ƒƒ“ƒg’Ç‰ÁŽž
-1. ”z’uƒ‹[ƒ‹i˜2.1j‚É]‚¢”z’uêŠ‚ðŒˆ’è
-2. Šù‘¶ƒhƒLƒ…ƒƒ“ƒgi˜2.2j‚Æd•¡‚ª‚È‚¢‚©Šm”F
+### ï¿½hï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½Ç‰ï¿½ï¿½ï¿½
+1. ï¿½zï¿½uï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½iï¿½ï¿½2.1ï¿½jï¿½É]ï¿½ï¿½ï¿½zï¿½uï¿½êŠï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+2. ï¿½ï¿½ï¿½ï¿½ï¿½hï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½iï¿½ï¿½2.2ï¿½jï¿½Ædï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½mï¿½F
 
-## 6. ‚»‚Ì‘¼’ˆÓ“_
-- }‚ð•`‚­‚Æ‚«‚ÍAmermaid‚Å‚Í‚È‚­ƒAƒXƒL[ƒA[ƒg‚ð—Dæ‚·‚é‚±‚ÆB
-- ˆÄ‚ð’ñŽ¦‚·‚éÛ‚É’ñŽ¦‚·‚éƒR[ƒh’f•Ð‚Í”s‚É‚Æ‚Ç‚ß‚é‚±‚ÆB‚ ‚é‚¢‚ÍƒR[ƒh‚Å‚Í‚È‚­}‚ð—p‚¢‚é‚±‚ÆB
+## 6. ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½ï¿½ï¿½Ó“_
+- ï¿½}ï¿½ï¿½`ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ÍAmermaidï¿½Å‚Í‚È‚ï¿½ï¿½Aï¿½Xï¿½Lï¿½[ï¿½Aï¿½[ï¿½gï¿½ï¿½Dï¿½æ‚·ï¿½é‚±ï¿½ÆB
+- ï¿½Ä‚ï¿½ñŽ¦‚ï¿½ï¿½ï¿½Û‚É’ñŽ¦‚ï¿½ï¿½ï¿½Rï¿½[ï¿½hï¿½fï¿½Ð‚Íï¿½ï¿½sï¿½É‚Æ‚Ç‚ß‚é‚±ï¿½ÆBï¿½ï¿½ï¿½é‚¢ï¿½ÍƒRï¿½[ï¿½hï¿½Å‚Í‚È‚ï¿½ï¿½}ï¿½ï¿½pï¿½ï¿½ï¿½é‚±ï¿½ÆB

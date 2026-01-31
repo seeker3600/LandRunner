@@ -6,18 +6,18 @@ using GlassBridge.Internal.HID;
 using Xunit;
 
 /// <summary>
-/// VitureLumaDevice ‚ÌƒeƒXƒg
-/// d—lŠm”FƒeƒXƒgiŠÈ—ª”Åj
+/// VitureLumaDevice ï¿½Ìƒeï¿½Xï¿½g
+/// ï¿½dï¿½lï¿½mï¿½Fï¿½eï¿½Xï¿½gï¿½iï¿½È—ï¿½ï¿½Åj
 /// </summary>
 public class VitureLumaDeviceTests
 {
     /// <summary>
-    /// ƒeƒXƒg—pIMUƒf[ƒ^ƒWƒFƒlƒŒ[ƒ^
-    /// ƒf[ƒ^óM‘¬“x‚ğƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‰Â”\
+    /// ï¿½eï¿½Xï¿½gï¿½pIMUï¿½fï¿½[ï¿½^ï¿½Wï¿½Fï¿½lï¿½ï¿½ï¿½[ï¿½^
+    /// ï¿½fï¿½[ï¿½^ï¿½ï¿½Mï¿½ï¿½ï¿½xï¿½ï¿½ï¿½Vï¿½~ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Â”\
     /// </summary>
-    /// <param name="count">¶¬‚·‚éƒf[ƒ^”</param>
-    /// <param name="delayMs">ƒtƒŒ[ƒ€ŠÔ‚Ì’x‰„imsjB0 ‚ÅƒpƒtƒH[ƒ}ƒ“ƒXŒv‘ªA>0 ‚Åƒ^ƒCƒ€ƒAƒEƒg“™‚ğƒeƒXƒg</param>
-    /// <param name="cancellationToken">ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“</param>
+    /// <param name="count">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½</param>
+    /// <param name="delayMs">ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ô‚Ì’xï¿½ï¿½ï¿½imsï¿½jï¿½B0 ï¿½Åƒpï¿½tï¿½Hï¿½[ï¿½}ï¿½ï¿½ï¿½Xï¿½vï¿½ï¿½ï¿½A>0 ï¿½Åƒ^ï¿½Cï¿½ï¿½ï¿½Aï¿½Eï¿½gï¿½ï¿½ï¿½ï¿½ï¿½eï¿½Xï¿½g</param>
+    /// <param name="cancellationToken">ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½gï¿½[ï¿½Nï¿½ï¿½</param>
     private static async IAsyncEnumerable<ImuData> GenerateTestImuData(
         int count = 10,
         int delayMs = 0,
@@ -44,9 +44,9 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg1: ƒfƒoƒCƒXÚ‘±iƒpƒtƒH[ƒ}ƒ“ƒXŒv‘ª—pj
-    /// d—lFuƒfƒoƒCƒXÚ‘±‚ÉIsConnected‚ªtrue‚É‚È‚év
-    /// ’x‰„‚È‚µ‚Å‚‘¬Às
+    /// ï¿½eï¿½Xï¿½g1: ï¿½fï¿½oï¿½Cï¿½Xï¿½Ú‘ï¿½ï¿½iï¿½pï¿½tï¿½Hï¿½[ï¿½}ï¿½ï¿½ï¿½Xï¿½vï¿½ï¿½ï¿½pï¿½j
+    /// ï¿½dï¿½lï¿½Fï¿½uï¿½fï¿½oï¿½Cï¿½Xï¿½Ú‘ï¿½ï¿½ï¿½ï¿½ï¿½IsConnectedï¿½ï¿½trueï¿½É‚È‚ï¿½v
+    /// ï¿½xï¿½ï¿½ï¿½È‚ï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task ConnectAsync_ShouldSucceed()
@@ -65,9 +65,9 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg2: GetImuDataStreamAsync ƒƒ\ƒbƒh‚ª‘¶İ‚µAŒÄ‚Ño‚µ‰Â”\iƒpƒtƒH[ƒ}ƒ“ƒXŒv‘ª—pj
-    /// d—lFuIMUƒf[ƒ^ƒXƒgƒŠ[ƒ€ƒƒ\ƒbƒh‚ªÀ‘•‚³‚ê‚Ä‚¢‚év
-    /// ’x‰„‚È‚µ‚Å‚‘¬Às
+    /// ï¿½eï¿½Xï¿½g2: GetImuDataStreamAsync ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½ï¿½ï¿½ï¿½ï¿½İ‚ï¿½ï¿½Aï¿½Ä‚Ñoï¿½ï¿½ï¿½Â”\ï¿½iï¿½pï¿½tï¿½Hï¿½[ï¿½}ï¿½ï¿½ï¿½Xï¿½vï¿½ï¿½ï¿½pï¿½j
+    /// ï¿½dï¿½lï¿½Fï¿½uIMUï¿½fï¿½[ï¿½^ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½v
+    /// ï¿½xï¿½ï¿½ï¿½È‚ï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task GetImuDataStreamAsync_ShouldBeCallable()
@@ -78,10 +78,10 @@ public class VitureLumaDeviceTests
         Assert.NotNull(device);
         Assert.True(device.IsConnected);
 
-        // Act: GetImuDataStreamAsync ƒƒ\ƒbƒh‚ªŒÄ‚Ño‚µ‰Â”\‚©Šm”F
+        // Act: GetImuDataStreamAsync ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½Â”\ï¿½ï¿½ï¿½mï¿½F
         var streamMethod = device.GetType().GetMethod("GetImuDataStreamAsync");
 
-        // Assert: ƒƒ\ƒbƒh‚ª‘¶İ‚µAÀ‘•‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
+        // Assert: ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½ï¿½ï¿½ï¿½ï¿½İ‚ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
         Assert.NotNull(streamMethod);
         Assert.True(streamMethod.ReturnType.IsGenericType);
 
@@ -89,9 +89,9 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg3: Dispose‚Ì³íI—¹iƒpƒtƒH[ƒ}ƒ“ƒXŒv‘ª—pj
-    /// d—lFuDisposeasync‚ÅIsConnected‚ªfalse‚É‚È‚év
-    /// ’x‰„‚È‚µ‚Å‚‘¬Às
+    /// ï¿½eï¿½Xï¿½g3: Disposeï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½iï¿½pï¿½tï¿½Hï¿½[ï¿½}ï¿½ï¿½ï¿½Xï¿½vï¿½ï¿½ï¿½pï¿½j
+    /// ï¿½dï¿½lï¿½Fï¿½uDisposeasyncï¿½ï¿½IsConnectedï¿½ï¿½falseï¿½É‚È‚ï¿½v
+    /// ï¿½xï¿½ï¿½ï¿½È‚ï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s
     /// </summary>
     [Fact(Timeout = 5000)]
     public async Task DisposeAsync_ShouldDisconnect()
@@ -110,14 +110,14 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg4: ’á‘¬ƒf[ƒ^ƒXƒgƒŠ[ƒ€óM‚ÌƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“
-    /// ÀƒfƒoƒCƒX‚Í” ms`”\ ms ‚Ìƒ^ƒCƒ~ƒ“ƒO‚Åƒf[ƒ^‚ğ‘—M‚·‚é
-    /// ƒ^ƒCƒ€ƒAƒEƒgˆ—‚âƒoƒbƒtƒ@ƒŠƒ“ƒO“®ì‚ÌŠm”F—p
+    /// ï¿½eï¿½Xï¿½g4: ï¿½á‘¬ï¿½fï¿½[ï¿½^ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½Mï¿½ÌƒVï¿½~ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
+    /// ï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½Íï¿½ msï¿½`ï¿½ï¿½ï¿½\ ms ï¿½Ìƒ^ï¿½Cï¿½~ï¿½ï¿½ï¿½Oï¿½Åƒfï¿½[ï¿½^ï¿½ğ‘—Mï¿½ï¿½ï¿½ï¿½
+    /// ï¿½^ï¿½Cï¿½ï¿½ï¿½Aï¿½Eï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½bï¿½tï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ÌŠmï¿½Fï¿½p
     /// </summary>
     [Fact(Timeout = 10000)]
     public async Task ConnectAsync_WithDelayedData_ShouldSucceed()
     {
-        // Arrange: 10ms ‚Ì’x‰„‚Åƒf[ƒ^‚ğ‘—MiÀƒfƒoƒCƒXƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“j
+        // Arrange: 10ms ï¿½Ì’xï¿½ï¿½ï¿½Åƒfï¿½[ï¿½^ï¿½ğ‘—Mï¿½iï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½Vï¿½~ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½j
         var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(10, delayMs: 10, cancellationToken: ct));
 
         // Act
@@ -131,13 +131,13 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg5: ƒfƒoƒCƒX‰Šú‰»‚Æ•¡”‰ñ‚ÌÚ‘±ƒeƒXƒg
-    /// •¡”‚ÌƒfƒoƒCƒXÚ‘±ƒV[ƒPƒ“ƒX‚ª³í‚É“®ì‚·‚é‚±‚Æ‚ğŠm”F
+    /// ï¿½eï¿½Xï¿½g5: ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ•ï¿½ï¿½ï¿½ï¿½ï¿½ÌÚ‘ï¿½ï¿½eï¿½Xï¿½g
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½Ìƒfï¿½oï¿½Cï¿½Xï¿½Ú‘ï¿½ï¿½Vï¿½[ï¿½Pï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É“ï¿½ï¿½ì‚·ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
     /// </summary>
     [Fact(Timeout = 10000)]
     public async Task ConnectAsync_MultipleConnections_ShouldSucceed()
     {
-        // Arrange & Act: •¡”‰ñ‚ÌÚ‘±‚ğs
+        // Arrange & Act: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌÚ‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s
         for (int i = 0; i < 3; i++)
         {
             var mockProvider = new MockHidStreamProvider(ct => GenerateTestImuData(3, delayMs: 0, cancellationToken: ct));
@@ -153,8 +153,8 @@ public class VitureLumaDeviceTests
     }
 
     /// <summary>
-    /// ƒeƒXƒg6: ƒfƒoƒCƒX‰Šú‰»Œã‚Í IMU ‚ª–³Œø‰»‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
-    /// DisposeAsync ‚Å‚à–³Œø‰»ƒRƒ}ƒ“ƒh‚ª‘—M‚³‚ê‚é
+    /// ï¿½eï¿½Xï¿½g6: ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IMU ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
+    /// DisposeAsync ï¿½Å‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     [Fact(Timeout = 10000)]
     public async Task DisposeAsync_ShouldDisableImuOnCleanup()
@@ -165,12 +165,12 @@ public class VitureLumaDeviceTests
         Assert.NotNull(device);
         Assert.True(device.IsConnected);
 
-        // Act: Dispose ‚ğŒÄ‚Ño‚·
+        // Act: Dispose ï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½
         await device.DisposeAsync();
 
-        // Assert: ƒfƒoƒCƒX‚ªØ’f‚³‚ê‚½‚±‚Æ‚ğŠm”F
+        // Assert: ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½Ø’fï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½mï¿½F
         Assert.False(device.IsConnected);
-        // Dispose ‚É IMU –³Œø‰»ƒRƒ}ƒ“ƒh‚ª‘—M‚³‚ê‚éiÀ‘•Ú×‚¾‚ªŠm”F‰Â”\j
+        // Dispose ï¿½ï¿½ï¿½ï¿½ IMU ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½Ú×‚ï¿½ï¿½ï¿½ï¿½mï¿½Fï¿½Â”\ï¿½j
     }
 }
 

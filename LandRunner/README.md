@@ -1,191 +1,191 @@
-# LandRunner - VITURE Luma IMU ƒrƒ…[ƒA
+# LandRunner - VITURE Luma IMU ï¿½rï¿½ï¿½ï¿½[ï¿½A
 
-WPF ‚ÅÀ‘•‚³‚ê‚½ VITURE Luma Œü‚¯‚ÌƒŠƒAƒ‹ƒ^ƒCƒ€ IMU ƒf[ƒ^ƒrƒ…[ƒAEƒƒK[‚Å‚·B
+WPF ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ VITURE Luma ï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Aï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ IMU ï¿½fï¿½[ï¿½^ï¿½rï¿½ï¿½ï¿½[ï¿½Aï¿½Eï¿½ï¿½ï¿½Kï¿½[ï¿½Å‚ï¿½ï¿½B
 
-## å‚È‹@”\
+## ï¿½ï¿½È‹@ï¿½\
 
-- ?? **ƒŠƒAƒ‹ƒ^ƒCƒ€ IMU ƒf[ƒ^•\¦**FEuler Šp“xAQuaternion ‚ğƒ_ƒbƒVƒ…ƒ{[ƒh‚Å•\¦
-- ?? **3D ‰ñ“]ƒrƒWƒ…ƒAƒ‰ƒCƒ[[ƒVƒ‡ƒ“**FXYZ ²‚ğ Yaw Šp‚ÉŠî‚Ã‚¢‚Ä‰ñ“]‚³‚¹‚½ó‘Ô‚Å•\¦
-- ?? **IMU ƒf[ƒ^©“®‹L˜^**FGlassBridge ‚Ì‹L˜^‹@”\‚ğŠˆ—p‚µ‚Ä IMU ƒf[ƒ^‚ğ JSON Lines Œ`®‚Å‹L˜^
-- ?? **ƒfƒoƒbƒO ƒƒOo—Í**F‚·‚×‚Ä‚ÌƒAƒNƒeƒBƒrƒeƒB‚ğƒ^ƒCƒ€ƒXƒ^ƒ“ƒv•t‚«ƒƒOƒtƒ@ƒCƒ‹‚É‹L˜^
+- ?? **ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ IMU ï¿½fï¿½[ï¿½^ï¿½\ï¿½ï¿½**ï¿½FEuler ï¿½pï¿½xï¿½AQuaternion ï¿½ï¿½ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½{ï¿½[ï¿½hï¿½Å•\ï¿½ï¿½
+- ?? **3D ï¿½ï¿½]ï¿½rï¿½Wï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Cï¿½[ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½**ï¿½FXYZ ï¿½ï¿½ï¿½ï¿½ Yaw ï¿½pï¿½ÉŠï¿½Ã‚ï¿½ï¿½Ä‰ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚Å•\ï¿½ï¿½
+- ?? **IMU ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½Lï¿½^**ï¿½FGlassBridge ï¿½Ì‹Lï¿½^ï¿½@ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ IMU ï¿½fï¿½[ï¿½^ï¿½ï¿½ JSON Lines ï¿½`ï¿½ï¿½ï¿½Å‹Lï¿½^
+- ?? **ï¿½fï¿½oï¿½bï¿½O ï¿½ï¿½ï¿½Oï¿½oï¿½ï¿½**ï¿½Fï¿½ï¿½ï¿½×‚Ä‚ÌƒAï¿½Nï¿½eï¿½Bï¿½rï¿½eï¿½Bï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½tï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½É‹Lï¿½^
 
-## ƒvƒƒWƒFƒNƒg\¬iMVVM ƒpƒ^[ƒ“j
+## ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½\ï¿½ï¿½ï¿½iMVVM ï¿½pï¿½^ï¿½[ï¿½ï¿½ï¿½j
 
 ```
 LandRunner/
-„¥„Ÿ„Ÿ Models/
-„    „¥„Ÿ„Ÿ DebugLogger.cs            # ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv•t‚«ƒfƒoƒbƒOƒƒOo—Í
-„    „¤„Ÿ„Ÿ ImuLogger.cs              # DebugLogger ‚ÌƒGƒCƒŠƒAƒX/ƒ‰ƒbƒp[
-„¥„Ÿ„Ÿ ViewModels/
-„    „¥„Ÿ„Ÿ ViewModelBase.cs          # MVVM Šî–{ƒNƒ‰ƒXiINotifyPropertyChangedj
-„    „¥„Ÿ„Ÿ RelayCommand.cs           # ICommand À‘•i“¯ŠúE”ñ“¯Šú‘Î‰j
-„    „¤„Ÿ„Ÿ MainWindowViewModel.cs    # ó‘ÔŠÇ—EƒrƒWƒlƒXƒƒWƒbƒN
-„¥„Ÿ„Ÿ Views/
-„    „¥„Ÿ„Ÿ MainWindow.xaml           # UI ƒŒƒCƒAƒEƒgiDataBindingj
-„    „¤„Ÿ„Ÿ MainWindow.xaml.cs        # CodeBehindiƒrƒWƒ…ƒAƒ‹‰»‚Ì‚İj
-„¥„Ÿ„Ÿ App.xaml
-„¥„Ÿ„Ÿ App.xaml.cs
-„¤„Ÿ„Ÿ GlassBridge “‡
-    „¤„Ÿ„Ÿ ConnectAndRecordAsync() ¨ JSON Lines ‹L˜^
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Models/
+ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DebugLogger.cs            # ï¿½^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½tï¿½ï¿½ï¿½fï¿½oï¿½bï¿½Oï¿½ï¿½ï¿½Oï¿½oï¿½ï¿½
+ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ImuLogger.cs              # DebugLogger ï¿½ÌƒGï¿½Cï¿½ï¿½ï¿½Aï¿½X/ï¿½ï¿½ï¿½bï¿½pï¿½[
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ViewModels/
+ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ViewModelBase.cs          # MVVM ï¿½ï¿½{ï¿½Nï¿½ï¿½ï¿½Xï¿½iINotifyPropertyChangedï¿½j
+ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RelayCommand.cs           # ICommand ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ñ“¯Šï¿½ï¿½Î‰ï¿½ï¿½j
+ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MainWindowViewModel.cs    # ï¿½ï¿½ÔŠÇ—ï¿½ï¿½Eï¿½rï¿½Wï¿½lï¿½Xï¿½ï¿½ï¿½Wï¿½bï¿½N
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Views/
+ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MainWindow.xaml           # UI ï¿½ï¿½ï¿½Cï¿½Aï¿½Eï¿½gï¿½iDataBindingï¿½j
+ï¿½ï¿½   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MainWindow.xaml.cs        # CodeBehindï¿½iï¿½rï¿½Wï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½Ì‚İj
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ App.xaml
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ App.xaml.cs
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ GlassBridge ï¿½ï¿½ï¿½ï¿½
+    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ConnectAndRecordAsync() ï¿½ï¿½ JSON Lines ï¿½Lï¿½^
 ```
 
-### ŠeƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì–ğŠ„
+### ï¿½eï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½Ì–ï¿½ï¿½ï¿½
 
-| ƒtƒ@ƒCƒ‹ | –ğŠ„ | à–¾ |
+| ï¿½tï¿½@ï¿½Cï¿½ï¿½ | ï¿½ï¿½ï¿½ï¿½ | ï¿½ï¿½ï¿½ï¿½ |
 |---------|------|------|
-| **ViewModelBase.cs** | Šî–{ƒNƒ‰ƒX | `INotifyPropertyChanged` À‘•AƒvƒƒpƒeƒB•ÏX’Ê’m |
-| **RelayCommand.cs** | ƒRƒ}ƒ“ƒhÀ‘• | UI ƒ{ƒ^ƒ“Eƒƒjƒ…[‘€ì‚Ìƒnƒ“ƒhƒŠƒ“ƒOi”ñ“¯Šú‘Î‰j |
-| **MainWindowViewModel.cs** | ViewModel | UI ó‘ÔEGlassBridge ‚ÌÚ‘±Eƒf[ƒ^XV‚ğŠÇ— |
-| **DebugLogger.cs** | ƒƒOo—Í | ƒtƒ@ƒCƒ‹EƒRƒ“ƒ\[ƒ‹‚Ö‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv•t‚«ƒƒO |
-| **MainWindow.xaml** | View | UI ’è‹`iMVVM DataBindingj |
+| **ViewModelBase.cs** | ï¿½ï¿½{ï¿½Nï¿½ï¿½ï¿½X | `INotifyPropertyChanged` ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½vï¿½ï¿½ï¿½pï¿½eï¿½Bï¿½ÏXï¿½Ê’m |
+| **RelayCommand.cs** | ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ | UI ï¿½{ï¿½^ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½Ìƒnï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½iï¿½ñ“¯Šï¿½ï¿½Î‰ï¿½ï¿½j |
+| **MainWindowViewModel.cs** | ViewModel | UI ï¿½ï¿½ÔEGlassBridge ï¿½ÌÚ‘ï¿½ï¿½Eï¿½fï¿½[ï¿½^ï¿½Xï¿½Vï¿½ï¿½ï¿½Ç—ï¿½ |
+| **DebugLogger.cs** | ï¿½ï¿½ï¿½Oï¿½oï¿½ï¿½ | ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Eï¿½Rï¿½ï¿½ï¿½\ï¿½[ï¿½ï¿½ï¿½Ö‚Ìƒ^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½tï¿½ï¿½ï¿½ï¿½ï¿½O |
+| **MainWindow.xaml** | View | UI ï¿½ï¿½`ï¿½iMVVM DataBindingï¿½j |
 
-## ÀsEƒeƒXƒg
+## ï¿½ï¿½ï¿½sï¿½Eï¿½eï¿½Xï¿½g
 
-### ƒAƒvƒŠƒP[ƒVƒ‡ƒ“Às
+### ï¿½Aï¿½vï¿½ï¿½ï¿½Pï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s
 
 ```bash
-# ƒfƒoƒbƒOƒrƒ‹ƒh•Às
+# ï¿½fï¿½oï¿½bï¿½Oï¿½rï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½s
 dotnet run --project LandRunner
 
-# ƒŠƒŠ[ƒXƒrƒ‹ƒh•Às
+# ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Xï¿½rï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½s
 dotnet run --project LandRunner --configuration Release
 ```
 
-### ƒeƒXƒgÀs
+### ï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½s
 
 ```bash
-# ‘SƒeƒXƒgÀs
+# ï¿½Sï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½s
 dotnet test LandRunnerTest
 
-# “Á’è‚ÌƒeƒXƒgƒNƒ‰ƒX‚Ì‚İ
+# ï¿½ï¿½ï¿½ï¿½Ìƒeï¿½Xï¿½gï¿½Nï¿½ï¿½ï¿½Xï¿½Ì‚ï¿½
 dotnet test LandRunnerTest --filter "FullyQualifiedName~ImuLoggerTests"
 
-# Ú×o—Í
+# ï¿½Ú×oï¿½ï¿½
 dotnet test LandRunnerTest --verbosity detailed
 ```
 
-## ƒƒOo—Íæ
+## ï¿½ï¿½ï¿½Oï¿½oï¿½Íï¿½
 
-### ƒfƒBƒŒƒNƒgƒŠ\¬
+### ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½\ï¿½ï¿½
 
 ```
-%APPDATA%\LandRunner\                      i—áFC:\Users\<User>\AppData\Roaming\LandRunner\j
-„¥„Ÿ„Ÿ debug_<yyyyMMdd_HHmmss>.log            ƒfƒoƒbƒOƒƒOiƒ^ƒCƒ€ƒXƒ^ƒ“ƒv•t‚«j
-„¤„Ÿ„Ÿ imu_data_<yyyyMMdd_HHmmss>.jsonl       IMU ƒf[ƒ^‹L˜^iGlassBridge ‚ª©“®¶¬j
+%APPDATA%\LandRunner\                      ï¿½iï¿½ï¿½FC:\Users\<User>\AppData\Roaming\LandRunner\ï¿½j
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ debug_<yyyyMMdd_HHmmss>.log            ï¿½fï¿½oï¿½bï¿½Oï¿½ï¿½ï¿½Oï¿½iï¿½^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½tï¿½ï¿½ï¿½j
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ imu_data_<yyyyMMdd_HHmmss>.jsonl       IMU ï¿½fï¿½[ï¿½^ï¿½Lï¿½^ï¿½iGlassBridge ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½j
 ```
 
-### ƒfƒoƒbƒOƒƒOŒ`®
+### ï¿½fï¿½oï¿½bï¿½Oï¿½ï¿½ï¿½Oï¿½`ï¿½ï¿½
 
-ŠeƒƒOƒGƒ“ƒgƒŠ‚Íƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Æ‹¤‚Éo—Í‚³‚ê‚Ü‚·F
+ï¿½eï¿½ï¿½ï¿½Oï¿½Gï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Íƒ^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½Æ‹ï¿½ï¿½Éoï¿½Í‚ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½F
 
 ```
 [2026-01-26 21:46:11.234] ImuLogger initialized
 [2026-01-26 21:46:11.235] Debug log: C:\Users\...\AppData\Roaming\LandRunner\debug_20260126_214611.log
 [2026-01-26 21:46:11.236] Recording IMU data to: C:\Users\...\AppData\Roaming\LandRunner
 [2026-01-26 21:46:12.500] Successfully connected to device
-[2026-01-26 21:46:13.100] Received IMU frame: Timestamp=12345, Roll=45.0‹
+[2026-01-26 21:46:13.100] Received IMU frame: Timestamp=12345, Roll=45.0ï¿½ï¿½
 [2026-01-26 21:46:15.800] Disposing device (GlassBridge will finalize recording)
 ```
 
-### IMU ƒf[ƒ^‹L˜^Œ`®
+### IMU ï¿½fï¿½[ï¿½^ï¿½Lï¿½^ï¿½`ï¿½ï¿½
 
-GlassBridge ‚Ì `ConnectAndRecordAsync()` ‚É‚æ‚èAIMU ƒf[ƒ^‚Í **JSON Lines Œ`®** ‚Å©“®‹L˜^‚³‚ê‚Ü‚·BŠes‚ª1‚Â‚ÌƒtƒŒ[ƒ€‚Å‚·F
+GlassBridge ï¿½ï¿½ `ConnectAndRecordAsync()` ï¿½É‚ï¿½ï¿½AIMU ï¿½fï¿½[ï¿½^ï¿½ï¿½ **JSON Lines ï¿½`ï¿½ï¿½** ï¿½Åï¿½ï¿½ï¿½ï¿½Lï¿½^ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½Bï¿½eï¿½sï¿½ï¿½1ï¿½Â‚Ìƒtï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Å‚ï¿½ï¿½F
 
 ```json
 {"Timestamp":12345,"MessageCounter":100,"Quaternion":{"W":0.707107,"X":0.707107,"Y":0,"Z":0},"EulerAngles":{"Roll":45.0,"Pitch":30.0,"Yaw":15.0}}
 {"Timestamp":12350,"MessageCounter":101,"Quaternion":{"W":0.707107,"X":0.707107,"Y":0,"Z":0},"EulerAngles":{"Roll":46.0,"Pitch":31.0,"Yaw":16.0}}
 ```
 
-Ú×‚Í **GlassBridge/RECORDING_API_GUIDE.md** ‚ğQÆ‚µ‚Ä‚­‚¾‚³‚¢B
+ï¿½Ú×‚ï¿½ **GlassBridge/RECORDING_API_GUIDE.md** ï¿½ï¿½ï¿½Qï¿½Æ‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 
-## ƒeƒXƒg
+## ï¿½eï¿½Xï¿½g
 
-LandRunnerTest ƒvƒƒWƒFƒNƒg‚É‚ÍAˆÈ‰º‚ÌƒeƒXƒgƒNƒ‰ƒXEƒeƒXƒgƒP[ƒX‚ªŠÜ‚Ü‚ê‚Ä‚¢‚Ü‚·B
+LandRunnerTest ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½É‚ÍAï¿½È‰ï¿½ï¿½Ìƒeï¿½Xï¿½gï¿½Nï¿½ï¿½ï¿½Xï¿½Eï¿½eï¿½Xï¿½gï¿½Pï¿½[ï¿½Xï¿½ï¿½ï¿½Ü‚Ü‚ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½B
 
-### ƒeƒXƒgƒNƒ‰ƒXˆê——i‘S 19 Œj
+### ï¿½eï¿½Xï¿½gï¿½Nï¿½ï¿½ï¿½Xï¿½ê——ï¿½iï¿½S 19 ï¿½ï¿½ï¿½j
 
-| ƒeƒXƒgƒNƒ‰ƒX | ‘ÎÛƒNƒ‰ƒX | ƒeƒXƒg” | à–¾ |
+| ï¿½eï¿½Xï¿½gï¿½Nï¿½ï¿½ï¿½X | ï¿½ÎÛƒNï¿½ï¿½ï¿½X | ï¿½eï¿½Xï¿½gï¿½ï¿½ | ï¿½ï¿½ï¿½ï¿½ |
 |----------|-----------|--------|------|
-| **ImuLoggerTests** | ImuLogger | 4 Œ | ƒfƒoƒbƒOƒƒOo—Í‹@”\EƒXƒŒƒbƒhˆÀ‘S« |
-| **ImuDeviceManagerTests** | ImuDeviceManager | 1 Œ | ƒfƒoƒCƒXƒ}ƒl[ƒWƒƒ[‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‰» |
-| **MockImuDeviceTests** | MockImuDevice | 1 Œ | ƒ‚ƒbƒNƒfƒoƒCƒX‚ÌƒXƒgƒŠ[ƒ€“®ì |
-| **ImuDataTests** | ImuData | 3 Œ | IMU ƒf[ƒ^\‘¢E’l‚Ì¸“x |
-| **MainWindowViewModelTests** | MainWindowViewModel | 5 Œ | ViewModel ó‘ÔŠÇ—EƒCƒxƒ“ƒg |
-| **RelayCommandTests** | RelayCommand | 5 Œ | ƒRƒ}ƒ“ƒhÀsE”ñ“¯Šú‘Î‰ |
-| **‡Œv** | | **19 Œ** | **‚·‚×‚Ä‡Ši ?** |
+| **ImuLoggerTests** | ImuLogger | 4 ï¿½ï¿½ | ï¿½fï¿½oï¿½bï¿½Oï¿½ï¿½ï¿½Oï¿½oï¿½Í‹@ï¿½\ï¿½Eï¿½Xï¿½ï¿½ï¿½bï¿½hï¿½ï¿½ï¿½Sï¿½ï¿½ |
+| **ImuDeviceManagerTests** | ImuDeviceManager | 1 ï¿½ï¿½ | ï¿½fï¿½oï¿½Cï¿½Xï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½[ï¿½ÌƒCï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½Xï¿½ï¿½ |
+| **MockImuDeviceTests** | MockImuDevice | 1 ï¿½ï¿½ | ï¿½ï¿½ï¿½bï¿½Nï¿½fï¿½oï¿½Cï¿½Xï¿½ÌƒXï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ |
+| **ImuDataTests** | ImuData | 3 ï¿½ï¿½ | IMU ï¿½fï¿½[ï¿½^ï¿½\ï¿½ï¿½ï¿½Eï¿½lï¿½Ìï¿½ï¿½x |
+| **MainWindowViewModelTests** | MainWindowViewModel | 5 ï¿½ï¿½ | ViewModel ï¿½ï¿½ÔŠÇ—ï¿½ï¿½Eï¿½Cï¿½xï¿½ï¿½ï¿½g |
+| **RelayCommandTests** | RelayCommand | 5 ï¿½ï¿½ | ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½sï¿½Eï¿½ñ“¯Šï¿½ï¿½Î‰ï¿½ |
+| **ï¿½ï¿½ï¿½v** | | **19 ï¿½ï¿½** | **ï¿½ï¿½ï¿½×‚Äï¿½ï¿½i ?** |
 
-### ƒeƒXƒgƒP[ƒXÚ×
+### ï¿½eï¿½Xï¿½gï¿½Pï¿½[ï¿½Xï¿½Úï¿½
 
 #### ImuLoggerTests
-- `ImuLogger_Initialize_CreatesLogFile` - ƒƒOƒtƒ@ƒCƒ‹‚Ìì¬‚ğŠm”F
-- `ImuLogger_LogDebug_WritesMessage` - ƒƒbƒZ[ƒW‚ªƒtƒ@ƒCƒ‹‚É‹L˜^‚³‚ê‚é‚±‚Æ‚ğŠm”F
-- `ImuLogger_Dispose_ClosesFiles` - ”jŠü‚Éƒtƒ@ƒCƒ‹‚ªƒNƒ[ƒY‚³‚ê‚é‚±‚Æ‚ğŠm”F
-- `ImuLogger_ThreadSafe_ConcurrentWrites` - ƒ}ƒ‹ƒ`ƒXƒŒƒbƒhŠÂ‹«‚Å‚ÌˆÀ‘S«‚ğŠm”F
+- `ImuLogger_Initialize_CreatesLogFile` - ï¿½ï¿½ï¿½Oï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ìì¬ï¿½ï¿½ï¿½mï¿½F
+- `ImuLogger_LogDebug_WritesMessage` - ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½É‹Lï¿½^ï¿½ï¿½ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
+- `ImuLogger_Dispose_ClosesFiles` - ï¿½jï¿½ï¿½ï¿½ï¿½ï¿½Éƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½[ï¿½Yï¿½ï¿½ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
+- `ImuLogger_ThreadSafe_ConcurrentWrites` - ï¿½}ï¿½ï¿½ï¿½`ï¿½Xï¿½ï¿½ï¿½bï¿½hï¿½Â‹ï¿½ï¿½Å‚Ìˆï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½mï¿½F
 
 #### ImuDeviceManagerTests
-- `ImuDeviceManager_CreateInstance_ShouldNotThrow` - ƒCƒ“ƒXƒ^ƒ“ƒX‰»‚ª¬Œ÷‚·‚é‚±‚Æ‚ğŠm”F
+- `ImuDeviceManager_CreateInstance_ShouldNotThrow` - ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
 
 #### MockImuDeviceTests
-- `MockDevice_StreamData_ProducesData` - ƒ‚ƒbƒN ƒfƒoƒCƒX‚ªƒf[ƒ^‚ğ¶¬‚·‚é‚±‚Æ‚ğŠm”F
+- `MockDevice_StreamData_ProducesData` - ï¿½ï¿½ï¿½bï¿½N ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ğ¶ï¿½ï¿½ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
 
 #### ImuDataTests
-- `ImuData_EulerAngles_ShouldBeAccurate` - Euler Šp“xŒvZ‚Ì¸“x‚ğŠm”F
-- `Quaternion_Operations_ShouldWork` - Quaternion ‰‰Z‚ğŠm”F
-- `ImuData_Record_ShouldContainRequiredFields` - ƒŒƒR[ƒhŒ^‚É•K{ƒtƒB[ƒ‹ƒh‚ªŠÜ‚Ü‚ê‚é‚±‚Æ‚ğŠm”F
+- `ImuData_EulerAngles_ShouldBeAccurate` - Euler ï¿½pï¿½xï¿½vï¿½Zï¿½Ìï¿½ï¿½xï¿½ï¿½ï¿½mï¿½F
+- `Quaternion_Operations_ShouldWork` - Quaternion ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½mï¿½F
+- `ImuData_Record_ShouldContainRequiredFields` - ï¿½ï¿½ï¿½Rï¿½[ï¿½hï¿½^ï¿½É•Kï¿½{ï¿½tï¿½Bï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Ü‚Ü‚ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
 
 #### MainWindowViewModelTests
-- `MainWindowViewModel_Initialize_DefaultValues` - ‰Šú’l‚ª³‚µ‚­İ’è‚³‚ê‚é‚±‚Æ‚ğŠm”F
-- `MainWindowViewModel_PropertyChanged_RaisesEvent` - ƒvƒƒpƒeƒB•ÏX‚ÉƒCƒxƒ“ƒg‚ª”­‰Î‚·‚é‚±‚Æ‚ğŠm”F
-- `MainWindowViewModel_ConnectCommand_IsNotNull` - ConnectCommand ‚ª null ‚Å‚È‚¢‚±‚Æ‚ğŠm”F
-- `MainWindowViewModel_UpdateFromImuData_UpdatesProperties` - IMU ƒf[ƒ^XV‚É UI ‚ª”½‰f‚³‚ê‚é‚±‚Æ‚ğŠm”F
-- `MainWindowViewModel_GetLastEulerAngles_ParsesCorrectly` - Euler Šp“x‚Ì‰ğÍ¸“x‚ğŠm”F
+- `MainWindowViewModel_Initialize_DefaultValues` - ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ’è‚³ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
+- `MainWindowViewModel_PropertyChanged_RaisesEvent` - ï¿½vï¿½ï¿½ï¿½pï¿½eï¿½Bï¿½ÏXï¿½ï¿½ï¿½ÉƒCï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Î‚ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
+- `MainWindowViewModel_ConnectCommand_IsNotNull` - ConnectCommand ï¿½ï¿½ null ï¿½Å‚È‚ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½mï¿½F
+- `MainWindowViewModel_UpdateFromImuData_UpdatesProperties` - IMU ï¿½fï¿½[ï¿½^ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
+- `MainWindowViewModel_GetLastEulerAngles_ParsesCorrectly` - Euler ï¿½pï¿½xï¿½Ì‰ï¿½Íï¿½ï¿½xï¿½ï¿½ï¿½mï¿½F
 
 #### RelayCommandTests
-- `RelayCommand_Execute_InvokesAction` - ƒRƒ}ƒ“ƒhÀs‚ªƒAƒNƒVƒ‡ƒ“‚ğŒÄ‚Ño‚·‚±‚Æ‚ğŠm”F
-- `RelayCommand_CanExecute_ReturnsTrue_WhenNoCondition` - ğŒ‚È‚µ‚ÅÀs‰Â”\‚Å‚ ‚é‚±‚Æ‚ğŠm”F
-- `RelayCommand_CanExecute_RespectsPredicate` - qŒêƒƒWƒbƒN‚ª³‚µ‚­‹@”\‚·‚é‚±‚Æ‚ğŠm”F
-- `AsyncRelayCommand_Execute_InvokesAsyncAction` - ”ñ“¯ŠúƒRƒ}ƒ“ƒhÀs‚ğŠm”F
-- `AsyncRelayCommand_CanExecute_ReturnsTrue_WhenNotExecuting` - ”ñ“¯ŠúÀs’†‚Å‚È‚¢‚ÍÀs‰Â”\‚Å‚ ‚é‚±‚Æ‚ğŠm”F
+- `RelayCommand_Execute_InvokesAction` - ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Aï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½mï¿½F
+- `RelayCommand_CanExecute_ReturnsTrue_WhenNoCondition` - ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½Åï¿½ï¿½sï¿½Â”\ï¿½Å‚ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
+- `RelayCommand_CanExecute_RespectsPredicate` - ï¿½qï¿½êƒï¿½Wï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½@ï¿½\ï¿½ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
+- `AsyncRelayCommand_Execute_InvokesAsyncAction` - ï¿½ñ“¯Šï¿½ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½sï¿½ï¿½ï¿½mï¿½F
+- `AsyncRelayCommand_CanExecute_ReturnsTrue_WhenNotExecuting` - ï¿½ñ“¯Šï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½sï¿½Â”\ï¿½Å‚ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½F
 
-## ˆË‘¶ŠÖŒW‚Æ‹ZpƒXƒ^ƒbƒN
+## ï¿½Ë‘ï¿½ï¿½ÖŒWï¿½Æ‹Zï¿½pï¿½Xï¿½^ï¿½bï¿½N
 
-| €–Ú | à–¾ |
+| ï¿½ï¿½ï¿½ï¿½ | ï¿½ï¿½ï¿½ï¿½ |
 |------|------|
-| **ƒtƒŒ[ƒ€ƒ[ƒN** | .NET 10.0-windows7.0 |
-| **UI ƒtƒŒ[ƒ€ƒ[ƒN** | WPF (Windows Presentation Foundation) |
-| **IMU ƒ‰ƒCƒuƒ‰ƒŠ** | GlassBridge (‚±‚Ìƒ\ƒŠƒ…[ƒVƒ‡ƒ““à) |
-| **ƒeƒXƒgƒtƒŒ[ƒ€ƒ[ƒN** | xUnit + •W€ƒ†ƒjƒbƒgƒeƒXƒg |
-| **ƒA[ƒLƒeƒNƒ`ƒƒ** | MVVM (Model-View-ViewModel) |
+| **ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½N** | .NET 10.0-windows7.0 |
+| **UI ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½N** | WPF (Windows Presentation Foundation) |
+| **IMU ï¿½ï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½** | GlassBridge (ï¿½ï¿½ï¿½Ìƒ\ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) |
+| **ï¿½eï¿½Xï¿½gï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½N** | xUnit + ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½jï¿½bï¿½gï¿½eï¿½Xï¿½g |
+| **ï¿½Aï¿½[ï¿½Lï¿½eï¿½Nï¿½`ï¿½ï¿½** | MVVM (Model-View-ViewModel) |
 
-## MVVM ƒpƒ^[ƒ“‚ÌİŒv
+## MVVM ï¿½pï¿½^ï¿½[ï¿½ï¿½ï¿½ÌİŒv
 
-LandRunner ‚Í MVVM ƒpƒ^[ƒ“‚ğÌ—p‚µAŠÖS‚Ì•ª—£‚ğÀŒ»‚µ‚Ä‚¢‚Ü‚·F
+LandRunner ï¿½ï¿½ MVVM ï¿½pï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ì—pï¿½ï¿½ï¿½Aï¿½ÖSï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½F
 
-### –ğŠ„•ª’S
+### ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½S
 
-| ƒŒƒCƒ„[ | ’S“– | å—vƒNƒ‰ƒX |
+| ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ | ï¿½Sï¿½ï¿½ | ï¿½ï¿½vï¿½Nï¿½ï¿½ï¿½X |
 |--------|------|-----------|
-| **Model** | ƒf[ƒ^EƒrƒWƒlƒXƒƒWƒbƒN | DebugLoggerAImuData |
-| **ViewModel** | ó‘ÔŠÇ—EƒRƒ}ƒ“ƒhˆ— | MainWindowViewModelARelayCommand |
-| **View** | UI •\¦ | MainWindow.xaml |
+| **Model** | ï¿½fï¿½[ï¿½^ï¿½Eï¿½rï¿½Wï¿½lï¿½Xï¿½ï¿½ï¿½Wï¿½bï¿½N | DebugLoggerï¿½AImuData |
+| **ViewModel** | ï¿½ï¿½ÔŠÇ—ï¿½ï¿½Eï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ | MainWindowViewModelï¿½ARelayCommand |
+| **View** | UI ï¿½\ï¿½ï¿½ | MainWindow.xaml |
 
-### ’ÊMƒtƒ[
+### ï¿½ÊMï¿½tï¿½ï¿½ï¿½[
 
 ```
-User ¨ View (XAML) 
-          «
-       MainWindow.xaml.cs (Å¬ŒÀ)
-          «
+User ï¿½ï¿½ View (XAML) 
+          ï¿½ï¿½
+       MainWindow.xaml.cs (ï¿½Åï¿½ï¿½ï¿½)
+          ï¿½ï¿½
        ViewModel (MainWindowViewModel)
-          «
-       GlassBridge (IMU æ“¾E‹L˜^)
-          «
-       Model (DebugLoggerAImuData)
+          ï¿½ï¿½
+       GlassBridge (IMU ï¿½æ“¾ï¿½Eï¿½Lï¿½^)
+          ï¿½ï¿½
+       Model (DebugLoggerï¿½AImuData)
 ```
 
-### DataBinding ‚ÌŠˆ—p
+### DataBinding ï¿½ÌŠï¿½ï¿½p
 
-ViewModel‚ÌƒvƒƒpƒeƒB•ÏX‚ğ XAML DataBinding ‚Å©“®ŒŸoF
+ViewModelï¿½Ìƒvï¿½ï¿½ï¿½pï¿½eï¿½Bï¿½ÏXï¿½ï¿½ XAML DataBinding ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½F
 
 ```xml
 <TextBlock Text="{Binding RollText}" />
@@ -193,28 +193,28 @@ ViewModel‚ÌƒvƒƒpƒeƒB•ÏX‚ğ XAML DataBinding ‚Å©“®ŒŸoF
 <TextBlock Text="{Binding YawText}" />
 ```
 
-Ú×‚Í `MainWindow.xaml` ‚ğQÆB
+ï¿½Ú×‚ï¿½ `MainWindow.xaml` ï¿½ï¿½ï¿½Qï¿½ÆB
 
-## GlassBridge ‚Æ‚Ì“‡
+## GlassBridge ï¿½Æ‚Ì“ï¿½ï¿½ï¿½
 
-### ]—ˆ‚ÌƒAƒvƒ[ƒ`
+### ï¿½]ï¿½ï¿½ï¿½ÌƒAï¿½vï¿½ï¿½ï¿½[ï¿½`
 ```
-LandRunner ¨ IMU ƒf[ƒ^óM ¨ è“®‚Å CSV ‹L˜^
+LandRunner ï¿½ï¿½ IMU ï¿½fï¿½[ï¿½^ï¿½ï¿½M ï¿½ï¿½ ï¿½è“®ï¿½ï¿½ CSV ï¿½Lï¿½^
 ```
 
-### “‡Œã‚ÌƒAƒvƒ[ƒ`
+### ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌƒAï¿½vï¿½ï¿½ï¿½[ï¿½`
 ```
 ConnectAndRecordAsync()
-    «
-GlassBridge ‚ª©“®‹L˜^ ¨ imu_data_*.jsonl
-    «
-LandRunner ‚Í•\¦‚ÆƒƒOo—Í‚Ì‚İ‚É“Á‰»
+    ï¿½ï¿½
+GlassBridge ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Lï¿½^ ï¿½ï¿½ imu_data_*.jsonl
+    ï¿½ï¿½
+LandRunner ï¿½Í•\ï¿½ï¿½ï¿½Æƒï¿½ï¿½Oï¿½oï¿½Í‚Ì‚İ‚É“ï¿½ï¿½ï¿½
 ```
 
-ƒƒŠƒbƒgF
-- ?? LandRunner ‚ªŠÈŒ‰‚É‚È‚éi•\¦EƒƒO‚Ì‚İj
-- ?? GlassBridge ‚ª•W€‰»‚µ‚½ JSON Lines Œ`®‚Å‹L˜^
-- ?? Ä¶‹@”\iConnectFromRecordingAsync()j‚ÅŠÈ’P‚ÉƒŠƒvƒŒƒC
+ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½gï¿½F
+- ?? LandRunner ï¿½ï¿½ï¿½ÈŒï¿½ï¿½É‚È‚ï¿½iï¿½\ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½Oï¿½Ì‚İj
+- ?? GlassBridge ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ JSON Lines ï¿½`ï¿½ï¿½ï¿½Å‹Lï¿½^
+- ?? ï¿½Äï¿½ï¿½@ï¿½\ï¿½iConnectFromRecordingAsync()ï¿½jï¿½ÅŠÈ’Pï¿½Éƒï¿½ï¿½vï¿½ï¿½ï¿½C
 
-Ú×‚Í **GlassBridge/RECORDING_API_GUIDE.md** ‚ğQÆB
+ï¿½Ú×‚ï¿½ **GlassBridge/RECORDING_API_GUIDE.md** ï¿½ï¿½ï¿½Qï¿½ÆB
 

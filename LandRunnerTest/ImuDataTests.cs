@@ -3,8 +3,8 @@ using GlassBridge;
 namespace LandRunnerTest;
 
 /// <summary>
-/// ImuData ‚ÌƒeƒXƒg
-/// EulerŠp“xEQuaternion‚Ìƒf[ƒ^ŒŸØ
+/// ImuData ï¿½Ìƒeï¿½Xï¿½g
+/// Eulerï¿½pï¿½xï¿½EQuaternionï¿½Ìƒfï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 public class ImuDataTests
 {

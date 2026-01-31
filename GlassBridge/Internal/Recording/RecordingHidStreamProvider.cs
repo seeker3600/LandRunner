@@ -3,8 +3,8 @@ namespace GlassBridge.Internal.Recording;
 using GlassBridge.Internal.HID;
 
 /// <summary>
-/// HIDƒXƒgƒŠ[ƒ€ƒvƒƒoƒCƒ_[‚ğƒ‰ƒbƒv‚µ‚Ä‹L˜^‹@”\‚ğ’Ç‰Á
-/// g—p—á: var recordingProvider = new RecordingHidStreamProvider(baseProvider, outputDir)
+/// HIDï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½oï¿½Cï¿½_ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½vï¿½ï¿½ï¿½Ä‹Lï¿½^ï¿½@ï¿½\ï¿½ï¿½Ç‰ï¿½
+/// ï¿½gï¿½pï¿½ï¿½: var recordingProvider = new RecordingHidStreamProvider(baseProvider, outputDir)
 /// </summary>
 internal sealed class RecordingHidStreamProvider : IHidStreamProvider
 {
@@ -19,7 +19,7 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
         _outputDirectory = outputDirectory ?? throw new ArgumentNullException(nameof(outputDirectory));
         _recordingStreams = new Dictionary<IHidStream, RecordingHidStream>();
 
-        // o—ÍƒfƒBƒŒƒNƒgƒŠ‚ğì¬
+        // ï¿½oï¿½Íƒfï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ì¬
         Directory.CreateDirectory(_outputDirectory);
     }
 
@@ -33,7 +33,7 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
 
         var baseStreams = await _baseProvider.GetStreamsAsync(vendorId, productIds, cancellationToken);
 
-        // ŠeƒXƒgƒŠ[ƒ€‚ğRecordingHidStream‚Åƒ‰ƒbƒv
+        // ï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½RecordingHidStreamï¿½Åƒï¿½ï¿½bï¿½v
         var recordingStreams = new List<IHidStream>();
         for (int i = 0; i < baseStreams.Count; i++)
         {
@@ -49,7 +49,7 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
     }
 
     /// <summary>
-    /// ‹L˜^ƒZƒbƒVƒ‡ƒ“‚ğŠ®—¹‚µ‚Äƒƒ^ƒf[ƒ^‚ğ•Û‘¶
+    /// ï¿½Lï¿½^ï¿½Zï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äƒï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½ï¿½Û‘ï¿½
     /// </summary>
     public async Task FinalizeRecordingAsync()
     {
@@ -65,7 +65,7 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
         if (_disposed)
             return;
 
-        // ©“®“I‚Éƒƒ^ƒf[ƒ^‚ğ•Û‘¶
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½Éƒï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½ï¿½Û‘ï¿½
         await FinalizeRecordingAsync();
 
         foreach (var recordingStream in _recordingStreams.Values)

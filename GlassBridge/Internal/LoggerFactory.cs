@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 namespace GlassBridge.Internal;
 
 /// <summary>
-/// GlassBridge “à•”‚Åg—p‚·‚éƒƒK[ƒtƒ@ƒNƒgƒŠ
+/// GlassBridge ï¿½ï¿½ï¿½ï¿½ï¿½Ågï¿½pï¿½ï¿½ï¿½éƒï¿½Kï¿½[ï¿½tï¿½@ï¿½Nï¿½gï¿½ï¿½
 /// </summary>
 internal static class LoggerFactoryProvider
 {
@@ -20,7 +20,7 @@ internal static class LoggerFactoryProvider
                 {
                     if (_instance == null)
                     {
-                        // ƒtƒH[ƒ‹ƒoƒbƒN: ƒfƒtƒHƒ‹ƒg‚Å‹ó‚ÌƒƒK[ƒtƒ@ƒNƒgƒŠ‚ğg—p
+                        // ï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½oï¿½bï¿½N: ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Å‹ï¿½Ìƒï¿½ï¿½Kï¿½[ï¿½tï¿½@ï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½gï¿½p
                         _instance = new LoggerFactory();
                     }
                 }

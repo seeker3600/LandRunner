@@ -1,7 +1,7 @@
 namespace GlassBridge.Internal;
 
 /// <summary>
-/// CRC-16-CCITTŒvZƒ†[ƒeƒBƒŠƒeƒB
+/// CRC-16-CCITTï¿½vï¿½Zï¿½ï¿½ï¿½[ï¿½eï¿½Bï¿½ï¿½ï¿½eï¿½B
 /// polynomial: 0x1021, initial value: 0xFFFF
 /// </summary>
 internal static class Crc16Ccitt
@@ -9,7 +9,7 @@ internal static class Crc16Ccitt
     private static readonly ushort[] CrcTable = GenerateCrcTable();
 
     /// <summary>
-    /// CRCƒe[ƒuƒ‹‚ğ¶¬
+    /// CRCï¿½eï¿½[ï¿½uï¿½ï¿½ï¿½ğ¶ï¿½
     /// </summary>
     private static ushort[] GenerateCrcTable()
     {
@@ -30,12 +30,12 @@ internal static class Crc16Ccitt
     }
 
     /// <summary>
-    /// CRC-16-CCITT‚ğŒvZ
+    /// CRC-16-CCITTï¿½ï¿½ï¿½vï¿½Z
     /// </summary>
-    /// <param name="data">ŒvZ‘ÎÛ‚Ìƒf[ƒ^</param>
-    /// <param name="offset">ŠJnƒIƒtƒZƒbƒg</param>
-    /// <param name="length">ŒvZ‘ÎÛ‚Ì’·‚³</param>
-    /// <returns>CRC’liƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“j</returns>
+    /// <param name="data">ï¿½vï¿½Zï¿½ÎÛ‚Ìƒfï¿½[ï¿½^</param>
+    /// <param name="offset">ï¿½Jï¿½nï¿½Iï¿½tï¿½Zï¿½bï¿½g</param>
+    /// <param name="length">ï¿½vï¿½Zï¿½ÎÛ‚Ì’ï¿½ï¿½ï¿½</param>
+    /// <returns>CRCï¿½lï¿½iï¿½rï¿½bï¿½Oï¿½Gï¿½ï¿½ï¿½fï¿½Bï¿½Aï¿½ï¿½ï¿½j</returns>
     public static ushort Calculate(ReadOnlySpan<byte> data, int offset, int length)
     {
         ushort crc = 0xFFFF;

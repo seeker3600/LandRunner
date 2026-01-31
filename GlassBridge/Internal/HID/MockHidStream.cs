@@ -3,12 +3,12 @@ namespace GlassBridge.Internal.HID;
 using System.Runtime.CompilerServices;
 
 /// <summary>
-/// ƒeƒXƒg—p‚Ìƒ‚ƒbƒNHIDƒXƒgƒŠ[ƒ€i”ñ“¯Šú‘Î‰j
+/// ï¿½eï¿½Xï¿½gï¿½pï¿½Ìƒï¿½ï¿½bï¿½NHIDï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½iï¿½ñ“¯Šï¿½ï¿½Î‰ï¿½ï¿½j
 /// </summary>
 internal sealed class MockHidStream : IHidStream
 {
     /// <summary>
-    /// ƒfƒtƒHƒ‹ƒg‚ÌƒŒƒ|[ƒg’·iVITURE ƒfƒoƒCƒX‚É‡‚í‚¹‚½’lj
+    /// ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ìƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iVITURE ï¿½fï¿½oï¿½Cï¿½Xï¿½Éï¿½ï¿½í‚¹ï¿½ï¿½ï¿½lï¿½j
     /// Report ID (1 byte) + Report Data (64 bytes) = 65 bytes
     /// </summary>
     public const int DefaultReportLength = 65;
@@ -23,12 +23,12 @@ internal sealed class MockHidStream : IHidStream
     public bool IsOpen => !_disposed;
 
     /// <summary>
-    /// Å‘å“ü—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
+    /// ï¿½Å‘ï¿½ï¿½ï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iReport ID ï¿½ï¿½ï¿½Ü‚Şj
     /// </summary>
     public int MaxInputReportLength { get; }
 
     /// <summary>
-    /// Å‘åo—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
+    /// ï¿½Å‘ï¿½oï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iReport ID ï¿½ï¿½ï¿½Ü‚Şj
     /// </summary>
     public int MaxOutputReportLength { get; }
 
@@ -49,7 +49,7 @@ internal sealed class MockHidStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(MockHidStream));
 
-        // ‰‰ñŒÄ‚Ño‚µ‚Éƒf[ƒ^‚ğæ“¾
+        // ï¿½ï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½ï¿½ï¿½Éƒfï¿½[ï¿½^ï¿½ï¿½ï¿½æ“¾
         if (_enumerator == null)
         {
             _enumerator = _dataStream.GetAsyncEnumerator(_cancellationToken);
@@ -57,14 +57,14 @@ internal sealed class MockHidStream : IHidStream
                 return 0;
         }
 
-        // Œ»İ‚Ìƒf[ƒ^‚ª‚È‚¢ê‡‚ÍŸ‚Ìƒf[ƒ^‚ğæ“¾
+        // ï¿½ï¿½ï¿½İ‚Ìƒfï¿½[ï¿½^ï¿½ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½Íï¿½ï¿½Ìƒfï¿½[ï¿½^ï¿½ï¿½ï¿½æ“¾
         if (_currentData == null)
         {
             if (!await FetchNextDataAsync())
-                return 0; // ƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ªI—¹
+                return 0; // ï¿½fï¿½[ï¿½^ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½
         }
 
-        // Œ»İ‚Ìƒf[ƒ^‚ğƒVƒŠƒAƒ‰ƒCƒY‚µ‚Äƒoƒbƒtƒ@‚É‹l‚ß‚é
+        // ï¿½ï¿½ï¿½İ‚Ìƒfï¿½[ï¿½^ï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Cï¿½Yï¿½ï¿½ï¿½Äƒoï¿½bï¿½tï¿½@ï¿½É‹lï¿½ß‚ï¿½
         if (_currentData != null)
         {
             var packet = SerializeImuData(_currentData);
@@ -73,11 +73,11 @@ internal sealed class MockHidStream : IHidStream
 
             _readOffset += bytesToCopy;
 
-            // Ÿ‚Ìƒf[ƒ^‚ğ€”õ
+            // ï¿½ï¿½ï¿½Ìƒfï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (_readOffset >= packet.Length)
             {
                 _readOffset = 0;
-                _currentData = null; // Ÿ‚Ì ReadAsync ‚ÅŸƒf[ƒ^‚ğæ“¾
+                _currentData = null; // ï¿½ï¿½ï¿½ï¿½ ReadAsync ï¿½Åï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½æ“¾
             }
 
             return bytesToCopy;
@@ -91,7 +91,7 @@ internal sealed class MockHidStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(MockHidStream));
 
-        // ƒ‚ƒbƒN‚Å‚Í‰½‚à‚µ‚È‚¢
+        // ï¿½ï¿½ï¿½bï¿½Nï¿½Å‚Í‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
         await Task.CompletedTask;
     }
 
@@ -126,55 +126,55 @@ internal sealed class MockHidStream : IHidStream
         }
         catch
         {
-            // ƒGƒ‰[‚ÍI—¹
+            // ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ÍIï¿½ï¿½
         }
 
         return false;
     }
 
     /// <summary>
-    /// ImuData‚ğƒoƒCƒg”z—ñ‚ÉƒVƒŠƒAƒ‰ƒCƒYiVITURE ƒpƒPƒbƒgŒ`®j
-    /// VitureLumaPacket.TryParseImuPacket ‚ÆŒİŠ·«‚Ì‚ ‚éŒ`®
+    /// ImuDataï¿½ï¿½ï¿½oï¿½Cï¿½gï¿½zï¿½ï¿½ÉƒVï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Cï¿½Yï¿½iVITURE ï¿½pï¿½Pï¿½bï¿½gï¿½`ï¿½ï¿½ï¿½j
+    /// VitureLumaPacket.TryParseImuPacket ï¿½ÆŒİŠï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½`ï¿½ï¿½
     /// </summary>
     private static byte[] SerializeImuData(ImuData data)
     {
         var buffer = new byte[64];
 
-        // ƒwƒbƒ_iVITURE IMU ƒf[ƒ^ƒpƒPƒbƒgj
+        // ï¿½wï¿½bï¿½_ï¿½iVITURE IMU ï¿½fï¿½[ï¿½^ï¿½pï¿½Pï¿½bï¿½gï¿½j
         buffer[0] = 0xFF;
         buffer[1] = 0xFC;  // IMU Data
 
-        // CRC ‚ÍŠÈ—ª‰»i0‚Å‚à‰Âj
+        // CRC ï¿½ÍŠÈ—ï¿½ï¿½ï¿½ï¿½i0ï¿½Å‚ï¿½ï¿½Âj
         buffer[2] = 0x00;
         buffer[3] = 0x00;
 
-        // Payload lengthioffset 4-5AƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“j
-        ushort payloadLen = 30; // ŠÈ—ª‰»
+        // Payload lengthï¿½ioffset 4-5ï¿½Aï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½fï¿½Bï¿½Aï¿½ï¿½ï¿½j
+        ushort payloadLen = 30; // ï¿½È—ï¿½ï¿½ï¿½
         buffer[4] = (byte)(payloadLen & 0xFF);
         buffer[5] = (byte)((payloadLen >> 8) & 0xFF);
 
-        // Timestampioffset 6-9AƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“j
+        // Timestampï¿½ioffset 6-9ï¿½Aï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½fï¿½Bï¿½Aï¿½ï¿½ï¿½j
         buffer[6] = (byte)(data.Timestamp & 0xFF);
         buffer[7] = (byte)((data.Timestamp >> 8) & 0xFF);
         buffer[8] = (byte)((data.Timestamp >> 16) & 0xFF);
         buffer[9] = (byte)((data.Timestamp >> 24) & 0xFF);
 
-        // Reservedioffset 10-13j
+        // Reservedï¿½ioffset 10-13ï¿½j
         buffer[10] = 0x00;
         buffer[11] = 0x00;
         buffer[12] = 0x00;
         buffer[13] = 0x00;
 
-        // Command IDioffset 14-15j
+        // Command IDï¿½ioffset 14-15ï¿½j
         buffer[14] = 0x00;
         buffer[15] = 0x00;
 
-        // Message counterioffset 16-17AƒŠƒgƒ‹ƒGƒ“ƒfƒBƒAƒ“j
+        // Message counterï¿½ioffset 16-17ï¿½Aï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½fï¿½Bï¿½Aï¿½ï¿½ï¿½j
         buffer[16] = (byte)(data.MessageCounter & 0xFF);
         buffer[17] = (byte)((data.MessageCounter >> 8) & 0xFF);
 
-        // IMU ƒf[ƒ^ioffset 18-29j
-        // raw0, raw1, raw2 (3 x float32 = 12 bytesAƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“)
+        // IMU ï¿½fï¿½[ï¿½^ï¿½ioffset 18-29ï¿½j
+        // raw0, raw1, raw2 (3 x float32 = 12 bytesï¿½Aï¿½rï¿½bï¿½Oï¿½Gï¿½ï¿½ï¿½fï¿½Bï¿½Aï¿½ï¿½)
         var euler = data.EulerAngles;
         
         // yaw = -raw0
@@ -184,7 +184,7 @@ internal sealed class MockHidStream : IHidStream
         // pitch = raw2
         float raw2 = euler.Pitch;
 
-        // ƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“ float32
+        // ï¿½rï¿½bï¿½Oï¿½Gï¿½ï¿½ï¿½fï¿½Bï¿½Aï¿½ï¿½ float32
         var bytes0 = BitConverter.GetBytes(raw0);
         if (BitConverter.IsLittleEndian)
             System.Array.Reverse(bytes0);

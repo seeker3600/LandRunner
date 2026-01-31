@@ -6,8 +6,8 @@ using GlassBridge.Internal.Recording;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
-/// IMUƒfƒoƒCƒXƒ}ƒl[ƒWƒƒ[‚ÌÀ‘•
-/// ƒfƒoƒCƒXÚ‘±A‹L˜^AÄ¶‹@”\‚ğ’ñ‹Ÿ
+/// IMUï¿½fï¿½oï¿½Cï¿½Xï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½[ï¿½Ìï¿½ï¿½ï¿½
+/// ï¿½fï¿½oï¿½Cï¿½Xï¿½Ú‘ï¿½ï¿½Aï¿½Lï¿½^ï¿½Aï¿½Äï¿½ï¿½@ï¿½\ï¿½ï¿½ï¿½
 /// </summary>
 public sealed class ImuDeviceManager : IImuDeviceManager
 {
@@ -18,7 +18,7 @@ public sealed class ImuDeviceManager : IImuDeviceManager
     private RecordingHidStreamProvider? _recordingProvider;
 
     /// <summary>
-    /// VITURE LumaƒfƒoƒCƒX‚É’ÊíÚ‘±
+    /// VITURE Lumaï¿½fï¿½oï¿½Cï¿½Xï¿½É’Êï¿½Ú‘ï¿½
     /// </summary>
     public async Task<IImuDevice?> ConnectAsync(CancellationToken cancellationToken = default)
     {
@@ -41,9 +41,9 @@ public sealed class ImuDeviceManager : IImuDeviceManager
     }
 
     /// <summary>
-    /// ƒfƒoƒCƒX‚ÉÚ‘±‚µ‚Ä IMU ƒf[ƒ^‚ğ‹L˜^
-    /// æ“¾‚µ‚½ƒfƒoƒCƒX‚©‚ç GetImuDataStreamAsync() ‚Åæ“¾‚µ‚½ƒf[ƒ^‚Í©“®“I‚É‹L˜^‚³‚ê‚é
-    /// device.DisposeAsync() ‚É©“®“I‚Éƒƒ^ƒf[ƒ^‚à•Û‘¶‚³‚ê‚é
+    /// ï¿½fï¿½oï¿½Cï¿½Xï¿½ÉÚ‘ï¿½ï¿½ï¿½ï¿½ï¿½ IMU ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Lï¿½^
+    /// ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½ GetImuDataStreamAsync() ï¿½Åæ“¾ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½Íï¿½ï¿½ï¿½ï¿½Iï¿½É‹Lï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½
+    /// device.DisposeAsync() ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½Iï¿½Éƒï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public async Task<IImuDevice?> ConnectAndRecordAsync(
         string outputDirectory,
@@ -57,20 +57,20 @@ public sealed class ImuDeviceManager : IImuDeviceManager
 
         _logger.LogDebug("Starting device connection with recording to: {OutputDirectory}", outputDirectory);
 
-        // ‘O‰ñ‚Ì‹L˜^ƒZƒbƒVƒ‡ƒ“‚ğI—¹
+        // ï¿½Oï¿½ï¿½Ì‹Lï¿½^ï¿½Zï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½
         if (_recordingProvider != null)
         {
             _logger.LogDebug("Disposing previous recording session");
             await _recordingProvider.DisposeAsync();
         }
 
-        // Šî–{“I‚ÈHIDƒXƒgƒŠ[ƒ€ƒvƒƒoƒCƒ_[‚ğì¬
+        // ï¿½ï¿½{ï¿½Iï¿½ï¿½HIDï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½oï¿½Cï¿½_ï¿½[ï¿½ï¿½ï¿½ì¬
         var baseProvider = new HidStreamProvider();
 
-        // ‹L˜^‹@”\‚Åƒ‰ƒbƒv
+        // ï¿½Lï¿½^ï¿½@ï¿½\ï¿½Åƒï¿½ï¿½bï¿½v
         _recordingProvider = new RecordingHidStreamProvider(baseProvider, outputDirectory);
 
-        // ƒfƒoƒCƒX‚ÉÚ‘±
+        // ï¿½fï¿½oï¿½Cï¿½Xï¿½ÉÚ‘ï¿½
         var device = await VitureLumaDevice.ConnectWithProviderAsync(_recordingProvider, cancellationToken);
         
         if (device != null)
@@ -86,8 +86,8 @@ public sealed class ImuDeviceManager : IImuDeviceManager
     }
 
     /// <summary>
-    /// ‹L˜^‚³‚ê‚½ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©‚ç IMU ƒfƒoƒCƒX‚ğÄ¶
-    /// ÀÛ‚ÌƒfƒoƒCƒX‚Ì‘ã‚í‚è‚ÉA‹L˜^‚³‚ê‚½ƒf[ƒ^‚ğƒXƒgƒŠ[ƒ€”zM‚·‚é Mock ƒfƒoƒCƒX‚ğ•Ô‚·
+    /// ï¿½Lï¿½^ï¿½ï¿½ï¿½ê‚½ï¿½fï¿½[ï¿½^ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IMU ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½Äï¿½
+    /// ï¿½ï¿½ï¿½Û‚Ìƒfï¿½oï¿½Cï¿½Xï¿½Ì‘ï¿½ï¿½ï¿½ÉAï¿½Lï¿½^ï¿½ï¿½ï¿½ê‚½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½zï¿½Mï¿½ï¿½ï¿½ï¿½ Mock ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½Ô‚ï¿½
     /// </summary>
     public async Task<IImuDevice?> ConnectFromRecordingAsync(
         string recordingDirectory,
@@ -104,10 +104,10 @@ public sealed class ImuDeviceManager : IImuDeviceManager
 
         _logger.LogDebug("Starting device connection from recording: {RecordingDirectory}", recordingDirectory);
 
-        // Ä¶ƒvƒƒoƒCƒ_[‚ğì¬
+        // ï¿½Äï¿½ï¿½vï¿½ï¿½ï¿½oï¿½Cï¿½_ï¿½[ï¿½ï¿½ï¿½ì¬
         var replayProvider = new ReplayHidStreamProvider(recordingDirectory);
 
-        // Mock ƒfƒoƒCƒX‚Æ‚µ‚ÄÄ¶
+        // Mock ï¿½fï¿½oï¿½Cï¿½Xï¿½Æ‚ï¿½ï¿½ÄÄï¿½
         var device = await VitureLumaDevice.ConnectWithProviderAsync(replayProvider, cancellationToken);
 
         if (device != null)
@@ -135,7 +135,7 @@ public sealed class ImuDeviceManager : IImuDeviceManager
             }
             catch
             {
-                // ƒfƒBƒXƒ|[ƒY‚ÌƒGƒ‰[‚Í–³‹
+                // ï¿½fï¿½Bï¿½Xï¿½|ï¿½[ï¿½Yï¿½ï¿½ï¿½ÌƒGï¿½ï¿½ï¿½[ï¿½Í–ï¿½ï¿½ï¿½
             }
         }
 

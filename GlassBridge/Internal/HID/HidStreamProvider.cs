@@ -4,7 +4,7 @@ using HidSharp;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
-/// HidSharp‚Ì”–‚¢ƒ‰ƒbƒp[iƒfƒoƒCƒX”ñˆË‘¶AVID/PID‚ÍŒÄ‚Ño‚µ‚Éw’èj
+/// HidSharpï¿½Ì”ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½pï¿½[ï¿½iï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½Ë‘ï¿½ï¿½AVID/PIDï¿½ÍŒÄ‚Ñoï¿½ï¿½ï¿½ï¿½ï¿½Éwï¿½ï¿½j
 /// </summary>
 internal sealed class HidStreamProvider : IHidStreamProvider
 {

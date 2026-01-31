@@ -1,34 +1,34 @@
-## IMU ƒf[ƒ^‹L˜^EÄ¶‹@”\
+## IMU ï¿½fï¿½[ï¿½^ï¿½Lï¿½^ï¿½Eï¿½Äï¿½ï¿½@ï¿½\
 
-GlassBridge ‚Í IMU ƒfƒoƒCƒX‚©‚ç‚Ì•¡”ƒf[ƒ^‚ğ‹L˜^EÄ¶‚Å‚«‚é‹@”\‚ª‘g‚İ‚Ü‚ê‚Ä‚¢‚Ü‚·B
+GlassBridge ï¿½ï¿½ IMU ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½Ì•ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Lï¿½^ï¿½Eï¿½Äï¿½ï¿½Å‚ï¿½ï¿½ï¿½@ï¿½\ï¿½ï¿½ï¿½gï¿½İï¿½ï¿½Ü‚ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½B
 
-### ŠT—v
+### ï¿½Tï¿½v
 
-- **‹L˜^**: ƒfƒoƒCƒX‚©‚çó‚¯æ‚Á‚½ IMU ƒf[ƒ^‚ğ JSON Lines Œ`®‚Å•Û‘¶
-- **Ä¶**: ‹L˜^‚³‚ê‚½ JSON ƒtƒ@ƒCƒ‹‚©‚ç Mock ƒfƒoƒCƒX‚Ì‚æ‚¤‚ÉÄ¶‰Â”\
-- **ƒtƒH[ƒ}ƒbƒg**: lŠÔ‚ª“Ç‚İæ‚ê‚é JSON Lines Œ`®i`.jsonl`j
-- **ƒeƒXƒg‘Î‰**: ƒeƒXƒg—pƒpƒtƒH[ƒ}ƒ“ƒX•ªÍ‚ÉÅ“K
+- **ï¿½Lï¿½^**: ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½ó‚¯ï¿½ï¿½ï¿½ï¿½ IMU ï¿½fï¿½[ï¿½^ï¿½ï¿½ JSON Lines ï¿½`ï¿½ï¿½ï¿½Å•Û‘ï¿½
+- **ï¿½Äï¿½**: ï¿½Lï¿½^ï¿½ï¿½ï¿½ê‚½ JSON ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Mock ï¿½fï¿½oï¿½Cï¿½Xï¿½Ì‚æ‚¤ï¿½ÉÄï¿½ï¿½Â”\
+- **ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½g**: ï¿½lï¿½Ô‚ï¿½ï¿½Ç‚İï¿½ï¿½ï¿½ JSON Lines ï¿½`ï¿½ï¿½ï¿½i`.jsonl`ï¿½j
+- **ï¿½eï¿½Xï¿½gï¿½Î‰ï¿½**: ï¿½eï¿½Xï¿½gï¿½pï¿½pï¿½tï¿½Hï¿½[ï¿½}ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½Í‚ÉÅ“K
 
-### ƒtƒ@ƒCƒ‹\‘¢
+### ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½\ï¿½ï¿½
 
-‹L˜^Œ‹‰Ê‚Ìƒtƒ@ƒCƒ‹‚ÍˆÈ‰º‚Ì‚æ‚¤‚È\‘¢‚Å‚·F
+ï¿½Lï¿½^ï¿½ï¿½ï¿½Ê‚Ìƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ÍˆÈ‰ï¿½ï¿½Ì‚æ‚¤ï¿½È\ï¿½ï¿½ï¿½Å‚ï¿½ï¿½F
 
 ```
 output_directory/
-„¥„Ÿ„Ÿ frames_0.jsonl          # IMU ƒtƒŒ[ƒ€ƒf[ƒ^ (JSON LinesŒ`®)
-„¥„Ÿ„Ÿ metadata_0.json         # ‹L˜^ƒZƒbƒVƒ‡ƒ“‚Ìƒƒ^ƒf[ƒ^
-„¥„Ÿ„Ÿ frames_1.jsonl
-„¥„Ÿ„Ÿ metadata_1.json
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ frames_0.jsonl          # IMU ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½fï¿½[ï¿½^ (JSON Linesï¿½`ï¿½ï¿½)
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ metadata_0.json         # ï¿½Lï¿½^ï¿½Zï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½^ï¿½fï¿½[ï¿½^
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ frames_1.jsonl
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ metadata_1.json
 ```
 
-#### frames_*.jsonl ‚ÌŒ`®
+#### frames_*.jsonl ï¿½ÌŒ`ï¿½ï¿½
 
 ```json
 {"timestamp":0,"messageCounter":0,"quaternion":{"w":1.0,"x":0.0,"y":0.0,"z":0.0},"eulerAngles":{"roll":0.0,"pitch":0.0,"yaw":0.0},"rawBytes":"AAAAAA=="}
 {"timestamp":10,"messageCounter":1,"quaternion":{"w":1.0,"x":0.01,"y":0.02,"z":0.03},"eulerAngles":{"roll":1.0,"pitch":2.0,"yaw":3.0},"rawBytes":"AAAAAA=="}
 ```
 
-#### metadata_*.json ‚ÌŒ`®
+#### metadata_*.json ï¿½ÌŒ`ï¿½ï¿½
 
 ```json
 {
@@ -39,23 +39,23 @@ output_directory/
 }
 ```
 
-### å—v‚ÈƒNƒ‰ƒX
+### ï¿½ï¿½vï¿½ÈƒNï¿½ï¿½ï¿½X
 
-#### ‹L˜^ŠÖ˜A
+#### ï¿½Lï¿½^ï¿½Ö˜A
 
-- **RecordingHidStream**: `IHidStream` ‚ğƒ‰ƒbƒv‚µ‚Ä‹L˜^‹@”\‚ğ’Ç‰Á
-- **RecordingHidStreamProvider**: HID ƒXƒgƒŠ[ƒ€ƒvƒƒoƒCƒ_[‚ğ‹L˜^‹@”\‚Åƒ‰ƒbƒv
-- **ImuFrameRecord**: ImuData ‚ğ JSON Œ`®‚Å•\Œ»
-- **ImuRecordingSession**: ‹L˜^ƒZƒbƒVƒ‡ƒ“‚Ìƒƒ^ƒf[ƒ^
+- **RecordingHidStream**: `IHidStream` ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½vï¿½ï¿½ï¿½Ä‹Lï¿½^ï¿½@ï¿½\ï¿½ï¿½Ç‰ï¿½
+- **RecordingHidStreamProvider**: HID ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½oï¿½Cï¿½_ï¿½[ï¿½ï¿½ï¿½Lï¿½^ï¿½@ï¿½\ï¿½Åƒï¿½ï¿½bï¿½v
+- **ImuFrameRecord**: ImuData ï¿½ï¿½ JSON ï¿½`ï¿½ï¿½ï¿½Å•\ï¿½ï¿½
+- **ImuRecordingSession**: ï¿½Lï¿½^ï¿½Zï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½^ï¿½fï¿½[ï¿½^
 
-#### Ä¶ŠÖ˜A
+#### ï¿½Äï¿½ï¿½Ö˜A
 
-- **RecordedHidStream**: JSON Lines ƒtƒ@ƒCƒ‹‚©‚ç `IHidStream` ‚Æ‚µ‚ÄÄ¶
-- **ReplayHidStreamProvider**: ‹L˜^ƒfƒBƒŒƒNƒgƒŠ‚©‚çÄ¶ƒXƒgƒŠ[ƒ€‚ğì¬
+- **RecordedHidStream**: JSON Lines ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ `IHidStream` ï¿½Æ‚ï¿½ï¿½ÄÄï¿½
+- **ReplayHidStreamProvider**: ï¿½Lï¿½^ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ì¬
 
-### g—p•û–@
+### ï¿½gï¿½pï¿½ï¿½ï¿½@
 
-#### ƒfƒoƒCƒX‚©‚çƒf[ƒ^‚ğ‹L˜^
+#### ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Lï¿½^
 
 ```csharp
 var baseProvider = new HidStreamProvider(0x35CA, new[] { 0x1131 });
@@ -63,40 +63,40 @@ var recordingProvider = new RecordingHidStreamProvider(baseProvider, @"C:\IMU_Re
 
 var device = await VitureLumaDevice.ConnectWithProviderAsync(recordingProvider);
 
-// IMU ƒf[ƒ^‚ğæ“¾i“¯‚É‹L˜^‚³‚ê‚éj
+// IMU ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½æ“¾ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½É‹Lï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½j
 await foreach (var imuData in device.GetImuDataStreamAsync())
 {
-    // ƒf[ƒ^ˆ—
+    // ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½
 }
 
 await recordingProvider.FinalizeRecordingAsync();
 await device.DisposeAsync();
 ```
 
-#### ‹L˜^‚³‚ê‚½ƒf[ƒ^‚ğÄ¶
+#### ï¿½Lï¿½^ï¿½ï¿½ï¿½ê‚½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Äï¿½
 
 ```csharp
 var replayProvider = new ReplayHidStreamProvider(@"C:\IMU_Records");
 var device = await VitureLumaDevice.ConnectWithProviderAsync(replayProvider);
 
-// ‹L˜^‚³‚ê‚½ƒf[ƒ^‚ğ‡˜’Ê‚èæ“¾
+// ï¿½Lï¿½^ï¿½ï¿½ï¿½ê‚½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê‚ï¿½æ“¾
 await foreach (var imuData in device.GetImuDataStreamAsync())
 {
-    // ƒf[ƒ^‚ğˆ—EƒeƒXƒgÀs
+    // ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½eï¿½Xï¿½gï¿½ï¿½ï¿½s
 }
 ```
 
-#### ‹L˜^ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+#### ï¿½Lï¿½^ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½Ç‚İï¿½ï¿½ï¿½
 
 ```csharp
-// ƒƒ^ƒf[ƒ^‚ğ“Ç‚İ‚Ş
+// ï¿½ï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½ï¿½Ç‚İï¿½ï¿½ï¿½
 var metadataJson = File.ReadAllText("output/metadata_0.json");
 var metadata = ImuRecordingSession.FromJson(metadataJson);
 
 Console.WriteLine($"Frames: {metadata.FrameCount}");
 Console.WriteLine($"Recorded: {metadata.RecordedAt}");
 
-// ƒtƒŒ[ƒ€‚ğ1s‚²‚Æ‚É“Ç‚Ş
+// ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½1ï¿½sï¿½ï¿½ï¿½Æ‚É“Ç‚ï¿½
 using var reader = new StreamReader("output/frames_0.jsonl");
 string? line;
 while ((line = reader.ReadLine()) != null)
@@ -106,41 +106,41 @@ while ((line = reader.ReadLine()) != null)
 }
 ```
 
-### ƒA[ƒLƒeƒNƒ`ƒƒ
+### ï¿½Aï¿½[ï¿½Lï¿½eï¿½Nï¿½`ï¿½ï¿½
 
 ```
-ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‘w
-    «
-IImuDevice (•ÏX‚È‚µ)
-    «
+ï¿½Aï¿½vï¿½ï¿½ï¿½Pï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½w
+    ï¿½ï¿½
+IImuDevice (ï¿½ÏXï¿½È‚ï¿½)
+    ï¿½ï¿½
 VitureLumaDevice
-    «
-[‹L˜^EÄ¶ƒ‰ƒbƒp[‘w]
+    ï¿½ï¿½
+[ï¿½Lï¿½^ï¿½Eï¿½Äï¿½ï¿½ï¿½ï¿½bï¿½pï¿½[ï¿½w]
 IHidStreamProvider
-    „¥„Ÿ„Ÿ RecordingHidStreamProvider (‹L˜^‘w)
-    „¥„Ÿ„Ÿ ReplayHidStreamProvider (Ä¶‘w)
-    «
+    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RecordingHidStreamProvider (ï¿½Lï¿½^ï¿½w)
+    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ReplayHidStreamProvider (ï¿½Äï¿½ï¿½w)
+    ï¿½ï¿½
 IHidStream
-    „¥„Ÿ„Ÿ RecordingHidStream (‹L˜^‹@”\’Ç‰Á)
-    „¥„Ÿ„Ÿ RecordedHidStream (Ä¶‹@”\)
-    „¥„Ÿ„Ÿ RealHidStream (ÀƒfƒoƒCƒX)
-    „¥„Ÿ„Ÿ MockHidStream (ƒeƒXƒg)
+    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RecordingHidStream (ï¿½Lï¿½^ï¿½@ï¿½\ï¿½Ç‰ï¿½)
+    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RecordedHidStream (ï¿½Äï¿½ï¿½@ï¿½\)
+    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RealHidStream (ï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½X)
+    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MockHidStream (ï¿½eï¿½Xï¿½g)
 ```
 
-### §–ñ–€
+### ï¿½ï¿½ï¿½ñ–ï¿½
 
-1. **IImuDevice ƒCƒ“ƒ^[ƒtƒF[ƒX‚Í•ÏX‚È‚µ** - ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‘¤‚Ö‚Ì‰e‹¿‚È‚µ
-2. **’€Ÿ“I‚È‹L˜^** - `VitureLumaDevice.GetImuDataStreamAsync()` ‚ğŒÄ‚Ño‚µ‚Ä‚¢‚éŠÔ‚É‹L˜^
-3. **lŠÔ‚ª“Ç‚ß‚éƒf[ƒ^Œ`®** - JSON Lines Œ`®‚È‚Ì‚Å ƒeƒLƒXƒgƒGƒfƒBƒ^‚ÅŠm”F‰Â”\
-4. **’Pƒ‚ÈÄ¶** - Mock ƒfƒoƒCƒX‚Ì‚æ‚¤‚È‹@”\‚È‚Ì‚Å ƒeƒXƒgE«”\•ªÍ‚ÉÅ“K
-5. **ƒXƒP[ƒ‰ƒuƒ‹** - •¡”ƒZƒbƒVƒ‡ƒ“‚Ì“¯‹L˜^‚ª‰Â”\
+1. **IImuDevice ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½Í•ÏXï¿½È‚ï¿½** - ï¿½Aï¿½vï¿½ï¿½ï¿½Pï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö‚Ì‰eï¿½ï¿½ï¿½È‚ï¿½
+2. **ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½È‹Lï¿½^** - `VitureLumaDevice.GetImuDataStreamAsync()` ï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ô‚É‹Lï¿½^
+3. **ï¿½lï¿½Ô‚ï¿½ï¿½Ç‚ß‚ï¿½fï¿½[ï¿½^ï¿½`ï¿½ï¿½** - JSON Lines ï¿½`ï¿½ï¿½ï¿½È‚Ì‚ï¿½ ï¿½eï¿½Lï¿½Xï¿½gï¿½Gï¿½fï¿½Bï¿½^ï¿½ÅŠmï¿½Fï¿½Â”\
+4. **ï¿½Pï¿½ï¿½ï¿½ÈÄï¿½** - Mock ï¿½fï¿½oï¿½Cï¿½Xï¿½Ì‚æ‚¤ï¿½È‹@ï¿½\ï¿½È‚Ì‚ï¿½ ï¿½eï¿½Xï¿½gï¿½Eï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½Í‚ÉÅ“K
+5. **ï¿½Xï¿½Pï¿½[ï¿½ï¿½ï¿½uï¿½ï¿½** - ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½ï¿½Lï¿½^ï¿½ï¿½ï¿½Â”\
 
-### ƒeƒXƒg‘Î‰
+### ï¿½eï¿½Xï¿½gï¿½Î‰ï¿½
 
-- ? JSON ƒVƒŠƒAƒ‰ƒCƒU[ˆ—
-- ? ƒƒ^ƒf[ƒ^‚Ì•Û‘¶E“Ç‚İ‚İ
-- ? JSON Lines ƒtƒH[ƒ}ƒbƒg‚ÌŒŸØ
-- ? ƒtƒ@ƒCƒ‹ I/O
-- ? ƒXƒgƒŠ[ƒ€Ä¶
+- ? JSON ï¿½Vï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Cï¿½Uï¿½[ï¿½ï¿½ï¿½ï¿½
+- ? ï¿½ï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½Ì•Û‘ï¿½ï¿½Eï¿½Ç‚İï¿½ï¿½ï¿½
+- ? JSON Lines ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½gï¿½ÌŒï¿½ï¿½ï¿½
+- ? ï¿½tï¿½@ï¿½Cï¿½ï¿½ I/O
+- ? ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Äï¿½
 
-‚·‚×‚Ä‚ÌƒeƒXƒg‚ªÀ‘•‚³‚ê‚Ä‚¢‚Ü‚·B
+ï¿½ï¿½ï¿½×‚Ä‚Ìƒeï¿½Xï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½B

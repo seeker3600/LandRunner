@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 /// <summary>
-/// JSON LinesŒ`®‚Å•Û‘¶‚·‚éƒtƒŒ[ƒ€ƒŒƒR[ƒh
+/// JSON Linesï¿½`ï¿½ï¿½ï¿½Å•Û‘ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½[ï¿½h
 /// </summary>
 internal class ImuFrameRecord
 {
@@ -24,7 +24,7 @@ internal class ImuFrameRecord
     public string RawBytes { get; set; } = string.Empty;
 
     /// <summary>
-    /// ImuData‚ğƒtƒŒ[ƒ€ƒŒƒR[ƒh‚É•ÏŠ·
+    /// ImuDataï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½[ï¿½hï¿½É•ÏŠï¿½
     /// </summary>
     public static ImuFrameRecord FromImuData(ImuData data, byte[] rawBytes)
     {
@@ -50,7 +50,7 @@ internal class ImuFrameRecord
     }
 
     /// <summary>
-    /// ƒtƒŒ[ƒ€ƒŒƒR[ƒh‚ğImuData‚É•ÏŠ·
+    /// ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½[ï¿½hï¿½ï¿½ImuDataï¿½É•ÏŠï¿½
     /// </summary>
     public ImuData ToImuData()
     {
@@ -64,7 +64,7 @@ internal class ImuFrameRecord
     }
 
     /// <summary>
-    /// JSON‚©‚ç’Pˆês‚ğ‰ğÍ
+    /// JSONï¿½ï¿½ï¿½ï¿½Pï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public static ImuFrameRecord FromJsonLine(string jsonLine)
     {
@@ -73,7 +73,7 @@ internal class ImuFrameRecord
     }
 
     /// <summary>
-    /// JSON‚É•ÏŠ·i‰üs‚È‚µj
+    /// JSONï¿½É•ÏŠï¿½ï¿½iï¿½ï¿½ï¿½sï¿½È‚ï¿½ï¿½j
     /// </summary>
     public string ToJsonLine()
     {
@@ -82,7 +82,7 @@ internal class ImuFrameRecord
 }
 
 /// <summary>
-/// Quaternion‚ÌƒVƒŠƒAƒ‰ƒCƒY—pƒŒƒR[ƒh
+/// Quaternionï¿½ÌƒVï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Cï¿½Yï¿½pï¿½ï¿½ï¿½Rï¿½[ï¿½h
 /// </summary>
 internal record QuaternionRecord
 {
@@ -100,7 +100,7 @@ internal record QuaternionRecord
 }
 
 /// <summary>
-/// EulerAngles‚ÌƒVƒŠƒAƒ‰ƒCƒY—pƒŒƒR[ƒh
+/// EulerAnglesï¿½ÌƒVï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Cï¿½Yï¿½pï¿½ï¿½ï¿½Rï¿½[ï¿½h
 /// </summary>
 internal record EulerAnglesRecord
 {

@@ -4,8 +4,8 @@ using GlassBridge.Internal.HID;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
-/// HIDƒXƒgƒŠ[ƒ€‚ğƒ‰ƒbƒv‚µ‚Ä¶ƒf[ƒ^‚ğJSON‚Å‹L˜^‚·‚é
-/// g—p—á: var recordingStream = new RecordingHidStream(innerStream, filePath)
+/// HIDï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½vï¿½ï¿½ï¿½Äï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½JSONï¿½Å‹Lï¿½^ï¿½ï¿½ï¿½ï¿½
+/// ï¿½gï¿½pï¿½ï¿½: var recordingStream = new RecordingHidStream(innerStream, filePath)
 /// </summary>
 internal sealed class RecordingHidStream : IHidStream
 {
@@ -20,34 +20,34 @@ internal sealed class RecordingHidStream : IHidStream
     public bool IsOpen => !_disposed && _innerStream.IsOpen;
 
     /// <summary>
-    /// Å‘å“ü—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
-    /// “à•”ƒXƒgƒŠ[ƒ€‚ÉˆÏ÷
+    /// ï¿½Å‘ï¿½ï¿½ï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iReport ID ï¿½ï¿½ï¿½Ü‚Şj
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ÉˆÏï¿½
     /// </summary>
     public int MaxInputReportLength => _innerStream.MaxInputReportLength;
 
     /// <summary>
-    /// Å‘åo—ÍƒŒƒ|[ƒg’·iReport ID ‚ğŠÜ‚Şj
-    /// “à•”ƒXƒgƒŠ[ƒ€‚ÉˆÏ÷
+    /// ï¿½Å‘ï¿½oï¿½Íƒï¿½ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½iReport ID ï¿½ï¿½ï¿½Ü‚Şj
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ÉˆÏï¿½
     /// </summary>
     public int MaxOutputReportLength => _innerStream.MaxOutputReportLength;
 
     /// <summary>
-    /// ‹L˜^‚ğ”º‚¤HIDƒXƒgƒŠ[ƒ€‚ğì¬
+    /// ï¿½Lï¿½^ï¿½ğ”º‚ï¿½HIDï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ì¬
     /// </summary>
-    /// <param name="innerStream">Šî”Õ‚Æ‚È‚éHIDƒXƒgƒŠ[ƒ€</param>
-    /// <param name="recordingPath">‹L˜^ƒtƒ@ƒCƒ‹‚ÌƒpƒX</param>
+    /// <param name="innerStream">ï¿½ï¿½Õ‚Æ‚È‚ï¿½HIDï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½</param>
+    /// <param name="recordingPath">ï¿½Lï¿½^ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ìƒpï¿½X</param>
     public RecordingHidStream(IHidStream innerStream, string recordingPath)
     {
         _innerStream = innerStream ?? throw new ArgumentNullException(nameof(innerStream));
         
-        // ƒtƒ@ƒCƒ‹‚ÌƒfƒBƒŒƒNƒgƒŠ‚ğì¬
+        // ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ìƒfï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ì¬
         var directory = Path.GetDirectoryName(recordingPath);
         if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
         {
             Directory.CreateDirectory(directory);
         }
 
-        // ƒtƒŒ[ƒ€ƒtƒ@ƒCƒ‹‚ğì¬
+        // ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ì¬
         _recordingWriter = new StreamWriter(recordingPath, false)
         {
             AutoFlush = true
@@ -62,18 +62,18 @@ internal sealed class RecordingHidStream : IHidStream
         if (_disposed)
             throw new ObjectDisposedException(nameof(RecordingHidStream));
 
-        // Šî”ÕƒXƒgƒŠ[ƒ€‚©‚ç“Ç‚İ‚İ
+        // ï¿½ï¿½ÕƒXï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‚İï¿½ï¿½ï¿½
         int bytesRead = await _innerStream.ReadAsync(buffer, offset, count, cancellationToken);
 
-        // “Ç‚İ‚ñ‚¾ƒf[ƒ^‚ğ‹L˜^
+        // ï¿½Ç‚İï¿½ï¿½ñ‚¾ƒfï¿½[ï¿½^ï¿½ï¿½ï¿½Lï¿½^
         if (bytesRead > 0)
         {
             try
             {
-                // HIDƒpƒPƒbƒg‚ğ‰ğÍ‚µ‚ÄƒtƒŒ[ƒ€ƒŒƒR[ƒh‚É•ÏŠ·
+                // HIDï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½ï¿½Í‚ï¿½ï¿½Äƒtï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½[ï¿½hï¿½É•ÏŠï¿½
                 var rawData = buffer.AsSpan(offset, bytesRead).ToArray();
                 
-                // VitureLumaPacket‚©‚ç‰ğÍ‚ğ‚İ‚é
+                // VitureLumaPacketï¿½ï¿½ï¿½ï¿½ï¿½Í‚ï¿½ï¿½ï¿½ï¿½İ‚ï¿½
                 if (VitureLumaPacket.TryParseImuPacket(rawData, out var imuData) && imuData != null)
                 {
                     var frameRecord = ImuFrameRecord.FromImuData(imuData, rawData);
@@ -87,13 +87,13 @@ internal sealed class RecordingHidStream : IHidStream
                 }
                 else
                 {
-                    // ƒp[ƒX¸”s‚Å‚à¶ƒf[ƒ^‚Í‹L˜^iƒfƒoƒbƒO—pj
+                    // ï¿½pï¿½[ï¿½Xï¿½ï¿½ï¿½sï¿½Å‚ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½Í‹Lï¿½^ï¿½iï¿½fï¿½oï¿½bï¿½Oï¿½pï¿½j
                     _logger.LogTrace("Failed to parse IMU packet from {BytesCount} bytes", bytesRead);
                 }
             }
             catch (Exception ex)
             {
-                // ‰ğÍƒGƒ‰[‚Í–³‹i‹L˜^‚ª‚Å‚«‚È‚­‚Ä‚àˆ—‚ğ‘±‚¯‚éj
+                // ï¿½ï¿½ÍƒGï¿½ï¿½ï¿½[ï¿½Í–ï¿½ï¿½ï¿½ï¿½iï¿½Lï¿½^ï¿½ï¿½ï¿½Å‚ï¿½ï¿½È‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ğ‘±‚ï¿½ï¿½ï¿½j
                 _logger.LogWarning(ex, "Error recording frame data");
             }
         }
@@ -110,7 +110,7 @@ internal sealed class RecordingHidStream : IHidStream
     }
 
     /// <summary>
-    /// ‹L˜^ƒZƒbƒVƒ‡ƒ“‚ğŠ®—¹‚µ‚Äƒƒ^ƒf[ƒ^‚ğ•Û‘¶
+    /// ï¿½Lï¿½^ï¿½Zï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äƒï¿½ï¿½^ï¿½fï¿½[ï¿½^ï¿½ï¿½Û‘ï¿½
     /// </summary>
     public async Task FinalizeAsync(string metadataPath)
     {
