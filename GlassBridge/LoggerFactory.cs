@@ -1,11 +1,11 @@
 using Microsoft.Extensions.Logging;
 
-namespace GlassBridge.Internal;
+namespace GlassBridge;
 
 /// <summary>
 /// GlassBridge 内部で使用するロガーファクトリ
 /// </summary>
-internal static class LoggerFactoryProvider
+public static class LoggerFactoryProvider
 {
     private static ILoggerFactory? _instance;
     private static readonly object _lock = new();

@@ -1,5 +1,6 @@
 namespace GlassBridge.Internal.Recording;
 
+using GlassBridge;
 using GlassBridge.Internal.HID;
 using Microsoft.Extensions.Logging;
 

@@ -1,5 +1,6 @@
 namespace GlassBridge.Internal.HID;
 
+using GlassBridge;
 using HidSharp;
 using Microsoft.Extensions.Logging;
 

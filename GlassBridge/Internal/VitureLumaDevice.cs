@@ -3,6 +3,7 @@ namespace GlassBridge.Internal;
 using GlassBridge.Internal.HID;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
+using GlassBridge;
 
 /// <summary>
 /// VITURE系グラス用IMUデバイス実装
