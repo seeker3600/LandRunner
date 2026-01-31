@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="GlassBridgeTest" />
+    <InternalsVisibleTo Include="GlassBridgeBenchmark" />
     <InternalsVisibleTo Include="LandRunner" />
   </ItemGroup>
 
