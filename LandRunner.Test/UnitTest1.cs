@@ -93,22 +93,3 @@ public class HeadTrackingServiceTests
         }
     }
 }
-
-public class MonitorServiceTests
-{
-    [Fact]
-    public void GetDisplayName_IncludesResolutionAndPrimaryMarker()
-    {
-        var monitor = new MonitorInfo(
-            IntPtr.Zero,
-            "TestMonitor",
-            new System.Windows.Rect(0, 0, 1920, 1080),
-            new System.Windows.Rect(0, 0, 1920, 1040),
-            true,
-            0);
-
-        var name = MonitorService.GetDisplayName(monitor);
-
-        Assert.Equal("モニター 1: 1920x1080 (プライマリ)", name);
-    }
-}

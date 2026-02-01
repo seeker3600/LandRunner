@@ -180,6 +180,16 @@ public partial class SetupWindow : Window
         catch (OperationCanceledException)
         {
             // 正常なキャンセル
+            _logger.LogDebug("IMUプレビューがキャンセルされました");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "IMUプレビュー中にエラーが発生しました");
+            Dispatcher.Invoke(() =>
+            {
+                ImuDataText.Text = "エラー: IMUデータ取得失敗";
+                Log($"? IMUデータ取得エラー: {ex.Message}");
+            });
         }
     }
 

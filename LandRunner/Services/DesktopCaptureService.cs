@@ -181,8 +181,9 @@ public sealed class DesktopCaptureService : IDisposable
 
             return bitmap;
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogWarning(ex, "フレームのビットマップ変換に失敗しました");
             return null;
         }
     }

@@ -89,25 +89,38 @@ public sealed class HeadTrackingService : IDisposable
     {
         if (_device == null) return;
 
-        await foreach (var imuData in _device.GetImuDataStreamAsync(cancellationToken))
+        try
         {
-            // 基準姿勢のリセット
-            if (_pendingReset)
+            await foreach (var imuData in _device.GetImuDataStreamAsync(cancellationToken))
             {
-                _referenceQuaternion = imuData.Quaternion;
-                _pendingReset = false;
+                // 基準姿勢のリセット
+                if (_pendingReset)
+                {
+                    _referenceQuaternion = imuData.Quaternion;
+                    _pendingReset = false;
+                    _logger.LogDebug("基準姿勢をリセットしました");
+                }
+
+                // 相対姿勢を計算（基準姿勢からの差分）
+                var relativeQuat = _referenceQuaternion.Conjugate() * imuData.Quaternion;
+
+                // クォータニオンからオイラー角に変換
+                var euler = QuaternionToEuler(relativeQuat);
+                _currentAngles = euler;
+
+                // 画面上の位置を計算
+                var trackingData = CalculateTrackingData(euler);
+                TrackingUpdated?.Invoke(this, trackingData);
             }
-
-            // 相対姿勢を計算（基準姿勢からの差分）
-            var relativeQuat = _referenceQuaternion.Conjugate() * imuData.Quaternion;
-
-            // クォータニオンからオイラー角に変換
-            var euler = QuaternionToEuler(relativeQuat);
-            _currentAngles = euler;
-
-            // 画面上の位置を計算
-            var trackingData = CalculateTrackingData(euler);
-            TrackingUpdated?.Invoke(this, trackingData);
+        }
+        catch (OperationCanceledException)
+        {
+            // 正常なキャンセル
+            _logger.LogDebug("トラッキングループがキャンセルされました");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "トラッキングループでエラーが発生しました");
         }
     }
 

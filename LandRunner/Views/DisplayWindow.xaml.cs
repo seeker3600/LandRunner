@@ -82,6 +82,12 @@ public partial class DisplayWindow : Window, IAsyncDisposable
         // トラッキング開始
         _trackingService.StartTracking(_device);
 
+        // スクリーンデバイス名を表示
+        var displayName = !string.IsNullOrEmpty(_displayMonitor.FriendlyName) ? _displayMonitor.FriendlyName : _displayMonitor.DeviceName;
+        var captureName = !string.IsNullOrEmpty(_captureMonitor.FriendlyName) ? _captureMonitor.FriendlyName : _captureMonitor.DeviceName;
+        DisplayMonitorText.Text = $"Display: {displayName}";
+        CaptureMonitorText.Text = $"Capture: {captureName}";
+
         _logger.LogInformation("DisplayWindow 初期化完了 (表示: {DisplayMonitor}, キャプチャ: {CaptureMonitor})",
             _displayMonitor.DeviceName, _captureMonitor.DeviceName);
     }
@@ -92,16 +98,21 @@ public partial class DisplayWindow : Window, IAsyncDisposable
     }
 
     /// <summary>
-    /// ウィンドウを表示用モニターに配置
+    /// ウィンドウを表示用モニターの中央に半分サイズで配置
     /// </summary>
     private void PositionOnMonitor()
     {
         var bounds = _displayMonitor.Bounds;
 
-        Left = bounds.Left;
-        Top = bounds.Top;
-        Width = bounds.Width;
-        Height = bounds.Height;
+        // スクリーンの半分のサイズ
+        var windowWidth = bounds.Width / 2;
+        var windowHeight = bounds.Height / 2;
+
+        // 中央に配置
+        Left = bounds.Left + (bounds.Width - windowWidth) / 2;
+        Top = bounds.Top + (bounds.Height - windowHeight) / 2;
+        Width = windowWidth;
+        Height = windowHeight;
 
         WindowState = WindowState.Normal;
     }
@@ -141,13 +152,11 @@ public partial class DisplayWindow : Window, IAsyncDisposable
     {
         Dispatcher.BeginInvoke(() =>
         {
+            // TODO: ピンニング機能は一時的に無効化
             // 頭の動きと反対方向に画像を移動（空間固定効果）
-            // 頭を右に向けると、画像は左に移動するように見える = 画像を右に動かす
-            ImageTranslation.X = data.HorizontalOffset * _horizontalScale;
-            ImageTranslation.Y = data.VerticalOffset * _verticalScale;
-
-            // 頭のロールと反対方向に画像を回転
-            ImageRotation.Angle = data.RotationAngle;
+            // ImageTranslation.X = data.HorizontalOffset * _horizontalScale;
+            // ImageTranslation.Y = data.VerticalOffset * _verticalScale;
+            // ImageRotation.Angle = data.RotationAngle;
 
             // デバッグ情報更新
             if (_isDebugVisible)
@@ -161,9 +170,6 @@ public partial class DisplayWindow : Window, IAsyncDisposable
                     H-Offset: {data.HorizontalOffset,6:F2}
                     V-Offset: {data.VerticalOffset,6:F2}
                     Rotation: {data.RotationAngle,6:F1}°
-                    ───────────────
-                    X: {ImageTranslation.X,6:F0} px
-                    Y: {ImageTranslation.Y,6:F0} px
                     """;
             }
         });
@@ -188,7 +194,7 @@ public partial class DisplayWindow : Window, IAsyncDisposable
             case Key.D:
                 // デバッグ表示トグル
                 _isDebugVisible = !_isDebugVisible;
-                DebugOverlay.Visibility = _isDebugVisible ? Visibility.Visible : Visibility.Collapsed;
+                DebugText.Visibility = _isDebugVisible ? Visibility.Visible : Visibility.Collapsed;
                 break;
         }
     }

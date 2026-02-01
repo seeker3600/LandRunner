@@ -25,20 +25,31 @@
             </Image.RenderTransform>
         </Image>
 
-        <!-- Debug overlay -->
-        <Border x:Name="DebugOverlay"
-                Background="#80000000"
+        <!-- Screen info overlay -->
+        <Border Background="#80000000"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Margin="10"
                 Padding="10"
-                CornerRadius="5"
-                Visibility="Collapsed">
+                CornerRadius="5">
             <StackPanel>
+                <TextBlock x:Name="DisplayMonitorText" 
+                           Foreground="Yellow" 
+                           FontFamily="Consolas"
+                           FontSize="14"
+                           FontWeight="Bold"/>
+                <TextBlock x:Name="CaptureMonitorText" 
+                           Foreground="Cyan" 
+                           FontFamily="Consolas"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Margin="0,5,0,0"/>
                 <TextBlock x:Name="DebugText" 
                            Foreground="White" 
                            FontFamily="Consolas"
-                           FontSize="12"/>
+                           FontSize="12"
+                           Margin="0,10,0,0"
+                           Visibility="Collapsed"/>
             </StackPanel>
         </Border>
 
