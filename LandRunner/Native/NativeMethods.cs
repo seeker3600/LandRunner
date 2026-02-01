@@ -3,34 +3,34 @@ using System.Runtime.InteropServices;
 namespace LandRunner.Native;
 
 /// <summary>
-/// Win32 API ŒÄ‚Ño‚µ‚Ì‚½‚ß‚ÌƒlƒCƒeƒBƒuƒƒ\ƒbƒh
+/// Win32 API å‘¼ã³å‡ºã—ã®ãŸã‚ã®ãƒã‚¤ãƒ†ã‚£ãƒ–ãƒ¡ã‚½ãƒƒãƒ‰
 /// </summary>
 internal static partial class NativeMethods
 {
     public const int WDA_EXCLUDEFROMCAPTURE = 0x00000011;
 
     /// <summary>
-    /// ƒEƒBƒ“ƒhƒE‚Ì•\¦ƒAƒtƒBƒjƒeƒB‚ğİ’è
-    /// WDA_EXCLUDEFROMCAPTURE ‚ğİ’è‚·‚é‚ÆAƒEƒBƒ“ƒhƒE‚ªƒXƒNƒŠ[ƒ“ƒLƒƒƒvƒ`ƒƒ‚©‚çœŠO‚³‚ê‚é
+    /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤ºã‚¢ãƒ•ã‚£ãƒ‹ãƒ†ã‚£ã‚’è¨­å®š
+    /// WDA_EXCLUDEFROMCAPTURE ã‚’è¨­å®šã™ã‚‹ã¨ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚­ãƒ£ãƒ—ãƒãƒ£ã‹ã‚‰é™¤å¤–ã•ã‚Œã‚‹
     /// </summary>
     [DllImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool SetWindowDisplayAffinity(IntPtr hWnd, uint dwAffinity);
 
     /// <summary>
-    /// ƒ‚ƒjƒ^[—ñ‹“—pƒR[ƒ‹ƒoƒbƒN
+    /// ãƒ¢ãƒ‹ã‚¿ãƒ¼åˆ—æŒ™ç”¨ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
     /// </summary>
     public delegate bool MonitorEnumProc(IntPtr hMonitor, IntPtr hdcMonitor, ref RECT lprcMonitor, IntPtr dwData);
 
     /// <summary>
-    /// ‚·‚×‚Ä‚Ìƒ‚ƒjƒ^[‚ğ—ñ‹“
+    /// ã™ã¹ã¦ã®ãƒ¢ãƒ‹ã‚¿ãƒ¼ã‚’åˆ—æŒ™
     /// </summary>
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr lprcClip, MonitorEnumProc lpfnEnum, IntPtr dwData);
 
     /// <summary>
-    /// ƒ‚ƒjƒ^[î•ñ‚ğæ“¾
+    /// ãƒ¢ãƒ‹ã‚¿ãƒ¼æƒ…å ±ã‚’å–å¾—
     /// </summary>
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     public static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFOEX lpmi);

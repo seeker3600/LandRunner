@@ -5,14 +5,17 @@ using System.Windows.Media.Imaging;
 using GlassBridge;
 using LandRunner.Native;
 using LandRunner.Services;
+using Microsoft.Extensions.Logging;
 
 namespace LandRunner.Views;
 
 /// <summary>
-/// ƒLƒƒƒvƒ`ƒƒ‰æ‘œ‚ğ•\¦‚µAXRƒfƒoƒCƒX‚Ìp¨‚É‰‚¶‚ÄˆÊ’u‚ğ•Ï‰»‚³‚¹‚éƒEƒBƒ“ƒhƒE
+/// ã‚­ãƒ£ãƒ—ãƒãƒ£ç”»åƒã‚’è¡¨ç¤ºã—ã€XRãƒ‡ãƒã‚¤ã‚¹ã®å§¿å‹¢ã«å¿œã˜ã¦ä½ç½®ã‚’å¤‰åŒ–ã•ã›ã‚‹ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
 /// </summary>
 public partial class DisplayWindow : Window, IAsyncDisposable
 {
+    private readonly ILogger<DisplayWindow> _logger = App.CreateLogger<DisplayWindow>();
+
     private readonly IImuDevice _device;
     private readonly MonitorInfo _displayMonitor;
     private readonly MonitorInfo _captureMonitor;
@@ -23,8 +26,8 @@ public partial class DisplayWindow : Window, IAsyncDisposable
     private bool _isDebugVisible;
     private bool _disposed;
 
-    // ‰æ–Ê‚ÌˆÚ“®—ÊƒXƒP[ƒ‹iƒsƒNƒZƒ‹’PˆÊj
-    // ³‹K‰»ƒIƒtƒZƒbƒgi-1`1j‚ğƒsƒNƒZƒ‹‚É•ÏŠ·‚·‚éŒW”
+    // ç”»é¢ã®ç§»å‹•é‡ã‚¹ã‚±ãƒ¼ãƒ«ï¼ˆãƒ”ã‚¯ã‚»ãƒ«å˜ä½ï¼‰
+    // æ­£è¦åŒ–ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼ˆ-1ï½1ï¼‰ã‚’ãƒ”ã‚¯ã‚»ãƒ«ã«å¤‰æ›ã™ã‚‹ä¿‚æ•°
     private double _horizontalScale;
     private double _verticalScale;
 
@@ -48,35 +51,39 @@ public partial class DisplayWindow : Window, IAsyncDisposable
 
     private async void OnLoaded(object sender, RoutedEventArgs e)
     {
-        // ƒEƒBƒ“ƒhƒE‚ğ•\¦—pƒ‚ƒjƒ^[‚É‘S‰æ–Ê”z’u
+        // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤ºç”¨ãƒ¢ãƒ‹ã‚¿ãƒ¼ã«å…¨ç”»é¢é…ç½®
         PositionOnMonitor();
 
-        // WDA_EXCLUDEFROMCAPTURE ‚ğİ’èi‚±‚ÌƒEƒBƒ“ƒhƒE‚ğƒLƒƒƒvƒ`ƒƒ‚©‚çœŠOj
+        // WDA_EXCLUDEFROMCAPTURE ã‚’è¨­å®šï¼ˆã“ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ã‚­ãƒ£ãƒ—ãƒãƒ£ã‹ã‚‰é™¤å¤–ï¼‰
         SetExcludeFromCapture();
 
-        // ƒXƒP[ƒ‹ŒvZ
-        _horizontalScale = _displayMonitor.Bounds.Width * 0.3;  // ‹–ì’[‚Å30%ˆÚ“®
+        // ã‚¹ã‚±ãƒ¼ãƒ«è¨ˆç®—
+        _horizontalScale = _displayMonitor.Bounds.Width * 0.3;  // è¦–é‡ç«¯ã§30%ç§»å‹•
         _verticalScale = _displayMonitor.Bounds.Height * 0.3;
 
-        // ƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰“o˜^
+        // ã‚¤ãƒ™ãƒ³ãƒˆãƒãƒ³ãƒ‰ãƒ©ç™»éŒ²
         _captureService.FrameCaptured += OnFrameCaptured;
         _trackingService.TrackingUpdated += OnTrackingUpdated;
 
-        // ƒLƒƒƒvƒ`ƒƒŠJn
+        // ã‚­ãƒ£ãƒ—ãƒãƒ£é–‹å§‹
         try
         {
             await _captureService.StartCaptureAsync(_captureMonitor);
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"ƒLƒƒƒvƒ`ƒƒ‚ÌŠJn‚É¸”s‚µ‚Ü‚µ‚½:\n{ex.Message}", "ƒGƒ‰[",
+            _logger.LogError(ex, "ã‚­ãƒ£ãƒ—ãƒãƒ£ã®é–‹å§‹ã«å¤±æ•—ã—ã¾ã—ãŸ");
+            MessageBox.Show($"ã‚­ãƒ£ãƒ—ãƒãƒ£ã®é–‹å§‹ã«å¤±æ•—ã—ã¾ã—ãŸ:\n{ex.Message}", "ã‚¨ãƒ©ãƒ¼",
                 MessageBoxButton.OK, MessageBoxImage.Error);
             Close();
             return;
         }
 
-        // ƒgƒ‰ƒbƒLƒ“ƒOŠJn
+        // ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°é–‹å§‹
         _trackingService.StartTracking(_device);
+
+        _logger.LogInformation("DisplayWindow åˆæœŸåŒ–å®Œäº† (è¡¨ç¤º: {DisplayMonitor}, ã‚­ãƒ£ãƒ—ãƒãƒ£: {CaptureMonitor})",
+            _displayMonitor.DeviceName, _captureMonitor.DeviceName);
     }
 
     private void OnClosed(object? sender, EventArgs e)
@@ -85,7 +92,7 @@ public partial class DisplayWindow : Window, IAsyncDisposable
     }
 
     /// <summary>
-    /// ƒEƒBƒ“ƒhƒE‚ğ•\¦—pƒ‚ƒjƒ^[‚É”z’u
+    /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤ºç”¨ãƒ¢ãƒ‹ã‚¿ãƒ¼ã«é…ç½®
     /// </summary>
     private void PositionOnMonitor()
     {
@@ -100,7 +107,7 @@ public partial class DisplayWindow : Window, IAsyncDisposable
     }
 
     /// <summary>
-    /// WDA_EXCLUDEFROMCAPTURE ‚ğİ’è
+    /// WDA_EXCLUDEFROMCAPTURE ã‚’è¨­å®š
     /// </summary>
     private void SetExcludeFromCapture()
     {
@@ -116,11 +123,11 @@ public partial class DisplayWindow : Window, IAsyncDisposable
     }
 
     /// <summary>
-    /// ƒLƒƒƒvƒ`ƒƒƒtƒŒ[ƒ€óM
+    /// ã‚­ãƒ£ãƒ—ãƒãƒ£ãƒ•ãƒ¬ãƒ¼ãƒ å—ä¿¡æ™‚
     /// </summary>
     private void OnFrameCaptured(object? sender, WriteableBitmap bitmap)
     {
-        // UI ƒXƒŒƒbƒh‚Å‰æ‘œ‚ğXV
+        // UI ã‚¹ãƒ¬ãƒƒãƒ‰ã§ç”»åƒã‚’æ›´æ–°
         Dispatcher.BeginInvoke(() =>
         {
             CaptureImage.Source = bitmap;
@@ -128,33 +135,33 @@ public partial class DisplayWindow : Window, IAsyncDisposable
     }
 
     /// <summary>
-    /// ƒgƒ‰ƒbƒLƒ“ƒOƒf[ƒ^XV
+    /// ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿æ›´æ–°æ™‚
     /// </summary>
     private void OnTrackingUpdated(object? sender, TrackingData data)
     {
         Dispatcher.BeginInvoke(() =>
         {
-            // “ª‚Ì“®‚«‚Æ”½‘Î•ûŒü‚É‰æ‘œ‚ğˆÚ“®i‹óŠÔŒÅ’èŒø‰Êj
-            // “ª‚ğ‰E‚ÉŒü‚¯‚é‚ÆA‰æ‘œ‚Í¶‚ÉˆÚ“®‚·‚é‚æ‚¤‚ÉŒ©‚¦‚é = ‰æ‘œ‚ğ‰E‚É“®‚©‚·
+            // é ­ã®å‹•ãã¨åå¯¾æ–¹å‘ã«ç”»åƒã‚’ç§»å‹•ï¼ˆç©ºé–“å›ºå®šåŠ¹æœï¼‰
+            // é ­ã‚’å³ã«å‘ã‘ã‚‹ã¨ã€ç”»åƒã¯å·¦ã«ç§»å‹•ã™ã‚‹ã‚ˆã†ã«è¦‹ãˆã‚‹ = ç”»åƒã‚’å³ã«å‹•ã‹ã™
             ImageTranslation.X = data.HorizontalOffset * _horizontalScale;
             ImageTranslation.Y = data.VerticalOffset * _verticalScale;
 
-            // “ª‚Ìƒ[ƒ‹‚Æ”½‘Î•ûŒü‚É‰æ‘œ‚ğ‰ñ“]
+            // é ­ã®ãƒ­ãƒ¼ãƒ«ã¨åå¯¾æ–¹å‘ã«ç”»åƒã‚’å›è»¢
             ImageRotation.Angle = data.RotationAngle;
 
-            // ƒfƒoƒbƒOî•ñXV
+            // ãƒ‡ãƒãƒƒã‚°æƒ…å ±æ›´æ–°
             if (_isDebugVisible)
             {
                 var euler = data.RawAngles;
                 DebugText.Text = $"""
-                    Roll:  {euler.Roll,7:F1}‹
-                    Pitch: {euler.Pitch,7:F1}‹
-                    Yaw:   {euler.Yaw,7:F1}‹
-                    „Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
+                    Roll:  {euler.Roll,7:F1}Â°
+                    Pitch: {euler.Pitch,7:F1}Â°
+                    Yaw:   {euler.Yaw,7:F1}Â°
+                    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                     H-Offset: {data.HorizontalOffset,6:F2}
                     V-Offset: {data.VerticalOffset,6:F2}
-                    Rotation: {data.RotationAngle,6:F1}‹
-                    „Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ
+                    Rotation: {data.RotationAngle,6:F1}Â°
+                    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                     X: {ImageTranslation.X,6:F0} px
                     Y: {ImageTranslation.Y,6:F0} px
                     """;
@@ -163,7 +170,7 @@ public partial class DisplayWindow : Window, IAsyncDisposable
     }
 
     /// <summary>
-    /// ƒL[“ü—Íˆ—
+    /// ã‚­ãƒ¼å…¥åŠ›å‡¦ç†
     /// </summary>
     private void Window_KeyDown(object sender, KeyEventArgs e)
     {
@@ -174,12 +181,12 @@ public partial class DisplayWindow : Window, IAsyncDisposable
                 break;
 
             case Key.R:
-                // p¨ƒŠƒZƒbƒg
+                // å§¿å‹¢ãƒªã‚»ãƒƒãƒˆ
                 _trackingService.ResetReference();
                 break;
 
             case Key.D:
-                // ƒfƒoƒbƒO•\¦ƒgƒOƒ‹
+                // ãƒ‡ãƒãƒƒã‚°è¡¨ç¤ºãƒˆã‚°ãƒ«
                 _isDebugVisible = !_isDebugVisible;
                 DebugOverlay.Visibility = _isDebugVisible ? Visibility.Visible : Visibility.Collapsed;
                 break;
@@ -190,6 +197,8 @@ public partial class DisplayWindow : Window, IAsyncDisposable
     {
         if (_disposed) return;
         _disposed = true;
+
+        _logger.LogInformation("DisplayWindow ã‚’é–‰ã˜ã¾ã™");
 
         _captureService.FrameCaptured -= OnFrameCaptured;
         _trackingService.TrackingUpdated -= OnTrackingUpdated;

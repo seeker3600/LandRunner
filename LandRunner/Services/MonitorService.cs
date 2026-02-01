@@ -4,7 +4,7 @@ using LandRunner.Native;
 namespace LandRunner.Services;
 
 /// <summary>
-/// Ú‘±‚³‚ê‚Ä‚¢‚éƒ‚ƒjƒ^[î•ñ
+/// æ¥ç¶šã•ã‚Œã¦ã„ã‚‹ãƒ¢ãƒ‹ã‚¿ãƒ¼æƒ…å ±
 /// </summary>
 public record MonitorInfo(
     IntPtr Handle,
@@ -15,12 +15,12 @@ public record MonitorInfo(
     int Index);
 
 /// <summary>
-/// ƒ}ƒ‹ƒ`ƒ‚ƒjƒ^[î•ñ‚ğæ“¾‚·‚éƒT[ƒrƒX
+/// ãƒãƒ«ãƒãƒ¢ãƒ‹ã‚¿ãƒ¼æƒ…å ±ã‚’å–å¾—ã™ã‚‹ã‚µãƒ¼ãƒ“ã‚¹
 /// </summary>
 public static class MonitorService
 {
     /// <summary>
-    /// ‚·‚×‚Ä‚Ìƒ‚ƒjƒ^[î•ñ‚ğæ“¾
+    /// ã™ã¹ã¦ã®ãƒ¢ãƒ‹ã‚¿ãƒ¼æƒ…å ±ã‚’å–å¾—
     /// </summary>
     public static ReadOnlyCollection<MonitorInfo> GetAllMonitors()
     {
@@ -57,11 +57,11 @@ public static class MonitorService
     }
 
     /// <summary>
-    /// ƒ‚ƒjƒ^[•\¦–¼‚ğ¶¬
+    /// ãƒ¢ãƒ‹ã‚¿ãƒ¼è¡¨ç¤ºåã‚’ç”Ÿæˆ
     /// </summary>
     public static string GetDisplayName(MonitorInfo monitor)
     {
-        var primary = monitor.IsPrimary ? " (ƒvƒ‰ƒCƒ}ƒŠ)" : "";
-        return $"ƒ‚ƒjƒ^[ {monitor.Index + 1}: {monitor.Bounds.Width}x{monitor.Bounds.Height}{primary}";
+        var primary = monitor.IsPrimary ? " (ãƒ—ãƒ©ã‚¤ãƒãƒª)" : "";
+        return $"ãƒ¢ãƒ‹ã‚¿ãƒ¼ {monitor.Index + 1}: {monitor.Bounds.Width}x{monitor.Bounds.Height}{primary}";
     }
 }

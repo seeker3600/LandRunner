@@ -1,44 +1,49 @@
 using System.Numerics;
 using GlassBridge;
+using Microsoft.Extensions.Logging;
 
 namespace LandRunner.Services;
 
 /// <summary>
-/// IMU ƒf[ƒ^‚©‚ç‰æ–Êã‚ÌˆÊ’uEŠp“x‚ğŒvZ‚·‚éƒT[ƒrƒX
+/// IMU ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ç”»é¢ä¸Šã®ä½ç½®ãƒ»è§’åº¦ã‚’è¨ˆç®—ã™ã‚‹ã‚µãƒ¼ãƒ“ã‚¹
 /// </summary>
 public sealed class HeadTrackingService : IDisposable
 {
+    private readonly ILogger<HeadTrackingService> _logger = App.CreateLogger<HeadTrackingService>();
+
     private IImuDevice? _device;
     private CancellationTokenSource? _cts;
     private Task? _trackingTask;
     private bool _disposed;
 
-    // Šî€p¨iƒŠƒZƒbƒg‚Ìp¨j
+    // åŸºæº–å§¿å‹¢ï¼ˆãƒªã‚»ãƒƒãƒˆæ™‚ã®å§¿å‹¢ï¼‰
     private GlassBridge.Quaternion _referenceQuaternion = GlassBridge.Quaternion.Identity;
 
-    // Œ»İ‚Ì‘Š‘Îp¨
+    // ç¾åœ¨ã®ç›¸å¯¾å§¿å‹¢
     private volatile EulerAngles _currentAngles = new(0, 0, 0);
 
-    // ‹–ìŠp‚Ìİ’èi“xj- XR ƒOƒ‰ƒX‚Ì‹–ìŠp‚É‹ß‚¢’l
+    // è¦–é‡è§’ã®è¨­å®šï¼ˆåº¦ï¼‰- XR ã‚°ãƒ©ã‚¹ã®è¦–é‡è§’ã«è¿‘ã„å€¤
     private const float HorizontalFov = 46f;
     private const float VerticalFov = 26f;
 
     /// <summary>
-    /// ƒgƒ‰ƒbƒLƒ“ƒOƒf[ƒ^‚ªXV‚³‚ê‚½‚Æ‚«‚É”­¶
+    /// ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿ãŒæ›´æ–°ã•ã‚ŒãŸã¨ãã«ç™ºç”Ÿ
     /// </summary>
     public event EventHandler<TrackingData>? TrackingUpdated;
 
     /// <summary>
-    /// Œ»İ‚Ì‘Š‘ÎƒIƒCƒ‰[Šp
+    /// ç¾åœ¨ã®ç›¸å¯¾ã‚ªã‚¤ãƒ©ãƒ¼è§’
     /// </summary>
     public EulerAngles CurrentAngles => _currentAngles;
 
     /// <summary>
-    /// Ú‘±‚³‚ê‚½ƒfƒoƒCƒX‚Åƒgƒ‰ƒbƒLƒ“ƒO‚ğŠJn
+    /// æ¥ç¶šã•ã‚ŒãŸãƒ‡ãƒã‚¤ã‚¹ã§ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°ã‚’é–‹å§‹
     /// </summary>
     public void StartTracking(IImuDevice device)
     {
         if (_disposed) throw new ObjectDisposedException(nameof(HeadTrackingService));
+
+        _logger.LogInformation("ãƒ˜ãƒƒãƒ‰ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°é–‹å§‹");
 
         _device = device;
         _cts = new CancellationTokenSource();
@@ -47,10 +52,12 @@ public sealed class HeadTrackingService : IDisposable
     }
 
     /// <summary>
-    /// ƒgƒ‰ƒbƒLƒ“ƒO‚ğ’â~
+    /// ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°ã‚’åœæ­¢
     /// </summary>
     public async Task StopTrackingAsync()
     {
+        _logger.LogInformation("ãƒ˜ãƒƒãƒ‰ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°åœæ­¢");
+
         _cts?.Cancel();
         if (_trackingTask != null)
         {
@@ -60,7 +67,7 @@ public sealed class HeadTrackingService : IDisposable
             }
             catch (OperationCanceledException)
             {
-                // ³í‚ÈƒLƒƒƒ“ƒZƒ‹
+                // æ­£å¸¸ãªã‚­ãƒ£ãƒ³ã‚»ãƒ«
             }
         }
         _cts?.Dispose();
@@ -68,11 +75,11 @@ public sealed class HeadTrackingService : IDisposable
     }
 
     /// <summary>
-    /// Œ»İ‚Ìp¨‚ğŠî€‚Æ‚µ‚ÄƒŠƒZƒbƒg
+    /// ç¾åœ¨ã®å§¿å‹¢ã‚’åŸºæº–ã¨ã—ã¦ãƒªã‚»ãƒƒãƒˆ
     /// </summary>
     public void ResetReference()
     {
-        // Ÿ‚ÌƒtƒŒ[ƒ€‚ÅŠî€p¨‚ğXV‚·‚éƒtƒ‰ƒO‚ğ—§‚Ä‚é
+        _logger.LogDebug("åŸºæº–å§¿å‹¢ãƒªã‚»ãƒƒãƒˆè¦æ±‚");
         _pendingReset = true;
     }
 
@@ -84,39 +91,39 @@ public sealed class HeadTrackingService : IDisposable
 
         await foreach (var imuData in _device.GetImuDataStreamAsync(cancellationToken))
         {
-            // Šî€p¨‚ÌƒŠƒZƒbƒg
+            // åŸºæº–å§¿å‹¢ã®ãƒªã‚»ãƒƒãƒˆ
             if (_pendingReset)
             {
                 _referenceQuaternion = imuData.Quaternion;
                 _pendingReset = false;
             }
 
-            // ‘Š‘Îp¨‚ğŒvZiŠî€p¨‚©‚ç‚Ì·•ªj
+            // ç›¸å¯¾å§¿å‹¢ã‚’è¨ˆç®—ï¼ˆåŸºæº–å§¿å‹¢ã‹ã‚‰ã®å·®åˆ†ï¼‰
             var relativeQuat = _referenceQuaternion.Conjugate() * imuData.Quaternion;
 
-            // ƒNƒH[ƒ^ƒjƒIƒ“‚©‚çƒIƒCƒ‰[Šp‚É•ÏŠ·
+            // ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‹ã‚‰ã‚ªã‚¤ãƒ©ãƒ¼è§’ã«å¤‰æ›
             var euler = QuaternionToEuler(relativeQuat);
             _currentAngles = euler;
 
-            // ‰æ–Êã‚ÌˆÊ’u‚ğŒvZ
+            // ç”»é¢ä¸Šã®ä½ç½®ã‚’è¨ˆç®—
             var trackingData = CalculateTrackingData(euler);
             TrackingUpdated?.Invoke(this, trackingData);
         }
     }
 
     /// <summary>
-    /// ƒNƒH[ƒ^ƒjƒIƒ“‚©‚çƒIƒCƒ‰[Špi“xj‚É•ÏŠ·
+    /// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‹ã‚‰ã‚ªã‚¤ãƒ©ãƒ¼è§’ï¼ˆåº¦ï¼‰ã«å¤‰æ›
     /// </summary>
     private static EulerAngles QuaternionToEuler(GlassBridge.Quaternion q)
     {
         var (w, x, y, z) = q;
 
-        // Roll (X²‰ñ“])
+        // Roll (Xè»¸å›è»¢)
         var sinr_cosp = 2 * (w * x + y * z);
         var cosr_cosp = 1 - 2 * (x * x + y * y);
         var roll = MathF.Atan2(sinr_cosp, cosr_cosp);
 
-        // Pitch (Y²‰ñ“])
+        // Pitch (Yè»¸å›è»¢)
         var sinp = 2 * (w * y - z * x);
         float pitch;
         if (MathF.Abs(sinp) >= 1)
@@ -124,30 +131,30 @@ public sealed class HeadTrackingService : IDisposable
         else
             pitch = MathF.Asin(sinp);
 
-        // Yaw (Z²‰ñ“])
+        // Yaw (Zè»¸å›è»¢)
         var siny_cosp = 2 * (w * z + x * y);
         var cosy_cosp = 1 - 2 * (y * y + z * z);
         var yaw = MathF.Atan2(siny_cosp, cosy_cosp);
 
-        // ƒ‰ƒWƒAƒ“‚©‚ç“x‚É•ÏŠ·
+        // ãƒ©ã‚¸ã‚¢ãƒ³ã‹ã‚‰åº¦ã«å¤‰æ›
         const float radToDeg = 180f / MathF.PI;
         return new EulerAngles(roll * radToDeg, pitch * radToDeg, yaw * radToDeg);
     }
 
     /// <summary>
-    /// ƒIƒCƒ‰[Šp‚©‚çƒgƒ‰ƒbƒLƒ“ƒOƒf[ƒ^‚ğŒvZ
+    /// ã‚ªã‚¤ãƒ©ãƒ¼è§’ã‹ã‚‰ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿ã‚’è¨ˆç®—
     /// </summary>
     private TrackingData CalculateTrackingData(EulerAngles euler)
     {
-        // Yaw ¨ …•½•ûŒü‚ÌƒIƒtƒZƒbƒgi-1 ` 1j
-        // Pitch ¨ ‚’¼•ûŒü‚ÌƒIƒtƒZƒbƒgi-1 ` 1j
-        // Roll ¨ ‰ñ“]Šp“x
+        // Yaw â†’ æ°´å¹³æ–¹å‘ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼ˆ-1 ï½ 1ï¼‰
+        // Pitch â†’ å‚ç›´æ–¹å‘ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼ˆ-1 ï½ 1ï¼‰
+        // Roll â†’ å›è»¢è§’åº¦
 
-        // ‹–ìŠp‚Å³‹K‰»i‹–ìŠp‚Ì’[‚Å }1j
+        // è¦–é‡è§’ã§æ­£è¦åŒ–ï¼ˆè¦–é‡è§’ã®ç«¯ã§ Â±1ï¼‰
         var horizontalOffset = -euler.Yaw / (HorizontalFov / 2);
         var verticalOffset = euler.Pitch / (VerticalFov / 2);
 
-        // ƒNƒ‰ƒ“ƒvi‹–ìŠO‚Éo‚È‚¢‚æ‚¤‚Éj
+        // ã‚¯ãƒ©ãƒ³ãƒ—ï¼ˆè¦–é‡å¤–ã«å‡ºãªã„ã‚ˆã†ã«ï¼‰
         horizontalOffset = Math.Clamp(horizontalOffset, -2f, 2f);
         verticalOffset = Math.Clamp(verticalOffset, -2f, 2f);
 
@@ -169,12 +176,12 @@ public sealed class HeadTrackingService : IDisposable
 }
 
 /// <summary>
-/// ƒgƒ‰ƒbƒLƒ“ƒOƒf[ƒ^
+/// ãƒˆãƒ©ãƒƒã‚­ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿
 /// </summary>
-/// <param name="HorizontalOffset">…•½•ûŒüƒIƒtƒZƒbƒgi-1 ` 1A‹–ìŠp‚Ì”ÍˆÍj</param>
-/// <param name="VerticalOffset">‚’¼•ûŒüƒIƒtƒZƒbƒgi-1 ` 1A‹–ìŠp‚Ì”ÍˆÍj</param>
-/// <param name="RotationAngle">‰ñ“]Šp“xi“xj</param>
-/// <param name="RawAngles">¶‚ÌƒIƒCƒ‰[Šp</param>
+/// <param name="HorizontalOffset">æ°´å¹³æ–¹å‘ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼ˆ-1 ï½ 1ã€è¦–é‡è§’ã®ç¯„å›²ï¼‰</param>
+/// <param name="VerticalOffset">å‚ç›´æ–¹å‘ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼ˆ-1 ï½ 1ã€è¦–é‡è§’ã®ç¯„å›²ï¼‰</param>
+/// <param name="RotationAngle">å›è»¢è§’åº¦ï¼ˆåº¦ï¼‰</param>
+/// <param name="RawAngles">ç”Ÿã®ã‚ªã‚¤ãƒ©ãƒ¼è§’</param>
 public record TrackingData(
     float HorizontalOffset,
     float VerticalOffset,

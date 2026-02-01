@@ -9,14 +9,17 @@ using System.Windows;
 using Vortice.Direct3D11;
 using Vortice.DXGI;
 using WinRT;
+using Microsoft.Extensions.Logging;
 
 namespace LandRunner.Services;
 
 /// <summary>
-/// Windows.Graphics.Capture ‚ğg—p‚µ‚½ƒfƒXƒNƒgƒbƒvƒLƒƒƒvƒ`ƒƒƒT[ƒrƒX
+/// Windows.Graphics.Capture ã‚’ä½¿ç”¨ã—ãŸãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚µãƒ¼ãƒ“ã‚¹
 /// </summary>
 public sealed class DesktopCaptureService : IDisposable
 {
+    private readonly ILogger<DesktopCaptureService> _logger = App.CreateLogger<DesktopCaptureService>();
+
     private Direct3D11CaptureFramePool? _framePool;
     private GraphicsCaptureSession? _session;
     private IDirect3DDevice? _winrtDevice;
@@ -26,34 +29,38 @@ public sealed class DesktopCaptureService : IDisposable
     private bool _disposed;
 
     /// <summary>
-    /// V‚µ‚¢ƒtƒŒ[ƒ€‚ªƒLƒƒƒvƒ`ƒƒ‚³‚ê‚½‚Æ‚«‚É”­¶
+    /// æ–°ã—ã„ãƒ•ãƒ¬ãƒ¼ãƒ ãŒã‚­ãƒ£ãƒ—ãƒãƒ£ã•ã‚ŒãŸã¨ãã«ç™ºç”Ÿ
     /// </summary>
     public event EventHandler<WriteableBitmap>? FrameCaptured;
 
     /// <summary>
-    /// ƒLƒƒƒvƒ`ƒƒ’†‚ÌƒtƒŒ[ƒ€ƒTƒCƒY
+    /// ã‚­ãƒ£ãƒ—ãƒãƒ£ä¸­ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚µã‚¤ã‚º
     /// </summary>
     public SizeInt32 FrameSize => _lastSize;
 
     /// <summary>
-    /// w’è‚³‚ê‚½ƒ‚ƒjƒ^[‚ÌƒLƒƒƒvƒ`ƒƒ‚ğŠJn
+    /// æŒ‡å®šã•ã‚ŒãŸãƒ¢ãƒ‹ã‚¿ãƒ¼ã®ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚’é–‹å§‹
     /// </summary>
     public async Task StartCaptureAsync(MonitorInfo monitor)
     {
         if (_disposed) throw new ObjectDisposedException(nameof(DesktopCaptureService));
 
-        // GraphicsCaptureItem ‚ğæ“¾
+        _logger.LogInformation("ã‚­ãƒ£ãƒ—ãƒãƒ£é–‹å§‹: {MonitorName} ({Width}x{Height})",
+            monitor.DeviceName, monitor.Bounds.Width, monitor.Bounds.Height);
+
+        // GraphicsCaptureItem ã‚’å–å¾—
         var item = GetCaptureItemForMonitor(monitor);
         if (item == null)
         {
-            throw new InvalidOperationException($"ƒ‚ƒjƒ^[ '{monitor.DeviceName}' ‚ÌƒLƒƒƒvƒ`ƒƒƒAƒCƒeƒ€‚ğæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+            _logger.LogError("ãƒ¢ãƒ‹ã‚¿ãƒ¼ '{MonitorName}' ã®ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚¢ã‚¤ãƒ†ãƒ å–å¾—ã«å¤±æ•—", monitor.DeviceName);
+            throw new InvalidOperationException($"ãƒ¢ãƒ‹ã‚¿ãƒ¼ '{monitor.DeviceName}' ã®ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚¢ã‚¤ãƒ†ãƒ ã‚’å–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
         }
 
-        // Direct3D ƒfƒoƒCƒX‚ğì¬
+        // Direct3D ãƒ‡ãƒã‚¤ã‚¹ã‚’ä½œæˆ
         CreateD3DDevice();
         _lastSize = item.Size;
 
-        // ƒtƒŒ[ƒ€ƒv[ƒ‹‚ğì¬
+        // ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ—ãƒ¼ãƒ«ã‚’ä½œæˆ
         _framePool = Direct3D11CaptureFramePool.CreateFreeThreaded(
             _winrtDevice!,
             DirectXPixelFormat.B8G8R8A8UIntNormalized,
@@ -62,7 +69,7 @@ public sealed class DesktopCaptureService : IDisposable
 
         _framePool.FrameArrived += OnFrameArrived;
 
-        // ƒLƒƒƒvƒ`ƒƒƒZƒbƒVƒ‡ƒ“‚ğŠJn
+        // ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚’é–‹å§‹
         _session = _framePool.CreateCaptureSession(item);
         _session.IsBorderRequired = false;
         _session.IsCursorCaptureEnabled = true;
@@ -72,10 +79,12 @@ public sealed class DesktopCaptureService : IDisposable
     }
 
     /// <summary>
-    /// ƒLƒƒƒvƒ`ƒƒ‚ğ’â~
+    /// ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚’åœæ­¢
     /// </summary>
     public void StopCapture()
     {
+        _logger.LogInformation("ã‚­ãƒ£ãƒ—ãƒãƒ£åœæ­¢");
+
         _session?.Dispose();
         _session = null;
 
@@ -97,14 +106,14 @@ public sealed class DesktopCaptureService : IDisposable
         using var frame = sender.TryGetNextFrame();
         if (frame == null) return;
 
-        // ƒTƒCƒY‚ª•Ï‚í‚Á‚½ê‡‚ÍƒtƒŒ[ƒ€ƒv[ƒ‹‚ğÄì¬
+        // ã‚µã‚¤ã‚ºãŒå¤‰ã‚ã£ãŸå ´åˆã¯ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ—ãƒ¼ãƒ«ã‚’å†ä½œæˆ
         if (frame.ContentSize.Width != _lastSize.Width || frame.ContentSize.Height != _lastSize.Height)
         {
             _lastSize = frame.ContentSize;
             _framePool?.Recreate(_winrtDevice!, DirectXPixelFormat.B8G8R8A8UIntNormalized, 2, _lastSize);
         }
 
-        // ƒtƒŒ[ƒ€‚ğ WriteableBitmap ‚É•ÏŠ·
+        // ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’ WriteableBitmap ã«å¤‰æ›
         var bitmap = ConvertFrameToBitmap(frame);
         if (bitmap != null)
         {
@@ -119,7 +128,7 @@ public sealed class DesktopCaptureService : IDisposable
 
         try
         {
-            // WinRT ƒT[ƒtƒFƒX‚©‚ç D3D ƒeƒNƒXƒ`ƒƒ‚ğæ“¾
+            // WinRT ã‚µãƒ¼ãƒ•ã‚§ã‚¹ã‹ã‚‰ D3D ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å–å¾—
             var access = surface.As<IDirect3DDxgiInterfaceAccess>();
             var texturePtr = access.GetInterface(typeof(ID3D11Texture2D).GUID);
             using var sourceTexture = new ID3D11Texture2D(texturePtr);
@@ -128,7 +137,7 @@ public sealed class DesktopCaptureService : IDisposable
             var width = desc.Width;
             var height = desc.Height;
 
-            // ƒXƒe[ƒWƒ“ƒOƒeƒNƒXƒ`ƒƒ‚ğì¬
+            // ã‚¹ãƒ†ãƒ¼ã‚¸ãƒ³ã‚°ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œæˆ
             var stagingDesc = new Texture2DDescription
             {
                 Width = width,
@@ -146,7 +155,7 @@ public sealed class DesktopCaptureService : IDisposable
             using var stagingTexture = _d3dDevice.CreateTexture2D(stagingDesc);
             _d3dContext.CopyResource(stagingTexture, sourceTexture);
 
-            // ƒf[ƒ^‚ğ“Ç‚İæ‚è
+            // ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿å–ã‚Š
             var mappedResource = _d3dContext.Map(stagingTexture, 0, MapMode.Read, Vortice.Direct3D11.MapFlags.None);
 
             // WriteableBitmap must be created on UI thread
@@ -191,7 +200,7 @@ public sealed class DesktopCaptureService : IDisposable
 
     private void CreateD3DDevice()
     {
-        // D3D11 ƒfƒoƒCƒX‚ğì¬
+        // D3D11 ãƒ‡ãƒã‚¤ã‚¹ã‚’ä½œæˆ
         Vortice.Direct3D11.D3D11.D3D11CreateDevice(
             null,
             Vortice.Direct3D.DriverType.Hardware,
@@ -200,10 +209,10 @@ public sealed class DesktopCaptureService : IDisposable
             out _d3dDevice,
             out _d3dContext);
 
-        // DXGI ƒfƒoƒCƒX‚ğæ“¾
+        // DXGI ãƒ‡ãƒã‚¤ã‚¹ã‚’å–å¾—
         using var dxgiDevice = _d3dDevice!.QueryInterface<IDXGIDevice>();
 
-        // WinRT IDirect3DDevice ‚É•ÏŠ·
+        // WinRT IDirect3DDevice ã«å¤‰æ›
         var inspectable = CreateDirect3D11DeviceFromDXGIDevice(dxgiDevice.NativePointer);
         _winrtDevice = MarshalInterface<IDirect3DDevice>.FromAbi(inspectable);
     }

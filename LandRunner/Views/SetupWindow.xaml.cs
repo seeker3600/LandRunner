@@ -3,15 +3,17 @@ using System.Windows;
 using System.Windows.Threading;
 using GlassBridge;
 using LandRunner.Services;
+using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
 
 namespace LandRunner.Views;
 
 /// <summary>
-/// ƒZƒbƒgƒAƒbƒvƒEƒBƒ“ƒhƒE
+/// ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
 /// </summary>
 public partial class SetupWindow : Window
 {
+    private readonly ILogger<SetupWindow> _logger = App.CreateLogger<SetupWindow>();
     private readonly IImuDeviceManager _deviceManager;
     private IImuDevice? _device;
     private CancellationTokenSource? _previewCts;
@@ -27,13 +29,15 @@ public partial class SetupWindow : Window
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
+        _logger.LogInformation("ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ãã¾ã—ãŸ");
         LoadMonitors();
-        Log("LandRunner ƒZƒbƒgƒAƒbƒv‚ğŠJn‚µ‚Ü‚µ‚½");
-        Log("‘Î‰ƒfƒoƒCƒX: VITURE Luma, Luma Pro, Pro, One, One Lite");
+        Log("LandRunner ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã‚’é–‹å§‹ã—ã¾ã—ãŸ");
+        Log("å¯¾å¿œãƒ‡ãƒã‚¤ã‚¹: VITURE Luma, Luma Pro, Pro, One, One Lite");
     }
 
     private void OnClosed(object? sender, EventArgs e)
     {
+        _logger.LogInformation("ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã¾ã—ãŸ");
         _previewCts?.Cancel();
         _device?.DisposeAsync().AsTask().Wait(TimeSpan.FromSeconds(2));
         _deviceManager.Dispose();
@@ -53,10 +57,10 @@ public partial class SetupWindow : Window
             CaptureMonitorCombo.Items.Add(new MonitorItem(displayName, monitor));
         }
 
-        // ƒfƒtƒHƒ‹ƒg‘I‘ğ
+        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆé¸æŠ
         if (monitors.Count >= 2)
         {
-            // 2‘äˆÈã: ƒvƒ‰ƒCƒ}ƒŠ‚ğƒLƒƒƒvƒ`ƒƒAƒZƒJƒ“ƒ_ƒŠ‚ğ•\¦
+            // 2å°ä»¥ä¸Š: ãƒ—ãƒ©ã‚¤ãƒãƒªã‚’ã‚­ãƒ£ãƒ—ãƒãƒ£ã€ã‚»ã‚«ãƒ³ãƒ€ãƒªã‚’è¡¨ç¤º
             var primaryIndex = monitors.ToList().FindIndex(m => m.IsPrimary);
             var secondaryIndex = primaryIndex == 0 ? 1 : 0;
 
@@ -65,24 +69,24 @@ public partial class SetupWindow : Window
         }
         else if (monitors.Count == 1)
         {
-            // 1‘ä: —¼•û“¯‚¶iƒeƒXƒg—pj
+            // 1å°: ä¸¡æ–¹åŒã˜ï¼ˆãƒ†ã‚¹ãƒˆç”¨ï¼‰
             DisplayMonitorCombo.SelectedIndex = 0;
             CaptureMonitorCombo.SelectedIndex = 0;
-            Log("?? ƒ‚ƒjƒ^[‚ª1‘ä‚Ì‚İŒŸo‚³‚ê‚Ü‚µ‚½BƒfƒoƒbƒOƒ‚[ƒh‚Å“®ì‚µ‚Ü‚·B");
+            Log("?? ãƒ¢ãƒ‹ã‚¿ãƒ¼ãŒ1å°ã®ã¿æ¤œå‡ºã•ã‚Œã¾ã—ãŸã€‚ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã§å‹•ä½œã—ã¾ã™ã€‚");
         }
 
-        Log($"{monitors.Count} ‘ä‚Ìƒ‚ƒjƒ^[‚ğŒŸo‚µ‚Ü‚µ‚½");
+        Log($"{monitors.Count} å°ã®ãƒ¢ãƒ‹ã‚¿ãƒ¼ã‚’æ¤œå‡ºã—ã¾ã—ãŸ");
     }
 
     private async void ConnectButton_Click(object sender, RoutedEventArgs e)
     {
         ConnectButton.IsEnabled = false;
-        DeviceStatusText.Text = "Ú‘±’†...";
+        DeviceStatusText.Text = "æ¥ç¶šä¸­...";
         DeviceStatusText.Foreground = System.Windows.Media.Brushes.Orange;
 
         try
         {
-            // Šù‘¶‚ÌÚ‘±‚ğƒNƒŠ[ƒ“ƒAƒbƒv
+            // æ—¢å­˜ã®æ¥ç¶šã‚’ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—
             _previewCts?.Cancel();
             if (_device != null)
             {
@@ -90,17 +94,17 @@ public partial class SetupWindow : Window
                 _device = null;
             }
 
-            // Ú‘±
+            // æ¥ç¶š
             if (PlaybackCheckBox.IsChecked == true)
             {
                 var dialog = new OpenFolderDialog
                 {
-                    Title = "‹L˜^ƒtƒHƒ‹ƒ_‚ğ‘I‘ğ"
+                    Title = "è¨˜éŒ²ãƒ•ã‚©ãƒ«ãƒ€ã‚’é¸æŠ"
                 };
 
                 if (dialog.ShowDialog() == true)
                 {
-                    Log($"‹L˜^ƒtƒHƒ‹ƒ_: {dialog.FolderName}");
+                    Log($"è¨˜éŒ²ãƒ•ã‚©ãƒ«ãƒ€: {dialog.FolderName}");
                     _device = await _deviceManager.ConnectFromRecordingAsync(dialog.FolderName);
                 }
             }
@@ -108,12 +112,12 @@ public partial class SetupWindow : Window
             {
                 var dialog = new OpenFolderDialog
                 {
-                    Title = "‹L˜^•Û‘¶æƒtƒHƒ‹ƒ_‚ğ‘I‘ğ"
+                    Title = "è¨˜éŒ²ä¿å­˜å…ˆãƒ•ã‚©ãƒ«ãƒ€ã‚’é¸æŠ"
                 };
 
                 if (dialog.ShowDialog() == true)
                 {
-                    Log($"‹L˜^•Û‘¶æ: {dialog.FolderName}");
+                    Log($"è¨˜éŒ²ä¿å­˜å…ˆ: {dialog.FolderName}");
                     _device = await _deviceManager.ConnectAndRecordAsync(dialog.FolderName);
                 }
             }
@@ -124,31 +128,34 @@ public partial class SetupWindow : Window
 
             if (_device != null)
             {
-                DeviceStatusText.Text = "Ú‘±Ï‚İ ?";
+                DeviceStatusText.Text = "æ¥ç¶šæ¸ˆã¿ ?";
                 DeviceStatusText.Foreground = System.Windows.Media.Brushes.Green;
                 StartButton.IsEnabled = true;
-                Log("XRƒfƒoƒCƒX‚ÉÚ‘±‚µ‚Ü‚µ‚½");
+                _logger.LogInformation("XRãƒ‡ãƒã‚¤ã‚¹ã«æ¥ç¶šã—ã¾ã—ãŸ");
+                Log("XRãƒ‡ãƒã‚¤ã‚¹ã«æ¥ç¶šã—ã¾ã—ãŸ");
 
-                // ƒvƒŒƒrƒ…[ŠJn
+                // ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼é–‹å§‹
                 StartImuPreview();
             }
             else
             {
-                DeviceStatusText.Text = "ƒfƒoƒCƒX‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ";
+                DeviceStatusText.Text = "ãƒ‡ãƒã‚¤ã‚¹ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“";
                 DeviceStatusText.Foreground = System.Windows.Media.Brushes.Red;
-                Log("? XRƒfƒoƒCƒX‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
+                _logger.LogWarning("XRãƒ‡ãƒã‚¤ã‚¹ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ");
+                Log("? XRãƒ‡ãƒã‚¤ã‚¹ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ");
             }
         }
         catch (Exception ex)
         {
-            DeviceStatusText.Text = "Ú‘±ƒGƒ‰[";
+            DeviceStatusText.Text = "æ¥ç¶šã‚¨ãƒ©ãƒ¼";
             DeviceStatusText.Foreground = System.Windows.Media.Brushes.Red;
-            Log($"? Ú‘±ƒGƒ‰[: {ex.Message}");
+            _logger.LogError(ex, "ãƒ‡ãƒã‚¤ã‚¹æ¥ç¶šã‚¨ãƒ©ãƒ¼");
+            Log($"? æ¥ç¶šã‚¨ãƒ©ãƒ¼: {ex.Message}");
         }
         finally
         {
             ConnectButton.IsEnabled = true;
-            ConnectButton.Content = _device != null ? "ÄÚ‘±" : "Ú‘±";
+            ConnectButton.Content = _device != null ? "å†æ¥ç¶š" : "æ¥ç¶š";
         }
     }
 
@@ -166,13 +173,13 @@ public partial class SetupWindow : Window
                 var euler = data.EulerAngles;
                 Dispatcher.Invoke(() =>
                 {
-                    ImuDataText.Text = $"Roll: {euler.Roll,7:F1}‹  Pitch: {euler.Pitch,7:F1}‹  Yaw: {euler.Yaw,7:F1}‹";
+                    ImuDataText.Text = $"Roll: {euler.Roll,7:F1}Â°  Pitch: {euler.Pitch,7:F1}Â°  Yaw: {euler.Yaw,7:F1}Â°";
                 });
             }
         }
         catch (OperationCanceledException)
         {
-            // ³í‚ÈƒLƒƒƒ“ƒZƒ‹
+            // æ­£å¸¸ãªã‚­ãƒ£ãƒ³ã‚»ãƒ«
         }
     }
 
@@ -192,7 +199,7 @@ public partial class SetupWindow : Window
     {
         if (_device == null)
         {
-            Log("? ƒfƒoƒCƒX‚ªÚ‘±‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+            Log("? ãƒ‡ãƒã‚¤ã‚¹ãŒæ¥ç¶šã•ã‚Œã¦ã„ã¾ã›ã‚“");
             return;
         }
 
@@ -201,21 +208,21 @@ public partial class SetupWindow : Window
 
         if (displayMonitor == null || captureMonitor == null)
         {
-            Log("? ƒ‚ƒjƒ^[‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢");
+            Log("? ãƒ¢ãƒ‹ã‚¿ãƒ¼ã‚’é¸æŠã—ã¦ãã ã•ã„");
             return;
         }
 
-        // IMU ƒvƒŒƒrƒ…[‚ğ’â~iƒfƒoƒCƒX‚Í DisplayWindow ‚Éˆø‚«“n‚·j
+        // IMU ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã‚’åœæ­¢ï¼ˆãƒ‡ãƒã‚¤ã‚¹ã¯ DisplayWindow ã«å¼•ãæ¸¡ã™ï¼‰
         _previewCts?.Cancel();
 
-        Log("•\¦ƒEƒBƒ“ƒhƒE‚ğ‹N“®‚µ‚Ü‚·...");
+        Log("è¡¨ç¤ºã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’èµ·å‹•ã—ã¾ã™...");
 
-        // •\¦ƒEƒBƒ“ƒhƒE‚ğŠJ‚­
+        // è¡¨ç¤ºã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ã
         var displayWindow = new DisplayWindow(_device, displayMonitor, captureMonitor);
-        _device = null; // Š—LŒ ‚ğˆÚ÷
+        _device = null; // æ‰€æœ‰æ¨©ã‚’ç§»è­²
         displayWindow.Show();
 
-        // ƒZƒbƒgƒAƒbƒvƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚é
+        // ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
         Close();
     }
 
