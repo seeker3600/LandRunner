@@ -3,9 +3,11 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using GlassBridge;
-using LandRunner.Native;
 using LandRunner.Services;
 using Microsoft.Extensions.Logging;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace LandRunner.Views;
 
@@ -125,7 +127,7 @@ public partial class DisplayWindow : Window, IAsyncDisposable
         var hwnd = new WindowInteropHelper(this).Handle;
         if (hwnd != IntPtr.Zero)
         {
-            var result = NativeMethods.SetWindowDisplayAffinity(hwnd, NativeMethods.WDA_EXCLUDEFROMCAPTURE);
+            var result = PInvoke.SetWindowDisplayAffinity(new HWND(hwnd), Windows.Win32.UI.WindowsAndMessaging.WINDOW_DISPLAY_AFFINITY.WDA_EXCLUDEFROMCAPTURE);
             if (!result)
             {
                 System.Diagnostics.Debug.WriteLine("?? SetWindowDisplayAffinity failed");

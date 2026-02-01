@@ -206,7 +206,7 @@ public sealed class DesktopCaptureService : IDisposable
             null,
             Vortice.Direct3D.DriverType.Hardware,
             DeviceCreationFlags.BgraSupport,
-            null,
+            [],
             out _d3dDevice,
             out _d3dContext);
 
