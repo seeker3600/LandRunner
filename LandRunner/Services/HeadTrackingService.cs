@@ -155,8 +155,8 @@ public sealed class HeadTrackingService : IDisposable
         var verticalOffset = euler.Pitch / (VerticalFov / 2);
 
         // クランプ（視野外に出ないように）
-        horizontalOffset = Math.Clamp(horizontalOffset, -2f, 2f);
-        verticalOffset = Math.Clamp(verticalOffset, -2f, 2f);
+        horizontalOffset = Math.Clamp(horizontalOffset, -1f, 1f);
+        verticalOffset = Math.Clamp(verticalOffset, -1f, 1f);
 
         return new TrackingData(
             HorizontalOffset: horizontalOffset,
