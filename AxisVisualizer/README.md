@@ -1,102 +1,93 @@
-# LandRunner - VITURE Luma IMU ビューア
+# AxisVisualizer - VITURE XR グラス IMU ビューア
 
-WPF で実装された VITURE Luma 向けのリアルタイム IMU データビューア・ロガーです。
+WPF で実装された VITURE XR グラス（Luma / Pro / One 系列）向けのリアルタイム IMU データビューア・ロガーです。
 
 ## 主な機能
 
-- ?? **リアルタイム IMU データ表示**：Euler 角度、Quaternion をダッシュボードで表示
-- ?? **3D 回転ビジュアライゼーション**：XYZ 軸を Yaw 角に基づいて回転させた状態で表示
-- ?? **IMU データ自動記録**：GlassBridge の記録機能を活用して IMU データを JSON Lines 形式で記録
-- ?? **デバッグ ログ出力**：すべてのアクティビティをタイムスタンプ付きログファイルに記録
+- 📊 **リアルタイム IMU データ表示** - Euler 角度、Quaternion をダッシュボードで表示
+- 🎯 **3D 回転ビジュアライゼーション** - XYZ 軸を Roll / Pitch / Yaw に基づいて回転表示
+- 📝 **IMU データ自動記録** - GlassBridge の記録機能で JSON Lines 形式で自動保存
+- 🔍 **Serilog ログ出力** - すべてのアクティビティを構造化ログで記録
+
+## 要件
+
+- **.NET 10** 以上
+- **Windows** (WPF)
+- **VITURE XR グラス** (Luma / Luma Pro / Pro / One / One Lite)
+
+## 依存関係
+
+- **GlassBridge** - IMU デバイス通信ライブラリ
+- **Microsoft.Extensions.Logging** - ログ抽象化
+- **Serilog** - 構造化ログ出力（ファイル・コンソール）
 
 ## プロジェクト構成（MVVM パターン）
 
 ```
-LandRunner/
-├── Models/
-│   ├── DebugLogger.cs            # タイムスタンプ付きデバッグログ出力
-│   └── ImuLogger.cs              # DebugLogger のエイリアス/ラッパー
+AxisVisualizer/
 ├── ViewModels/
 │   ├── ViewModelBase.cs          # MVVM 基本クラス（INotifyPropertyChanged）
 │   ├── RelayCommand.cs           # ICommand 実装（同期・非同期対応）
-│   └── MainWindowViewModel.cs    # 状態管理・ビジネスロジック
-├── Views/
-│   ├── MainWindow.xaml           # UI レイアウト（DataBinding）
-│   └── MainWindow.xaml.cs        # CodeBehind（ビジュアル化のみ）
+│   └── MainWindowViewModel.cs    # 状態管理・GlassBridge 連携
+├── MainWindow.xaml               # UI レイアウト（DataBinding）
+├── MainWindow.xaml.cs            # 3D 軸ビジュアライゼーション描画
 ├── App.xaml
-├── App.xaml.cs
-└── GlassBridge 統合
-    └── ConnectAndRecordAsync() → JSON Lines 記録
+└── App.xaml.cs                   # Serilog 設定・DI
 ```
 
-### 各コンポーネントの役割
+### コンポーネントの役割
 
-| ファイル | 役割 | 説明 |
-|---------|------|------|
-| **ViewModelBase.cs** | 基本クラス | `INotifyPropertyChanged` 実装、プロパティ変更通知 |
-| **RelayCommand.cs** | コマンド実装 | UI ボタン・メニュー操作のハンドリング（非同期対応） |
-| **MainWindowViewModel.cs** | ViewModel | UI 状態・GlassBridge の接続・データ更新を管理 |
-| **DebugLogger.cs** | ログ出力 | ファイル・コンソールへのタイムスタンプ付きログ |
-| **MainWindow.xaml** | View | UI 定義（MVVM DataBinding） |
+| ファイル | 役割 |
+|---------|------|
+| **ViewModelBase.cs** | `INotifyPropertyChanged` 実装、プロパティ変更通知 |
+| **RelayCommand.cs** | UI ボタン・メニュー操作のハンドリング（非同期対応） |
+| **MainWindowViewModel.cs** | GlassBridge 接続・IMU データ更新・UI 状態管理 |
+| **MainWindow.xaml.cs** | Canvas への XYZ 軸描画（Roll / Pitch / Yaw 回転） |
 
-## 実行・テスト
-
-### アプリケーション実行
+## 実行方法
 
 ```bash
 # デバッグビルド＆実行
-dotnet run --project LandRunner
+dotnet run --project AxisVisualizer
 
 # リリースビルド＆実行
-dotnet run --project LandRunner --configuration Release
+dotnet run --project AxisVisualizer --configuration Release
 ```
 
-### テスト実行
-
-```bash
-# 全テスト実行
-dotnet test LandRunnerTest
-
-# 特定のテストクラスのみ
-dotnet test LandRunnerTest --filter "FullyQualifiedName~ImuLoggerTests"
-
-# 詳細出力
-dotnet test LandRunnerTest --verbosity detailed
-```
-
-## ログ出力先
-
-### ディレクトリ構成
+## ログ・記録ファイルの出力先
 
 ```
-%APPDATA%\LandRunner\                      （例：C:\Users\<User>\AppData\Roaming\LandRunner\）
-├── debug_<yyyyMMdd_HHmmss>.log            デバッグログ（タイムスタンプ付き）
-└── imu_data_<yyyyMMdd_HHmmss>.jsonl       IMU データ記録（GlassBridge が自動生成）
-```
-
-### デバッグログ形式
-
-各ログエントリはタイムスタンプと共に出力されます：
-
-```
-[2026-01-26 21:46:11.234] ImuLogger initialized
-[2026-01-26 21:46:11.235] Debug log: C:\Users\...\AppData\Roaming\LandRunner\debug_20260126_214611.log
-[2026-01-26 21:46:11.236] Recording IMU data to: C:\Users\...\AppData\Roaming\LandRunner
-[2026-01-26 21:46:12.500] Successfully connected to device
-[2026-01-26 21:46:13.100] Received IMU frame: Timestamp=12345, Roll=45.0°
-[2026-01-26 21:46:15.800] Disposing device (GlassBridge will finalize recording)
+%APPDATA%\LandRunner\
+├── log-<yyyyMMdd>.txt             Serilog ログファイル
+└── imu_data_<yyyyMMdd_HHmmss>.jsonl   IMU データ記録（GlassBridge 自動生成）
 ```
 
 ### IMU データ記録形式
 
-GlassBridge の `ConnectAndRecordAsync()` により、IMU データは **JSON Lines 形式** で自動記録されます。各行が1つのフレームです：
+GlassBridge の `ConnectAndRecordAsync()` により、IMU データは **JSON Lines 形式** で自動記録されます：
 
 ```json
 {"Timestamp":12345,"MessageCounter":100,"Quaternion":{"W":0.707107,"X":0.707107,"Y":0,"Z":0},"EulerAngles":{"Roll":45.0,"Pitch":30.0,"Yaw":15.0}}
 {"Timestamp":12350,"MessageCounter":101,"Quaternion":{"W":0.707107,"X":0.707107,"Y":0,"Z":0},"EulerAngles":{"Roll":46.0,"Pitch":31.0,"Yaw":16.0}}
 ```
 
-詳細は **GlassBridge/RECORDING_API_GUIDE.md** を参照してください。
+## GlassBridge との連携
+
+本アプリケーションは **GlassBridge** ライブラリを使用して VITURE XR グラスと通信します：
+
+```csharp
+// 接続と同時に IMU データを自動記録
+var manager = new ImuDeviceManager();
+var device = await manager.ConnectAndRecordAsync(outputDirectory);
+
+// IMU データストリームを非同期で取得
+await foreach (var imuData in device.GetImuDataStreamAsync(cancellationToken))
+{
+    // Euler 角度・Quaternion を UI に反映
+}
+```
+
+詳細は **GlassBridge/README.md** を参照してください。
 
 ## テスト
 

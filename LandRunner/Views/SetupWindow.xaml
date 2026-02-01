@@ -1,0 +1,128 @@
+<Window x:Class="LandRunner.Views.SetupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="LandRunner - Setup" 
+        Height="500" Width="600"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Grid.Row="0" Text="LandRunner Setup" 
+                   FontSize="24" FontWeight="Bold" 
+                   Margin="0,0,0,20"/>
+
+        <!-- Monitor Selection -->
+        <GroupBox Grid.Row="1" Header="Monitor Settings" Margin="0,0,0,15">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" 
+                           Text="Display Monitor:" 
+                           VerticalAlignment="Center" Margin="0,0,0,10"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" 
+                          x:Name="DisplayMonitorCombo"
+                          Margin="0,0,0,10"
+                          ToolTip="Monitor connected to XR glasses (fullscreen, excluded from capture)"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" 
+                           Text="Capture Target:" 
+                           VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" 
+                          x:Name="CaptureMonitorCombo"
+                          ToolTip="Desktop to capture"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- XR Device Connection -->
+        <GroupBox Grid.Row="2" Header="XR Device Connection" Margin="0,0,0,15">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" 
+                           Text="Device Status:" 
+                           VerticalAlignment="Center" Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" 
+                           x:Name="DeviceStatusText"
+                           Text="Not Connected" 
+                           Foreground="Gray"
+                           VerticalAlignment="Center" Margin="0,0,0,10"/>
+                <Button Grid.Row="0" Grid.Column="2" 
+                        x:Name="ConnectButton"
+                        Content="Connect" 
+                        Width="80" Margin="10,0,0,10"
+                        Click="ConnectButton_Click"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" 
+                           Text="IMU Data:" 
+                           VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                           x:Name="ImuDataText"
+                           Text="--" 
+                           FontFamily="Consolas"
+                           VerticalAlignment="Center"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Options -->
+        <GroupBox Grid.Row="3" Header="Options" Margin="0,0,0,15">
+            <StackPanel Margin="10" Orientation="Horizontal">
+                <CheckBox x:Name="RecordCheckBox" Content="Record IMU Data" Margin="0,0,20,0"/>
+                <CheckBox x:Name="PlaybackCheckBox" Content="Playback from Recording" 
+                          Checked="PlaybackCheckBox_Checked"
+                          Unchecked="PlaybackCheckBox_Unchecked"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Log Area -->
+        <GroupBox Grid.Row="4" Header="Log">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <TextBox x:Name="LogTextBox" 
+                         IsReadOnly="True" 
+                         TextWrapping="Wrap"
+                         FontFamily="Consolas"
+                         FontSize="11"
+                         Background="Black"
+                         Foreground="LightGreen"
+                         BorderThickness="0"/>
+            </ScrollViewer>
+        </GroupBox>
+
+        <!-- Start Button -->
+        <StackPanel Grid.Row="5" Orientation="Horizontal" 
+                    HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button x:Name="StartButton" 
+                    Content="Start" 
+                    Width="100" Height="35"
+                    FontSize="14"
+                    IsEnabled="False"
+                    Click="StartButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

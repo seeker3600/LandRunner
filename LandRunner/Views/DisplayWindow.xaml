@@ -1,0 +1,61 @@
+<Window x:Class="LandRunner.Views.DisplayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="LandRunner Display"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Black"
+        Topmost="True"
+        ShowInTaskbar="False"
+        KeyDown="Window_KeyDown">
+    
+    <Grid x:Name="RootGrid" ClipToBounds="True">
+        <!-- Captured image display (position/rotation controlled by transform) -->
+        <Image x:Name="CaptureImage"
+               Stretch="None"
+               RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform x:Name="ImageRotation" Angle="0"/>
+                    <TranslateTransform x:Name="ImageTranslation" X="0" Y="0"/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <!-- Debug overlay -->
+        <Border x:Name="DebugOverlay"
+                Background="#80000000"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="10"
+                Padding="10"
+                CornerRadius="5"
+                Visibility="Collapsed">
+            <StackPanel>
+                <TextBlock x:Name="DebugText" 
+                           Foreground="White" 
+                           FontFamily="Consolas"
+                           FontSize="12"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Control guide -->
+        <Border Background="#60000000"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,20"
+                Padding="15,8"
+                CornerRadius="5">
+            <TextBlock Foreground="White" FontSize="12" Opacity="0.7">
+                <Run Text="ESC: Exit"/>
+                <Run Text="  |  "/>
+                <Run Text="R: Reset Pose"/>
+                <Run Text="  |  "/>
+                <Run Text="D: Debug View"/>
+            </TextBlock>
+        </Border>
+    </Grid>
+</Window>
