@@ -4,6 +4,7 @@ GetMonitorInfo
 GetDisplayConfigBufferSizes
 QueryDisplayConfig
 DisplayConfigGetDeviceInfo
+EnumDisplayDevices
 
 MONITORINFOEXW
 DISPLAYCONFIG_SOURCE_DEVICE_NAME

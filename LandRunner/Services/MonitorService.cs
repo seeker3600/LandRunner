@@ -1,10 +1,10 @@
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
+using System.Windows;
 using Windows.Win32;
 using Windows.Win32.Devices.Display;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
-using static Windows.Win32.PInvoke;
 
 namespace LandRunner.Services;
 
@@ -15,8 +15,8 @@ public record MonitorInfo(
     IntPtr Handle,
     string DeviceName,
     string FriendlyName,
-    System.Windows.Rect Bounds,
-    System.Windows.Rect WorkArea,
+    Rect Bounds,
+    Rect WorkArea,
     bool IsPrimary,
     int Index);
 
@@ -30,52 +30,42 @@ public static class MonitorService
     /// </summary>
     public static ReadOnlyCollection<MonitorInfo> GetAllMonitors()
     {
-        // まずフレンドリー名のマッピングを取得
-        var friendlyNames = GetMonitorFriendlyNames();
-
+        // 1. DisplayConfig API で高精度のFriendlyNameを取得（キャッシュ）
+        var friendlyNamesCache = GetMonitorFriendlyNamesCache();
+        
         var monitors = new List<MonitorInfo>();
         int index = 0;
 
         unsafe
         {
-            MONITORENUMPROC callback = (hMonitor, hdcMonitor, lprcMonitor, dwData) =>
+            PInvoke.EnumDisplayMonitors(HDC.Null, null, (hMonitor, _, _, _) =>
             {
                 var info = new MONITORINFOEXW();
                 info.monitorInfo.cbSize = (uint)Marshal.SizeOf<MONITORINFOEXW>();
 
                 if (PInvoke.GetMonitorInfo(hMonitor, ref info.monitorInfo))
                 {
-                    string deviceName = GetString((char*)&info.szDevice, 32);
+                    // デバイス名取得 (NULL終端を考慮して文字列化)
+                    var deviceName = GetString(info.szDevice.AsSpan());
 
-                    var friendlyName = friendlyNames.GetValueOrDefault(deviceName, "");
+                    // FriendlyName を取得 (Cache -> Fallback)
+                    string friendlyName = GetFriendlyName(deviceName, friendlyNamesCache);
 
                     var monitorRect = info.monitorInfo.rcMonitor;
                     var workRect = info.monitorInfo.rcWork;
 
-                    var handle = new IntPtr((nint)hMonitor.Value);
-
                     monitors.Add(new MonitorInfo(
-                        handle,
+                        (IntPtr)hMonitor.Value,
                         deviceName,
                         friendlyName,
-                        new System.Windows.Rect(
-                            monitorRect.left,
-                            monitorRect.top,
-                            monitorRect.right - monitorRect.left,
-                            monitorRect.bottom - monitorRect.top),
-                        new System.Windows.Rect(
-                            workRect.left,
-                            workRect.top,
-                            workRect.right - workRect.left,
-                            workRect.bottom - workRect.top),
-                        (info.monitorInfo.dwFlags & MONITORINFOF_PRIMARY) != 0,
+                        new Rect(monitorRect.left, monitorRect.top, monitorRect.right - monitorRect.left, monitorRect.bottom - monitorRect.top),
+                        new Rect(workRect.left, workRect.top, workRect.right - workRect.left, workRect.bottom - workRect.top),
+                        (info.monitorInfo.dwFlags & PInvoke.MONITORINFOF_PRIMARY) != 0,
                         index++));
                 }
 
                 return true;
-            };
-
-            PInvoke.EnumDisplayMonitors(HDC.Null, null, callback, default);
+            }, 0);
         }
 
         return monitors.AsReadOnly();
@@ -92,92 +82,117 @@ public static class MonitorService
     }
 
     /// <summary>
-    /// DisplayConfig API を使用してモニターのフレンドリー名を取得
+    /// デバイス名に対応する FriendlyName を取得
     /// </summary>
-    private static unsafe Dictionary<string, string> GetMonitorFriendlyNames()
+    private static string GetFriendlyName(string deviceName, Dictionary<string, string> cache)
+    {
+        // 1. QueryDisplayConfig のキャッシュから検索 (e.g., "LG UltraFine")
+        if (cache.TryGetValue(deviceName, out var name) && !string.IsNullOrEmpty(name))
+        {
+            return name;
+        }
+
+        // 2. EnumDisplayDevices で取得トライ (e.g., "Generic PnP Monitor")
+        return GetFriendlyNameViaEnum(deviceName);
+    }
+
+    /// <summary>
+    /// DisplayConfig API を使用してモニターのフレンドリー名を取得（高精度）
+    /// </summary>
+    private static Dictionary<string, string> GetMonitorFriendlyNamesCache()
     {
         var result = new Dictionary<string, string>();
 
         try
         {
-            // バッファサイズを取得
-            uint pathCount, modeCount;
-            if (PInvoke.GetDisplayConfigBufferSizes(QUERY_DISPLAY_CONFIG_FLAGS.QDC_ONLY_ACTIVE_PATHS, out pathCount, out modeCount) != 0)
+            if (PInvoke.GetDisplayConfigBufferSizes(QUERY_DISPLAY_CONFIG_FLAGS.QDC_ONLY_ACTIVE_PATHS, out var pathCount, out var modeCount) != 0)
                 return result;
 
             var paths = new DISPLAYCONFIG_PATH_INFO[pathCount];
             var modes = new DISPLAYCONFIG_MODE_INFO[modeCount];
 
-            // ディスプレイ構成を取得
-            DISPLAYCONFIG_TOPOLOGY_ID topologyId = default;
-            if (PInvoke.QueryDisplayConfig(QUERY_DISPLAY_CONFIG_FLAGS.QDC_ONLY_ACTIVE_PATHS, ref pathCount, paths, ref modeCount, modes, ref topologyId) != 0)
+            if (PInvoke.QueryDisplayConfig(QUERY_DISPLAY_CONFIG_FLAGS.QDC_ONLY_ACTIVE_PATHS, ref pathCount, paths, ref modeCount, modes) != 0)
                 return result;
-
+            
             for (var i = 0; i < pathCount; i++)
             {
                 var path = paths[i];
+                var sourceName = GetDisplayConfigSourceName(path.sourceInfo.adapterId, path.sourceInfo.id);
+                var targetName = GetDisplayConfigTargetName(path.targetInfo.adapterId, path.targetInfo.id);
 
-                // ソースデバイス名（\\.\DISPLAYx）を取得
-                var sourceName = new DISPLAYCONFIG_SOURCE_DEVICE_NAME
+                if (!string.IsNullOrEmpty(sourceName) && !string.IsNullOrEmpty(targetName))
                 {
-                    header = new DISPLAYCONFIG_DEVICE_INFO_HEADER
-                    {
-                        type = DISPLAYCONFIG_DEVICE_INFO_TYPE.DISPLAYCONFIG_DEVICE_INFO_GET_SOURCE_NAME,
-                        size = (uint)Marshal.SizeOf<DISPLAYCONFIG_SOURCE_DEVICE_NAME>(),
-                        adapterId = path.sourceInfo.adapterId,
-                        id = path.sourceInfo.id
-                    }
-                };
-
-                if (PInvoke.DisplayConfigGetDeviceInfo((DISPLAYCONFIG_DEVICE_INFO_HEADER*)&sourceName) != 0)
-                    continue;
-
-                // ターゲット（モニター）のフレンドリー名を取得
-                var targetName = new DISPLAYCONFIG_TARGET_DEVICE_NAME
-                {
-                    header = new DISPLAYCONFIG_DEVICE_INFO_HEADER
-                    {
-                        type = DISPLAYCONFIG_DEVICE_INFO_TYPE.DISPLAYCONFIG_DEVICE_INFO_GET_TARGET_NAME,
-                        size = (uint)Marshal.SizeOf<DISPLAYCONFIG_TARGET_DEVICE_NAME>(),
-                        adapterId = path.targetInfo.adapterId,
-                        id = path.targetInfo.id
-                    }
-                };
-
-                if (PInvoke.DisplayConfigGetDeviceInfo((DISPLAYCONFIG_DEVICE_INFO_HEADER*)&targetName) != 0)
-                    continue;
-
-                string gdiDeviceName = GetString((char*)&sourceName.viewGdiDeviceName, 32);
-                string friendlyName = GetString((char*)&targetName.monitorFriendlyDeviceName, 64);
-
-                if (!string.IsNullOrEmpty(gdiDeviceName) && !string.IsNullOrEmpty(friendlyName))
-                {
-                    result[gdiDeviceName] = friendlyName;
+                    result[sourceName] = targetName;
                 }
             }
         }
         catch
         {
-            // API失敗時は空の辞書を返す
+            // API失敗時 or サポート外は空で返す
         }
 
         return result;
     }
 
-    private static string GetString(ReadOnlySpan<char> buffer)
+    private static unsafe string GetDisplayConfigSourceName(LUID adapterId, uint sourceId)
     {
-        var span = buffer;
-        var end = span.IndexOf('\0');
-        if (end >= 0)
+        var sourceName = new DISPLAYCONFIG_SOURCE_DEVICE_NAME
         {
-            span = span[..end];
+            header = new DISPLAYCONFIG_DEVICE_INFO_HEADER
+            {
+                type = DISPLAYCONFIG_DEVICE_INFO_TYPE.DISPLAYCONFIG_DEVICE_INFO_GET_SOURCE_NAME,
+                size = (uint)Marshal.SizeOf<DISPLAYCONFIG_SOURCE_DEVICE_NAME>(),
+                adapterId = adapterId,
+                id = sourceId
+            }
+        };
+
+        if (PInvoke.DisplayConfigGetDeviceInfo((DISPLAYCONFIG_DEVICE_INFO_HEADER*)&sourceName) != 0)
+            return string.Empty;
+
+        return GetString((char*)&sourceName.viewGdiDeviceName, 32);
+    }
+
+    private static unsafe string GetDisplayConfigTargetName(LUID adapterId, uint targetId)
+    {
+        var targetName = new DISPLAYCONFIG_TARGET_DEVICE_NAME
+        {
+            header = new DISPLAYCONFIG_DEVICE_INFO_HEADER
+            {
+                type = DISPLAYCONFIG_DEVICE_INFO_TYPE.DISPLAYCONFIG_DEVICE_INFO_GET_TARGET_NAME,
+                size = (uint)Marshal.SizeOf<DISPLAYCONFIG_TARGET_DEVICE_NAME>(),
+                adapterId = adapterId,
+                id = targetId
+            }
+        };
+
+        if (PInvoke.DisplayConfigGetDeviceInfo((DISPLAYCONFIG_DEVICE_INFO_HEADER*)&targetName) != 0)
+            return string.Empty;
+
+        return GetString((char*)&targetName.monitorFriendlyDeviceName, 64);
+    }
+
+    private static unsafe string GetFriendlyNameViaEnum(string deviceName)
+    {
+        var device = new DISPLAY_DEVICEW();
+        device.cb = (uint)Marshal.SizeOf(device);
+
+        // 指定のアダプタに接続されている最初のモニターを取得（通常 index 0）
+        if (PInvoke.EnumDisplayDevices(deviceName, 0, ref device, 0))
+        {
+            return GetString((char*)&device.DeviceString, 128);
         }
-        return new string(span);
+        return string.Empty;
     }
 
     private static unsafe string GetString(char* buffer, int length)
     {
-        var span = new ReadOnlySpan<char>(buffer, length);
-        return GetString(span);
+        return GetString(new ReadOnlySpan<char>(buffer, length));
+    }
+
+    private static string GetString(ReadOnlySpan<char> buffer)
+    {
+        var end = buffer.IndexOf('\0');
+        return end >= 0 ? new string(buffer[..end]) : new string(buffer);
     }
 }
