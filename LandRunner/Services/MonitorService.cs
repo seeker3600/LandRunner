@@ -55,7 +55,7 @@ public static class MonitorService
                     var workRect = info.monitorInfo.rcWork;
 
                     monitors.Add(new MonitorInfo(
-                        (IntPtr)hMonitor.Value,
+                        (IntPtr)hMonitor,
                         deviceName,
                         friendlyName,
                         new Rect(monitorRect.left, monitorRect.top, monitorRect.right - monitorRect.left, monitorRect.bottom - monitorRect.top),
