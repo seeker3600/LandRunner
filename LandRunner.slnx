@@ -1,17 +1,36 @@
 <Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
   <Folder Name="/ソリューション項目/">
     <File Path=".github/copilot-instructions.md" />
     <File Path="docs/hid/VITURE_Luma.md" />
     <File Path="README.md" />
   </Folder>
-  <Project Path="AxisVisualizer.Test/AxisVisualizer.Test.csproj" Id="8e4ccc79-18eb-4dbd-a129-78c820a821d9" />
-  <Project Path="AxisVisualizer/AxisVisualizer.csproj" />
-  <Project Path="GlassBridge.Benchmark/GlassBridge.Benchmark.csproj" Id="d4c1ec20-a5a7-44af-ba05-82a32ec4bd5c" />
+  <Project Path="AxisVisualizer.Test/AxisVisualizer.Test.csproj" Id="8e4ccc79-18eb-4dbd-a129-78c820a821d9">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="AxisVisualizer/AxisVisualizer.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="GlassBridge.Benchmark/GlassBridge.Benchmark.csproj" Id="d4c1ec20-a5a7-44af-ba05-82a32ec4bd5c">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
   <Project Path="GlassBridge.Test/GlassBridge.Test.csproj" Id="66072987-92e2-458a-81da-3a1c89e48168">
     <BuildDependency Project="GlassBridge/GlassBridge.csproj" />
+    <Platform Solution="*|x64" Project="x64" />
   </Project>
-  <Project Path="GlassBridge.Utils/GlassBridge.Utils.csproj" />
-  <Project Path="GlassBridge/GlassBridge.csproj" />
-  <Project Path="LandRunner.Test/LandRunner.Test.csproj" Id="a43427c4-198c-41b2-b8e6-70dcb631729f" />
-  <Project Path="LandRunner/LandRunner.csproj" Id="c1f7c09f-bd40-45cc-8aac-fe3a26c2e527" />
+  <Project Path="GlassBridge.Utils/GlassBridge.Utils.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="GlassBridge/GlassBridge.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="LandRunner.Test/LandRunner.Test.csproj" Id="a43427c4-198c-41b2-b8e6-70dcb631729f">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="LandRunner/LandRunner.csproj" Id="c1f7c09f-bd40-45cc-8aac-fe3a26c2e527">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
 </Solution>
