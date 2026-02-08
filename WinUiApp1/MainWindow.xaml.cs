@@ -52,6 +52,7 @@ public sealed partial class MainWindow : Window
         _captureService?.Dispose();
         _captureService = new ScreenCaptureService();
         _captureService.VisualCreated += OnCaptureVisualCreated;
+        _captureService.StatsUpdated += OnCaptureStatsUpdated;
 
         var compositor = ElementCompositionPreview.GetElementVisual(CaptureContainer).Compositor;
 
@@ -85,6 +86,7 @@ public sealed partial class MainWindow : Window
         StartButton.IsEnabled = true;
         StopButton.IsEnabled = false;
         DisplayComboBox.IsEnabled = true;
+        StatsTextBlock.Text = "No stats";
     }
 
     private void OnCaptureVisualCreated(object? sender, SpriteVisual visual)
@@ -92,6 +94,14 @@ public sealed partial class MainWindow : Window
         DispatcherQueue.TryEnqueue(() =>
         {
             ElementCompositionPreview.SetElementChildVisual(CaptureContainer, visual);
+        });
+    }
+
+    private void OnCaptureStatsUpdated(object? sender, CaptureStats stats)
+    {
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            StatsTextBlock.Text = $"FPS: {stats.Fps} | Processing: {stats.AvgProcessingMs:F2}ms";
         });
     }
 }

@@ -33,6 +33,11 @@
                     Content="Stop Capture" 
                     Click="StopButton_Click"
                     IsEnabled="False"/>
+            <TextBlock x:Name="StatsTextBlock"
+                       VerticalAlignment="Center"
+                       Margin="16,0,0,0"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                       Text="No stats"/>
         </StackPanel>
 
         <Border Grid.Row="1" 

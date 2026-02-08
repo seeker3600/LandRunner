@@ -1,6 +1,7 @@
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Composition;
 using Microsoft.UI.Composition;
+using System.Diagnostics;
 using System.Numerics;
 using Windows.Graphics;
 using Windows.Graphics.Capture;
@@ -22,7 +23,14 @@ public sealed class ScreenCaptureService : IDisposable
     private SizeInt32 _lastSize;
     private bool _isCapturing;
 
+    // Latency measurement fields
+    private readonly Stopwatch _frameStopwatch = new();
+    private int _frameCount;
+    private double _totalProcessingMs;
+    private DateTime _lastStatsTime = DateTime.UtcNow;
+
     public event EventHandler<SpriteVisual>? VisualCreated;
+    public event EventHandler<CaptureStats>? StatsUpdated;
 
     public async Task<bool> StartCaptureAsync(DisplayMonitorInfo displayInfo, Compositor compositor)
     {
@@ -82,6 +90,8 @@ public sealed class ScreenCaptureService : IDisposable
         if (!_isCapturing || _canvasDevice == null || _surface == null)
             return;
 
+        _frameStopwatch.Restart();
+
         try
         {
             using var frame = sender.TryGetNextFrame();
@@ -102,6 +112,28 @@ public sealed class ScreenCaptureService : IDisposable
             using var session = CanvasComposition.CreateDrawingSession(_surface);
             session.Clear(Color.FromArgb(0, 0, 0, 0));
             session.DrawImage(canvasBitmap);
+
+            _frameStopwatch.Stop();
+            _totalProcessingMs += _frameStopwatch.Elapsed.TotalMilliseconds;
+            _frameCount++;
+
+            // Emit stats every second
+            var now = DateTime.UtcNow;
+            if ((now - _lastStatsTime).TotalSeconds >= 1.0 && _frameCount > 0)
+            {
+                var stats = new CaptureStats(
+                    Fps: _frameCount,
+                    AvgProcessingMs: _totalProcessingMs / _frameCount
+                );
+
+                Debug.WriteLine($"FPS: {stats.Fps:F0}, Processing: {stats.AvgProcessingMs:F2}ms");
+                StatsUpdated?.Invoke(this, stats);
+
+                // Reset counters
+                _frameCount = 0;
+                _totalProcessingMs = 0;
+                _lastStatsTime = now;
+            }
         }
         catch
         {
@@ -126,3 +158,8 @@ public sealed class ScreenCaptureService : IDisposable
         _canvasDevice?.Dispose();
     }
 }
+
+public record CaptureStats(
+    int Fps,
+    double AvgProcessingMs
+);
