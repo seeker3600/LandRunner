@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 
 namespace WinUiApp1;
 
@@ -18,6 +20,13 @@ public sealed partial class MainWindow : Window
     {
         InitializeComponent();
         LoadDisplays();
+        SetWindowCaptureProtection();
+    }
+
+    private void SetWindowCaptureProtection()
+    {
+        var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+        PInvoke.SetWindowDisplayAffinity(new HWND(hwnd), Windows.Win32.UI.WindowsAndMessaging.WINDOW_DISPLAY_AFFINITY.WDA_EXCLUDEFROMCAPTURE);
     }
 
     private void LoadDisplays()

@@ -1,18 +1,9 @@
-RoGetActivationFactory
-WindowsCreateString
-WindowsDeleteString
-IGraphicsCaptureItemInterop
-// IGraphicsCaptureItem
-
-SetWindowDisplayAffinity
-EnumDisplayMonitors
 GetMonitorInfo
 GetDisplayConfigBufferSizes
 QueryDisplayConfig
 DisplayConfigGetDeviceInfo
-EnumDisplayDevices
+SetWindowDisplayAffinity
 
 MONITORINFOEXW
 DISPLAYCONFIG_SOURCE_DEVICE_NAME
 DISPLAYCONFIG_TARGET_DEVICE_NAME
-MONITORINFOF_PRIMARY

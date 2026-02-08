@@ -1,22 +1,10 @@
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Composition;
-using Microsoft.UI;
 using Microsoft.UI.Composition;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Numerics;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading;
-using System.Threading.Tasks;
 using Windows.Graphics;
 using Windows.Graphics.Capture;
 using Windows.UI;
-using Windows.Win32;
-using Windows.Win32.Graphics.Gdi;
-using Windows.Win32.System.WinRT;
-using Windows.Win32.System.WinRT.Graphics.Capture;
 using Win2DDirectX = Microsoft.Graphics.DirectX;
 using WinDirectX = Windows.Graphics.DirectX;
 
