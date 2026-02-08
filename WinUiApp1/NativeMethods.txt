@@ -2,7 +2,7 @@ RoGetActivationFactory
 WindowsCreateString
 WindowsDeleteString
 IGraphicsCaptureItemInterop
-IGraphicsCaptureItem
+// IGraphicsCaptureItem
 
 SetWindowDisplayAffinity
 EnumDisplayMonitors

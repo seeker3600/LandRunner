@@ -37,7 +37,4 @@
     <Platform Project="x64" />
     <Deploy />
   </Project>
-  <Project Path="WpfApp1/WpfApp1.csproj" Id="fc8b0b49-107f-4c48-accf-783860a2dd1a">
-    <Platform Solution="*|x64" Project="x64" />
-  </Project>
 </Solution>

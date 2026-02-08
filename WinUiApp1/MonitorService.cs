@@ -1,5 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
+using Windows.Graphics;
+using Windows.Graphics.Display;
 using Windows.Win32;
 using Windows.Win32.Devices.Display;
 using Windows.Win32.Foundation;
@@ -11,89 +13,47 @@ namespace WinUiApp1;
 /// 接続されているモニター情報
 /// </summary>
 public record DisplayMonitorInfo(
-    IntPtr Handle,
-    string DeviceName,
-    string FriendlyName,
-    Rect Bounds,
-    Rect WorkArea,
-    bool IsPrimary,
-    int Index);
+    DisplayId Id, // IntPtrの方がいいかもしれん
+    //string DeviceName,
+    string FriendlyName);
 
 /// <summary>
 /// マルチモニター情報を取得するサービス
 /// </summary>
 public static class MonitorService
 {
-    /// <summary>
-    /// すべてのモニター情報を取得
-    /// </summary>
     public static ReadOnlyCollection<DisplayMonitorInfo> GetAllMonitors()
     {
-        // 1. DisplayConfig API で高精度のFriendlyNameを取得（キャッシュ）
         var friendlyNamesCache = GetMonitorFriendlyNamesCache();
-        
-        var monitors = new List<DisplayMonitorInfo>();
-        int index = 0;
+        var ids = DisplayServices.FindAll();
+        var results = new List<DisplayMonitorInfo>();
 
-        unsafe
+        foreach (var displayId in ids)
         {
-            PInvoke.EnumDisplayMonitors(HDC.Null, null, (hMonitor, _, _, _) =>
+            var info = new MONITORINFOEXW();
+            info.monitorInfo.cbSize = (uint)Marshal.SizeOf<MONITORINFOEXW>();
+
+            string friendlyName;
+            if (PInvoke.GetMonitorInfo((HMONITOR)displayId.Value, ref info.monitorInfo))
             {
-                var info = new MONITORINFOEXW();
-                info.monitorInfo.cbSize = (uint)Marshal.SizeOf<MONITORINFOEXW>();
+                var deviceName = GetString(info.szDevice.AsSpan());
+                friendlyName = friendlyNamesCache.TryGetValue(deviceName, out var name)
+                    ? name
+                    : deviceName;
+            }
+            else
+            {
+                friendlyName = string.Empty;
+            }
 
-                if (PInvoke.GetMonitorInfo(hMonitor, ref info.monitorInfo))
-                {
-                    // デバイス名取得 (NULL終端を考慮して文字列化)
-                    var deviceName = GetString(info.szDevice.AsSpan());
-
-                    // FriendlyName を取得 (Cache -> Fallback)
-                    string friendlyName = GetFriendlyName(deviceName, friendlyNamesCache);
-
-                    var monitorRect = info.monitorInfo.rcMonitor;
-                    var workRect = info.monitorInfo.rcWork;
-
-                    monitors.Add(new DisplayMonitorInfo(
-                        (IntPtr)hMonitor,
-                        deviceName,
-                        friendlyName,
-                        new Rect(monitorRect),
-                        new Rect(workRect),
-                        (info.monitorInfo.dwFlags & PInvoke.MONITORINFOF_PRIMARY) != 0,
-                        index++));
-                }
-
-                return true;
-            }, 0);
+            results.Add(new DisplayMonitorInfo(
+                displayId,
+                friendlyName));
         }
 
-        return monitors.AsReadOnly();
+        return results.AsReadOnly();
     }
 
-    /// <summary>
-    /// モニター表示名を生成
-    /// </summary>
-    public static string GetDisplayName(DisplayMonitorInfo monitor)
-    {
-        var primary = monitor.IsPrimary ? " (プライマリ)" : "";
-        var name = !string.IsNullOrEmpty(monitor.FriendlyName) ? monitor.FriendlyName : monitor.DeviceName;
-        return $"モニター {monitor.Index + 1}: {name} ({monitor.Bounds.Width}x{monitor.Bounds.Height}){primary}";
-    }
-
-    /// <summary>
-    /// デバイス名に対応する FriendlyName を取得
-    /// </summary>
-    private static string GetFriendlyName(string deviceName, Dictionary<string, string> cache)
-    {
-        // 1. QueryDisplayConfig のキャッシュから検索 (e.g., "LG UltraFine")
-        if (cache.TryGetValue(deviceName, out var name) && !string.IsNullOrEmpty(name))
-        {
-            return name;
-        }
-
-        // 2. EnumDisplayDevices で取得トライ (e.g., "Generic PnP Monitor")
-        return GetFriendlyNameViaEnum(deviceName);
-    }
 
     /// <summary>
     /// DisplayConfig API を使用してモニターのフレンドリー名を取得（高精度）
@@ -112,7 +72,7 @@ public static class MonitorService
 
             if (PInvoke.QueryDisplayConfig(QUERY_DISPLAY_CONFIG_FLAGS.QDC_ONLY_ACTIVE_PATHS, ref pathCount, paths, ref modeCount, modes) != 0)
                 return result;
-            
+
             for (var i = 0; i < pathCount; i++)
             {
                 var path = paths[i];
@@ -171,19 +131,6 @@ public static class MonitorService
         return GetString((char*)&targetName.monitorFriendlyDeviceName, 64);
     }
 
-    private static unsafe string GetFriendlyNameViaEnum(string deviceName)
-    {
-        var device = new DISPLAY_DEVICEW();
-        device.cb = (uint)Marshal.SizeOf(device);
-
-        // 指定のアダプタに接続されている最初のモニターを取得（通常 index 0）
-        if (PInvoke.EnumDisplayDevices(deviceName, 0, ref device, 0))
-        {
-            return GetString((char*)&device.DeviceString, 128);
-        }
-        return string.Empty;
-    }
-
     private static unsafe string GetString(char* buffer, int length)
     {
         return GetString(new ReadOnlySpan<char>(buffer, length));
@@ -194,16 +141,4 @@ public static class MonitorService
         var end = buffer.IndexOf('\0');
         return end >= 0 ? new string(buffer[..end]) : new string(buffer);
     }
-}
-
-public readonly record struct Rect(int left, int top, int right, int bottom)
-{
-    internal Rect(in RECT native) : this(native.left, native.top, native.right, native.bottom)
-    {
-    }
-
-    public readonly int Width => unchecked(this.right - this.left);
-
-    public readonly int Height => unchecked(this.bottom - this.top);
-
 }

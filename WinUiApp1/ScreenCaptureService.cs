@@ -1,5 +1,6 @@
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Composition;
+using Microsoft.UI;
 using Microsoft.UI.Composition;
 using System;
 using System.Collections.Generic;
@@ -44,9 +45,7 @@ public sealed class ScreenCaptureService : IDisposable
             _canvasDevice = new CanvasDevice();
             _compositionGraphicsDevice = CanvasComposition.CreateCompositionGraphicsDevice(compositor, _canvasDevice);
 
-            var item = CreateCaptureItemForDisplay((HMONITOR)displayInfo.Handle);
-            if (item == null)
-                return false;
+            var item = GraphicsCaptureItem.TryCreateFromDisplayId(displayInfo.Id);
 
             _captureItem = item;
             _lastSize = _captureItem.Size;
@@ -88,47 +87,6 @@ public sealed class ScreenCaptureService : IDisposable
             Stop();
             return false;
         }
-    }
-
-    private static WindowsDeleteStringSafeHandle ToHS(string s)
-    {
-        int hr = PInvoke.WindowsCreateString(s, (uint)s.Length, out var hs);
-        Marshal.ThrowExceptionForHR(hr);
-        return hs;
-    }
-
-    private static T GetActivationFactory<T>(string runtimeClassId) where T : class
-    {
-        using var cls = ToHS(runtimeClassId);
-        Guid iid = typeof(T).GUID;
-
-        var hr = PInvoke.RoGetActivationFactory(cls, in iid, out object factory);
-        Marshal.ThrowExceptionForHR(hr.Value);
-
-        return (T)factory;
-    }
-
-    private static GraphicsCaptureItem? CreateCaptureItemForDisplay(in HMONITOR hMonitor)
-    {
-        try
-        {
-            //var factory = GetActivationFactory<IGraphicsCaptureItemInterop>("Windows.Graphics.Capture.GraphicsCaptureItem");
-            //using (ComReleaser.AsDisposable(factory))
-            //{
-            //    //Guid itemGuid = typeof(Windows.Graphics.Capture.IGraphicsCaptureItem).GUID;
-            //    var test = Guid.Parse("79C3F95B-31F7-4EC2-A464-632EF5D30760"); // IGraphicsCaptureItemInterop
-            //    factory.CreateForMonitor(hMonitor, in test, out var item);
-            var displayId = new DisplayId((ulong)(IntPtr)hMonitor);
-            var res = GraphicsCaptureItem.TryCreateFromDisplayId(displayId);
-            return res;
-                //return (GraphicsCaptureItem)item;
-            //}
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"Error creating capture item: {ex.Message}");
-        }
-        return null;
     }
 
     private void OnFrameArrived(Direct3D11CaptureFramePool sender, object args)
@@ -180,8 +138,3 @@ public sealed class ScreenCaptureService : IDisposable
         _canvasDevice?.Dispose();
     }
 }
-
-
-
-
-
