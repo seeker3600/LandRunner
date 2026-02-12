@@ -99,7 +99,8 @@ public sealed partial class MainWindow : Window
 
     private void OnCaptureStatsUpdated(object? sender, CaptureStats stats)
     {
-        DispatcherQueue.TryEnqueue(() =>
+        // B-2: 低優先度キューで UI スレッド負荷を軽減
+        DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
         {
             StatsTextBlock.Text = $"FPS: {stats.Fps} | Processing: {stats.AvgProcessingMs:F2}ms";
         });
