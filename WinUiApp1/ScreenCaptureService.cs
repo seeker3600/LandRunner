@@ -34,9 +34,7 @@ public sealed class ScreenCaptureService : IDisposable
 
     // Latency measurement fields
     private readonly Stopwatch _frameStopwatch = new();
-    private int _frameCount;
-    private double _totalProcessingMs;
-    private DateTime _lastStatsTime = DateTime.UtcNow;
+    private readonly CaptureStatsCollector _statsCollector = new();
 
     public event EventHandler<SpriteVisual>? VisualCreated;
     public event EventHandler<CaptureStats>? StatsUpdated;
@@ -144,25 +142,15 @@ public sealed class ScreenCaptureService : IDisposable
             session.DrawImage(canvasBitmap);
 
             _frameStopwatch.Stop();
-            _totalProcessingMs += _frameStopwatch.Elapsed.TotalMilliseconds;
-            _frameCount++;
+            
+            // 統計記録（ロックフリー）
+            _statsCollector.RecordFrame(_frameStopwatch.Elapsed);
 
-            // Emit stats every second
-            var now = DateTime.UtcNow;
-            if ((now - _lastStatsTime).TotalSeconds >= 1.0 && _frameCount > 0)
+            // 統計レポート（1秒ごと）
+            if (_statsCollector.ShouldReport(out var stats))
             {
-                var stats = new CaptureStats(
-                    Fps: _frameCount,
-                    AvgProcessingMs: _totalProcessingMs / _frameCount
-                );
-
                 Debug.WriteLine($"FPS: {stats.Fps:F0}, Processing: {stats.AvgProcessingMs:F2}ms");
                 StatsUpdated?.Invoke(this, stats);
-
-                // Reset counters
-                _frameCount = 0;
-                _totalProcessingMs = 0;
-                _lastStatsTime = now;
             }
         }
         catch
@@ -173,6 +161,7 @@ public sealed class ScreenCaptureService : IDisposable
     public void Stop()
     {
         _isCapturing = false;
+        _statsCollector.Reset();
         
         _session?.Dispose();
         _session = null;
@@ -187,6 +176,63 @@ public sealed class ScreenCaptureService : IDisposable
         _surface?.Dispose();
         _compositionGraphicsDevice?.Dispose();
         _canvasDevice?.Dispose();
+    }
+
+    /// <summary>
+    /// ロックフリーな統計情報コレクター（FreeThreaded モード対応）
+    /// </summary>
+    private sealed class CaptureStatsCollector
+    {
+        private int _frameCount;
+        private long _totalProcessingTicks;
+        private DateTime _lastReportTime = DateTime.UtcNow;
+
+        /// <summary>
+        /// フレーム処理時間を記録（ロックフリー）
+        /// </summary>
+        public void RecordFrame(TimeSpan processingTime)
+        {
+            Interlocked.Increment(ref _frameCount);
+            Interlocked.Add(ref _totalProcessingTicks, processingTime.Ticks);
+        }
+
+        /// <summary>
+        /// 統計レポートが必要かチェック（1秒ごと）
+        /// </summary>
+        public bool ShouldReport(out CaptureStats? stats)
+        {
+            var now = DateTime.UtcNow;
+            if ((now - _lastReportTime).TotalSeconds < 1.0)
+            {
+                stats = null;
+                return false;
+            }
+
+            // アトミックに読み取り＆リセット
+            var fps = Interlocked.Exchange(ref _frameCount, 0);
+            var ticks = Interlocked.Exchange(ref _totalProcessingTicks, 0);
+
+            if (fps == 0)
+            {
+                stats = null;
+                return false;
+            }
+
+            var avgMs = TimeSpan.FromTicks(ticks).TotalMilliseconds / fps;
+            stats = new CaptureStats(Fps: fps, AvgProcessingMs: avgMs);
+            _lastReportTime = now;
+            return true;
+        }
+
+        /// <summary>
+        /// 統計をリセット
+        /// </summary>
+        public void Reset()
+        {
+            Interlocked.Exchange(ref _frameCount, 0);
+            Interlocked.Exchange(ref _totalProcessingTicks, 0);
+            _lastReportTime = DateTime.UtcNow;
+        }
     }
 }
 
