@@ -51,7 +51,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
         Directory.CreateDirectory(recordingDir);
 
         // Act
-        await using var device = await manager.ConnectFromRecordingAsync(recordingDir);
+        await using var device = await manager.ConnectReplayAsync(recordingDir);
 
         // Assert
         Assert.Null(device);  // ファイルなし時はnull
@@ -70,7 +70,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
 
         // Act & Assert
         await Assert.ThrowsAsync<DirectoryNotFoundException>(
-            () => manager.ConnectFromRecordingAsync(nonexistentDir)
+            () => manager.ConnectReplayAsync(nonexistentDir)
         );
 
         manager.Dispose();
@@ -126,7 +126,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
 
         // Act
         var manager = new ImuDeviceManager();
-        await using var device = await manager.ConnectFromRecordingAsync(recordingDir);
+        await using var device = await manager.ConnectReplayAsync(recordingDir);
 
         // Assert
         if (device != null)
@@ -193,7 +193,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
         );
 
         await Assert.ThrowsAsync<ObjectDisposedException>(
-            () => manager.ConnectFromRecordingAsync(_testOutputDirectory)
+            () => manager.ConnectReplayAsync(_testOutputDirectory)
         );
     }
 
@@ -229,11 +229,11 @@ public class ImuDeviceManagerRecordingTests : IDisposable
 
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(
-            () => manager.ConnectFromRecordingAsync(null!)
+            () => manager.ConnectReplayAsync(null!)
         );
 
         await Assert.ThrowsAsync<ArgumentException>(
-            () => manager.ConnectFromRecordingAsync("")
+            () => manager.ConnectReplayAsync("")
         );
 
         manager.Dispose();

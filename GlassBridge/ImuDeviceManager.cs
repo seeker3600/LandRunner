@@ -75,7 +75,7 @@ public sealed class ImuDeviceManager : IImuDeviceManager
     /// 記録されたデータファイルから IMU デバイスを再生
     /// 実際のデバイスの代わりに、記録されたデータをストリーム配信する Mock デバイスを返す
     /// </summary>
-    public async Task<IImuDevice?> ConnectFromRecordingAsync(
+    public async Task<IImuDevice?> ConnectReplayAsync(
         string recordingDirectory,
         CancellationToken cancellationToken = default)
     {

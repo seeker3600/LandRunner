@@ -201,7 +201,7 @@ public class MainWindowViewModel : ViewModelBase
                     return;
                 }
 
-                _device = await _deviceManager.ConnectFromRecordingAsync(RecordingPath);
+                _device = await _deviceManager.ConnectReplayAsync(RecordingPath);
 
                 if (_device == null)
                 {

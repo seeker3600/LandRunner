@@ -46,7 +46,7 @@ public interface IImuDeviceManager : IDisposable
     /// <param name="recordingDirectory">記録ファイルが保存されているディレクトリ</param>
     /// <param name="cancellationToken">キャンセルトークン</param>
     /// <returns>再生用の Mock デバイス、ファイルなし時はnull</returns>
-    Task<IImuDevice?> ConnectFromRecordingAsync(
+    Task<IImuDevice?> ConnectReplayAsync(
         string recordingDirectory,
         CancellationToken cancellationToken = default);
 }
