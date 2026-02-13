@@ -32,6 +32,11 @@ public sealed class ScreenCaptureService : IDisposable
     private SizeInt32 _lastSize;
     private bool _isCapturing;
 
+    // Transform parameters
+    private float _offsetX = 0f;
+    private float _offsetY = 0f;
+    private float _rotationAngle = 0f;
+
     // Latency measurement fields
     private readonly Stopwatch _frameStopwatch = new();
     private readonly CaptureStatsCollector _statsCollector = new();
@@ -73,6 +78,9 @@ public sealed class ScreenCaptureService : IDisposable
             brush.VerticalAlignmentRatio = 0.5f;
             brush.Stretch = CompositionStretch.Uniform;
             _visual.Brush = brush;
+
+            // 初期変換を適用
+            UpdateVisualTransform();
 
             _framePool.FrameArrived += OnFrameArrived;
 
@@ -160,6 +168,36 @@ public sealed class ScreenCaptureService : IDisposable
         _framePool?.Dispose();
         _framePool = null;
         _captureItem = null;
+    }
+
+    /// <summary>
+    /// キャプチャ描画の位置と角度を設定する
+    /// </summary>
+    /// <param name="x">X オフセット（ピクセル）</param>
+    /// <param name="y">Y オフセット（ピクセル）</param>
+    /// <param name="angleDegrees">回転角度（度）</param>
+    public void SetTransform(float x, float y, float angleDegrees)
+    {
+        _offsetX = x;
+        _offsetY = y;
+        _rotationAngle = angleDegrees;
+        UpdateVisualTransform();
+    }
+
+    /// <summary>
+    /// Visual の変換行列を更新
+    /// </summary>
+    private void UpdateVisualTransform()
+    {
+        if (_visual == null) return;
+
+        // Composition API で変換を適用
+        // 1. 回転の中心を Visual の中央に設定
+        // 2. 回転を適用
+        // 3. オフセットを適用
+        _visual.CenterPoint = new Vector3(_visual.Size / 2f, 0f);
+        _visual.RotationAngleInDegrees = _rotationAngle;
+        _visual.Offset = new Vector3(_offsetX, _offsetY, 0f);
     }
 
     public void Dispose()

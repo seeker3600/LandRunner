@@ -105,6 +105,18 @@ public sealed partial class MainWindow : Window
             StatsTextBlock.Text = $"FPS: {stats.Fps} | Processing: {stats.AvgProcessingMs:F2}ms";
         });
     }
+
+    private void TransformParameter_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+    {
+        if (_captureService == null || double.IsNaN(args.NewValue))
+            return;
+
+        var x = (float)OffsetXNumberBox.Value;
+        var y = (float)OffsetYNumberBox.Value;
+        var angle = (float)AngleNumberBox.Value;
+
+        _captureService.SetTransform(x, y, angle);
+    }
 }
 
 
