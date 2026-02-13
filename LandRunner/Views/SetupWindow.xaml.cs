@@ -97,28 +97,44 @@ public partial class SetupWindow : Window
             // 接続
             if (PlaybackCheckBox.IsChecked == true)
             {
-                var dialog = new OpenFolderDialog
+                var dialog = new OpenFileDialog
                 {
-                    Title = "記録フォルダを選択"
+                    Title = "記録ファイルを選択",
+                    Filter = "Recording Files (*.jsonl)|*.jsonl|All Files (*.*)|*.*",
+                    CheckFileExists = true
                 };
 
                 if (dialog.ShowDialog() == true)
                 {
-                    Log($"記録フォルダ: {dialog.FolderName}");
-                    _device = await _deviceManager.ConnectFromRecordingAsync(dialog.FolderName);
+                    Log($"記録ファイル: {dialog.FileName}");
+                    _device = await _deviceManager.ConnectReplayAsync(dialog.FileName);
                 }
             }
             else if (RecordCheckBox.IsChecked == true)
             {
-                var dialog = new OpenFolderDialog
+                var dialog = new SaveFileDialog
                 {
-                    Title = "記録保存先フォルダを選択"
+                    Title = "記録ファイルの保存先を選択",
+                    Filter = "Recording Files (*.jsonl)|*.jsonl|All Files (*.*)|*.*",
+                    DefaultExt = ".jsonl",
+                    FileName = $"session_{DateTime.Now:yyyyMMdd_HHmmss}.jsonl",
+                    InitialDirectory = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                        "LandRunner",
+                        "Recordings")
                 };
 
                 if (dialog.ShowDialog() == true)
                 {
-                    Log($"記録保存先: {dialog.FolderName}");
-                    _device = await _deviceManager.ConnectAndRecordAsync(dialog.FolderName);
+                    // ディレクトリを作成
+                    var directory = Path.GetDirectoryName(dialog.FileName);
+                    if (!string.IsNullOrEmpty(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+
+                    Log($"記録保存先: {dialog.FileName}");
+                    _device = await _deviceManager.ConnectAndRecordAsync(dialog.FileName);
                 }
             }
             else

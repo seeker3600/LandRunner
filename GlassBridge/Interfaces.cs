@@ -32,21 +32,21 @@ public interface IImuDeviceManager : IDisposable
     /// 取得したデバイスから GetImuDataStreamAsync() で取得したデータは自動的に記録される
     /// device.DisposeAsync() 時に自動的にメタデータも保存される
     /// </summary>
-    /// <param name="outputDirectory">記録ファイルの出力先ディレクトリ</param>
+    /// <param name="recordingFilePath">記録ファイルのパス（.jsonl）</param>
     /// <param name="cancellationToken">キャンセルトークン</param>
     /// <returns>記録付きで接続されたIMUデバイス、接続失敗時はnull</returns>
     Task<IImuDevice?> ConnectAndRecordAsync(
-        string outputDirectory,
+        string recordingFilePath,
         CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 記録されたデータファイルから IMU デバイスを再生
     /// 実際のデバイスの代わりに、記録されたデータをストリーム配信する Mock デバイスを返す
     /// </summary>
-    /// <param name="recordingDirectory">記録ファイルが保存されているディレクトリ</param>
+    /// <param name="recordingFilePath">記録ファイルのパス（.jsonl）</param>
     /// <param name="cancellationToken">キャンセルトークン</param>
     /// <returns>再生用の Mock デバイス、ファイルなし時はnull</returns>
     Task<IImuDevice?> ConnectReplayAsync(
-        string recordingDirectory,
+        string recordingFilePath,
         CancellationToken cancellationToken = default);
 }

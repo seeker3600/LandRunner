@@ -40,15 +40,16 @@ public sealed class ImuDeviceManager : IImuDeviceManager
     /// 取得したデバイスから GetImuDataStreamAsync() で取得したデータは自動的に記録される
     /// device.DisposeAsync() 時に自動的にメタデータも保存される
     /// </summary>
+    /// <param name="recordingFilePath">記録ファイルパス（.jsonl）</param>
     public async Task<IImuDevice?> ConnectAndRecordAsync(
-        string outputDirectory,
+        string recordingFilePath,
         CancellationToken cancellationToken = default)
     {
         if (_disposed)
             throw new ObjectDisposedException(nameof(ImuDeviceManager));
 
-        if (string.IsNullOrWhiteSpace(outputDirectory))
-            throw new ArgumentException("Output directory must not be null or empty", nameof(outputDirectory));
+        if (string.IsNullOrWhiteSpace(recordingFilePath))
+            throw new ArgumentException("Recording file path must not be null or empty", nameof(recordingFilePath));
 
         // 前回の記録セッションを終了
         if (_recordingProvider != null)
@@ -58,13 +59,13 @@ public sealed class ImuDeviceManager : IImuDeviceManager
         var baseProvider = new HidStreamProvider();
 
         // 記録機能でラップ
-        _recordingProvider = new RecordingHidStreamProvider(baseProvider, outputDirectory);
+        _recordingProvider = new RecordingHidStreamProvider(baseProvider, recordingFilePath);
 
         // デバイスに接続
         var device = await VitureLumaDevice.ConnectWithProviderAsync(_recordingProvider, cancellationToken);
         
         if (device != null)
-            _logger.LogInformation("デバイスに接続しました（記録モード: {OutputDirectory}）", outputDirectory);
+            _logger.LogInformation("デバイスに接続しました（記録モード: {RecordingFilePath}）", recordingFilePath);
         else
             _logger.LogWarning("デバイスが見つかりませんでした");
         
@@ -75,29 +76,30 @@ public sealed class ImuDeviceManager : IImuDeviceManager
     /// 記録されたデータファイルから IMU デバイスを再生
     /// 実際のデバイスの代わりに、記録されたデータをストリーム配信する Mock デバイスを返す
     /// </summary>
+    /// <param name="recordingFilePath">記録ファイルパス（.jsonl）</param>
     public async Task<IImuDevice?> ConnectReplayAsync(
-        string recordingDirectory,
+        string recordingFilePath,
         CancellationToken cancellationToken = default)
     {
         if (_disposed)
             throw new ObjectDisposedException(nameof(ImuDeviceManager));
 
-        if (string.IsNullOrWhiteSpace(recordingDirectory))
-            throw new ArgumentException("Recording directory must not be null or empty", nameof(recordingDirectory));
+        if (string.IsNullOrWhiteSpace(recordingFilePath))
+            throw new ArgumentException("Recording file path must not be null or empty", nameof(recordingFilePath));
 
-        if (!Directory.Exists(recordingDirectory))
-            throw new DirectoryNotFoundException($"Recording directory not found: {recordingDirectory}");
+        if (!File.Exists(recordingFilePath))
+            throw new FileNotFoundException($"Recording file not found: {recordingFilePath}");
 
         // 再生プロバイダーを作成
-        var replayProvider = new ReplayHidStreamProvider(recordingDirectory);
+        var replayProvider = new ReplayHidStreamProvider(recordingFilePath);
 
         // Mock デバイスとして再生
         var device = await VitureLumaDevice.ConnectWithProviderAsync(replayProvider, cancellationToken);
 
         if (device != null)
-            _logger.LogInformation("記録データから再生を開始しました: {RecordingDirectory}", recordingDirectory);
+            _logger.LogInformation("記録データから再生を開始しました: {RecordingFilePath}", recordingFilePath);
         else
-            _logger.LogWarning("記録データの読み込みに失敗しました: {RecordingDirectory}", recordingDirectory);
+            _logger.LogWarning("記録データの読み込みに失敗しました: {RecordingFilePath}", recordingFilePath);
 
         return device;
     }

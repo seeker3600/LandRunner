@@ -16,6 +16,12 @@ internal sealed class HidFrameRecord
     public string Type { get; set; } = "frame";
 
     /// <summary>
+    /// ストリーム識別子（複数ストリームを単一ファイルに記録する際の識別子）
+    /// </summary>
+    [JsonPropertyName("streamId")]
+    public int StreamId { get; set; }
+
+    /// <summary>
     /// 記録時刻（ミリ秒単位のタイムスタンプ）
     /// </summary>
     [JsonPropertyName("timestamp")]
@@ -32,11 +38,13 @@ internal sealed class HidFrameRecord
     /// </summary>
     /// <param name="rawBytes">HIDバイト列</param>
     /// <param name="timestamp">記録時刻（ミリ秒）</param>
-    public static HidFrameRecord Create(byte[] rawBytes, long timestamp)
+    /// <param name="streamId">ストリーム識別子</param>
+    public static HidFrameRecord Create(byte[] rawBytes, long timestamp, int streamId)
     {
         return new HidFrameRecord
         {
             Type = "frame",
+            StreamId = streamId,
             Timestamp = timestamp,
             RawBytes = Convert.ToBase64String(rawBytes)
         };

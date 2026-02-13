@@ -26,11 +26,10 @@ public class ImuDeviceManagerRecordingTests : IDisposable
     {
         // Arrange
         var manager = new ImuDeviceManager();
-        var recordingDir = Path.Combine(_testOutputDirectory, "test1");
-        Directory.CreateDirectory(recordingDir);
+        var recordingFilePath = Path.Combine(_testOutputDirectory, "test1.jsonl");
 
         // Act: 実デバイス接続を試みる（デバイスなし時はnullが返る）
-        await using var device = await manager.ConnectAndRecordAsync(recordingDir);
+        await using var device = await manager.ConnectAndRecordAsync(recordingFilePath);
 
         // Assert: 記録機能が正しく初期化されたことを確認
         // デバイスが接続できなくても、記録機能は初期化される
@@ -47,30 +46,29 @@ public class ImuDeviceManagerRecordingTests : IDisposable
     {
         // Arrange
         var manager = new ImuDeviceManager();
-        var recordingDir = Path.Combine(_testOutputDirectory, "test2_empty");
-        Directory.CreateDirectory(recordingDir);
+        var recordingFilePath = Path.Combine(_testOutputDirectory, "test2_empty.jsonl");
 
-        // Act
-        await using var device = await manager.ConnectReplayAsync(recordingDir);
+        // Act & Assert
+        await Assert.ThrowsAsync<FileNotFoundException>(
+            () => manager.ConnectReplayAsync(recordingFilePath)
+        );
 
-        // Assert
-        Assert.Null(device);  // ファイルなし時はnull
         manager.Dispose();
     }
 
     /// <summary>
-    /// テスト3: ConnectFromRecordingAsync - 無効なディレクトリ
+    /// テスト3: ConnectFromRecordingAsync - 無効なファイル
     /// </summary>
     [Fact]
     public async Task ConnectFromRecordingAsync_WithInvalidDirectory_ThrowsException()
     {
         // Arrange
         var manager = new ImuDeviceManager();
-        var nonexistentDir = Path.Combine(_testOutputDirectory, "nonexistent");
+        var nonexistentFile = Path.Combine(_testOutputDirectory, "nonexistent.jsonl");
 
         // Act & Assert
-        await Assert.ThrowsAsync<DirectoryNotFoundException>(
-            () => manager.ConnectReplayAsync(nonexistentDir)
+        await Assert.ThrowsAsync<FileNotFoundException>(
+            () => manager.ConnectReplayAsync(nonexistentFile)
         );
 
         manager.Dispose();
@@ -83,8 +81,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
     public async Task ConnectFromRecordingAsync_WithValidRecording_ReplaysData()
     {
         // Arrange
-        var recordingDir = Path.Combine(_testOutputDirectory, "test4");
-        Directory.CreateDirectory(recordingDir);
+        var recordingFilePath = Path.Combine(_testOutputDirectory, "test4.jsonl");
 
         // テスト用の記録ファイルを作成
         var testData = new ImuData[]
@@ -105,20 +102,18 @@ public class ImuDeviceManagerRecordingTests : IDisposable
             }
         };
 
-        var recordingPath = Path.Combine(recordingDir, "recording_0.jsonl");
-
         // 記録ファイルを作成（新形式: メタデータ + フレーム）
-        using (var writer = new StreamWriter(recordingPath))
+        using (var writer = new StreamWriter(recordingFilePath))
         {
             // 1行目: メタデータ
-            var metadata = HidRecordingMetadata.Create(frameCount: testData.Length);
+            var metadata = HidRecordingMetadata.Create(streamCount: 2);
             writer.WriteLine(metadata.ToJson());
 
             // 2行目以降: フレーム（HIDバイト列のみ）
             long timestamp = 0;
             foreach (var frame in testData)
             {
-                var record = HidFrameRecord.Create(new byte[] { 0xFF, 0xFC }, timestamp);
+                var record = HidFrameRecord.Create(new byte[] { 0xFF, 0xFC }, timestamp, streamId: 0);
                 writer.WriteLine(record.ToJson());
                 timestamp += 10;
             }
@@ -126,7 +121,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
 
         // Act
         var manager = new ImuDeviceManager();
-        await using var device = await manager.ConnectReplayAsync(recordingDir);
+        await using var device = await manager.ConnectReplayAsync(recordingFilePath);
 
         // Assert
         if (device != null)

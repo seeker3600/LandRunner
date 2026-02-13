@@ -4,7 +4,7 @@ using GlassBridge.Internal.HID;
 
 /// <summary>
 /// 記録されたJSONファイルから生データを再生するHIDストリーム（VitureLuma非依存）
-/// 使用例: var replayStream = new ReplayHidStream(recordingFilePath)
+/// 使用例: var replayStream = new ReplayHidStream(recordingFilePath, streamId)
 /// </summary>
 internal sealed class ReplayHidStream : IHidStream
 {
@@ -15,6 +15,7 @@ internal sealed class ReplayHidStream : IHidStream
     public const int DefaultReportLength = 65;
 
     private readonly Queue<(long delayMs, byte[] data)> _frameQueue;
+    private readonly int _streamId;
     private DateTime _playbackStartTime;
     private bool _disposed;
     private IEnumerator<(long, byte[])>? _frameEnumerator;
@@ -32,13 +33,15 @@ internal sealed class ReplayHidStream : IHidStream
     public int MaxOutputReportLength { get; }
 
     /// <summary>
-    /// 記録ファイルから再生ストリームを作成
+    /// 記録ファイルから特定のストリームIDの再生ストリームを作成
     /// </summary>
     /// <param name="recordingFilePath">記録ファイルのパス（.jsonl）</param>
+    /// <param name="streamId">再生するストリームID</param>
     /// <param name="maxInputReportLength">最大入力レポート長（デフォルト: 65）</param>
     /// <param name="maxOutputReportLength">最大出力レポート長（デフォルト: 65）</param>
     public ReplayHidStream(
         string recordingFilePath,
+        int streamId,
         int maxInputReportLength = DefaultReportLength,
         int maxOutputReportLength = DefaultReportLength)
     {
@@ -46,10 +49,11 @@ internal sealed class ReplayHidStream : IHidStream
             throw new FileNotFoundException($"Recording file not found: {recordingFilePath}");
 
         _frameQueue = new Queue<(long, byte[])>();
+        _streamId = streamId;
         MaxInputReportLength = maxInputReportLength;
         MaxOutputReportLength = maxOutputReportLength;
 
-        // フレームを読み込んでキューに積む
+        // フレームを読み込んでキューに積む（指定されたstreamIdのみ）
         LoadFramesFromJsonLines(recordingFilePath);
         _frameEnumerator = _frameQueue.GetEnumerator();
     }
@@ -79,6 +83,11 @@ internal sealed class ReplayHidStream : IHidStream
 
                 // 2行目以降はフレームデータ
                 var frameRecord = HidFrameRecord.FromJson(line);
+                
+                // 指定されたstreamIdのフレームのみを抽出
+                if (frameRecord.StreamId != _streamId)
+                    continue;
+
                 var rawBytes = frameRecord.DecodeRawBytes();
                 
                 // タイムスタンプの差分を計算してディレイを設定

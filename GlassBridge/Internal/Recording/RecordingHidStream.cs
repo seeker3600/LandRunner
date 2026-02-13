@@ -5,16 +5,17 @@ using System.Diagnostics;
 
 /// <summary>
 /// HIDストリームをラップして生データをJSONで記録する（VitureLuma非依存）
-/// 使用例: var recordingStream = new RecordingHidStream(innerStream, filePath)
+/// 使用例: var recordingStream = new RecordingHidStream(innerStream, sharedWriter, streamId, stopwatch, semaphore)
 /// </summary>
 internal sealed class RecordingHidStream : IHidStream
 {
     private readonly IHidStream _innerStream;
     private readonly StreamWriter _recordingWriter;
     private readonly Stopwatch _stopwatch;
+    private readonly int _streamId;
+    private readonly SemaphoreSlim _writeLock;
     private int _frameCount;
     private bool _disposed;
-    private bool _headerWritten;
 
     public bool IsOpen => !_disposed && _innerStream.IsOpen;
 
@@ -34,26 +35,23 @@ internal sealed class RecordingHidStream : IHidStream
     /// 記録を伴うHIDストリームを作成
     /// </summary>
     /// <param name="innerStream">基盤となるHIDストリーム</param>
-    /// <param name="recordingPath">記録ファイルのパス（.jsonl）</param>
-    public RecordingHidStream(IHidStream innerStream, string recordingPath)
+    /// <param name="recordingWriter">共有する StreamWriter</param>
+    /// <param name="streamId">ストリーム識別子</param>
+    /// <param name="stopwatch">共有する Stopwatch</param>
+    /// <param name="writeLock">書き込み排他制御用の SemaphoreSlim</param>
+    public RecordingHidStream(
+        IHidStream innerStream, 
+        StreamWriter recordingWriter,
+        int streamId,
+        Stopwatch stopwatch,
+        SemaphoreSlim writeLock)
     {
         _innerStream = innerStream ?? throw new ArgumentNullException(nameof(innerStream));
-        
-        // ファイルのディレクトリを作成
-        var directory = Path.GetDirectoryName(recordingPath);
-        if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
-        {
-            Directory.CreateDirectory(directory);
-        }
-
-        // 記録ファイルを作成
-        _recordingWriter = new StreamWriter(recordingPath, false)
-        {
-            AutoFlush = true
-        };
-        _stopwatch = Stopwatch.StartNew();
+        _recordingWriter = recordingWriter ?? throw new ArgumentNullException(nameof(recordingWriter));
+        _stopwatch = stopwatch ?? throw new ArgumentNullException(nameof(stopwatch));
+        _writeLock = writeLock ?? throw new ArgumentNullException(nameof(writeLock));
+        _streamId = streamId;
         _frameCount = 0;
-        _headerWritten = false;
     }
 
 
@@ -61,14 +59,6 @@ internal sealed class RecordingHidStream : IHidStream
     {
         if (_disposed)
             throw new ObjectDisposedException(nameof(RecordingHidStream));
-
-        // 初回読み込み時にメタデータヘッダーを書き込む
-        if (!_headerWritten)
-        {
-            var metadata = HidRecordingMetadata.Create(frameCount: 0);
-            await _recordingWriter.WriteLineAsync(metadata.ToJson());
-            _headerWritten = true;
-        }
 
         // 基盤ストリームから読み込み
         int bytesRead = await _innerStream.ReadAsync(buffer, offset, count, cancellationToken);
@@ -80,10 +70,19 @@ internal sealed class RecordingHidStream : IHidStream
             {
                 var rawData = buffer.AsSpan(offset, bytesRead).ToArray();
                 var timestamp = _stopwatch.ElapsedMilliseconds;
-                var frameRecord = HidFrameRecord.Create(rawData, timestamp);
+                var frameRecord = HidFrameRecord.Create(rawData, timestamp, _streamId);
                 
-                await _recordingWriter.WriteLineAsync(frameRecord.ToJson());
-                _frameCount++;
+                // 排他制御付きで書き込み
+                await _writeLock.WaitAsync(cancellationToken);
+                try
+                {
+                    await _recordingWriter.WriteLineAsync(frameRecord.ToJson());
+                    _frameCount++;
+                }
+                finally
+                {
+                    _writeLock.Release();
+                }
             }
             catch
             {
@@ -104,23 +103,6 @@ internal sealed class RecordingHidStream : IHidStream
         await _innerStream.WriteAsync(buffer, cancellationToken);
     }
 
-    /// <summary>
-    /// 記録セッションを完了してメタデータを更新
-    /// </summary>
-    public async Task FinalizeAsync()
-    {
-        if (_disposed || !_headerWritten)
-            return;
-
-        await _recordingWriter.FlushAsync();
-        _stopwatch.Stop();
-    }
-
-    /// <summary>
-    /// 記録されたフレーム数を取得
-    /// </summary>
-    public int FrameCount => _frameCount;
-
     public async ValueTask DisposeAsync()
     {
         if (_disposed)
@@ -128,17 +110,10 @@ internal sealed class RecordingHidStream : IHidStream
 
         try
         {
-            await FinalizeAsync();
-            
-            if (_recordingWriter != null)
-            {
-                await _recordingWriter.FlushAsync();
-                await _recordingWriter.DisposeAsync();
-            }
+            await _innerStream.DisposeAsync();
         }
         finally
         {
-            await _innerStream.DisposeAsync();
             _disposed = true;
         }
     }

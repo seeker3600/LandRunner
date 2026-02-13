@@ -32,7 +32,7 @@ public class ImuRecordingTests
         var timestamp = 12345L;
 
         // Act
-        var frameRecord = HidFrameRecord.Create(rawBytes, timestamp);
+        var frameRecord = HidFrameRecord.Create(rawBytes, timestamp, streamId: 0);
         var json = frameRecord.ToJson();
         var parsedRecord = HidFrameRecord.FromJson(json);
 
@@ -51,16 +51,16 @@ public class ImuRecordingTests
     public void HidRecordingMetadata_SerializesMetadata()
     {
         // Arrange
-        var metadata = HidRecordingMetadata.Create(frameCount: 100);
+        var metadata = HidRecordingMetadata.Create(streamCount: 2);
 
         // Act
         var json = metadata.ToJson();
         var deserializedMetadata = HidRecordingMetadata.FromJson(json);
 
         // Assert
-        Assert.Equal(100, deserializedMetadata.FrameCount);
+        Assert.Equal(2, deserializedMetadata.StreamCount);
         Assert.Equal("metadata", deserializedMetadata.Type);
-        Assert.Equal(1, deserializedMetadata.FormatVersion);
+        Assert.Equal(2, deserializedMetadata.FormatVersion);
         Assert.NotNull(deserializedMetadata.RecordedAt);
     }
 
@@ -75,7 +75,7 @@ public class ImuRecordingTests
         var timestamp = 1000L;
 
         // Act
-        var frameRecord = HidFrameRecord.Create(rawBytes, timestamp);
+        var frameRecord = HidFrameRecord.Create(rawBytes, timestamp, streamId: 0);
         var json = frameRecord.ToJson();
 
         // Assert: JSONが人間が読める形式か確認
@@ -94,18 +94,18 @@ public class ImuRecordingTests
     public void HidRecordingMetadata_JsonIsReadable()
     {
         // Arrange
-        var metadata = HidRecordingMetadata.Create(frameCount: 100);
+        var metadata = HidRecordingMetadata.Create(streamCount: 2);
 
         // Act
         var json = metadata.ToJson();
 
         // Assert
         Assert.Contains("recordedAt", json);
-        Assert.Contains("frameCount", json);
+        Assert.Contains("streamCount", json);
         Assert.Contains("formatVersion", json);
         Assert.Contains("type", json);
         Assert.Contains("metadata", json);
-        Assert.Contains("100", json);  // frameCount値
+        Assert.Contains("2", json);  // streamCount値
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ public class ImuRecordingTests
     public void HidRecordingMetadata_RoundTripSerialization()
     {
         // Arrange
-        var original = HidRecordingMetadata.Create(frameCount: 50);
+        var original = HidRecordingMetadata.Create(streamCount: 2);
         var recordedAtBefore = original.RecordedAt;
 
         // Act
@@ -123,7 +123,7 @@ public class ImuRecordingTests
         var deserialized = HidRecordingMetadata.FromJson(json);
 
         // Assert
-        Assert.Equal(original.FrameCount, deserialized.FrameCount);
+        Assert.Equal(original.StreamCount, deserialized.StreamCount);
         Assert.Equal(original.FormatVersion, deserialized.FormatVersion);
         Assert.Equal(original.Type, deserialized.Type);
         Assert.Equal(recordedAtBefore, deserialized.RecordedAt);
@@ -136,7 +136,7 @@ public class ImuRecordingTests
     public void RecordingMetadata_WriteAndReadFromFile()
     {
         // Arrange
-        var metadata = HidRecordingMetadata.Create(frameCount: 75);
+        var metadata = HidRecordingMetadata.Create(streamCount: 2);
         var filePath = Path.Combine(_testOutputDirectory, "metadata.json");
 
         // Act
@@ -148,7 +148,7 @@ public class ImuRecordingTests
 
         // Assert
         Assert.True(File.Exists(filePath));
-        Assert.Equal(metadata.FrameCount, loadedMetadata.FrameCount);
+        Assert.Equal(metadata.StreamCount, loadedMetadata.StreamCount);
         Assert.Equal(metadata.FormatVersion, loadedMetadata.FormatVersion);
     }
 
@@ -171,13 +171,13 @@ public class ImuRecordingTests
         using (var writer = new StreamWriter(filePath))
         {
             // 1行目: メタデータ
-            var metadata = HidRecordingMetadata.Create(frameCount: testFrames.Length);
+            var metadata = HidRecordingMetadata.Create(streamCount: 1);
             writer.WriteLine(metadata.ToJson());
 
             // 2行目以降: フレーム
             foreach (var (timestamp, data) in testFrames)
             {
-                var record = HidFrameRecord.Create(data, timestamp);
+                var record = HidFrameRecord.Create(data, timestamp, streamId: 0);
                 writer.WriteLine(record.ToJson());
             }
         }
@@ -189,7 +189,7 @@ public class ImuRecordingTests
         
         // メタデータを検証
         var loadedMetadata = HidRecordingMetadata.FromJson(readLines[0]);
-        Assert.Equal(testFrames.Length, loadedMetadata.FrameCount);
+        Assert.Equal(1, loadedMetadata.StreamCount);
 
         // 各フレームを検証
         for (int i = 0; i < testFrames.Length; i++)
@@ -219,19 +219,19 @@ public class ImuRecordingTests
         using (var writer = new StreamWriter(recordingPath))
         {
             // 1行目: メタデータ
-            var metadata = HidRecordingMetadata.Create(frameCount: testFrames.Length);
+            var metadata = HidRecordingMetadata.Create(streamCount: 1);
             writer.WriteLine(metadata.ToJson());
 
             // 2行目以降: フレーム
             foreach (var (timestamp, data) in testFrames)
             {
-                var record = HidFrameRecord.Create(data, timestamp);
+                var record = HidFrameRecord.Create(data, timestamp, streamId: 0);
                 writer.WriteLine(record.ToJson());
             }
         }
 
         // Act
-        var replayStream = new ReplayHidStream(recordingPath);
+        var replayStream = new ReplayHidStream(recordingPath, streamId: 0);
         var buffer = new byte[64];
         
         int frameCount = 0;
@@ -260,7 +260,7 @@ public class ImuRecordingTests
         {
             var rawBytes = new byte[] { 0xFF, 0xFC, (byte)i };
             var timestamp = i * 10L;
-            var record = HidFrameRecord.Create(rawBytes, timestamp);
+            var record = HidFrameRecord.Create(rawBytes, timestamp, streamId: 0);
             recordList.Add(record);
         }
 

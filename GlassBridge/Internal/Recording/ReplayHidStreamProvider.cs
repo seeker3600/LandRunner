@@ -3,20 +3,20 @@ namespace GlassBridge.Internal.Recording;
 using GlassBridge.Internal.HID;
 
 /// <summary>
-/// 記録されたストリームを再生するためのプロバイダー
-/// 使用例: var replayProvider = new ReplayHidStreamProvider(recordingDirectory)
+/// 記録された単一ファイルからストリームを再生するためのプロバイダー
+/// 使用例: var replayProvider = new ReplayHidStreamProvider("recording.jsonl")
 /// </summary>
 internal sealed class ReplayHidStreamProvider : IHidStreamProvider
 {
-    private readonly string _recordingDirectory;
+    private readonly string _recordingFilePath;
     private bool _disposed;
 
-    public ReplayHidStreamProvider(string recordingDirectory)
+    public ReplayHidStreamProvider(string recordingFilePath)
     {
-        _recordingDirectory = recordingDirectory ?? throw new ArgumentNullException(nameof(recordingDirectory));
+        _recordingFilePath = recordingFilePath ?? throw new ArgumentNullException(nameof(recordingFilePath));
         
-        if (!Directory.Exists(_recordingDirectory))
-            throw new DirectoryNotFoundException($"Recording directory not found: {_recordingDirectory}");
+        if (!File.Exists(_recordingFilePath))
+            throw new FileNotFoundException($"Recording file not found: {_recordingFilePath}");
     }
 
     public async Task<IReadOnlyList<IHidStream>> GetStreamsAsync(
@@ -27,26 +27,30 @@ internal sealed class ReplayHidStreamProvider : IHidStreamProvider
         if (_disposed)
             throw new ObjectDisposedException(nameof(ReplayHidStreamProvider));
 
+        // ファイルを読み込んでストリーム数を取得
+        var streamCount = await GetStreamCountAsync();
+
+        // 各ストリームIDに対応する再生ストリームを作成
         var replayStreams = new List<IHidStream>();
-
-        // ディレクトリの全recording_*.jsonlファイルを探して再生ストリームを作成
-        var recordingFiles = Directory.GetFiles(_recordingDirectory, "recording_*.jsonl")
-            .OrderBy(f => ExtractIndex(f))
-            .ToList();
-
-        foreach (var recordingFile in recordingFiles)
+        for (int streamId = 0; streamId < streamCount; streamId++)
         {
-            var replayStream = new ReplayHidStream(recordingFile);
+            var replayStream = new ReplayHidStream(_recordingFilePath, streamId);
             replayStreams.Add(replayStream);
         }
 
-        return await Task.FromResult(replayStreams.AsReadOnly());
+        return replayStreams.AsReadOnly();
     }
 
-    private static int ExtractIndex(string filename)
+    private async Task<int> GetStreamCountAsync()
     {
-        var match = System.Text.RegularExpressions.Regex.Match(Path.GetFileName(filename), @"recording_(\d+)");
-        return match.Success && int.TryParse(match.Groups[1].Value, out int index) ? index : 0;
+        using var reader = new StreamReader(_recordingFilePath);
+        var firstLine = await reader.ReadLineAsync();
+        
+        if (string.IsNullOrWhiteSpace(firstLine))
+            throw new InvalidOperationException("Recording file is empty");
+
+        var metadata = HidRecordingMetadata.FromJson(firstLine);
+        return metadata.StreamCount;
     }
 
     public async ValueTask DisposeAsync()

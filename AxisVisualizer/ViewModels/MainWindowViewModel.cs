@@ -174,7 +174,8 @@ public class MainWindowViewModel : ViewModelBase
         var appDataPath = System.IO.Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "LandRunner",
-            "Recordings");
+            "Recordings",
+            $"session_{DateTime.Now:yyyyMMdd_HHmmss}.jsonl");
         RecordingPath = appDataPath;
         
         UpdateConnectionInfo();
@@ -193,10 +194,10 @@ public class MainWindowViewModel : ViewModelBase
                 InfoText = "Loading recording...";
                 _logger.LogDebug("Starting replay mode from: {RecordingPath}", RecordingPath);
 
-                if (!System.IO.Directory.Exists(RecordingPath))
+                if (!System.IO.File.Exists(RecordingPath))
                 {
-                    InfoText = "Recording folder not found";
-                    _logger.LogError("Recording directory not found: {RecordingPath}", RecordingPath);
+                    InfoText = "Recording file not found";
+                    _logger.LogError("Recording file not found: {RecordingPath}", RecordingPath);
                     IsConnectButtonEnabled = true;
                     return;
                 }
@@ -222,7 +223,13 @@ public class MainWindowViewModel : ViewModelBase
 
                 if (IsRecordingEnabled)
                 {
-                    System.IO.Directory.CreateDirectory(RecordingPath);
+                    // ディレクトリを作成
+                    var directory = System.IO.Path.GetDirectoryName(RecordingPath);
+                    if (!string.IsNullOrEmpty(directory))
+                    {
+                        System.IO.Directory.CreateDirectory(directory);
+                    }
+
                     _device = await _deviceManager.ConnectAndRecordAsync(RecordingPath);
                     InfoText = "Connected! Recording data...";
                     _logger.LogInformation("Recording IMU data to: {RecordingPath}", RecordingPath);
@@ -358,26 +365,24 @@ public class MainWindowViewModel : ViewModelBase
 
     private void SelectRecordingFolder()
     {
-        // WPFでフォルダ選択ダイアログを表示（ワークアラウンド）
+        // ファイル選択ダイアログを表示
         var dialog = new Microsoft.Win32.OpenFileDialog
         {
-            Title = "Select recording folder",
+            Title = "Select recording file",
+            Filter = "Recording Files (*.jsonl)|*.jsonl|All Files (*.*)|*.*",
             CheckFileExists = false,
-            CheckPathExists = true,
-            FileName = "Select Folder",
-            Filter = "Folder|*.none",
-            ValidateNames = false,
-            InitialDirectory = RecordingPath
+            InitialDirectory = System.IO.Path.GetDirectoryName(RecordingPath) ?? 
+                              System.IO.Path.Combine(
+                                  Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                                  "LandRunner",
+                                  "Recordings"),
+            FileName = System.IO.Path.GetFileName(RecordingPath) ?? $"session_{DateTime.Now:yyyyMMdd_HHmmss}.jsonl"
         };
 
         if (dialog.ShowDialog() == true)
         {
-            var folderPath = System.IO.Path.GetDirectoryName(dialog.FileName);
-            if (!string.IsNullOrEmpty(folderPath))
-            {
-                RecordingPath = folderPath;
-                _logger.LogInformation("Recording path changed to: {RecordingPath}", RecordingPath);
-            }
+            RecordingPath = dialog.FileName;
+            _logger.LogInformation("Recording path changed to: {RecordingPath}", RecordingPath);
         }
     }
 

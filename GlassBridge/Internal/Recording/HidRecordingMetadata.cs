@@ -21,28 +21,28 @@ internal sealed class HidRecordingMetadata
     public string RecordedAt { get; set; } = string.Empty;
 
     /// <summary>
-    /// フレーム数
-    /// </summary>
-    [JsonPropertyName("frameCount")]
-    public int FrameCount { get; set; }
-
-    /// <summary>
     /// フォーマットバージョン
     /// </summary>
     [JsonPropertyName("formatVersion")]
-    public int FormatVersion { get; set; } = 1;
+    public int FormatVersion { get; set; } = 2;
+
+    /// <summary>
+    /// ストリーム数
+    /// </summary>
+    [JsonPropertyName("streamCount")]
+    public int StreamCount { get; set; }
 
     /// <summary>
     /// 新しいメタデータを作成
     /// </summary>
-    public static HidRecordingMetadata Create(int frameCount = 0)
+    public static HidRecordingMetadata Create(int streamCount)
     {
         return new HidRecordingMetadata
         {
             Type = "metadata",
             RecordedAt = DateTime.UtcNow.ToString("O"),
-            FrameCount = frameCount,
-            FormatVersion = 1
+            FormatVersion = 2,
+            StreamCount = streamCount
         };
     }
 
