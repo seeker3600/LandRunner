@@ -10,14 +10,14 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
 {
     private readonly IHidStreamProvider _baseProvider;
     private readonly string _outputDirectory;
-    private readonly Dictionary<IHidStream, RecordingHidStream> _recordingStreams;
+    private readonly List<RecordingHidStream> _recordingStreams;
     private bool _disposed;
 
     public RecordingHidStreamProvider(IHidStreamProvider baseProvider, string outputDirectory)
     {
         _baseProvider = baseProvider ?? throw new ArgumentNullException(nameof(baseProvider));
         _outputDirectory = outputDirectory ?? throw new ArgumentNullException(nameof(outputDirectory));
-        _recordingStreams = new Dictionary<IHidStream, RecordingHidStream>();
+        _recordingStreams = new List<RecordingHidStream>();
 
         // 出力ディレクトリを作成
         Directory.CreateDirectory(_outputDirectory);
@@ -38,10 +38,10 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
         for (int i = 0; i < baseStreams.Count; i++)
         {
             var baseStream = baseStreams[i];
-            var framesPath = Path.Combine(_outputDirectory, $"frames_{i}.jsonl");
-            var recordingStream = new RecordingHidStream(baseStream, framesPath);
+            var recordingPath = Path.Combine(_outputDirectory, $"recording_{i}.jsonl");
+            var recordingStream = new RecordingHidStream(baseStream, recordingPath);
             
-            _recordingStreams[baseStream] = recordingStream;
+            _recordingStreams.Add(recordingStream);
             recordingStreams.Add(recordingStream);
         }
 
@@ -49,14 +49,13 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
     }
 
     /// <summary>
-    /// 記録セッションを完了してメタデータを保存
+    /// 記録セッションを完了
     /// </summary>
     public async Task FinalizeRecordingAsync()
     {
-        foreach (var (index, recordingStream) in _recordingStreams.Values.Select((s, i) => (i, s)))
+        foreach (var recordingStream in _recordingStreams)
         {
-            var metadataPath = Path.Combine(_outputDirectory, $"metadata_{index}.json");
-            await recordingStream.FinalizeAsync(metadataPath);
+            await recordingStream.FinalizeAsync();
         }
     }
 
@@ -65,10 +64,10 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
         if (_disposed)
             return;
 
-        // 自動的にメタデータを保存
+        // 自動的に記録を完了
         await FinalizeRecordingAsync();
 
-        foreach (var recordingStream in _recordingStreams.Values)
+        foreach (var recordingStream in _recordingStreams)
         {
             await recordingStream.DisposeAsync();
         }
@@ -83,3 +82,4 @@ internal sealed class RecordingHidStreamProvider : IHidStreamProvider
         DisposeAsync().GetAwaiter().GetResult();
     }
 }
+

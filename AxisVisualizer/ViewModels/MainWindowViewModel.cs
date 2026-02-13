@@ -27,6 +27,9 @@ public class MainWindowViewModel : ViewModelBase
     private string _visualizationLabelText = "Waiting for data...";
     private bool _isConnectButtonEnabled = true;
     private bool _isDisconnectButtonEnabled = false;
+    private bool _isRecordingEnabled = true;
+    private bool _isReplayMode = false;
+    private string _recordingPath = string.Empty;
 
     // Display properties
     public string StatusText
@@ -125,12 +128,35 @@ public class MainWindowViewModel : ViewModelBase
         set => SetProperty(ref _isDisconnectButtonEnabled, value);
     }
 
+    public bool IsRecordingEnabled
+    {
+        get => _isRecordingEnabled;
+        set => SetProperty(ref _isRecordingEnabled, value);
+    }
+
+    public bool IsReplayMode
+    {
+        get => _isReplayMode;
+        set
+        {
+            SetProperty(ref _isReplayMode, value);
+            UpdateConnectionInfo();
+        }
+    }
+
+    public string RecordingPath
+    {
+        get => _recordingPath;
+        set => SetProperty(ref _recordingPath, value);
+    }
+
     // Event for visualization updates
     public event Action<EulerAngles>? EulerAnglesUpdated;
 
     // Commands
     public ICommand ConnectCommand { get; }
     public ICommand DisconnectCommand { get; }
+    public ICommand SelectRecordingFolderCommand { get; }
 
     // Internal fields
     private IImuDeviceManager? _deviceManager;
@@ -143,6 +169,15 @@ public class MainWindowViewModel : ViewModelBase
         _logger = App.CreateLogger<MainWindowViewModel>();
         ConnectCommand = new AsyncRelayCommand(ConnectAsync, () => IsConnectButtonEnabled);
         DisconnectCommand = new AsyncRelayCommand(DisconnectAsync, () => IsDisconnectButtonEnabled);
+        SelectRecordingFolderCommand = new RelayCommand(SelectRecordingFolder);
+        
+        var appDataPath = System.IO.Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "LandRunner",
+            "Recordings");
+        RecordingPath = appDataPath;
+        
+        UpdateConnectionInfo();
     }
 
     public async Task ConnectAsync()
@@ -150,36 +185,69 @@ public class MainWindowViewModel : ViewModelBase
         try
         {
             IsConnectButtonEnabled = false;
-            InfoText = "Connecting to device...";
-
-            var appDataPath = System.IO.Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "LandRunner");
-            System.IO.Directory.CreateDirectory(appDataPath);
-
-            _logger.LogDebug("Starting device connection with GlassBridge recording");
-
-            _deviceManager = new ImuDeviceManager();
             
-            // GlassBridgeの ConnectAndRecordAsync() を使用してデータを自動記録
-            _device = await _deviceManager.ConnectAndRecordAsync(appDataPath);
+            _deviceManager = new ImuDeviceManager();
 
-            if (_device == null)
+            if (IsReplayMode)
             {
-                InfoText = "Failed to connect to device";
-                _logger.LogError("Failed to connect to VITURE Luma device");
-                IsConnectButtonEnabled = true;
-                return;
+                InfoText = "Loading recording...";
+                _logger.LogDebug("Starting replay mode from: {RecordingPath}", RecordingPath);
+
+                if (!System.IO.Directory.Exists(RecordingPath))
+                {
+                    InfoText = "Recording folder not found";
+                    _logger.LogError("Recording directory not found: {RecordingPath}", RecordingPath);
+                    IsConnectButtonEnabled = true;
+                    return;
+                }
+
+                _device = await _deviceManager.ConnectFromRecordingAsync(RecordingPath);
+
+                if (_device == null)
+                {
+                    InfoText = "Failed to load recording";
+                    _logger.LogError("Failed to load recording from: {RecordingPath}", RecordingPath);
+                    IsConnectButtonEnabled = true;
+                    return;
+                }
+
+                StatusText = "Status: Replaying";
+                InfoText = "Replaying recorded data...";
+                _logger.LogInformation("Started replay from: {RecordingPath}", RecordingPath);
+            }
+            else
+            {
+                InfoText = "Connecting to device...";
+                _logger.LogDebug("Starting device connection (Recording: {IsRecording})", IsRecordingEnabled);
+
+                if (IsRecordingEnabled)
+                {
+                    System.IO.Directory.CreateDirectory(RecordingPath);
+                    _device = await _deviceManager.ConnectAndRecordAsync(RecordingPath);
+                    InfoText = "Connected! Recording data...";
+                    _logger.LogInformation("Recording IMU data to: {RecordingPath}", RecordingPath);
+                }
+                else
+                {
+                    _device = await _deviceManager.ConnectAsync();
+                    InfoText = "Connected! Receiving data...";
+                    _logger.LogInformation("Connected to device (no recording)");
+                }
+
+                if (_device == null)
+                {
+                    InfoText = "Failed to connect to device";
+                    _logger.LogError("Failed to connect to VITURE Luma device");
+                    IsConnectButtonEnabled = true;
+                    return;
+                }
+
+                StatusText = "Status: Connected";
             }
 
-            StatusText = "Status: Connected";
             IsDisconnectButtonEnabled = true;
             IsConnectButtonEnabled = false;
-            InfoText = "Connected! Receiving and recording data...";
             VisualizationLabelText = "";
-
-            _logger.LogInformation("Successfully connected to device");
-            _logger.LogInformation("Recording IMU data to: {AppDataPath}", appDataPath);
 
             _cancellationTokenSource = new CancellationTokenSource();
             _ = StreamDataAsync(_cancellationTokenSource.Token);
@@ -210,7 +278,7 @@ public class MainWindowViewModel : ViewModelBase
             StatusText = "Status: Disconnected";
             IsDisconnectButtonEnabled = false;
             IsConnectButtonEnabled = true;
-            InfoText = "Disconnected. Click 'Connect Device' to start.";
+            UpdateConnectionInfo();
             VisualizationLabelText = "Waiting for data...";
 
             _logger.LogInformation("Device disconnected");
@@ -286,5 +354,46 @@ public class MainWindowViewModel : ViewModelBase
         float pitch = float.Parse(PitchText.Replace("Pitch: ", "").Replace("°", ""));
         float yaw = float.Parse(YawText.Replace("Yaw:   ", "").Replace("°", ""));
         return new EulerAngles(roll, pitch, yaw);
+    }
+
+    private void SelectRecordingFolder()
+    {
+        // WPFでフォルダ選択ダイアログを表示（ワークアラウンド）
+        var dialog = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = "Select recording folder",
+            CheckFileExists = false,
+            CheckPathExists = true,
+            FileName = "Select Folder",
+            Filter = "Folder|*.none",
+            ValidateNames = false,
+            InitialDirectory = RecordingPath
+        };
+
+        if (dialog.ShowDialog() == true)
+        {
+            var folderPath = System.IO.Path.GetDirectoryName(dialog.FileName);
+            if (!string.IsNullOrEmpty(folderPath))
+            {
+                RecordingPath = folderPath;
+                _logger.LogInformation("Recording path changed to: {RecordingPath}", RecordingPath);
+            }
+        }
+    }
+
+    private void UpdateConnectionInfo()
+    {
+        if (IsReplayMode)
+        {
+            InfoText = "Replay mode: Click 'Connect' to load recording";
+        }
+        else if (IsRecordingEnabled)
+        {
+            InfoText = "Recording mode: Click 'Connect' to start";
+        }
+        else
+        {
+            InfoText = "Click 'Connect Device' to start";
+        }
     }
 }

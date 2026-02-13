@@ -1,8 +1,8 @@
 namespace GlassBridge;
 
-using GlassBridge.Internal;
 using GlassBridge.Internal.HID;
 using GlassBridge.Internal.Recording;
+using GlassBridge.Internal.VitureLuma;
 using Microsoft.Extensions.Logging;
 
 /// <summary>

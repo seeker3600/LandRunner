@@ -105,22 +105,24 @@ public class ImuDeviceManagerRecordingTests : IDisposable
             }
         };
 
-        var framesPath = Path.Combine(recordingDir, "frames_0.jsonl");
-        var metadataPath = Path.Combine(recordingDir, "metadata_0.json");
+        var recordingPath = Path.Combine(recordingDir, "recording_0.jsonl");
 
-        // フレームを保存
-        using (var writer = new StreamWriter(framesPath))
+        // 記録ファイルを作成（新形式: メタデータ + フレーム）
+        using (var writer = new StreamWriter(recordingPath))
         {
+            // 1行目: メタデータ
+            var metadata = HidRecordingMetadata.Create(frameCount: testData.Length);
+            writer.WriteLine(metadata.ToJson());
+
+            // 2行目以降: フレーム（HIDバイト列のみ）
+            long timestamp = 0;
             foreach (var frame in testData)
             {
-                var record = ImuFrameRecord.FromImuData(frame, new byte[] { 0xFF, 0xFC });
-                writer.WriteLine(record.ToJsonLine());
+                var record = HidFrameRecord.Create(new byte[] { 0xFF, 0xFC }, timestamp);
+                writer.WriteLine(record.ToJson());
+                timestamp += 10;
             }
         }
-
-        // メタデータを保存
-        var metadata = ImuRecordingSession.CreateNew(frameCount: 2, sampleRate: 100);
-        File.WriteAllText(metadataPath, metadata.ToJson());
 
         // Act
         var manager = new ImuDeviceManager();
@@ -147,6 +149,7 @@ public class ImuDeviceManagerRecordingTests : IDisposable
         
         manager.Dispose();
     }
+
 
     /// <summary>
     /// テスト5: device.DisposeAsync() 時に自動的にメタデータが保存される

@@ -1,4 +1,4 @@
-namespace GlassBridge.Internal;
+namespace GlassBridge.Internal.VitureLuma;
 
 using GlassBridge.Internal.HID;
 using System.Runtime.CompilerServices;

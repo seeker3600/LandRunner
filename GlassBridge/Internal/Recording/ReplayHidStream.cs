@@ -3,10 +3,10 @@ namespace GlassBridge.Internal.Recording;
 using GlassBridge.Internal.HID;
 
 /// <summary>
-/// 記録されたJSONファイルから生データを再生するHIDストリーム
-/// 使用例: var replayStream = new RecordedHidStream(framesJsonPath, metadataJsonPath)
+/// 記録されたJSONファイルから生データを再生するHIDストリーム（VitureLuma非依存）
+/// 使用例: var replayStream = new ReplayHidStream(recordingFilePath)
 /// </summary>
-internal sealed class RecordedHidStream : IHidStream
+internal sealed class ReplayHidStream : IHidStream
 {
     /// <summary>
     /// デフォルトのレポート長（VITURE デバイスに合わせた値）
@@ -15,7 +15,6 @@ internal sealed class RecordedHidStream : IHidStream
     public const int DefaultReportLength = 65;
 
     private readonly Queue<(long delayMs, byte[] data)> _frameQueue;
-    private readonly DateTime _sessionStartTime;
     private DateTime _playbackStartTime;
     private bool _disposed;
     private IEnumerator<(long, byte[])>? _frameEnumerator;
@@ -35,48 +34,32 @@ internal sealed class RecordedHidStream : IHidStream
     /// <summary>
     /// 記録ファイルから再生ストリームを作成
     /// </summary>
-    /// <param name="framesJsonLinesPath">frames.jsonlファイルのパス</param>
-    /// <param name="metadataJsonPath">metadata.jsonファイルのパス（オプション）</param>
+    /// <param name="recordingFilePath">記録ファイルのパス（.jsonl）</param>
     /// <param name="maxInputReportLength">最大入力レポート長（デフォルト: 65）</param>
     /// <param name="maxOutputReportLength">最大出力レポート長（デフォルト: 65）</param>
-    public RecordedHidStream(
-        string framesJsonLinesPath,
-        string? metadataJsonPath = null,
+    public ReplayHidStream(
+        string recordingFilePath,
         int maxInputReportLength = DefaultReportLength,
         int maxOutputReportLength = DefaultReportLength)
     {
-        if (!File.Exists(framesJsonLinesPath))
-            throw new FileNotFoundException($"Frames file not found: {framesJsonLinesPath}");
+        if (!File.Exists(recordingFilePath))
+            throw new FileNotFoundException($"Recording file not found: {recordingFilePath}");
 
         _frameQueue = new Queue<(long, byte[])>();
-        _sessionStartTime = DateTime.UtcNow;
         MaxInputReportLength = maxInputReportLength;
         MaxOutputReportLength = maxOutputReportLength;
 
-        // メタデータを読み込む
-        ImuRecordingSession? metadata = null;
-        if (!string.IsNullOrEmpty(metadataJsonPath) && File.Exists(metadataJsonPath))
-        {
-            try
-            {
-                var json = File.ReadAllText(metadataJsonPath);
-                metadata = ImuRecordingSession.FromJson(json);
-            }
-            catch
-            {
-                // メタデータ読み込み失敗は無視
-            }
-        }
-
         // フレームを読み込んでキューに積む
-        LoadFramesFromJsonLines(framesJsonLinesPath);
+        LoadFramesFromJsonLines(recordingFilePath);
+        _frameEnumerator = _frameQueue.GetEnumerator();
     }
 
-    private void LoadFramesFromJsonLines(string framesJsonLinesPath)
+    private void LoadFramesFromJsonLines(string recordingFilePath)
     {
         long previousTimestamp = 0;
+        bool isFirstLine = true;
         
-        using var reader = new StreamReader(framesJsonLinesPath);
+        using var reader = new StreamReader(recordingFilePath);
         string? line;
         
         while ((line = reader.ReadLine()) != null)
@@ -86,14 +69,23 @@ internal sealed class RecordedHidStream : IHidStream
 
             try
             {
-                var frameRecord = ImuFrameRecord.FromJsonLine(line);
-                var rawBytes = Convert.FromBase64String(frameRecord.RawBytes);
+                // 1行目はメタデータ、スキップ
+                if (isFirstLine)
+                {
+                    isFirstLine = false;
+                    var metadata = HidRecordingMetadata.FromJson(line);
+                    continue;
+                }
+
+                // 2行目以降はフレームデータ
+                var frameRecord = HidFrameRecord.FromJson(line);
+                var rawBytes = frameRecord.DecodeRawBytes();
                 
                 // タイムスタンプの差分を計算してディレイを設定
                 long delayMs = 0;
                 if (previousTimestamp != 0)
                 {
-                    delayMs = (long)(frameRecord.Timestamp - previousTimestamp);
+                    delayMs = frameRecord.Timestamp - previousTimestamp;
                 }
                 previousTimestamp = frameRecord.Timestamp;
                 
@@ -104,14 +96,13 @@ internal sealed class RecordedHidStream : IHidStream
                 // 不正なフレームは無視
             }
         }
-
-        _frameEnumerator = _frameQueue.GetEnumerator();
     }
+
 
     public async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken = default)
     {
         if (_disposed)
-            throw new ObjectDisposedException(nameof(RecordedHidStream));
+            throw new ObjectDisposedException(nameof(ReplayHidStream));
 
         // 初回呼び出し時に再生開始時刻を記録
         if (_playbackStartTime == default)
@@ -140,7 +131,7 @@ internal sealed class RecordedHidStream : IHidStream
     public async Task WriteAsync(byte[] buffer, CancellationToken cancellationToken = default)
     {
         if (_disposed)
-            throw new ObjectDisposedException(nameof(RecordedHidStream));
+            throw new ObjectDisposedException(nameof(ReplayHidStream));
 
         // 再生ストリームでは書き込みは何もしない
         await Task.CompletedTask;

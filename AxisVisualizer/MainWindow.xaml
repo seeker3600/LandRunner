@@ -1,11 +1,11 @@
-﻿<Window x:Class="LandRunner.MainWindow"
+<Window x:Class="LandRunner.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LandRunner"
         mc:Ignorable="d"
-        Title="LandRunner - VITURE Luma IMU Viewer" Height="600" Width="900"
+        Title="LandRunner - VITURE Luma IMU Viewer" Height="650" Width="900"
         Closing="Window_Closing">
     <Grid Background="#F5F5F5">
         <Grid.RowDefinitions>
@@ -80,8 +80,68 @@
         </Grid>
 
         <!-- Bottom: Controls -->
-        <Grid Grid.Row="2" Background="#ECF0F1" Height="60" Margin="0">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0,0,0">
+        <Grid Grid.Row="2" Background="#ECF0F1" Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Recording/Replay Settings -->
+            <Grid Grid.Row="0" Margin="15,10,15,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Recording Toggle -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,0,20,0">
+                    <CheckBox IsChecked="{Binding IsRecordingEnabled}"
+                              IsEnabled="{Binding IsConnectButtonEnabled}"
+                              VerticalAlignment="Center"
+                              Margin="0,0,8,0"/>
+                    <TextBlock Text="Recording"
+                               Foreground="#34495E"
+                               FontSize="11"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Replay Mode Toggle -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,0,20,0">
+                    <CheckBox IsChecked="{Binding IsReplayMode}"
+                              IsEnabled="{Binding IsConnectButtonEnabled}"
+                              VerticalAlignment="Center"
+                              Margin="0,0,8,0"/>
+                    <TextBlock Text="Replay Mode"
+                               Foreground="#34495E"
+                               FontSize="11"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Recording Path -->
+                <TextBlock Grid.Column="2"
+                           Text="{Binding RecordingPath}"
+                           Foreground="#7F8C8D"
+                           FontSize="10"
+                           VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis"
+                           Margin="0,0,10,0"/>
+
+                <!-- Browse Button -->
+                <Button Grid.Column="3"
+                        Command="{Binding SelectRecordingFolderCommand}"
+                        IsEnabled="{Binding IsConnectButtonEnabled}"
+                        Content="Browse..."
+                        Background="#95A5A6"
+                        Foreground="White"
+                        FontSize="10"
+                        Padding="10,5"
+                        Cursor="Hand"/>
+            </Grid>
+
+            <!-- Connection Controls -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="15,5,15,10">
                 <Button Command="{Binding ConnectCommand}"
                         IsEnabled="{Binding IsConnectButtonEnabled}"
                         Content="Connect Device"

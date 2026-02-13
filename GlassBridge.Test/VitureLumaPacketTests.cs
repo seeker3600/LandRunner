@@ -1,7 +1,7 @@
 namespace GlassBridgeTest;
 
 using GlassBridge;
-using GlassBridge.Internal;
+using GlassBridge.Internal.VitureLuma;
 using Xunit;
 
 /// <summary>

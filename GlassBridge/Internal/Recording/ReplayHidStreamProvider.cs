@@ -29,29 +29,23 @@ internal sealed class ReplayHidStreamProvider : IHidStreamProvider
 
         var replayStreams = new List<IHidStream>();
 
-        // ディレクトリの全frames_*.jsonlファイルを探して再生ストリームを作成
-        var framesFiles = Directory.GetFiles(_recordingDirectory, "frames_*.jsonl")
+        // ディレクトリの全recording_*.jsonlファイルを探して再生ストリームを作成
+        var recordingFiles = Directory.GetFiles(_recordingDirectory, "recording_*.jsonl")
             .OrderBy(f => ExtractIndex(f))
             .ToList();
 
-        foreach (var framesFile in framesFiles)
+        foreach (var recordingFile in recordingFiles)
         {
-            int index = ExtractIndex(framesFile);
-            var metadataFile = Path.Combine(_recordingDirectory, $"metadata_{index}.json");
-
-            var replayStream = new RecordedHidStream(
-                framesFile,
-                File.Exists(metadataFile) ? metadataFile : null
-            );
+            var replayStream = new ReplayHidStream(recordingFile);
             replayStreams.Add(replayStream);
         }
 
-        return replayStreams.AsReadOnly();
+        return await Task.FromResult(replayStreams.AsReadOnly());
     }
 
     private static int ExtractIndex(string filename)
     {
-        var match = System.Text.RegularExpressions.Regex.Match(Path.GetFileName(filename), @"frames_(\d+)");
+        var match = System.Text.RegularExpressions.Regex.Match(Path.GetFileName(filename), @"recording_(\d+)");
         return match.Success && int.TryParse(match.Groups[1].Value, out int index) ? index : 0;
     }
 
@@ -66,3 +60,4 @@ internal sealed class ReplayHidStreamProvider : IHidStreamProvider
         DisposeAsync().GetAwaiter().GetResult();
     }
 }
+

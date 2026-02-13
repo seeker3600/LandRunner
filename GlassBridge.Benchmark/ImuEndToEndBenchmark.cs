@@ -2,7 +2,7 @@ namespace GlassBridgeBenchmark;
 
 using BenchmarkDotNet.Attributes;
 using GlassBridge;
-using GlassBridge.Internal;
+using GlassBridge.Internal.VitureLuma;
 using GlassBridge.Utils;
 using System.Runtime.CompilerServices;
 

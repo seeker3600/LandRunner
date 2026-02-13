@@ -3,7 +3,7 @@ namespace GlassBridgeBenchmark;
 using BenchmarkDotNet.Attributes;
 using Microsoft.VSDiagnostics;
 using GlassBridge;
-using GlassBridge.Internal;
+using GlassBridge.Internal.VitureLuma;
 
 /// <summary>
 /// IMU パケット解析のベンチマーク

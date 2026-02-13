@@ -1,4 +1,4 @@
-namespace GlassBridge.Internal;
+namespace GlassBridge.Internal.VitureLuma;
 
 /// <summary>
 /// CRC-16-CCITT計算ユーティリティ
