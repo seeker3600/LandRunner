@@ -108,28 +108,20 @@ public sealed class ScreenCaptureService : IDisposable
                 return;
 
             var contentSize = frame.ContentSize;
+            
+            // A-3: サイズ変更検出時は FramePool と Surface をリサイズ
+            // 修正: リサイズ後も描画を継続することで、タスクバーが消える問題を解消
             if (contentSize.Width != _lastSize.Width || contentSize.Height != _lastSize.Height)
             {
                 _lastSize = contentSize;
                 // A-1: FreeThreaded モードでバッファ3枚を維持
                 sender.Recreate(_canvasDevice, WinDirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized, 3, contentSize);
                 
-                // A-3: サイズ変更時のみ Surface をリサイズ
-                if (_surface != null)
-                {
-                    CanvasComposition.Resize(_surface, new Windows.Foundation.Size(contentSize.Width, contentSize.Height));
-                }
-                return;
+                // A-3: サイズ変更時に Surface をリサイズ
+                CanvasComposition.Resize(_surface, new Windows.Foundation.Size(contentSize.Width, contentSize.Height));
             }
 
             using var canvasBitmap = CanvasBitmap.CreateFromDirect3D11Surface(_canvasDevice, frame.Surface);
-            
-            // A-3: サイズが一致している場合はリサイズをスキップ（既に事前割り当て済み）
-            var surfaceSize = _surface!.Size;
-            if (surfaceSize.Width != canvasBitmap.Size.Width || surfaceSize.Height != canvasBitmap.Size.Height)
-            {
-                CanvasComposition.Resize(_surface, canvasBitmap.Size);
-            }
 
             // B-1: GPU 直接コピー最適化
             // DrawingSession を最小限の設定で使用し、GPU コピーを高速化

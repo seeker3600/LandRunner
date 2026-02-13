@@ -33,7 +33,9 @@
   <Project Path="LandRunner/LandRunner.csproj" Id="c1f7c09f-bd40-45cc-8aac-fe3a26c2e527">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
-  <Project Path="WinUiApp1.Test/WinUiApp1.Test.csproj" />
+  <Project Path="WinUiApp1.Test/WinUiApp1.Test.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
   <Project Path="WinUiApp1/WinUiApp1.csproj" Id="4a496be5-06a0-4128-806c-3345c381daf3">
     <Platform Project="x64" />
     <Deploy />
