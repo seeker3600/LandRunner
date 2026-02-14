@@ -1,5 +1,6 @@
 using System.Reflection;
 using Xunit;
+using CaptureBridge;
 
 namespace WinUiApp1.Test;
 

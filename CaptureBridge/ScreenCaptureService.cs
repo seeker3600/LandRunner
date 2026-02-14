@@ -9,7 +9,7 @@ using Windows.UI;
 using Win2DDirectX = Microsoft.Graphics.DirectX;
 using WinDirectX = Windows.Graphics.DirectX;
 
-namespace WinUiApp1;
+namespace CaptureBridge;
 
 /// <summary>
 /// Windows Graphics Capture API を使用した画面キャプチャサービス

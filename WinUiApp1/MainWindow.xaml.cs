@@ -6,8 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Windows.Win32;
-using Windows.Win32.Foundation;
+using CaptureBridge;
 
 namespace WinUiApp1;
 
@@ -26,7 +25,7 @@ public sealed partial class MainWindow : Window
     private void SetWindowCaptureProtection()
     {
         var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-        PInvoke.SetWindowDisplayAffinity(new HWND(hwnd), Windows.Win32.UI.WindowsAndMessaging.WINDOW_DISPLAY_AFFINITY.WDA_EXCLUDEFROMCAPTURE);
+        MonitorService.ExcludeFromCapture(hwnd);
     }
 
     private void LoadDisplays()

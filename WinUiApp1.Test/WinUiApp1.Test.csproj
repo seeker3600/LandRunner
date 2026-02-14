@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WinUiApp1\WinUiApp1.csproj" />
+    <ProjectReference Include="..\CaptureBridge\CaptureBridge.csproj" />
   </ItemGroup>
 
 </Project>

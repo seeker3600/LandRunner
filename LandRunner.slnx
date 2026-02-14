@@ -14,6 +14,9 @@
   <Project Path="AxisVisualizer/AxisVisualizer.csproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
+  <Project Path="CaptureBridge/CaptureBridge.csproj" Id="31ce4e45-3271-4728-a9ff-ed480ec516c5">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
   <Project Path="GlassBridge.Benchmark/GlassBridge.Benchmark.csproj" Id="d4c1ec20-a5a7-44af-ba05-82a32ec4bd5c">
     <Platform Solution="*|x64" Project="x64" />
   </Project>

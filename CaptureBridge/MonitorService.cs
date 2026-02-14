@@ -7,7 +7,7 @@ using Windows.Win32.Devices.Display;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
 
-namespace WinUiApp1;
+namespace CaptureBridge;
 
 /// <summary>
 /// 接続されているモニター情報
@@ -22,6 +22,11 @@ public record DisplayMonitorInfo(
 /// </summary>
 public static class MonitorService
 {
+    public static bool ExcludeFromCapture(IntPtr hwnd)
+    { 
+        return PInvoke.SetWindowDisplayAffinity(new HWND(hwnd), Windows.Win32.UI.WindowsAndMessaging.WINDOW_DISPLAY_AFFINITY.WDA_EXCLUDEFROMCAPTURE);
+    }
+
     public static ReadOnlyCollection<DisplayMonitorInfo> GetAllMonitors()
     {
         var friendlyNamesCache = GetMonitorFriendlyNamesCache();

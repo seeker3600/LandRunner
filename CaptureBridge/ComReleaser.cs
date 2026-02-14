@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace WinUiApp1;
+namespace CaptureBridge;
 
 sealed partial class ComReleaser : IDisposable
 {
